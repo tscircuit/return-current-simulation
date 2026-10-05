@@ -77,6 +77,7 @@ export function renderCurrentFieldSvg(
     description: string
     subtitle: string
     footer: string
+    gridLabel?: string
   },
 ): string {
   if (!result.diagnostics.converged)
@@ -191,7 +192,7 @@ export function renderCurrentFieldSvg(
 <path d="${polygonPath(result.geometry.boardOutline)}" fill="none" stroke="#94a3b8" stroke-width="${1 / pixelsPerMm}"/>${traces}</g>
 ${contacts}
 <text x="60" y="${boardBottom + 30}" font-size="14" fill="#334155">${result.geometry.excitations.map((excitation, excitationIndex) => `S${excitationIndex + 1} → L${excitationIndex + 1}: ${displayNumber(excitation.current)} A`).join("   ·   ")}</text>
-<text x="60" y="${boardBottom + 53}" font-size="13" fill="#64748b">h = ${displayNumber(result.layerSeparation)} mm · copper = ${displayNumber(result.copperThickness)} mm · mesh = ${result.columns} × ${result.rows}</text>
+<text x="60" y="${boardBottom + 53}" font-size="13" fill="#64748b">h = ${displayNumber(result.layerSeparation)} mm · copper = ${displayNumber(result.copperThickness)} mm · ${escapeXml(options.gridLabel ?? "mesh")} = ${result.columns} × ${result.rows}</text>
 <text x="60" y="${boardBottom + 76}" font-size="12" fill="#64748b">${escapeXml(options.footer)}</text></g>
 </svg>`
 }

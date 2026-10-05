@@ -50,6 +50,7 @@ export interface PalaceReference {
   schemaVersion: 1
   solver: "palace"
   solverVersion: string
+  femOrder: 1 | 2
   frequencyHz: number
   copperModel: "volumetric_copper"
   copperThickness: number
@@ -64,5 +65,10 @@ export interface PalaceReference {
   /** Palace v0.14.0 ParaView E fields are nondimensional. */
   electricFieldScaleVoltsPerMeter: number
   normalizationConditionNumber: number
-  provenance: { circuitSha256: string; modelSha256: string; meshSha256: string }
+  provenance: {
+    geometrySignature: string
+    circuitSha256: string
+    modelSha256: string
+    meshSha256: string
+  }
 }

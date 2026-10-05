@@ -2,6 +2,7 @@ import type { PalaceReference } from "./types"
 
 export function validatePalaceReference(reference: PalaceReference): void {
   if (
+    (reference.femOrder !== 1 && reference.femOrder !== 2) ||
     reference.schemaVersion !== 1 ||
     reference.solver !== "palace" ||
     reference.copperModel !== "volumetric_copper"
@@ -28,6 +29,11 @@ export function validatePalaceReference(reference: PalaceReference): void {
     !reference.samples.length
   )
     throw new Error("Palace reference needs a nonempty grid")
+  if (
+    typeof reference.provenance.geometrySignature !== "string" ||
+    !reference.provenance.geometrySignature.length
+  )
+    throw new Error("Palace reference needs a physical geometry signature")
   const locations = new Set<string>()
   for (const sample of reference.samples) {
     if (

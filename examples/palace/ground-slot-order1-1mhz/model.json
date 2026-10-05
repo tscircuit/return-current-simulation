@@ -1329,6 +1329,6 @@
   "portWidth": 0.18,
   "meshSize": 2,
   "airPadding": 6,
-  "order": 2,
+  "order": 1,
   "copperModel": "volumetric_copper"
 }

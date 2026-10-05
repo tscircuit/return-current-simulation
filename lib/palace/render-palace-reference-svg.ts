@@ -1,3 +1,4 @@
+import { palaceGeometrySignature } from "./geometry-signature"
 import { renderCurrentFieldSvg } from "../render-return-current-svg"
 import type { RenderOptions, SimulationResult } from "../types"
 import type { PalaceReference } from "./types"
@@ -12,6 +13,13 @@ export function renderPalaceReferenceSvg(
 ): string {
   const { reference } = options
   validatePalaceReference(reference)
+  if (
+    palaceGeometrySignature(result.geometry) !==
+    reference.provenance.geometrySignature
+  )
+    throw new Error(
+      "Palace reference geometry differs from the simulation geometry",
+    )
   if (
     reference.layerSeparation !== result.layerSeparation ||
     reference.samples.length !== result.nodes.length ||
@@ -75,7 +83,8 @@ export function renderPalaceReferenceSvg(
       description:
         "Palace driven Maxwell reference. Colors show magnitude of the complex conduction-current vector averaged through copper thickness. Arrows show the real instantaneous field at the selected phase. Copper is an explicitly meshed conductive volume.",
       subtitle: `Palace ${reference.solverVersion} · f = ${reference.frequencyHz / 1e6} MHz · |K|/t (A/mm²) · peak phasors`,
-      footer: `Conductive copper volumes · arrows at ${phaseDegrees}° · air/substrate domain · source currents normalized`,
+      gridLabel: "sample grid",
+      footer: `FEM order ${reference.femOrder} · conductive copper volumes · arrows at ${phaseDegrees}° · air/substrate domain · source currents normalized`,
     },
   )
 }

@@ -85,9 +85,9 @@ export default function PalaceComparisonPage() {
       </p>
       <p>
         Reference under validation: coarse/fine field change{" "}
-        {(100 * refinement.relativeComplexL2Change).toFixed(1)}%; sampled bridge
-        balance error{" "}
-        {(100 * refinement.fluxCheck.relativeComplexBalanceError).toFixed(1)}%.
+        {(100 * refinement.relativeComplexL2Change).toFixed(1)}%; dense sampled
+        bridge balance error{" "}
+        {(100 * refinement.fluxCheck.relativeComplexBalanceError).toFixed(2)}%.
         These results are not established ground truth.
       </p>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 16 }}>

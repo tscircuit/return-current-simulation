@@ -47,7 +47,8 @@ Each run saves the input circuit, mesher model, Gmsh mesh, Palace configuration,
 solver log, port CSVs, raw ParaView fields, complex sampled currents, numerical
 comparison, and SVG/PNG images. Outputs are under `work/`; curated evidence is
 checked into [`examples/palace`](examples/palace). The manual **Palace reference**
-CI workflow uploads raw meshes and ParaView output as artifacts.
+CI workflow uploads raw meshes and ParaView output as artifacts, then checks
+fresh field changes and independently sampled return-current balance.
 
 `frequencyHz` is required; the CLI has no frequency default. Other explicit
 options include conductivity, copper thickness, FR4 permittivity/loss tangent,
@@ -105,11 +106,20 @@ Palace versions are rejected until their output units are audited. See upstream
 [v0.14.0 units](https://github.com/awslabs/palace/blob/v0.14.0/palace/utils/units.hpp)
 and [postprocessing documentation](https://github.com/awslabs/palace/blob/v0.14.0/docs/src/guide/postprocessing.md).
 
+The 100 kHz example is exploratory order-1 evidence. Its frequency comparison
+uses the [matching order-1 1 MHz run](examples/palace/ground-slot-order1-1mhz),
+with identical mesh hashes, rather than attributing a change in FEM order to
+frequency. Use equal numerical refinement when comparing frequencies.
+
 Palace is an independent **point of comparison**, not automatically ground truth.
 The checked-in refinement report records field changes and bridge-current balance.
-The order-2 straight-trace check recovers about 0.998 A of return current for
-a 1 A source; this validates current direction, units and normalization independently
-of how closely the approximation follows the reference.
+Dense cross-section quadrature recovers 0.996 A for the straight 1 A source
+and 3.002 A through the slot bridge for three 1 A sources; complex balance errors
+are 0.64% and 0.064%, respectively. The 0.5 mm image grid gives a misleading
+16.8% slot balance error because only two rows span the 1 mm bridge, so flux
+checks use separate 0.0125 mm samples there. Current balance validates units and
+normalization; the 48.2% coarse/fine field change still prevents treating this
+mesh as converged ground truth.
 Increase FEM order, refine the mesh, and enlarge the air domain before treating a
 result as an accuracy reference. Contact footprints differ from the approximation's
 distributed contacts, so those neighborhoods are excluded from the default metric.

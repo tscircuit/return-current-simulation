@@ -40,7 +40,7 @@ export async function writeSlotRefinementReport(options: {
     bridgeFlux.reduce((total, flux) => total + flux.imag, 0) / bridgeFlux.length
   const reportWithFlux = {
     ...report,
-    fluxCheck: {
+    sampledImageGridFluxCheck: {
       method:
         "midpoint integration of sampled Kx across each ground bridge column",
       expectedRealAmps: -sourceCurrent,
@@ -52,6 +52,7 @@ export async function writeSlotRefinementReport(options: {
         Math.hypot(meanBridgeReal + sourceCurrent, meanBridgeImag) /
         sourceCurrent,
     },
+    fluxCheck: await Bun.file(`${options.fine}/flux-check.json`).json(),
     isGroundTruth: false,
     reason:
       "Finite mesh/domain and assumed material/port model. Report refinement change and balance error before using as an accuracy benchmark.",

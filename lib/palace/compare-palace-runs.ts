@@ -12,7 +12,7 @@ export function comparePalaceRuns(
     coarse.frequencyHz !== fine.frequencyHz ||
     coarse.copperThickness !== fine.copperThickness ||
     coarse.samples.length !== fine.samples.length ||
-    coarse.provenance.circuitSha256 !== fine.provenance.circuitSha256
+    coarse.provenance.geometrySignature !== fine.provenance.geometrySignature
   )
     throw new Error(
       "Refinement requires the same circuit, frequency and sampling positions",
@@ -37,6 +37,8 @@ export function comparePalaceRuns(
     throw new Error("Refinement requires a nonzero reference field")
   return {
     frequencyHz: fine.frequencyHz,
+    coarseFemOrder: coarse.femOrder,
+    fineFemOrder: fine.femOrder,
     samples: fine.samples.length,
     relativeComplexL2Change: Math.sqrt(errorSquared / fineNormSquared),
     coarseMeshSha256: coarse.provenance.meshSha256,

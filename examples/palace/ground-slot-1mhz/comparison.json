@@ -6,9 +6,9 @@
   "excludedSamples": 542,
   "edgeExclusionMm": 0.5,
   "contactExclusionMm": 1,
-  "relativeComplexL2Error": 0.8633453834880894,
-  "relativeRealL2Error": 0.8492952787209651,
-  "relativeMagnitudeL2Error": 0.6583131746146459,
-  "rmsSheetCurrentErrorAmpsPerMm": 0.15824900339353987,
-  "maxAbsoluteEquivalentDensityErrorAmpsPerMm2": 35.84192705115226
+  "relativeComplexL2Error": 0.5965154806002324,
+  "relativeRealL2Error": 0.578335913806199,
+  "relativeMagnitudeL2Error": 0.5178783077233682,
+  "rmsSheetCurrentErrorAmpsPerMm": 0.1403967985665798,
+  "maxAbsoluteEquivalentDensityErrorAmpsPerMm2": 25.046441456057632
 }

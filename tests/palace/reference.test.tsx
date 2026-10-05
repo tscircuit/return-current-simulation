@@ -72,6 +72,14 @@ test("TSX slot circuit matches Palace evidence and preserves complex currents", 
       samples: [...reference.samples, reference.samples[0]],
     }),
   ).toThrow("Duplicate")
+  expect(() =>
+    comparePalaceReference(result, {
+      reference: {
+        ...reference,
+        provenance: { ...reference.provenance, geometrySignature: "[]" },
+      },
+    }),
+  ).toThrow("geometry")
   for (const phaseDegrees of [0, 90]) {
     const svg = renderPalaceReferenceSvg(result, {
       reference,
@@ -146,7 +154,8 @@ test("Palace refinement is reported without relabelling it ground truth", async 
   ).toThrow("same circuit")
   const report = await Bun.file(`${exampleRoot}/refinement.json`).json()
   expect(report.isGroundTruth).toBe(false)
-  expect(report.fluxCheck.expectedRealAmps).toBe(-3)
+  expect(report.fluxCheck.specification.expectedRealAmps).toBe(-3)
+  expect(report.fluxCheck.relativeComplexBalanceError).toBeLessThan(0.05)
 })
 
 test("100 kHz Palace evidence is frequency-labelled and changes the field", async () => {
@@ -155,8 +164,9 @@ test("100 kHz Palace evidence is frequency-labelled and changes the field", asyn
     `${exampleRoot}/ground-slot-100khz/reference.json`,
   ).json()
   const oneMhz: PalaceReference = await Bun.file(
-    `${exampleRoot}/ground-slot-1mhz/reference.json`,
+    `${exampleRoot}/ground-slot-order1-1mhz/reference.json`,
   ).json()
+  expect(reference.provenance.meshSha256).toBe(oneMhz.provenance.meshSha256)
   const result = simulateReturnCurrent({
     circuitJson,
     cellSize: 0.5,

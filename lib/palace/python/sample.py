@@ -112,6 +112,45 @@ def probe_ground(ground, options):
     return np.einsum("d,dnc->nc", weights / 2, current) * model["copperThickness"]
 
 
+def coordinate(number):
+    return f"{0 if number == 0 else number:.9f}"
+
+
+def point(position):
+    return [coordinate(position["x"]), coordinate(position["y"])]
+
+
+def geometry_signature(geometry):
+    signature = [
+        [point(position) for position in geometry["boardOutline"]],
+        [
+            [
+                [point(position) for position in region["outer"]],
+                [[point(position) for position in hole] for hole in region["holes"]],
+            ]
+            for region in geometry["groundRegions"]
+        ],
+        [[point(position) for position in outline] for outline in geometry["cutouts"]],
+        [
+            [
+                [*point(route), coordinate(route["width"]), route["layer"]]
+                for route in signal["route"]
+                if route["route_type"] == "wire"
+            ]
+            for signal in geometry["signals"]
+        ],
+        [
+            [
+                coordinate(excitation["current"]),
+                point(excitation["return_source"]),
+                point(excitation["return_sink"]),
+            ]
+            for excitation in geometry["excitations"]
+        ],
+    ]
+    return json.dumps(signature, separators=(",", ":"))
+
+
 def serialize_currents(currents):
     return [
         {"real": float(current.real), "imag": float(current.imag)}
@@ -249,6 +288,7 @@ def sample_case(case):
         "schemaVersion": 1,
         "solver": "palace",
         "solverVersion": version[1],
+        "femOrder": model["order"],
         "frequencyHz": model["frequencyHz"],
         "copperModel": model["copperModel"],
         "copperThickness": model["copperThickness"],
@@ -261,6 +301,7 @@ def sample_case(case):
         "electricFieldScaleVoltsPerMeter": electric_field_scale,
         "provenance": {
             "circuitSha256": digest(case / "circuit.json"),
+            "geometrySignature": geometry_signature(model["geometry"]),
             "modelSha256": digest(case / "model.json"),
             "meshSha256": digest(case / "mesh.msh"),
         },

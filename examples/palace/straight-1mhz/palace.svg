@@ -11,6 +11,6 @@
 <path d="M-15,-10 L15,-10 L15,10 L-15,10 Z" fill="none" stroke="#94a3b8" stroke-width="0.030612244897959186"/><polyline points="-12,0 -12,0 12,0 12,0" fill="none" stroke="#16383b" stroke-width="0.18" stroke-linejoin="round" stroke-linecap="round"/></g>
 <circle cx="158" cy="486.66666666666663" r="5" fill="#fff" stroke="#19394c" stroke-width="2"/><text x="168" y="478.66666666666663" font-size="13" font-weight="600" fill="#122735" stroke="white" stroke-width="3" paint-order="stroke">S1</text><circle cx="942" cy="486.66666666666663" r="5" fill="#fff" stroke="#ae300f" stroke-width="2"/><text x="952" y="478.66666666666663" font-size="13" font-weight="600" fill="#122735" stroke="white" stroke-width="3" paint-order="stroke">L1</text>
 <text x="60" y="843.3333333333333" font-size="14" fill="#334155">S1 → L1: 1 A</text>
-<text x="60" y="866.3333333333333" font-size="13" fill="#64748b">h = 0.8 mm · copper = 0.035 mm · mesh = 60 × 40</text>
-<text x="60" y="889.3333333333333" font-size="12" fill="#64748b">Conductive copper volumes · arrows at 0° · air/substrate domain · source currents normalized</text></g>
+<text x="60" y="866.3333333333333" font-size="13" fill="#64748b">h = 0.8 mm · copper = 0.035 mm · sample grid = 60 × 40</text>
+<text x="60" y="889.3333333333333" font-size="12" fill="#64748b">FEM order 2 · conductive copper volumes · arrows at 0° · air/substrate domain · source currents normalized</text></g>
 </svg>

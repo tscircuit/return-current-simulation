@@ -25,6 +25,12 @@ export async function exportEvidence(options: {
       resolve(options.source, filename),
       resolve(options.destination, filename),
     )
+  for (const filename of ["flux-check.json", "flux-specification.json"])
+    if (await Bun.file(resolve(options.source, filename)).exists())
+      await cp(
+        resolve(options.source, filename),
+        resolve(options.destination, filename),
+      )
   for (const filename of [
     "port-I.csv",
     "port-V.csv",
