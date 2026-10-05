@@ -1,0 +1,17 @@
+{
+  "palaceImage": "benvial/palace@sha256:f0f3a3cbbdf1ee2d8f856ddbe1f5bf4628a92ee8ab87d1e27dc33402ad9c8dda",
+  "gmshVersion": "4.13.1",
+  "vtkVersion": "9.3.1",
+  "unitsAdapter": "Palace v0.14.0 nondimensional ParaView E -> V/m",
+  "fieldExtraction": "J = sigma E, integrated through bottom copper using 5-point Gauss quadrature",
+  "phasorConvention": "peak, exp(+j omega t)",
+  "sourceNormalization": "solve full source-port basis current matrix; net source = 2 I_inc - I_termination",
+  "rawOutputCommand": "bun run generate:palace:wide-gap work/palace/ground-slot-wide-gap-1mhz",
+  "rawOutputLocation": "work/palace/*/postpro/paraview",
+  "imageSampling": {
+    "columns": 200,
+    "rows": 200,
+    "cellWidth": 0.2,
+    "cellHeight": 0.2
+  }
+}

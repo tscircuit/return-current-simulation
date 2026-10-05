@@ -5,10 +5,13 @@ its complex return-current field with the original image-current approximation.
 Both accept circuit-json; every example and visual snapshot starts from TSX
 rendered by `@tscircuit/core`.
 
-![Palace return-current reference at 1 MHz](examples/palace/ground-slot-1mhz/palace.svg)
+![Palace return-current reference at 1 MHz, 4 mm clearance above the slot](examples/palace/ground-slot-wide-gap-1mhz/palace.svg)
 
 The Palace fixture has three top traces, a slot in the bottom ground copper,
 0.8 mm of FR4, and 35 µm copper. FR4 remains under signals crossing the slot.
+The displayed example leaves **4 mm** between the slot tip and the board top
+edge, compared with 1 mm in the original reference. The Cosmos comparison
+defaults to 4 mm and lets you switch to the 1 mm case.
 A physical PCB cutout removes the substrate too; signals must route around it.
 Palace models the copper as **3D conductive volumes**, not PEC or a custom field
 algorithm. The fields use 1 MHz and three simultaneous, in-phase 1 A peak source
@@ -54,6 +57,7 @@ To generate input circuit-json from TSX and run the example suite:
 
 ```sh
 bun run generate:palace work/palace
+bun run generate:palace:wide-gap work/palace/ground-slot-wide-gap-1mhz
 ```
 
 Each run saves the input circuit, mesher model, Gmsh mesh, Palace configuration,
@@ -124,8 +128,14 @@ uses the [matching order-1 1 MHz run](examples/palace/ground-slot-order1-1mhz),
 with identical mesh hashes, rather than attributing a change in FEM order to
 frequency. Use equal numerical refinement when comparing frequencies.
 
+The 4 mm clearance is generated with `<SlotBoard topGap={4} />` and a fresh
+second-order 1 MHz Palace solve; its fields are not reused from the 1 mm case.
+The original 1 mm evidence and frequency/refinement comparisons are retained.
+
 Palace is an independent **point of comparison**, not automatically ground truth.
-The checked-in refinement report records field changes and bridge-current balance.
+The 4 mm case recovers 2.994 A of return current for three 1 A sources, with
+0.40% complex balance error. Its mesh convergence has not been established.
+The original 1 mm refinement report records field changes and bridge-current balance.
 Dense cross-section quadrature recovers 0.996 A for the straight 1 A source
 and 3.002 A through the slot bridge for three 1 A sources; complex balance errors
 are 0.64% and 0.064%, respectively. The 0.2 mm image grid has five

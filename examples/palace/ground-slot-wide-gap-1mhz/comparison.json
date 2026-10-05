@@ -1,0 +1,14 @@
+{
+  "referenceSolver": "Palace v0.14.0",
+  "frequencyHz": 1000000,
+  "approximationFrequencyModel": "none",
+  "comparedSamples": 34524,
+  "excludedSamples": 2776,
+  "edgeExclusionMm": 0.5,
+  "contactExclusionMm": 1,
+  "relativeComplexL2Error": 0.6249867702243072,
+  "relativeRealL2Error": 0.609633482756347,
+  "relativeMagnitudeL2Error": 0.5633819758941999,
+  "rmsSheetCurrentErrorAmpsPerMm": 0.15367976293629718,
+  "maxAbsoluteEquivalentDensityErrorAmpsPerMm2": 63.76438315063219
+}

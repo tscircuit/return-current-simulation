@@ -62,7 +62,19 @@ export const groundSlotOutline = [
   { x: -20, y: 20 },
 ]
 
-export function SlotBoard({ unbrokenGround }: { unbrokenGround?: boolean }) {
+export function SlotBoard({
+  unbrokenGround,
+  topGap = 1,
+}: {
+  unbrokenGround?: boolean
+  topGap?: number
+}) {
+  if (!Number.isFinite(topGap) || topGap <= 0 || topGap >= 40)
+    throw new Error("topGap must be between 0 and 40 mm")
+  const outline = groundSlotOutline.map((point) => ({
+    ...point,
+    y: point.y === 19 ? 20 - topGap : point.y,
+  }))
   return (
     <board width={40} height={40} layers={2} thickness={0.8} schematicDisabled>
       <net name="GND" />
@@ -76,7 +88,7 @@ export function SlotBoard({ unbrokenGround }: { unbrokenGround?: boolean }) {
       <copperpour
         layer="bottom"
         connectsTo="net.GND"
-        outline={unbrokenGround ? undefined : groundSlotOutline}
+        outline={unbrokenGround ? undefined : outline}
         boardEdgeMargin={0}
         padMargin={0}
         traceMargin={0}

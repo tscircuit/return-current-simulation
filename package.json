@@ -26,7 +26,8 @@
     "render": "bun scripts/render-circuit.ts",
     "palace": "bun scripts/run-palace.ts",
     "generate:palace": "bun scripts/generate-palace-examples.tsx",
-    "resample:palace": "bun scripts/resample-palace.ts"
+    "resample:palace": "bun scripts/resample-palace.ts",
+    "generate:palace:wide-gap": "bun scripts/generate-wide-gap-example.tsx"
   },
   "dependencies": {
     "@tscircuit/solver-utils": "0.0.21",

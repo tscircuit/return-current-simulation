@@ -10,6 +10,7 @@ const destination = process.argv[2] ?? "work/palace"
 for (const [name, element, currents] of [
   ["straight-1mhz", <StraightBoard />, [1]],
   ["ground-slot-1mhz", <SlotBoard />, [1, 1, 1]],
+  ["ground-slot-wide-gap-1mhz", <SlotBoard topGap={4} />, [1, 1, 1]],
 ] as const) {
   const circuitJson = await renderFixture(element, currents)
   const reference: PalaceReference = await Bun.file(
