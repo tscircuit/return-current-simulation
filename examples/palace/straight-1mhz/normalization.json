@@ -1,0 +1,21 @@
+{
+  "basisCoefficients": [
+    {
+      "real": 7.075836406682896,
+      "imag": 0.0057121209913801405
+    }
+  ],
+  "sourceCurrents": [
+    {
+      "real": 1.0,
+      "imag": 0.0
+    }
+  ],
+  "loadCurrents": [
+    {
+      "real": 0.9999925750987845,
+      "imag": -0.00046239693620896485
+    }
+  ],
+  "conditionNumber": 1.0
+}

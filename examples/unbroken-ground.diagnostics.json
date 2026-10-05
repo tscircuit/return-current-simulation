@@ -1,0 +1,8 @@
+{
+  "converged": true,
+  "iterations": 966,
+  "relativeResidual": 9.012933827257062e-9,
+  "maxConservationError": 8.375563479530099e-10,
+  "maxCurrentDensity": 16.688081735746916,
+  "connectedCopperRegions": 1
+}

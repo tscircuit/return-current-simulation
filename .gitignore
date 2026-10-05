@@ -1,0 +1,11 @@
+node_modules/
+.cursor/
+bun.lock
+bun.lockb
+cosmos-export/
+work/
+*.diff.png
+*.snap.new.svg
+
+__pycache__/
+*.pyc

@@ -1,0 +1,51 @@
+{
+  "name": "@tscircuit/return-current-simulation",
+  "version": "0.0.1",
+  "description": "Conservative PCB ground-plane return-current simulation and SVG rendering from circuit-json",
+  "type": "module",
+  "module": "lib/index.ts",
+  "exports": {
+    ".": "./lib/index.ts"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tscircuit/return-current-simulation.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "start": "cosmos",
+    "build:site": "cosmos-export",
+    "generate:examples": "bun scripts/generate-examples.tsx",
+    "render": "bun scripts/render-circuit.ts",
+    "palace": "bun scripts/run-palace.ts",
+    "generate:palace": "bun scripts/generate-palace-examples.tsx"
+  },
+  "dependencies": {
+    "@tscircuit/solver-utils": "0.0.21",
+    "circuit-json": "0.0.515",
+    "graphics-debug": "0.0.76",
+    "transformation-matrix": "2.16.1",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.15",
+    "@resvg/resvg-js": "2.6.2",
+    "@tscircuit/core": "0.0.2079",
+    "@types/bun": "1.3.14",
+    "@types/react": "19.2.15",
+    "bun-match-svg": "0.0.17",
+    "react": "19.2.6",
+    "react-cosmos": "7.4.1",
+    "react-cosmos-plugin-vite": "7.4.0",
+    "react-dom": "19.2.6",
+    "typescript": "5.9.3",
+    "vite": "7.3.6"
+  }
+}
