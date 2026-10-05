@@ -1,15 +1,106 @@
 import { palaceGeometrySignature } from "./geometry-signature"
 import { renderCurrentFieldSvg } from "../render-return-current-svg"
 import type { RenderOptions, SimulationResult } from "../types"
-import type { PalaceReference } from "./types"
+import type { PalaceModel, PalaceReference } from "./types"
 import { validatePalaceReference } from "./validate-reference"
 
+type PalaceRenderOptions = RenderOptions & {
+  reference: PalaceReference
+  phaseDegrees?: number
+}
+
+type PalaceRenderGrid = Pick<
+  SimulationResult,
+  | "geometry"
+  | "nodes"
+  | "columns"
+  | "rows"
+  | "cellWidth"
+  | "cellHeight"
+  | "bounds"
+  | "copperThickness"
+  | "layerSeparation"
+>
+
+/** Render the Palace model directly, without constructing an approximation solve. */
+export function renderPalaceModelSvg(
+  model: PalaceModel,
+  options: PalaceRenderOptions,
+): string {
+  const { reference } = options
+  validatePalaceReference(reference)
+  if (
+    reference.frequencyHz !== model.frequencyHz ||
+    reference.femOrder !== model.order
+  )
+    throw new Error(
+      "Palace model frequency or FEM order differs from reference",
+    )
+  const outline = model.geometry.boardOutline
+  const bounds = {
+    minX: Math.min(...outline.map((point) => point.x)),
+    maxX: Math.max(...outline.map((point) => point.x)),
+    minY: Math.min(...outline.map((point) => point.y)),
+    maxY: Math.max(...outline.map((point) => point.y)),
+  }
+  if (
+    Math.abs(
+      reference.columns * reference.cellWidth - (bounds.maxX - bounds.minX),
+    ) > 1e-8 ||
+    Math.abs(
+      reference.rows * reference.cellHeight - (bounds.maxY - bounds.minY),
+    ) > 1e-8
+  )
+    throw new Error("Palace sample grid does not fit the model bounds")
+  const nodes = reference.samples.map((sample) => {
+    const column = Math.round(
+      (sample.x - bounds.minX) / reference.cellWidth - 0.5,
+    )
+    const row = Math.round(
+      (sample.y - bounds.minY) / reference.cellHeight - 0.5,
+    )
+    if (
+      column < 0 ||
+      column >= reference.columns ||
+      row < 0 ||
+      row >= reference.rows ||
+      Math.abs(
+        sample.x - (bounds.minX + (column + 0.5) * reference.cellWidth),
+      ) > 1e-8 ||
+      Math.abs(sample.y - (bounds.minY + (row + 0.5) * reference.cellHeight)) >
+        1e-8
+    )
+      throw new Error("Palace sample is not at a grid cell center")
+    return {
+      x: sample.x,
+      y: sample.y,
+      column,
+      row,
+      injection: 0,
+      sheetCurrentX: 0,
+      sheetCurrentY: 0,
+      currentDensity: 0,
+    }
+  })
+  return renderPalaceReferenceSvg(
+    {
+      geometry: model.geometry,
+      bounds,
+      nodes,
+      columns: reference.columns,
+      rows: reference.rows,
+      cellWidth: reference.cellWidth,
+      cellHeight: reference.cellHeight,
+      copperThickness: model.copperThickness,
+      layerSeparation: model.layerSeparation,
+    },
+    options,
+  )
+}
+
 export function renderPalaceReferenceSvg(
-  result: SimulationResult,
-  options: RenderOptions & {
-    reference: PalaceReference
-    phaseDegrees?: number
-  },
+  result: PalaceRenderGrid,
+  options: PalaceRenderOptions,
 ): string {
   const { reference } = options
   validatePalaceReference(reference)
@@ -43,12 +134,21 @@ export function renderPalaceReferenceSvg(
   if (!Number.isFinite(phaseDegrees))
     throw new Error("phaseDegrees must be finite")
   const phase = (phaseDegrees * Math.PI) / 180
+  let maxCurrentDensity = 0
   const nodes = reference.samples.map((sample, index) => {
     const node = result.nodes[index]
     if (Math.hypot(node.x - sample.x, node.y - sample.y) > 1e-8)
       throw new Error(
         "Palace sample coordinates differ from the rendering grid",
       )
+    const currentDensity =
+      Math.hypot(
+        sample.sheetCurrentXReal,
+        sample.sheetCurrentYReal,
+        sample.sheetCurrentXImag,
+        sample.sheetCurrentYImag,
+      ) / reference.copperThickness
+    maxCurrentDensity = Math.max(maxCurrentDensity, currentDensity)
     return {
       ...node,
       sheetCurrentX:
@@ -57,13 +157,7 @@ export function renderPalaceReferenceSvg(
       sheetCurrentY:
         sample.sheetCurrentYReal * Math.cos(phase) -
         sample.sheetCurrentYImag * Math.sin(phase),
-      currentDensity:
-        Math.hypot(
-          sample.sheetCurrentXReal,
-          sample.sheetCurrentYReal,
-          sample.sheetCurrentXImag,
-          sample.sheetCurrentYImag,
-        ) / reference.copperThickness,
+      currentDensity,
     }
   })
   return renderCurrentFieldSvg(
@@ -72,9 +166,7 @@ export function renderPalaceReferenceSvg(
       nodes,
       diagnostics: {
         converged: true,
-        maxCurrentDensity: Math.max(
-          ...nodes.map((node) => node.currentDensity),
-        ),
+        maxCurrentDensity,
       },
     },
     {

@@ -16,8 +16,10 @@ export async function writeSampleGrid(options: {
   const maxY = Math.max(...outline.map((point) => point.y))
   const columns = Math.max(2, Math.ceil((maxX - minX) / cellSize))
   const rows = Math.max(2, Math.ceil((maxY - minY) / cellSize))
-  if (columns * rows > 100_000)
-    throw new Error("The sample grid exceeds 100,000 cells; increase cellSize")
+  if (columns * rows > 1_000_000)
+    throw new Error(
+      "The sample grid exceeds 1,000,000 cells; increase cellSize",
+    )
   const cellWidth = (maxX - minX) / columns
   const cellHeight = (maxY - minY) / rows
   const points = []
@@ -35,4 +37,5 @@ export async function writeSampleGrid(options: {
     `${options.destination}/sample-grid.json`,
     JSON.stringify({ columns, rows, cellWidth, cellHeight, points }),
   )
+  return { columns, rows, cellWidth, cellHeight, copperSamples: points.length }
 }

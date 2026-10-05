@@ -5,7 +5,7 @@ its complex return-current field with the original image-current approximation.
 Both accept circuit-json; every example and visual snapshot starts from TSX
 rendered by `@tscircuit/core`.
 
-![Palace return-current reference at 1 MHz, 4 mm clearance above the slot](examples/palace/ground-slot-wide-gap-1mhz/palace.svg)
+![Palace return-current reference at 1 MHz, 4 mm clearance, 0.05 mm cells](examples/palace/ground-slot-wide-gap-005mm-1mhz/palace.png)
 
 The Palace fixture has three top traces, a slot in the bottom ground copper,
 0.8 mm of FR4, and 35 µm copper. FR4 remains under signals crossing the slot.
@@ -52,6 +52,29 @@ bun run resample:palace work/palace-slot --cell-size 0.2
 This reads the saved ParaView fields, samples the requested positions, and
 regenerates the comparison and SVG/PNG images. The mesh, frequency, physical
 model and port normalization remain the same.
+
+For **0.05 mm cells** on the 40 mm board (800 × 800), export Palace directly:
+
+```sh
+bun run resample:palace work/palace/ground-slot-wide-gap-1mhz \
+  --cell-size 0.05 --palace-only --image-size 2000
+```
+
+The 4 mm clearance variant has **596,800 copper samples**. The sampler evaluates
+the saved FEM fields at each new position and integrates five points through the
+copper thickness; it does not upscale a previous image. This changes image
+sampling, not the tetrahedral FEM resolution. Palace sampling supports up to
+1,000,000 candidate cells; the approximation retains its separate 100,000-cell
+limit, so larger exports require `--palace-only`. This flag skips the approximation
+and numerical comparison. `resample-timing.json` reports grid creation, VTK field
+sampling/normalization/serialization, and image-export wall times. The PNG defaults
+to 1100 pixels; `--image-size 2000` exports a 2000 × 2000 PNG.
+
+The measured image and timing evidence are in
+[`ground-slot-wide-gap-005mm-1mhz`](examples/palace/ground-slot-wide-gap-005mm-1mhz).
+The dense sampled JSON and SVG remain in `work/` rather than making the repository
+and browser viewer load hundreds of thousands of samples. The interactive
+comparison continues to use the 0.2 mm grid.
 
 To generate input circuit-json from TSX and run the example suite:
 
@@ -101,6 +124,9 @@ await Bun.write("palace.svg", renderPalaceReferenceSvg(result, {
   maxCurrentDensity: 50,
 }))
 ```
+
+To render Palace alone, use `renderPalaceModelSvg(model, { reference, ...options })`
+with the saved `PalaceModel`; no approximation solve is required.
 
 The comparison requires identical sampling positions, source currents and foil
 thickness. It reports complex-vector, real-vector and magnitude L2 differences,

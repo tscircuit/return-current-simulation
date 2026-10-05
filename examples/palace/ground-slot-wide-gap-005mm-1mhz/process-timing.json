@@ -1,0 +1,20 @@
+{
+  "wallSeconds": 62.1997341249953,
+  "userCpuSeconds": 61.58129,
+  "systemCpuSeconds": 1.705045,
+  "maxChildResidentKiB": 1128408,
+  "exitCode": 0,
+  "command": [
+    "bun",
+    "run",
+    "resample:palace",
+    "work/palace-wide-gap-005mm",
+    "--cell-size",
+    "0.05",
+    "--palace-only",
+    "--image-size",
+    "2000",
+    "--python",
+    "/workspace/work/palace-python/bin/python"
+  ]
+}

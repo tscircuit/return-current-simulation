@@ -4,6 +4,7 @@ import {
   comparePalaceReference,
   createPalaceModel,
   renderPalaceReferenceSvg,
+  renderPalaceModelSvg,
   simulateReturnCurrent,
   validatePalaceReference,
 } from "lib/index"
@@ -52,16 +53,35 @@ test("TSX widens the slot-tip clearance to 4 mm with a fresh 1 MHz Palace solve"
   expect(flux.specification.yMax).toBe(20)
   expect(flux.provenance.meshSha256).toBe(reference.provenance.meshSha256)
   expect(flux.relativeComplexBalanceError).toBeLessThan(0.05)
-  for (const phaseDegrees of [0, 90])
-    await expect(
-      renderPalaceReferenceSvg(result, {
-        reference,
-        title: "Palace: 4 mm clearance above the slot",
-        phaseDegrees,
-        width: 900,
-        height: 1000,
-        maxCurrentDensity: 50,
-        vectorSpacing: Math.round(1.5 / reference.cellWidth),
-      }),
-    ).toMatchSvgSnapshot(import.meta.path, `wide-gap-phase-${phaseDegrees}`)
+  for (const phaseDegrees of [0, 90]) {
+    const options = {
+      reference,
+      title: "Palace: 4 mm clearance above the slot",
+      phaseDegrees,
+      width: 900,
+      height: 1000,
+      maxCurrentDensity: 50,
+      vectorSpacing: Math.round(1.5 / reference.cellWidth),
+    }
+    const svg = renderPalaceReferenceSvg(result, options)
+    expect(renderPalaceModelSvg(model, options)).toBe(svg)
+    await expect(svg).toMatchSvgSnapshot(
+      import.meta.path,
+      `wide-gap-phase-${phaseDegrees}`,
+    )
+  }
+  expect(() =>
+    renderPalaceModelSvg({ ...model, frequencyHz: 1e5 }, { reference }),
+  ).toThrow("frequency")
+  expect(() =>
+    renderPalaceModelSvg(model, {
+      reference: {
+        ...reference,
+        samples: [
+          { ...reference.samples[0], x: reference.samples[0].x + 0.01 },
+          ...reference.samples.slice(1),
+        ],
+      },
+    }),
+  ).toThrow("cell center")
 })
