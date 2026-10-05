@@ -34,8 +34,21 @@ export PALACE_PYTHON="$PWD/work/palace-python/bin/python"
 # Optional native installation instead of Docker:
 # export PALACE_BIN=/path/to/palace-v0.14.0/bin/palace
 bun run palace examples/ground-slot.circuit.json work/palace-slot \
-  --frequency-hz 1000000 --mesh-size 2 --air-padding 6 --order 2 --processes 4
+  --frequency-hz 1000000 --mesh-size 2 --cell-size 0.2 --air-padding 6 --order 2 --processes 4
 ```
+
+Palace images default to 0.2 mm sample spacing: **200 × 200** for the 40 mm
+slot board, with 37,075 points inside ground copper. `--cell-size` controls
+this image grid; `--mesh-size` and `--order` control the independent FEM mesh.
+To resample an existing completed solve without rerunning Palace:
+
+```sh
+bun run resample:palace work/palace-slot --cell-size 0.2
+```
+
+This reads the saved ParaView fields, samples the requested positions, and
+regenerates the comparison and SVG/PNG images. The mesh, frequency, physical
+model and port normalization remain the same.
 
 To generate input circuit-json from TSX and run the example suite:
 
@@ -115,10 +128,11 @@ Palace is an independent **point of comparison**, not automatically ground truth
 The checked-in refinement report records field changes and bridge-current balance.
 Dense cross-section quadrature recovers 0.996 A for the straight 1 A source
 and 3.002 A through the slot bridge for three 1 A sources; complex balance errors
-are 0.64% and 0.064%, respectively. The 0.5 mm image grid gives a misleading
-16.8% slot balance error because only two rows span the 1 mm bridge, so flux
-checks use separate 0.0125 mm samples there. Current balance validates units and
-normalization; the 48.2% coarse/fine field change still prevents treating this
+are 0.64% and 0.064%, respectively. The 0.2 mm image grid has five
+rows across the 1 mm bridge and a 3.9% sampled complex balance error (the older
+0.5 mm grid had two rows and 16.8% error). Flux checks retain separate 0.0125 mm
+samples there. Current balance validates units and normalization; the 45.2%
+coarse/fine field change evaluated on the denser grid still prevents treating this
 mesh as converged ground truth.
 Increase FEM order, refine the mesh, and enlarge the air domain before treating a
 result as an accuracy reference. Contact footprints differ from the approximation's

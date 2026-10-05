@@ -18,10 +18,10 @@ export default function PalaceComparisonPage() {
     () =>
       simulateReturnCurrent({
         circuitJson: frozenCircuit as ReturnCurrentCircuitJson,
-        cellSize: 0.5,
+        cellSize: reference.cellWidth,
         contactRadius: 0.6,
       }),
-    [],
+    [reference],
   )
   const comparison = useMemo(
     () => comparePalaceReference(result, { reference }),
@@ -31,7 +31,7 @@ export default function PalaceComparisonPage() {
     width: 900,
     height: 1000,
     maxCurrentDensity: 50,
-    vectorSpacing: 3,
+    vectorSpacing: Math.max(1, Math.round(1.5 / reference.cellWidth)),
     hideVectors,
   }
   const palaceSvg = renderPalaceReferenceSvg(result, {
@@ -55,9 +55,11 @@ export default function PalaceComparisonPage() {
         tanδ = 0.02, 50 Ω ports.
       </p>
       <p>
-        Palace solves conductive copper volumes in a 3D Maxwell model. Colors
-        show magnitude of the complex conduction-current vector averaged through
-        the foil. Arrows show the instantaneous return field.
+        Image samples: {reference.columns} × {reference.rows} at{" "}
+        {reference.cellWidth} mm spacing. Palace solves conductive copper
+        volumes in a 3D Maxwell model. Colors show magnitude of the complex
+        conduction-current vector averaged through the foil. Arrows show the
+        instantaneous return field.
       </p>
       <label>
         Arrow phase: {phaseDegrees}°{" "}

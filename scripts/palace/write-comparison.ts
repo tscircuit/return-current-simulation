@@ -33,7 +33,7 @@ export async function writeComparison(destination: string): Promise<void> {
           ? "Palace: ground-plane return current"
           : "Approximation: ground-plane return current",
       maxCurrentDensity: 50,
-      vectorSpacing: 2,
+      vectorSpacing: Math.max(1, Math.round(1 / reference.cellWidth)),
       width: 1100,
       height: 1100,
     }

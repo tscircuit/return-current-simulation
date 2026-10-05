@@ -25,7 +25,8 @@
     "generate:examples": "bun scripts/generate-examples.tsx",
     "render": "bun scripts/render-circuit.ts",
     "palace": "bun scripts/run-palace.ts",
-    "generate:palace": "bun scripts/generate-palace-examples.tsx"
+    "generate:palace": "bun scripts/generate-palace-examples.tsx",
+    "resample:palace": "bun scripts/resample-palace.ts"
   },
   "dependencies": {
     "@tscircuit/solver-utils": "0.0.21",

@@ -14,6 +14,7 @@ export async function exportEvidence(options: {
     "mesh-summary.json",
     "normalization.json",
     "reference.json",
+    "sample-grid.json",
     "comparison.json",
     "palace.svg",
     "palace.png",
@@ -57,6 +58,16 @@ export async function exportEvidence(options: {
           "solve full source-port basis current matrix; net source = 2 I_inc - I_termination",
         rawOutputCommand: "bun run generate:palace work/palace",
         rawOutputLocation: "work/palace/*/postpro/paraview",
+        imageSampling: await Bun.file(
+          resolve(options.source, "sample-grid.json"),
+        )
+          .json()
+          .then(({ columns, rows, cellWidth, cellHeight }) => ({
+            columns,
+            rows,
+            cellWidth,
+            cellHeight,
+          })),
       },
       null,
       2,

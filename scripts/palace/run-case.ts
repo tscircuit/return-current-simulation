@@ -1,9 +1,9 @@
 import { mkdir } from "node:fs/promises"
 import { resolve } from "node:path"
 import { createPalaceModel } from "lib/palace/create-palace-model"
-import { simulateReturnCurrent } from "lib/simulate-return-current"
 import type { PalaceOptions } from "lib/palace/types"
 import { runCommand } from "./run-command"
+import { writeSampleGrid } from "./write-sample-grid"
 
 // Community-built Palace v0.14.0; pinned by digest, not a moving image tag.
 export const palaceImage =
@@ -31,24 +31,11 @@ export async function runPalaceCase(
     JSON.stringify(options.circuitJson),
   )
   await Bun.write(`${destination}/model.json`, JSON.stringify(model, null, 2))
-  const approximation = simulateReturnCurrent({
-    circuitJson: options.circuitJson,
-    excitations: options.excitations,
-    layerSeparation: model.layerSeparation,
-    copperThickness: model.copperThickness,
-    cellSize: options.cellSize ?? 0.5,
-    contactRadius: 0.6,
+  await writeSampleGrid({
+    destination,
+    geometry: model.geometry,
+    cellSize: options.cellSize,
   })
-  await Bun.write(
-    `${destination}/sample-grid.json`,
-    JSON.stringify({
-      columns: approximation.columns,
-      rows: approximation.rows,
-      cellWidth: approximation.cellWidth,
-      cellHeight: approximation.cellHeight,
-      points: approximation.nodes.map(({ x, y }) => ({ x, y })),
-    }),
-  )
   const python = options.python ?? process.env.PALACE_PYTHON ?? "python3"
   const meshScript = resolve(import.meta.dir, "../../lib/palace/python/mesh.py")
   const sampleScript = resolve(
