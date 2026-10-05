@@ -6,3 +6,6 @@ cosmos-export/
 work/
 *.diff.png
 *.snap.new.svg
+
+__pycache__/
+*.pyc

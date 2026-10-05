@@ -1,16 +1,118 @@
 # Return-current simulation
 
-Simulate ground-plane return current from **circuit-json**, then generate SVG or
-PNG current-density images with computed direction arrows and top-layer traces.
-This is a conservative high-frequency image-current approximation for two-layer
-PCBs.
+Use **Palace EM** to solve a two-layer PCB at an explicit frequency, then compare
+its complex return-current field with the original image-current approximation.
+Both accept circuit-json; every example and visual snapshot starts from TSX
+rendered by `@tscircuit/core`.
 
-![Return current around a bottom ground-plane slot](examples/ground-slot.svg)
+![Palace return-current reference at 1 MHz](examples/palace/ground-slot-1mhz/palace.svg)
 
-The example follows the supplied reference: three top signals cross a long slot
-in the **bottom copper**, with FR4 remaining under the top traces. A physical PCB
-cutout removes both layers, so top traces must route around it. That case has a
-separate [snapshot](tests/__snapshots__/physical-cutout.snap.svg).
+The Palace fixture has three top traces, a slot in the bottom ground copper,
+0.8 mm of FR4, and 35 µm copper. FR4 remains under signals crossing the slot.
+A physical PCB cutout removes the substrate too; signals must route around it.
+Palace models the copper as **3D conductive volumes**, not PEC or a custom field
+algorithm. The fields use 1 MHz and three simultaneous, in-phase 1 A peak source
+currents, with 50 Ω source/load ports. These assumptions are not known for the
+supplied screenshot, so visual similarity alone cannot validate either model.
+
+The original approximation **does not model frequency**. It is experimental and
+its current-conservation residual is not an electromagnetic accuracy check. Its
+snapshots now state this explicitly.
+
+## Run Palace
+
+Requires Bun, Python 3.12, Gmsh's `libGLU`, and either Docker or Palace v0.14.0.
+The Docker fallback is a **community-built** v0.14.0 binary pinned by digest;
+it is not an AWS-published container. See the pinned image and upstream source in
+[`scripts/palace/run-case.ts`](scripts/palace/run-case.ts).
+
+```sh
+bun install
+python3 -m venv work/palace-python
+work/palace-python/bin/pip install -r lib/palace/python/requirements.txt
+export PALACE_PYTHON="$PWD/work/palace-python/bin/python"
+# Optional native installation instead of Docker:
+# export PALACE_BIN=/path/to/palace-v0.14.0/bin/palace
+bun run palace examples/ground-slot.circuit.json work/palace-slot \
+  --frequency-hz 1000000 --mesh-size 2 --air-padding 6 --order 2 --processes 4
+```
+
+To generate input circuit-json from TSX and run the example suite:
+
+```sh
+bun run generate:palace work/palace
+```
+
+Each run saves the input circuit, mesher model, Gmsh mesh, Palace configuration,
+solver log, port CSVs, raw ParaView fields, complex sampled currents, numerical
+comparison, and SVG/PNG images. Outputs are under `work/`; curated evidence is
+checked into [`examples/palace`](examples/palace). The manual **Palace reference**
+CI workflow uploads raw meshes and ParaView output as artifacts.
+
+`frequencyHz` is required; the CLI has no frequency default. Other explicit
+options include conductivity, copper thickness, FR4 permittivity/loss tangent,
+port resistance, signal/ground separation, mesh size, air padding, and FEM order.
+Use `--processes` (or `PALACE_PROCESSES`) for MPI parallelism.
+Ports currently require ground contacts directly beneath trace endpoints and
+rectangular top SMT pads. Unsupported geometries fail instead of disappearing.
+The volume mesher currently requires foil thickness no larger than skin depth;
+there is no claim of a resolved high-frequency skin-effect benchmark.
+
+## Compare numerical fields
+
+```ts
+import {
+  comparePalaceReference,
+  renderPalaceReferenceSvg,
+  simulateReturnCurrent,
+} from "@tscircuit/return-current-simulation"
+import type { PalaceReference } from "@tscircuit/return-current-simulation"
+
+const reference: PalaceReference = await Bun.file("work/palace-slot/reference.json").json()
+const result = simulateReturnCurrent({
+  circuitJson,
+  cellSize: reference.cellWidth,
+  copperThickness: reference.copperThickness,
+  layerSeparation: 0.8,
+  contactRadius: 0.6,
+})
+console.log(comparePalaceReference(result, { reference }))
+await Bun.write("palace.svg", renderPalaceReferenceSvg(result, {
+  reference,
+  phaseDegrees: 0,
+  maxCurrentDensity: 50,
+}))
+```
+
+The comparison requires identical sampling positions, source currents and foil
+thickness. It reports complex-vector, real-vector and magnitude L2 differences,
+with contact/edge exclusions recorded. It does not fit amplitudes, rotate phase,
+or equate its error to a conservation residual. The heatmap shows the complex
+norm of thickness-averaged conduction current in A/mm²; arrows show an
+instantaneous field at the selected phase. Raw sheet-current phasors are A/mm.
+
+Palace's RF `port-I.csv` reports termination current. Net driven current entering
+the PCB is **2 I_inc − I_termination**. The importer solves the full source-current
+matrix, including coupling, to normalize simultaneous 1 A excitations. Load
+currents are reported separately and are not forced to equal the source current.
+
+**Version-specific units:** Palace v0.14.0's ParaView fields are nondimensional.
+The importer uses `E_SI = E_VTU × sqrt(Z0)/Lc`, then `J = conductivity × E_SI`,
+and integrates five Gauss points through the bottom copper. CSV port currents
+are already amperes. `Lc` is fixed explicitly in newly generated configurations;
+older case files derive the upstream default from the air-domain bounds. Other
+Palace versions are rejected until their output units are audited. See upstream
+[v0.14.0 units](https://github.com/awslabs/palace/blob/v0.14.0/palace/utils/units.hpp)
+and [postprocessing documentation](https://github.com/awslabs/palace/blob/v0.14.0/docs/src/guide/postprocessing.md).
+
+Palace is an independent **point of comparison**, not automatically ground truth.
+The checked-in refinement report records field changes and bridge-current balance.
+The order-2 straight-trace check recovers about 0.998 A of return current for
+a 1 A source; this validates current direction, units and normalization independently
+of how closely the approximation follows the reference.
+Increase FEM order, refine the mesh, and enlarge the air domain before treating a
+result as an accuracy reference. Contact footprints differ from the approximation's
+distributed contacts, so those neighborhoods are excluded from the default metric.
 
 ## Library usage
 

@@ -17,7 +17,8 @@
       "!**/cosmos-export",
       "!**/dist",
       "!**/package.json",
-      "!**/examples"
+      "!**/examples",
+      "!work/**"
     ]
   },
   "javascript": {

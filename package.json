@@ -23,7 +23,9 @@
     "start": "cosmos",
     "build:site": "cosmos-export",
     "generate:examples": "bun scripts/generate-examples.tsx",
-    "render": "bun scripts/render-circuit.ts"
+    "render": "bun scripts/render-circuit.ts",
+    "palace": "bun scripts/run-palace.ts",
+    "generate:palace": "bun scripts/generate-palace-examples.tsx"
   },
   "dependencies": {
     "@tscircuit/solver-utils": "0.0.21",

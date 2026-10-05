@@ -26,7 +26,7 @@ function svgNumber(number: number): string {
 }
 
 function renderCells(
-  result: SimulationResult,
+  result: Pick<SimulationResult, "nodes" | "cellWidth" | "cellHeight">,
   maxCurrentDensity: number,
 ): string {
   type CurrentColor = string
@@ -55,9 +55,29 @@ function displayNumber(number: number): string {
  * Circuit world points are mm, +Y up; SVG scene points are pixels, +Y down.
  * White regions contain no selected ground copper. Traces are a top-layer overlay.
  */
-export function renderReturnCurrentSvg(
-  result: SimulationResult,
-  options: RenderOptions = {},
+export function renderCurrentFieldSvg(
+  result: Pick<
+    SimulationResult,
+    | "geometry"
+    | "nodes"
+    | "columns"
+    | "rows"
+    | "cellWidth"
+    | "cellHeight"
+    | "bounds"
+    | "copperThickness"
+    | "layerSeparation"
+  > & {
+    diagnostics: Pick<
+      SimulationResult["diagnostics"],
+      "converged" | "maxCurrentDensity"
+    >
+  },
+  options: RenderOptions & {
+    description: string
+    subtitle: string
+    footer: string
+  },
 ): string {
   if (!result.diagnostics.converged)
     throw new Error("Only a converged simulation can be rendered")
@@ -160,11 +180,11 @@ export function renderReturnCurrentSvg(
   const boardBottom = top + boardHeight * pixelsPerMm
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="title description">
 <title id="title">${escapeXml(options.title ?? "Ground-plane return current")}</title>
-<desc id="description">High-frequency image-current approximation projected onto a conservative copper mesh. Colors show |J| in A/mm². White indicates absent ground copper. Dark lines show top-layer signals. Arrows show computed return direction.</desc>
+<desc id="description">${escapeXml(options.description)}</desc>
 <defs><linearGradient id="current-scale">${Array.from({ length: 6 }, (_, stopIndex) => `<stop offset="${stopIndex * 20}%" stop-color="${currentColor(stopIndex / 5)}"/>`).join("")}</linearGradient><clipPath id="board-clip"><path d="${boardPath}" clip-rule="evenodd"/></clipPath><clipPath id="ground-clip">${groundPaths}</clipPath></defs>
 <rect width="100%" height="100%" fill="white"/>
 <g font-family="Arial, sans-serif"><text x="60" y="42" font-size="26" font-weight="600" fill="#172b3a">${escapeXml(options.title ?? "Ground-plane return current")}</text>
-<text x="60" y="72" font-size="14" fill="#475569">Top signals · Bottom ground plane · |J| (A/mm²)</text>
+<text x="60" y="72" font-size="14" fill="#475569">${escapeXml(options.subtitle)}</text>
 <rect x="60" y="90" width="${width - 120}" height="26" rx="3" fill="url(#current-scale)"/>${ticks}
 <g transform="matrix(${worldToSvg.a},${worldToSvg.b},${worldToSvg.c},${worldToSvg.d},${worldToSvg.e},${worldToSvg.f})">
 <g clip-path="url(#board-clip)"><g clip-path="url(#ground-clip)"><g shape-rendering="crispEdges">${cells}</g><g fill="none" stroke="white" stroke-width="${1 / pixelsPerMm}" opacity="0.75">${arrows.join("")}</g></g></g>
@@ -172,6 +192,20 @@ export function renderReturnCurrentSvg(
 ${contacts}
 <text x="60" y="${boardBottom + 30}" font-size="14" fill="#334155">${result.geometry.excitations.map((excitation, excitationIndex) => `S${excitationIndex + 1} → L${excitationIndex + 1}: ${displayNumber(excitation.current)} A`).join("   ·   ")}</text>
 <text x="60" y="${boardBottom + 53}" font-size="13" fill="#64748b">h = ${displayNumber(result.layerSeparation)} mm · copper = ${displayNumber(result.copperThickness)} mm · mesh = ${result.columns} × ${result.rows}</text>
-<text x="60" y="${boardBottom + 76}" font-size="12" fill="#64748b">Conservative image-current approximation · max conservation error ${displayNumber(result.diagnostics.maxConservationError)} A</text></g>
+<text x="60" y="${boardBottom + 76}" font-size="12" fill="#64748b">${escapeXml(options.footer)}</text></g>
 </svg>`
+}
+
+export function renderReturnCurrentSvg(
+  result: SimulationResult,
+  options: RenderOptions = {},
+): string {
+  return renderCurrentFieldSvg(result, {
+    ...options,
+    description:
+      "Image-current approximation; frequency is not modelled. Colors show |J| in A/mm². White indicates absent ground copper. Dark lines show top-layer signals. Arrows show return direction.",
+    subtitle:
+      "Top signals · Bottom ground plane · |J| (A/mm²) · frequency not modelled",
+    footer: `Image-current approximation · frequency not modelled · max conservation error ${displayNumber(result.diagnostics.maxConservationError)} A`,
+  })
 }
