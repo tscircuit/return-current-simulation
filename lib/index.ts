@@ -2,6 +2,8 @@ export { ReturnCurrentSolver } from "./ReturnCurrentSolver"
 export { simulateReturnCurrent } from "./simulate-return-current"
 export { renderReturnCurrentSvg } from "./render-return-current-svg"
 export { parseReturnCurrentCircuitJson } from "./parse-circuit-json"
+export { withNamedExcitations, listCircuitPorts } from "./named-ports"
+export type { NamedExcitation } from "./named-ports"
 export type {
   SimulationOptions,
   SimulationResult,

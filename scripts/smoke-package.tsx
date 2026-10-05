@@ -1,0 +1,169 @@
+import { mkdtemp, readFile, writeFile, rm, stat } from "node:fs/promises"
+import { tmpdir } from "node:os"
+import { join, resolve } from "node:path"
+import { strict as assert } from "node:assert"
+import { StraightBoard } from "tests/fixtures/StraightBoard"
+import { renderFixture } from "tests/fixtures/render-fixture"
+
+const repository = process.cwd()
+const consumer = await mkdtemp(
+  join(tmpdir(), "simulate-return-current-package-"),
+)
+async function run(command: string[], cwd = consumer) {
+  const child = Bun.spawn(command, { cwd, stdout: "pipe", stderr: "pipe" })
+  const [stdout, stderr, status] = await Promise.all([
+    new Response(child.stdout).text(),
+    new Response(child.stderr).text(),
+    child.exited,
+  ])
+  if (status !== 0)
+    throw new Error(`${command[0]} failed (${status}): ${stdout}\n${stderr}`)
+  return stdout
+}
+
+try {
+  const packed = JSON.parse(
+    await run(
+      [
+        "npm",
+        "pack",
+        "--ignore-scripts",
+        "--json",
+        "--pack-destination",
+        consumer,
+        "--cache",
+        join(consumer, "cache"),
+      ],
+      repository,
+    ),
+  )[0]
+  assert.equal(packed.name, "simulate-return-current")
+  assert(
+    packed.files.some((file: { path: string }) => file.path === "dist/cli.js"),
+  )
+  for (const asset of ["mesh.py", "sample.py", "requirements.txt"])
+    assert(
+      packed.files.some(
+        (file: { path: string }) => file.path === `dist/python/${asset}`,
+      ),
+    )
+  assert(
+    packed.files.every(
+      (file: { path: string }) =>
+        file.path.startsWith("dist/") ||
+        ["README.md", "LICENSE", "package.json"].includes(file.path),
+    ),
+  )
+  await writeFile(
+    join(consumer, "package.json"),
+    JSON.stringify({ private: true, type: "module" }),
+  )
+  await run([
+    "npm",
+    "install",
+    join(consumer, packed.filename),
+    "--ignore-scripts",
+    "--no-audit",
+    "--no-fund",
+    "--cache",
+    join(consumer, "cache"),
+  ])
+  const bin = join(consumer, "node_modules/.bin/simulate-return-current")
+  assert((await run([bin, "--help"])).includes("R1.pin1"))
+  assert.equal((await run([bin, "--version"])).trim(), packed.version)
+  const circuitJson = (await renderFixture(<StraightBoard />)).filter(
+    (element) => element.type !== "simulation_return_current_excitation",
+  )
+  await writeFile(join(consumer, "board.json"), JSON.stringify(circuitJson))
+  const common = [
+    "board.json",
+    "--source",
+    "SIG_S.pin1",
+    "--load",
+    "SIG_L.SIGNAL",
+    "--ground",
+    "GND",
+    "--current",
+    "0.25",
+  ]
+  const listed = JSON.parse(await run([bin, "ports", "board.json"]))
+  assert(listed.ports[0].aliases.includes("SIG_S.pin1"))
+  await run([
+    bin,
+    ...common,
+    "--frequency-hz",
+    "1000000",
+    "--output",
+    "prepared",
+    "--cell-size",
+    "0.05",
+    "--prepare-only",
+  ])
+  const model = JSON.parse(
+    await readFile(join(consumer, "prepared/model.json"), "utf8"),
+  )
+  assert.equal(model.frequencyHz, 1e6)
+  assert.equal(model.geometry.excitations[0].current, 0.25)
+  const grid = JSON.parse(
+    await readFile(join(consumer, "prepared/sample-grid.json"), "utf8"),
+  )
+  assert.equal(grid.columns, 600)
+  assert.equal(grid.rows, 400)
+  await run([
+    bin,
+    ...common,
+    "--solver",
+    "approximation",
+    "--output",
+    "preview",
+  ])
+  assert((await stat(join(consumer, "preview/approximation.png"))).size > 1000)
+  await writeFile(
+    join(consumer, "import.mjs"),
+    `
+import { readFileSync } from "node:fs";
+import { parseReturnCurrentCircuitJson, withNamedExcitations, simulateReturnCurrent, renderReturnCurrentSvg } from "simulate-return-current";
+import { preparePalaceSimulation } from "simulate-return-current/palace";
+const input = parseReturnCurrentCircuitJson(JSON.parse(readFileSync("board.json", "utf8")));
+const ports = [{ source: "SIG_S.pin1", load: "SIG_L.SIGNAL", current: 0.25 }];
+const circuitJson = withNamedExcitations({ circuitJson: input, ports, groundNet: "GND" });
+if (!renderReturnCurrentSvg(simulateReturnCurrent({ circuitJson })).includes("<svg")) throw new Error("Missing SVG");
+await preparePalaceSimulation({ circuitJson: input, ports, groundNet: "GND", frequencyHz: 1e6, outputDirectory: "library-prepared" });
+`,
+  )
+  await run(["node", "import.mjs"])
+  await writeFile(
+    join(consumer, "types.mts"),
+    `
+import { parseReturnCurrentCircuitJson, withNamedExcitations } from "simulate-return-current";
+import { runPalaceSimulation } from "simulate-return-current/palace";
+const circuitJson = parseReturnCurrentCircuitJson([]);
+const ports = [{ source: "R1.pin1", load: "U1.VDDIO1", current: 1 }];
+withNamedExcitations({ circuitJson, ports, groundNet: "GND" });
+runPalaceSimulation({ circuitJson, ports, groundNet: "GND", frequencyHz: 1e6, outputDirectory: "out" });
+// @ts-expect-error Frequency is required.
+runPalaceSimulation({ circuitJson, ports, groundNet: "GND", outputDirectory: "out" });
+// @ts-expect-error Peak current must be numeric.
+withNamedExcitations({ circuitJson, ports: [{ source: "R1.pin1", load: "U1.pin1", current: "1" }], groundNet: "GND" });
+`,
+  )
+  await run([
+    "node",
+    resolve(consumer, "node_modules/typescript/bin/tsc"),
+    "types.mts",
+    "--noEmit",
+    "--strict",
+    "--skipLibCheck",
+    "--module",
+    "NodeNext",
+    "--moduleResolution",
+    "NodeNext",
+    "--target",
+    "ES2022",
+  ])
+  console.log(
+    `Package smoke passed: ${packed.name}@${packed.version}; installed Node CLI, library, NodeNext declarations, named ports, 0.05 mm preparation, PNG, bundled Python assets`,
+  )
+} finally {
+  await rm(consumer, { recursive: true, force: true })
+}

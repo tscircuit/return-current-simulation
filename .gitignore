@@ -4,6 +4,9 @@ bun.lock
 bun.lockb
 cosmos-export/
 work/
+dist/
+.return-current-python/
+*.tgz
 *.diff.png
 *.snap.new.svg
 

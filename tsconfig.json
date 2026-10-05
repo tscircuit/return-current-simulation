@@ -20,6 +20,7 @@
     "scripts",
     "pages",
     "vite.config.ts",
-    "cosmos.decorator.tsx"
+    "cosmos.decorator.tsx",
+    "cli"
   ]
 }
