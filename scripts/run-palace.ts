@@ -24,7 +24,7 @@ if (positionals.length !== 2 || !values["frequency-hz"])
 const order = values.order ? Number(values.order) : 2
 if (order !== 1 && order !== 2) throw new Error("order must be 1 or 2")
 const circuitJson = parseReturnCurrentCircuitJson(
-  await Bun.file(positionals[0]).text(),
+  await Bun.file(positionals[0]).json(),
 )
 await runPalaceCase({
   circuitJson,
