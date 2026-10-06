@@ -7,6 +7,31 @@ import {
 } from "transformation-matrix"
 import { rectangleOutline } from "../geometry"
 import { positiveFinite } from "../read-geometry"
+import type { SignalSegment } from "../types"
+
+/** Match Shapely's round-ended line buffer with eight chords per quadrant. */
+export function traceOutline(segment: SignalSegment): Point[] {
+  const dx = segment.end.x - segment.start.x
+  const dy = segment.end.y - segment.start.y
+  const length = Math.hypot(dx, dy)
+  const transform = compose(
+    translate(
+      (segment.start.x + segment.end.x) / 2,
+      (segment.start.y + segment.end.y) / 2,
+    ),
+    rotateDEG((Math.atan2(dy, dx) * 180) / Math.PI),
+  )
+  return [-1, 1].flatMap((end) =>
+    Array.from({ length: 17 }, (_, index) => {
+      const angle =
+        (index * Math.PI) / 16 + (end === 1 ? -Math.PI / 2 : Math.PI / 2)
+      return applyToPoint(transform, {
+        x: (end * length) / 2 + (segment.width / 2) * Math.cos(angle),
+        y: (segment.width / 2) * Math.sin(angle),
+      })
+    }),
+  )
+}
 
 /** 32-sided circles and rounded capsules are an explicit geometry approximation. */
 export function roundedOutline(options: {

@@ -20,7 +20,7 @@
   "frequencyHz": 1000000,
   "currentAmps": 0.005,
   "sampleLayer": "bottom",
-  "preparationSeconds": 11.340967821,
+  "preparationSeconds": 9.647391885,
   "emSolvePerformed": false,
   "stackup": {
     "copperLayers": [
@@ -94,10 +94,5 @@
     "cellWidth": 0.2,
     "cellHeight": 0.2,
     "copperSamples": 185644
-  },
-  "geometryAudit": {
-    "valid": false,
-    "reason": "Different nets overlap on inner1: source_net_23, source_net_80; area=0.00429090652 mm\u00b2, bounds=(-18.81697299997901, 12.350742213606248, -18.70753582120823, 12.440236629179074)",
-    "seconds": 143.57734834900475
   }
 }

@@ -8,6 +8,7 @@ import {
   drillOutline,
   platedPadOutline,
   roundedOutline,
+  traceOutline,
   smtPadOutline,
 } from "./copper-outlines"
 import { physicalStackup, type CopperLayer } from "./stackup"
@@ -324,18 +325,8 @@ export function createMultilayerPalaceModel(
   }
   // Match the planar mesher mask without requiring Python for --prepare-only.
   for (const segment of groundCopper.segments) {
-    const dx = segment.end.x - segment.start.x,
-      dy = segment.end.y - segment.start.y
     geometry.groundRegions.push({
-      outer: rectangleOutline({
-        center: {
-          x: (segment.start.x + segment.end.x) / 2,
-          y: (segment.start.y + segment.end.y) / 2,
-        },
-        width: Math.hypot(dx, dy) + segment.width,
-        height: segment.width,
-        rotation: (Math.atan2(dy, dx) * 180) / Math.PI,
-      }),
+      outer: traceOutline(segment),
       holes: [],
     })
   }
@@ -446,6 +437,7 @@ export function createMultilayerPalaceModel(
     )
   geometry.physicalModelSignature = JSON.stringify({
     ...layered,
+    traceEndCaps: "round_32",
     audit: undefined,
   })
   const order = options.order ?? 2

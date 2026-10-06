@@ -357,13 +357,33 @@ ports, harmonics and amplitudes for an analysis. The explicit stack sums to
 power copper; inner2 is adjacent to bottom GND. Current returns through whichever
 conductors the field supports, not automatically the selected `GND` net.
 
-The [preparation/geometry audit](examples/am3352/preparation-audit.json) retains
-all exported copper. **The pinned export is not ready for an EM result:** the
-geometry audit found overlapping `MMC0_DAT3` (`source_net_23`) and `VIN_5V`
-(`source_net_80`) copper on `inner1`, and the mesher rejects that overlap. Fix the
-board routing/export before removing `--prepare-only` to run Palace. Preparation
-validates the circuit/schema and layer metadata; it is not a substitute for the
-mesher's polygon/port/connection checks. No full-board EM solve is claimed.
+The [preparation audit](examples/am3352/preparation-audit.json) retains all
+exported copper. The earlier `inner1` overlap report was **an adapter error**:
+square ends on individual trace segments added copper beyond a VIN_5V width
+change. The board's own PCB SVG uses round ends. The corrected mesher uses
+round ends (32-sided circles), and its [polygon audit](examples/am3352/geometry-audit.json)
+finds **zero overlaps across all four layers**. `MMC0_DAT3` (`source_net_23`) and
+`VIN_5V` (`source_net_80`) have approximately **0.111 mm** minimum clearance;
+the former 0.004291 mm² intersection disappears without changing the board.
+
+![AM3352 inner1 copper occupancy before and after correcting trace ends](examples/am3352/inner1-copper-heatmap.png)
+
+The close-up heat map uses **0.005 mm cells**: gray = no copper, teal = one net,
+red = two overlapping nets. Area and minimum clearance come from polygon
+geometry, independently of pixel resolution. This validates copper geometry;
+it is not a return-current density plot, so frequency does not apply. Reproduce
+the audit and SVG/PNG from the prepared model:
+
+```sh
+# Use the mesher's Python environment with gmsh, shapely and matplotlib installed.
+MPLCONFIGDIR=work/matplotlib python scripts/audit-am3352-copper.py \
+  work/am3352/case/model.json work/am3352/copper-audit
+```
+
+Preparation validates the circuit/schema and layer metadata; it is not a
+substitute for the mesher's polygon/port/connection checks. Zero copper overlaps
+alone does not establish fabrication readiness or a working EM port setup.
+No full-board EM solve is claimed.
 
 Even after resolving geometry, DDR return paths through power-plane decoupling
 and package impedances need an additional component model. The current adapter
