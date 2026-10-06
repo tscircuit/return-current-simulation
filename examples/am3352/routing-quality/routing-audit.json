@@ -1,0 +1,748 @@
+{
+  "status": "geometry-only; EM/eye signoff unavailable",
+  "ruleSource": "https://www.ti.com/lit/ds/symlink/am3352.pdf",
+  "ruleRevision": "SPRS717L",
+  "ruleTable": "7-69",
+  "groups": [
+    {
+      "byte": 0,
+      "dqlmMm": 42.40012300000001,
+      "dqMinLengthMm": 44.795382650111534,
+      "dqMaxLengthMm": 45.430382650187155,
+      "dataLengthPass": false,
+      "dqAndDqsSkewMm": 0.6350000000756211,
+      "byteSkewPass": true,
+      "dqsPairSkewMm": 0.12226497234209432,
+      "pairSkewPass": true,
+      "sameInnerCarrier": true
+    },
+    {
+      "byte": 1,
+      "dqlmMm": 36.000285000000005,
+      "dqMinLengthMm": 39.44786378887629,
+      "dqMaxLengthMm": 40.082863788935704,
+      "dataLengthPass": false,
+      "dqAndDqsSkewMm": 0.6350000000594136,
+      "byteSkewPass": true,
+      "dqsPairSkewMm": 0.12699999999999534,
+      "pairSkewPass": true,
+      "sameInnerCarrier": true
+    }
+  ],
+  "geometricLengthAndSkewPass": false,
+  "measurements": [
+    {
+      "signal": "DDR_D0",
+      "pcbTraceId": "saved_phase_null_1_22",
+      "wireLengthMm": 44.79538265011799,
+      "padManhattanMm": 34.400085000000004,
+      "layerLengthsMm": {
+        "top": 1.1313545896356327,
+        "inner1": 43.664028060482345
+      },
+      "viaCount": 2
+    },
+    {
+      "signal": "DDR_D1",
+      "pcbTraceId": "saved_phase_null_1_40",
+      "wireLengthMm": 44.795382650111534,
+      "padManhattanMm": 39.20007700000001,
+      "layerLengthsMm": {
+        "top": 1.1315016672726603,
+        "inner2": 43.663880982838876
+      },
+      "viaCount": 2
+    },
+    {
+      "signal": "DDR_D2",
+      "pcbTraceId": "saved_phase_null_1_15",
+      "wireLengthMm": 44.79538265011802,
+      "padManhattanMm": 33.600085,
+      "layerLengthsMm": {
+        "top": 1.1314960109910688,
+        "inner2": 43.66388663912695
+      },
+      "viaCount": 2
+    },
+    {
+      "signal": "DDR_D3",
+      "pcbTraceId": "saved_phase_null_1_37",
+      "wireLengthMm": 44.79538265011795,
+      "padManhattanMm": 39.200177000000004,
+      "layerLengthsMm": {
+        "top": 1.131430967819,
+        "inner2": 43.663951682298936
+      },
+      "viaCount": 2
+    },
+    {
+      "signal": "DDR_D4",
+      "pcbTraceId": "saved_phase_null_1_27",
+      "wireLengthMm": 44.795382650117965,
+      "padManhattanMm": 37.600131000000005,
+      "layerLengthsMm": {
+        "top": 1.1313871209383897,
+        "inner1": 43.66399552917957
+      },
+      "viaCount": 2
+    },
+    {
+      "signal": "DDR_D5",
+      "pcbTraceId": "saved_phase_null_1_44",
+      "wireLengthMm": 45.430382650187155,
+      "padManhattanMm": 42.40012300000001,
+      "layerLengthsMm": {
+        "top": 1.1313927768945702,
+        "inner2": 44.298989873292584
+      },
+      "viaCount": 2
+    },
+    {
+      "signal": "DDR_D6",
+      "pcbTraceId": "saved_phase_null_1_24",
+      "wireLengthMm": 44.79538265011796,
+      "padManhattanMm": 36.800185,
+      "layerLengthsMm": {
+        "top": 1.131566733597085,
+        "inner1": 43.663815916520875
+      },
+      "viaCount": 2
+    },
+    {
+      "signal": "DDR_D7",
+      "pcbTraceId": "saved_phase_null_1_42",
+      "wireLengthMm": 44.795382650191215,
+      "padManhattanMm": 42.400023000000004,
+      "layerLengthsMm": {
+        "top": 1.1314634811205577,
+        "inner2": 43.66391916907066
+      },
+      "viaCount": 2
+    },
+    {
+      "signal": "DDR_DQM0",
+      "pcbTraceId": "saved_phase_null_1_30",
+      "wireLengthMm": 44.795382650117965,
+      "padManhattanMm": 36.799977000000005,
+      "layerLengthsMm": {
+        "top": 1.1314309542086387,
+        "inner1": 43.66395169590931
+      },
+      "viaCount": 2
+    },
+    {
+      "signal": "DDR_DQS0",
+      "pcbTraceId": "saved_phase_null_1_0",
+      "wireLengthMm": 44.79676712103152,
+      "padManhattanMm": 35.200185,
+      "layerLengthsMm": {
+        "top": 2.060714634125978,
+        "inner1": 42.73605248690555
+      },
+      "viaCount": 2
+    },
+    {
+      "signal": "DDR_DQSn0",
+      "pcbTraceId": "saved_phase_null_1_1",
+      "wireLengthMm": 44.919032093373616,
+      "padManhattanMm": 36.800285,
+      "layerLengthsMm": {
+        "top": 1.1314960436875254,
+        "inner1": 43.78753604968609
+      },
+      "viaCount": 2
+    },
+    {
+      "signal": "DDR_D8",
+      "pcbTraceId": "saved_phase_null_1_26",
+      "wireLengthMm": 40.082863788935704,
+      "padManhattanMm": 32.800131,
+      "layerLengthsMm": {
+        "top": 1.1315398560010757,
+        "inner2": 38.95132393293463
+      },
+      "viaCount": 2
+    },
+    {
+      "signal": "DDR_D9",
+      "pcbTraceId": "saved_phase_null_1_9",
+      "wireLengthMm": 39.447863788935784,
+      "padManhattanMm": 29.600139,
+      "layerLengthsMm": {
+        "top": 1.131392778747121,
+        "inner1": 38.31647101018865
+      },
+      "viaCount": 2
+    },
+    {
+      "signal": "DDR_D10",
+      "pcbTraceId": "saved_phase_null_1_29",
+      "wireLengthMm": 39.44786378893571,
+      "padManhattanMm": 34.400131,
+      "layerLengthsMm": {
+        "top": 1.1313984346467363,
+        "inner2": 38.31646535428898
+      },
+      "viaCount": 2
+    },
+    {
+      "signal": "DDR_D11",
+      "pcbTraceId": "saved_phase_null_1_12",
+      "wireLengthMm": 39.44786378893575,
+      "padManhattanMm": 30.400039,
+      "layerLengthsMm": {
+        "top": 1.1314634815588949,
+        "inner2": 38.31640030737685
+      },
+      "viaCount": 2
+    },
+    {
+      "signal": "DDR_D12",
+      "pcbTraceId": "saved_phase_null_1_32",
+      "wireLengthMm": 39.83196906057594,
+      "padManhattanMm": 33.60008500000001,
+      "layerLengthsMm": {
+        "top": 1.1315073246995018,
+        "inner1": 38.700461735876445
+      },
+      "viaCount": 2
+    },
+    {
+      "signal": "DDR_D13",
+      "pcbTraceId": "saved_phase_null_1_10",
+      "wireLengthMm": 39.447863788935756,
+      "padManhattanMm": 29.600093,
+      "layerLengthsMm": {
+        "top": 1.131501668474466,
+        "inner1": 38.31636212046129
+      },
+      "viaCount": 2
+    },
+    {
+      "signal": "DDR_D14",
+      "pcbTraceId": "saved_phase_null_1_38",
+      "wireLengthMm": 39.44786378887629,
+      "padManhattanMm": 36.000285000000005,
+      "layerLengthsMm": {
+        "top": 1.131507357395305,
+        "inner1": 38.31635643148098
+      },
+      "viaCount": 2
+    },
+    {
+      "signal": "DDR_D15",
+      "pcbTraceId": "saved_phase_null_1_8",
+      "wireLengthMm": 39.44786378893577,
+      "padManhattanMm": 29.600193,
+      "layerLengthsMm": {
+        "top": 1.131430970435019,
+        "inner2": 38.31643281850075
+      },
+      "viaCount": 2
+    },
+    {
+      "signal": "DDR_DQM1",
+      "pcbTraceId": "saved_phase_null_1_13",
+      "wireLengthMm": 39.44786378893574,
+      "padManhattanMm": 30.400239,
+      "layerLengthsMm": {
+        "top": 1.1314635061268359,
+        "inner1": 38.31640028280889
+      },
+      "viaCount": 2
+    },
+    {
+      "signal": "DDR_DQS1",
+      "pcbTraceId": "saved_phase_null_1_2",
+      "wireLengthMm": 39.44786378893572,
+      "padManhattanMm": 33.600031,
+      "layerLengthsMm": {
+        "top": 1.1314691381656916,
+        "inner2": 38.31639465077003
+      },
+      "viaCount": 2
+    },
+    {
+      "signal": "DDR_DQSn1",
+      "pcbTraceId": "saved_phase_null_1_3",
+      "wireLengthMm": 39.574863788935716,
+      "padManhattanMm": 33.600185,
+      "layerLengthsMm": {
+        "top": 1.1315780473052817,
+        "inner2": 38.44328574163043
+      },
+      "viaCount": 2
+    }
+  ],
+  "referencePourProjection": [
+    {
+      "signal": "DDR_D0",
+      "signalLayer": "inner1",
+      "referenceLayer": "top",
+      "referenceNets": [
+        "GND",
+        "DDR_1V5"
+      ],
+      "carrierLengthMm": 43.66402806048221,
+      "centerlineOutsidePourMm": 5.109678155116613
+    },
+    {
+      "signal": "DDR_D1",
+      "signalLayer": "inner1",
+      "referenceLayer": "top",
+      "referenceNets": [
+        "GND",
+        "DDR_1V5"
+      ],
+      "carrierLengthMm": 0,
+      "centerlineOutsidePourMm": 0
+    },
+    {
+      "signal": "DDR_D2",
+      "signalLayer": "inner1",
+      "referenceLayer": "top",
+      "referenceNets": [
+        "GND",
+        "DDR_1V5"
+      ],
+      "carrierLengthMm": 0,
+      "centerlineOutsidePourMm": 0
+    },
+    {
+      "signal": "DDR_D3",
+      "signalLayer": "inner1",
+      "referenceLayer": "top",
+      "referenceNets": [
+        "GND",
+        "DDR_1V5"
+      ],
+      "carrierLengthMm": 0,
+      "centerlineOutsidePourMm": 0
+    },
+    {
+      "signal": "DDR_D4",
+      "signalLayer": "inner1",
+      "referenceLayer": "top",
+      "referenceNets": [
+        "GND",
+        "DDR_1V5"
+      ],
+      "carrierLengthMm": 43.6639955291795,
+      "centerlineOutsidePourMm": 1.8412080994220226
+    },
+    {
+      "signal": "DDR_D5",
+      "signalLayer": "inner1",
+      "referenceLayer": "top",
+      "referenceNets": [
+        "GND",
+        "DDR_1V5"
+      ],
+      "carrierLengthMm": 0,
+      "centerlineOutsidePourMm": 0
+    },
+    {
+      "signal": "DDR_D6",
+      "signalLayer": "inner1",
+      "referenceLayer": "top",
+      "referenceNets": [
+        "GND",
+        "DDR_1V5"
+      ],
+      "carrierLengthMm": 43.66381591652082,
+      "centerlineOutsidePourMm": 2.3712913772758766
+    },
+    {
+      "signal": "DDR_D7",
+      "signalLayer": "inner1",
+      "referenceLayer": "top",
+      "referenceNets": [
+        "GND",
+        "DDR_1V5"
+      ],
+      "carrierLengthMm": 0,
+      "centerlineOutsidePourMm": 0
+    },
+    {
+      "signal": "DDR_DQM0",
+      "signalLayer": "inner1",
+      "referenceLayer": "top",
+      "referenceNets": [
+        "GND",
+        "DDR_1V5"
+      ],
+      "carrierLengthMm": 43.66395169590927,
+      "centerlineOutsidePourMm": 5.152312866277944
+    },
+    {
+      "signal": "DDR_DQS0",
+      "signalLayer": "inner1",
+      "referenceLayer": "top",
+      "referenceNets": [
+        "GND",
+        "DDR_1V5"
+      ],
+      "carrierLengthMm": 42.73605248690553,
+      "centerlineOutsidePourMm": 1.1538546077723988
+    },
+    {
+      "signal": "DDR_DQSn0",
+      "signalLayer": "inner1",
+      "referenceLayer": "top",
+      "referenceNets": [
+        "GND",
+        "DDR_1V5"
+      ],
+      "carrierLengthMm": 43.78753604968607,
+      "centerlineOutsidePourMm": 1.191471580236783
+    },
+    {
+      "signal": "DDR_D8",
+      "signalLayer": "inner1",
+      "referenceLayer": "top",
+      "referenceNets": [
+        "GND",
+        "DDR_1V5"
+      ],
+      "carrierLengthMm": 0,
+      "centerlineOutsidePourMm": 0
+    },
+    {
+      "signal": "DDR_D9",
+      "signalLayer": "inner1",
+      "referenceLayer": "top",
+      "referenceNets": [
+        "GND",
+        "DDR_1V5"
+      ],
+      "carrierLengthMm": 38.316471010188565,
+      "centerlineOutsidePourMm": 1.4447259568660802
+    },
+    {
+      "signal": "DDR_D10",
+      "signalLayer": "inner1",
+      "referenceLayer": "top",
+      "referenceNets": [
+        "GND",
+        "DDR_1V5"
+      ],
+      "carrierLengthMm": 0,
+      "centerlineOutsidePourMm": 0
+    },
+    {
+      "signal": "DDR_D11",
+      "signalLayer": "inner1",
+      "referenceLayer": "top",
+      "referenceNets": [
+        "GND",
+        "DDR_1V5"
+      ],
+      "carrierLengthMm": 0,
+      "centerlineOutsidePourMm": 0
+    },
+    {
+      "signal": "DDR_D12",
+      "signalLayer": "inner1",
+      "referenceLayer": "top",
+      "referenceNets": [
+        "GND",
+        "DDR_1V5"
+      ],
+      "carrierLengthMm": 38.700461735876445,
+      "centerlineOutsidePourMm": 6.545561478528572
+    },
+    {
+      "signal": "DDR_D13",
+      "signalLayer": "inner1",
+      "referenceLayer": "top",
+      "referenceNets": [
+        "GND",
+        "DDR_1V5"
+      ],
+      "carrierLengthMm": 38.316362120461186,
+      "centerlineOutsidePourMm": 2.5310895539358005
+    },
+    {
+      "signal": "DDR_D14",
+      "signalLayer": "inner1",
+      "referenceLayer": "top",
+      "referenceNets": [
+        "GND",
+        "DDR_1V5"
+      ],
+      "carrierLengthMm": 38.31635643148096,
+      "centerlineOutsidePourMm": 5.853874555676301
+    },
+    {
+      "signal": "DDR_D15",
+      "signalLayer": "inner1",
+      "referenceLayer": "top",
+      "referenceNets": [
+        "GND",
+        "DDR_1V5"
+      ],
+      "carrierLengthMm": 0,
+      "centerlineOutsidePourMm": 0
+    },
+    {
+      "signal": "DDR_DQM1",
+      "signalLayer": "inner1",
+      "referenceLayer": "top",
+      "referenceNets": [
+        "GND",
+        "DDR_1V5"
+      ],
+      "carrierLengthMm": 38.31640028280883,
+      "centerlineOutsidePourMm": 2.2636927530975335
+    },
+    {
+      "signal": "DDR_DQS1",
+      "signalLayer": "inner1",
+      "referenceLayer": "top",
+      "referenceNets": [
+        "GND",
+        "DDR_1V5"
+      ],
+      "carrierLengthMm": 0,
+      "centerlineOutsidePourMm": 0
+    },
+    {
+      "signal": "DDR_DQSn1",
+      "signalLayer": "inner1",
+      "referenceLayer": "top",
+      "referenceNets": [
+        "GND",
+        "DDR_1V5"
+      ],
+      "carrierLengthMm": 0,
+      "centerlineOutsidePourMm": 0
+    },
+    {
+      "signal": "DDR_D0",
+      "signalLayer": "inner2",
+      "referenceLayer": "bottom",
+      "referenceNets": [
+        "GND"
+      ],
+      "carrierLengthMm": 0,
+      "centerlineOutsidePourMm": 0
+    },
+    {
+      "signal": "DDR_D1",
+      "signalLayer": "inner2",
+      "referenceLayer": "bottom",
+      "referenceNets": [
+        "GND"
+      ],
+      "carrierLengthMm": 43.66388098283886,
+      "centerlineOutsidePourMm": 3.6306972422618164
+    },
+    {
+      "signal": "DDR_D2",
+      "signalLayer": "inner2",
+      "referenceLayer": "bottom",
+      "referenceNets": [
+        "GND"
+      ],
+      "carrierLengthMm": 43.6638866391268,
+      "centerlineOutsidePourMm": 2.2290052067858928
+    },
+    {
+      "signal": "DDR_D3",
+      "signalLayer": "inner2",
+      "referenceLayer": "bottom",
+      "referenceNets": [
+        "GND"
+      ],
+      "carrierLengthMm": 43.663951682298865,
+      "centerlineOutsidePourMm": 2.8931989191385847
+    },
+    {
+      "signal": "DDR_D4",
+      "signalLayer": "inner2",
+      "referenceLayer": "bottom",
+      "referenceNets": [
+        "GND"
+      ],
+      "carrierLengthMm": 0,
+      "centerlineOutsidePourMm": 0
+    },
+    {
+      "signal": "DDR_D5",
+      "signalLayer": "inner2",
+      "referenceLayer": "bottom",
+      "referenceNets": [
+        "GND"
+      ],
+      "carrierLengthMm": 44.29898987329258,
+      "centerlineOutsidePourMm": 4.6549879158072525
+    },
+    {
+      "signal": "DDR_D6",
+      "signalLayer": "inner2",
+      "referenceLayer": "bottom",
+      "referenceNets": [
+        "GND"
+      ],
+      "carrierLengthMm": 0,
+      "centerlineOutsidePourMm": 0
+    },
+    {
+      "signal": "DDR_D7",
+      "signalLayer": "inner2",
+      "referenceLayer": "bottom",
+      "referenceNets": [
+        "GND"
+      ],
+      "carrierLengthMm": 43.66391916907065,
+      "centerlineOutsidePourMm": 4.819827901836504
+    },
+    {
+      "signal": "DDR_DQM0",
+      "signalLayer": "inner2",
+      "referenceLayer": "bottom",
+      "referenceNets": [
+        "GND"
+      ],
+      "carrierLengthMm": 0,
+      "centerlineOutsidePourMm": 0
+    },
+    {
+      "signal": "DDR_DQS0",
+      "signalLayer": "inner2",
+      "referenceLayer": "bottom",
+      "referenceNets": [
+        "GND"
+      ],
+      "carrierLengthMm": 0,
+      "centerlineOutsidePourMm": 0
+    },
+    {
+      "signal": "DDR_DQSn0",
+      "signalLayer": "inner2",
+      "referenceLayer": "bottom",
+      "referenceNets": [
+        "GND"
+      ],
+      "carrierLengthMm": 0,
+      "centerlineOutsidePourMm": 0
+    },
+    {
+      "signal": "DDR_D8",
+      "signalLayer": "inner2",
+      "referenceLayer": "bottom",
+      "referenceNets": [
+        "GND"
+      ],
+      "carrierLengthMm": 38.95132393293463,
+      "centerlineOutsidePourMm": 0.5600002864284948
+    },
+    {
+      "signal": "DDR_D9",
+      "signalLayer": "inner2",
+      "referenceLayer": "bottom",
+      "referenceNets": [
+        "GND"
+      ],
+      "carrierLengthMm": 0,
+      "centerlineOutsidePourMm": 0
+    },
+    {
+      "signal": "DDR_D10",
+      "signalLayer": "inner2",
+      "referenceLayer": "bottom",
+      "referenceNets": [
+        "GND"
+      ],
+      "carrierLengthMm": 38.31646535428898,
+      "centerlineOutsidePourMm": 2.5400233970180697
+    },
+    {
+      "signal": "DDR_D11",
+      "signalLayer": "inner2",
+      "referenceLayer": "bottom",
+      "referenceNets": [
+        "GND"
+      ],
+      "carrierLengthMm": 38.316400307376796,
+      "centerlineOutsidePourMm": 1.4845582864285025
+    },
+    {
+      "signal": "DDR_D12",
+      "signalLayer": "inner2",
+      "referenceLayer": "bottom",
+      "referenceNets": [
+        "GND"
+      ],
+      "carrierLengthMm": 0,
+      "centerlineOutsidePourMm": 0
+    },
+    {
+      "signal": "DDR_D13",
+      "signalLayer": "inner2",
+      "referenceLayer": "bottom",
+      "referenceNets": [
+        "GND"
+      ],
+      "carrierLengthMm": 0,
+      "centerlineOutsidePourMm": 0
+    },
+    {
+      "signal": "DDR_D14",
+      "signalLayer": "inner2",
+      "referenceLayer": "bottom",
+      "referenceNets": [
+        "GND"
+      ],
+      "carrierLengthMm": 0,
+      "centerlineOutsidePourMm": 0
+    },
+    {
+      "signal": "DDR_D15",
+      "signalLayer": "inner2",
+      "referenceLayer": "bottom",
+      "referenceNets": [
+        "GND"
+      ],
+      "carrierLengthMm": 38.316432818500665,
+      "centerlineOutsidePourMm": 0.5600001432142514
+    },
+    {
+      "signal": "DDR_DQM1",
+      "signalLayer": "inner2",
+      "referenceLayer": "bottom",
+      "referenceNets": [
+        "GND"
+      ],
+      "carrierLengthMm": 0,
+      "centerlineOutsidePourMm": 0
+    },
+    {
+      "signal": "DDR_DQS1",
+      "signalLayer": "inner2",
+      "referenceLayer": "bottom",
+      "referenceNets": [
+        "GND"
+      ],
+      "carrierLengthMm": 38.31639465077,
+      "centerlineOutsidePourMm": 4.631278908782694
+    },
+    {
+      "signal": "DDR_DQSn1",
+      "signalLayer": "inner2",
+      "referenceLayer": "bottom",
+      "referenceNets": [
+        "GND"
+      ],
+      "carrierLengthMm": 38.443285741630405,
+      "centerlineOutsidePourMm": 3.0600002864284943
+    }
+  ],
+  "limitations": [
+    "XY pad-to-pad copper lengths exclude vertical/package flight time.",
+    "Projection uses rendered pour polygons and their holes, not traces, pads, barrels or electrical connectivity.",
+    "Copper under a trace does not prove an AC return path; power references need decoupling and stitching.",
+    "No impedance, coupled S-parameters, crosstalk, jitter, BER or receiver timing signoff is inferred."
+  ],
+  "circuitJsonSha256": "c9d7059fe536865784f175855e0dcc76510972319eec848c18b0ef6dcd2adb40"
+}

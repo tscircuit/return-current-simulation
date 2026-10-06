@@ -390,7 +390,90 @@ and package impedances need an additional component model. The current adapter
 cannot certify DDR signal integrity. At 100 × 80 mm, use at least 0.1 mm cells
 (800,000 candidates); 0.05 mm exceeds the current one-million-cell sample cap.
 
-### DQS eye estimate
+### Judge DDR routing quality
+
+The [AM3352 routing audit](examples/am3352/routing-quality) checks the pinned
+`astra/am3352-sbc` **0.1.19** circuit-json against TI's DDR3 length/skew rules and
+maps traces against the actual reference-pour polygons, including their voids.
+Both byte groups exceed the placement-derived DQ/DM length limit even though
+their length matching passes. This is a concrete routing issue; a clean eye from
+the simplified model below does not override it.
+
+![AM3352 DDR routing audit](examples/am3352/routing-quality/routing-audit.png)
+
+From a checkout, use Python with `numpy`, `matplotlib` and `shapely` installed:
+
+```sh
+python scripts/audit-am335x-ddr.py work/am3352/board.json \
+  --reference inner1:top:GND,DDR_1V5 \
+  --reference inner2:bottom:GND --output work/ddr-routing
+```
+
+The reference mappings are explicit: signal layer, reference layer, then accepted
+net names. Red segments are outside the selected **pour's XY projection**. This
+does not establish an electrical discontinuity: nearby pads/traces, other layers,
+ground stitching and power-to-ground decoupling require a coupled EM model.
+The script checks two DQ/DM bytes and their DQS pairs, not the address/clock bus.
+It fails on missing or ambiguous signals instead of skipping unrouted members.
+
+### Analyze DQS jitter and DQ timing
+
+Jitter should come from measured waveforms or an explicit source model and budget.
+Reflections, loss, coupling, supply noise and unequal paths can add variation.
+A periodic strobe with ideal timing can legitimately produce a thin eye, but
+the previous estimate omits the effects needed to judge this board. Adding an
+arbitrary jitter distribution would not make that model accurate.
+
+Use `scripts/analyze-ddr-waveforms.py` on receiver waveforms from an oscilloscope
+or a channel/I/O co-simulation. CSV columns use seconds and volts:
+
+```text
+time_s,dqs_p_v,dqs_n_v,tx_p_v,tx_n_v,dq0_v,dq1_v
+```
+
+The two transmitter columns and `dqN_v` columns are optional. Supply a JSON
+provenance file describing `kind`, `direction`, `channel`, `ioModels`, `jitter`
+and `noise`; [this template](examples/am3352/routing-quality/waveform-provenance.example.json)
+shows the fields. Declare unknowns explicitly. This file records provenance;
+it does not certify the inputs or create models.
+
+```sh
+python scripts/analyze-ddr-waveforms.py receiver.csv \
+  --provenance waveform-provenance.json --rate-mts 800 \
+  --start-ns 20 --stop-ns 1000 --max-gap-ps 5 \
+  --vil 0.6 --vih 0.9 --sample-delay-ps 0 \
+  --output work/ddr-eye
+```
+
+The voltage thresholds above are **illustrative**, not an installed Winbond mask;
+use the receiving device's thresholds and timing requirements. Crop to one
+continuous active burst, excluding preamble, turnaround and high impedance.
+At least 32 DQS crossings are required. Set the actual data rate; 800 MT/s means
+a 1.25 ns UI and 400 MHz DQS. Resolve edges with the sample interval and check
+timestep convergence for simulated input.
+
+The analyzer saves density eyes, a jitter histogram and JSON metrics. The DQS
+eye uses a fixed nominal clock and removes only mean phase, retaining jitter,
+duty-cycle distortion and drift. Time interval error (TIE) is each crossing's
+deviation from its expected edge on that clock. It reports finite-capture TIE RMS/peak-to-peak;
+with corresponding TX crossings it separates source TIE from added channel edge
+variation. It rejects missing/extra crossings rather than silently realigning them.
+It does not extrapolate BER or claim to separate random and deterministic jitter.
+
+For each DQ, it measures voltage headroom and time valid before/after the **actual
+DQS sampling edge**. `--sample-delay-ps` is required when DQ is present: choose the
+receiver PHY's sampling delay, independently for reads and writes. Data and strobe
+alignment differ by direction. These are observed validity windows, not device
+setup/hold compliance or bit-error counts; no expected data sequence is supplied.
+
+**Full AM3352 channel co-simulation is not working yet.** The exact Winbond model
+is HSPICE-encrypted, the available KiCad converter rejects TI's coupled package
+section, and no converged broadband multiport board extraction has been produced.
+The [model status and remaining requirements](examples/am3352/routing-quality)
+are explicit. Neither this analyzer nor the single-frequency return-current CLI
+creates the missing channel or IC models. No vendor model files are redistributed.
+
+### Simplified DQS eye estimate
 
 The [DQS0/DQS1 example](examples/am3352/dqs-eye-800mts) plots differential
 receiver voltage in the **write direction** at an assumed **800 MT/s**:
@@ -400,7 +483,8 @@ The exported routes supply lengths and layer transitions. Electrical settings
 are explicit assumptions; circuit-json does not supply the configured DDR clock,
 drive strength, ODT, jitter or package model.
 
-![Estimated AM3352 DQS eyes](examples/am3352/dqs-eye-800mts/dqs-eye.png)
+This example is retained as a simplified transmission-line demonstration. Use
+the routing audit and model-backed waveforms above to assess the board.
 
 Install ngspice (the snapshot uses **44.2**) and Python with `numpy` and
 `matplotlib`. From a checkout, prepare the pinned board files and generate:

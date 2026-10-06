@@ -13,6 +13,12 @@ export default function DqsEyeEstimate() {
         channel properties are assumed; this is not an EM/IBIS validation or DDR
         timing signoff.
       </p>
+      <p>
+        The routing-quality page independently shows that both byte groups
+        exceed TI’s maximum DQ/DM length for this placement. This idealized eye
+        cannot override those failures; use coupled channel/I/O waveforms to
+        assess jitter and DQ timing relative to DQS.
+      </p>
       <a href={eye} target="_blank" rel="noreferrer">
         <img
           src={eye}
