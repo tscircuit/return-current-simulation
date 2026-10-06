@@ -1,0 +1,76 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`actual TSX without physical stackup produces an actionable result 1`] = `
+"Crosstalk analysis: missing data
+Supply pcb_board.stackup with explicit physical layer data
+Uniform two-line quasi-TEM approximation; not arbitrary-board SI or DDR qualification.
+Supplied Er and explicit zero loss datum are held constant for this transient; no broadband laminate model is inferred.
+Soldermask properties are unknown and its effect is omitted; no assertion that the actual board is uncoated.
+Reference plane is idealized as infinite and nonmagnetic; finite edges, ground resistance, launches, pads and vias are omitted.
+Supplied trace conductivity gives DC series R, split at the line ends; skin effect and roughness are omitted."
+`;
+
+exports[`rendered SPICE pin mappings preserve the pulse and finite driver/load models 1`] = `
+[
+  {
+    "kind": "driver",
+    "referencePortId": "source_port_1",
+    "resistance": 40,
+    "waveform": [
+      [
+        0,
+        0,
+      ],
+      [
+        0.000000008,
+        0,
+      ],
+    ],
+  },
+  {
+    "capacitance": 0.000000000001,
+    "kind": "receiver",
+    "referencePortId": "source_port_3",
+    "resistance": 60,
+    "voltage": 0.75,
+  },
+  {
+    "kind": "driver",
+    "referencePortId": "source_port_5",
+    "resistance": 40,
+    "waveform": [
+      [
+        0,
+        0,
+      ],
+      [
+        0.000000002,
+        0,
+      ],
+      [
+        0.0000000021,
+        1.5,
+      ],
+      [
+        0.0000000041,
+        1.5,
+      ],
+      [
+        0.0000000042,
+        0,
+      ],
+      [
+        0.000000008,
+        0,
+      ],
+    ],
+  },
+  {
+    "capacitance": 0.000000000001,
+    "kind": "receiver",
+    "referencePortId": "source_port_7",
+    "resistance": 60,
+    "voltage": 0.75,
+  },
+]
+`;
