@@ -24,6 +24,17 @@ export interface PalaceModel {
   schemaVersion: 1
   geometry: SimulationGeometry
   topPads: Point[][]
+  /** Ground pads with a modeled, concentric top-to-bottom ground via. */
+  topGroundPads?: Point[][]
+  groundVias?: {
+    x: number
+    y: number
+    holeDiameter: number
+    outerDiameter: number
+    platingThickness: number
+  }[]
+  /** Source then load for each excitation; absent in legacy saved models. */
+  ports?: PalaceTerminalPort[]
   frequencyHz: number
   layerSeparation: number
   copperThickness: number
@@ -36,6 +47,15 @@ export interface PalaceModel {
   airPadding: number
   order: 1 | 2
   copperModel: "volumetric_copper"
+}
+
+export interface PalaceTerminalPort {
+  signal: Point
+  reference: Point
+  referenceLayer: "top" | "bottom"
+  resistance: number
+  signalPcbPortId?: string
+  referencePcbPortId?: string
 }
 
 export interface PalaceSample extends Point {

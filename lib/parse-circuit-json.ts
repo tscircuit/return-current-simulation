@@ -25,6 +25,22 @@ const excitationSchema = z.object({
   return_sink: point.refine(
     (contact) => Number.isFinite(contact.x) && Number.isFinite(contact.y),
   ),
+  source_port: z
+    .object({
+      signal_pcb_port_id: z.string(),
+      reference_pcb_port_id: z.string().optional(),
+      reference_layer: z.enum(["top", "bottom"]),
+      resistance: z.number().finite().positive(),
+    })
+    .optional(),
+  load_port: z
+    .object({
+      signal_pcb_port_id: z.string(),
+      reference_pcb_port_id: z.string().optional(),
+      reference_layer: z.enum(["top", "bottom"]),
+      resistance: z.number().finite().positive(),
+    })
+    .optional(),
 })
 
 /** Some released core versions emit numeric display offsets despite the

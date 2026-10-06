@@ -24,6 +24,25 @@ export class ReturnCurrentSolver extends BaseSolver {
 
   constructor(options: SimulationOptions) {
     super()
+    const excitations =
+      options.excitations ??
+      options.circuitJson.filter(
+        (element) => element.type === "simulation_return_current_excitation",
+      )
+    if (
+      excitations.some((excitation) =>
+        [excitation.source_port, excitation.load_port].some(
+          (port) =>
+            port &&
+            (port.reference_pcb_port_id ||
+              port.reference_layer !== "bottom" ||
+              port.resistance !== 50),
+        ),
+      )
+    )
+      throw new Error(
+        "Explicit reference terminals and impedances require Palace; the approximation has no port impedance model",
+      )
     this.options = options
     this.tolerance = positiveFinite(options.tolerance ?? 1e-8, "tolerance")
     this.MAX_ITERATIONS = positiveFinite(

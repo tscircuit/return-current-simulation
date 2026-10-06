@@ -3,12 +3,15 @@ import { readFile, writeFile, mkdir } from "node:fs/promises"
 import { resolve, join } from "node:path"
 import { parseArgs } from "node:util"
 import { Resvg } from "@resvg/resvg-js"
+import { z } from "zod"
 import {
   parseReturnCurrentCircuitJson,
   listCircuitPorts,
   withNamedExcitations,
   simulateReturnCurrent,
   renderReturnCurrentSvg,
+  parseCurrentAmps,
+  parseResistanceOhms,
 } from "../lib/index"
 import type { ReturnCurrentCircuitJson, NamedExcitation } from "../lib/index"
 import {
@@ -35,9 +38,14 @@ Usage:
 
 Options:
   --source, --load <refdes.pin>   Driver/load terminals; pin names or aliases
+  --source-reference <refdes.pin> Source reference terminal (default: plane beneath)
+  --load-reference <refdes.pin>  Load reference terminal (default: plane beneath)
+  --source-impedance <ohms>      Positive real source port resistance (default: 50)
+  --load-impedance <ohms>        Positive real load resistance (default: 50)
   --ground <net>                Ground net name or source_net_id
-  --current <A>                 Signed in-phase peak amperes, not RMS
-  --excitation <source,load,A>   Repeat for multiple simultaneous excitations
+  --current <A>                 Signed peak current: 5mA, 0.1A, 250uA or bare amperes
+  --excitation <source,load,A>   Repeat; or source,sourceRef,load,loadRef,current
+  --ports-file <json>           Array of named excitations, including per-port impedances
   --frequency-hz <Hz>           Required for Palace; never inferred from routing
   --output, -o <directory>      Output case directory (default: return-current)
   --cell-size <mm>              Image sample pitch (Palace: 0.2; approximation: 0.5)
@@ -53,7 +61,8 @@ Options:
   --solver <palace|approximation> Default: palace; approximation has no frequency model
   --help, -h / --version, -v
 
-Each signal port is paired with bottom ground directly beneath it. Source/load
+Omitted reference terminals use bottom ground directly beneath the signal.
+Named top reference pads require concentric, physical ground vias. Source/load
 must be endpoints of one continuous top-layer trace. No voltage source, signal
 amplitude, component circuit or frequency is inferred from circuit-json.
 Palace needs Python 3.12 with Gmsh/VTK and Docker or native Palace v0.14.0.
@@ -66,6 +75,11 @@ const definitions = {
   load: { type: "string" },
   ground: { type: "string" },
   current: { type: "string" },
+  "source-reference": { type: "string" },
+  "load-reference": { type: "string" },
+  "source-impedance": { type: "string" },
+  "load-impedance": { type: "string" },
+  "ports-file": { type: "string" },
   excitation: { type: "string", multiple: true },
   "frequency-hz": { type: "string" },
   output: { type: "string", short: "o" },
@@ -192,7 +206,12 @@ async function main() {
     values.load !== undefined ||
     values.current !== undefined ||
     values.ground !== undefined ||
-    values.excitation !== undefined
+    values.excitation !== undefined ||
+    values["ports-file"] !== undefined ||
+    values["source-reference"] !== undefined ||
+    values["load-reference"] !== undefined ||
+    values["source-impedance"] !== undefined ||
+    values["load-impedance"] !== undefined
   let ports: NamedExcitation[] | undefined
   if (values["use-circuit-excitations"]) {
     if (namedFlags)
@@ -210,7 +229,61 @@ async function main() {
       throw new Error(
         "Specify --ground GND and named source/load/current, or --use-circuit-excitations",
       )
-    if (values.excitation) {
+    const advanced = {
+      ...(values["source-reference"] === undefined
+        ? {}
+        : { sourceReference: values["source-reference"] }),
+      ...(values["load-reference"] === undefined
+        ? {}
+        : { loadReference: values["load-reference"] }),
+      ...(values["source-impedance"] === undefined
+        ? {}
+        : { sourceImpedance: parseResistanceOhms(values["source-impedance"]) }),
+      ...(values["load-impedance"] === undefined
+        ? {}
+        : { loadImpedance: parseResistanceOhms(values["load-impedance"]) }),
+    }
+    if (values["ports-file"]) {
+      if (
+        values.excitation ||
+        values.source ||
+        values.load ||
+        values.current !== undefined ||
+        Object.keys(advanced).length
+      )
+        throw new Error(
+          "Choose --ports-file or individual excitation/port flags",
+        )
+      const quantity = z.union([z.number(), z.string()])
+      ports = z
+        .array(
+          z
+            .object({
+              source: z.string(),
+              load: z.string(),
+              current: quantity,
+              sourceReference: z.string().optional(),
+              loadReference: z.string().optional(),
+              sourceImpedance: quantity.optional(),
+              loadImpedance: quantity.optional(),
+            })
+            .strict(),
+        )
+        .min(1)
+        .parse(
+          JSON.parse(await readFile(resolve(values["ports-file"]), "utf8")),
+        )
+        .map((port) => ({
+          ...port,
+          current: parseCurrentAmps(port.current),
+          ...(port.sourceImpedance === undefined
+            ? {}
+            : { sourceImpedance: parseResistanceOhms(port.sourceImpedance) }),
+          ...(port.loadImpedance === undefined
+            ? {}
+            : { loadImpedance: parseResistanceOhms(port.loadImpedance) }),
+        }))
+    } else if (values.excitation) {
       if (
         values.source !== undefined ||
         values.load !== undefined ||
@@ -219,15 +292,29 @@ async function main() {
         throw new Error("Choose --excitation or --source/--load/--current")
       ports = values.excitation.map((value) => {
         const fields = value.split(",").map((field) => field.trim())
-        if (fields.length !== 3 || fields.some((field) => !field))
+        if (![3, 5].includes(fields.length) || fields.some((field) => !field))
           throw new Error(
-            "Each --excitation must be source,load,current (e.g. R1.pin1,U1.VDDIO1,1)",
+            "Each --excitation must be source,load,current or source,sourceReference,load,loadReference,current",
           )
-        return {
-          source: fields[0],
-          load: fields[1],
-          current: Number(fields[2]),
-        }
+        if (values["source-reference"] || values["load-reference"])
+          throw new Error(
+            "Put reference pins inside each --excitation or use --ports-file",
+          )
+        return fields.length === 3
+          ? {
+              ...advanced,
+              source: fields[0],
+              load: fields[1],
+              current: parseCurrentAmps(fields[2]),
+            }
+          : {
+              ...advanced,
+              source: fields[0],
+              sourceReference: fields[1],
+              load: fields[2],
+              loadReference: fields[3],
+              current: parseCurrentAmps(fields[4]),
+            }
       })
     } else {
       if (!values.source || !values.load || values.current === undefined)
@@ -236,9 +323,10 @@ async function main() {
         )
       ports = [
         {
+          ...advanced,
           source: values.source,
           load: values.load,
-          current: Number(values.current),
+          current: parseCurrentAmps(values.current),
         },
       ]
     }
@@ -246,6 +334,26 @@ async function main() {
   const outputDirectory = resolve(values.output ?? "return-current")
   const imageSize = imageDimension(number("image-size", 1100))
   if (solver === "approximation") {
+    if (
+      ports?.some(
+        (port) =>
+          port.sourceReference ||
+          port.loadReference ||
+          port.sourceImpedance !== undefined ||
+          port.loadImpedance !== undefined,
+      ) ||
+      circuitJson.some(
+        (element) =>
+          element.type === "simulation_return_current_excitation" &&
+          (element.source_port?.reference_pcb_port_id ||
+            element.load_port?.reference_pcb_port_id ||
+            (element.source_port && element.source_port.resistance !== 50) ||
+            (element.load_port && element.load_port.resistance !== 50)),
+      )
+    )
+      throw new Error(
+        "Explicit reference terminals and impedances require --solver palace",
+      )
     for (const flag of [
       "mesh-size",
       "order",

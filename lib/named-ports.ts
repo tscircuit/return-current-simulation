@@ -3,6 +3,8 @@ import type {
   ReturnCurrentCircuitJson,
   SimulationReturnCurrentExcitation,
 } from "./types"
+import { parseCurrentAmps, parseResistanceOhms } from "./electrical-units"
+import { portNetIds } from "./port-connectivity"
 
 export interface NamedExcitation {
   /** Signal driver, e.g. R1.pin1. */
@@ -10,7 +12,13 @@ export interface NamedExcitation {
   /** Signal load, e.g. U1.VDDIO1. */
   load: string
   /** Signed, in-phase peak current in amperes. No amplitude is inferred. */
-  current: number
+  current: number | string
+  /** Omit to reference bottom copper directly beneath the signal. */
+  sourceReference?: string
+  loadReference?: string
+  /** Real positive ohms; defaults to 50. */
+  sourceImpedance?: number | string
+  loadImpedance?: number | string
 }
 
 function aliases(port: SourcePort): string[] {
@@ -58,6 +66,7 @@ export function listCircuitPorts(circuitJson: ReturnCurrentCircuitJson) {
 function resolvePort(
   circuitJson: ReturnCurrentCircuitJson,
   selector: string,
+  signal = true,
 ): { source: SourcePort; pcb: PcbPort } {
   const match = /^([^\.\s]+)\.([^\.\s]+)$/.exec(selector)
   if (!match)
@@ -90,7 +99,7 @@ function resolvePort(
   )
   if (pcbPorts.length !== 1)
     throw new Error(`Port "${selector}" needs exactly one PCB port location`)
-  if (!pcbPorts[0].layers.includes("top"))
+  if (signal && !pcbPorts[0].layers.includes("top"))
     throw new Error(`Port "${selector}" must be on the top layer`)
   return { source: ports[0], pcb: pcbPorts[0] }
 }
@@ -146,10 +155,45 @@ export function withNamedExcitations(options: {
   const oriented = new Map<string, PcbTrace>()
   const excitations: SimulationReturnCurrentExcitation[] = []
   for (const [index, excitation] of options.ports.entries()) {
-    if (!Number.isFinite(excitation.current))
-      throw new Error("Named excitation current must be finite (peak amperes)")
+    const current = parseCurrentAmps(excitation.current)
     const source = resolvePort(options.circuitJson, excitation.source)
     const load = resolvePort(options.circuitJson, excitation.load)
+    const reference = (selector: string | undefined, signal: typeof source) => {
+      if (!selector)
+        return {
+          point: { x: signal.pcb.x, y: signal.pcb.y },
+          layer: "bottom" as const,
+          pcbPortId: undefined,
+        }
+      const port = resolvePort(options.circuitJson, selector, false)
+      if (
+        !portNetIds(options.circuitJson, port.source.source_port_id).includes(
+          groundId,
+        )
+      )
+        throw new Error(
+          `Reference "${selector}" is not connected to the selected ground net; connect it explicitly in TSX`,
+        )
+      if (port.pcb.pcb_port_id === signal.pcb.pcb_port_id)
+        throw new Error(
+          "Signal and reference terminals must be different ports",
+        )
+      const layer =
+        port.pcb.layers.includes("bottom") && !port.pcb.layers.includes("top")
+          ? ("bottom" as const)
+          : ("top" as const)
+      if (!port.pcb.layers.includes(layer))
+        throw new Error(
+          `Reference "${selector}" must be on the top or bottom layer`,
+        )
+      return {
+        point: { x: port.pcb.x, y: port.pcb.y },
+        layer,
+        pcbPortId: port.pcb.pcb_port_id,
+      }
+    }
+    const sourceReference = reference(excitation.sourceReference, source)
+    const loadReference = reference(excitation.loadReference, load)
     if (source.pcb.pcb_port_id === load.pcb.pcb_port_id)
       throw new Error("Source and load must be different ports")
     const candidates = options.circuitJson.flatMap((element) => {
@@ -200,9 +244,21 @@ export function withNamedExcitations(options: {
       simulation_return_current_excitation_id: `simulation_return_current_excitation_${index}`,
       pcb_trace_id: trace.pcb_trace_id,
       ground_source_net_id: groundId,
-      current: excitation.current,
-      return_source: { x: load.pcb.x, y: load.pcb.y },
-      return_sink: { x: source.pcb.x, y: source.pcb.y },
+      current,
+      return_source: loadReference.point,
+      return_sink: sourceReference.point,
+      source_port: {
+        signal_pcb_port_id: source.pcb.pcb_port_id,
+        reference_pcb_port_id: sourceReference.pcbPortId,
+        reference_layer: sourceReference.layer,
+        resistance: parseResistanceOhms(excitation.sourceImpedance ?? 50),
+      },
+      load_port: {
+        signal_pcb_port_id: load.pcb.pcb_port_id,
+        reference_pcb_port_id: loadReference.pcbPortId,
+        reference_layer: loadReference.layer,
+        resistance: parseResistanceOhms(excitation.loadImpedance ?? 50),
+      },
     })
   }
   return [

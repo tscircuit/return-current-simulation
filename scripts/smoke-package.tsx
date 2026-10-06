@@ -3,6 +3,7 @@ import { tmpdir } from "node:os"
 import { join, resolve } from "node:path"
 import { strict as assert } from "node:assert"
 import { StraightBoard } from "tests/fixtures/StraightBoard"
+import { ExplicitPortBoard } from "tests/fixtures/ExplicitPortBoard"
 import { renderFixture } from "tests/fixtures/render-fixture"
 
 const repository = process.cwd()
@@ -84,7 +85,7 @@ try {
     "--ground",
     "GND",
     "--current",
-    "0.25",
+    "250mA",
   ]
   const listed = JSON.parse(await run([bin, "ports", "board.json"]))
   assert(listed.ports[0].aliases.includes("SIG_S.pin1"))
@@ -109,6 +110,46 @@ try {
   )
   assert.equal(grid.columns, 600)
   assert.equal(grid.rows, 400)
+  const explicit = (await renderFixture(<ExplicitPortBoard />)).filter(
+    (element) => element.type !== "simulation_return_current_excitation",
+  )
+  await writeFile(join(consumer, "explicit.json"), JSON.stringify(explicit))
+  await writeFile(
+    join(consumer, "ports.json"),
+    JSON.stringify([
+      {
+        source: "U1.OUT",
+        sourceReference: "U1.GND",
+        load: "U2.IN",
+        loadReference: "U2.GND",
+        current: "5mA",
+        sourceImpedance: "25ohm",
+        loadImpedance: "100ohm",
+      },
+    ]),
+  )
+  await run([
+    bin,
+    "explicit.json",
+    "--ports-file",
+    "ports.json",
+    "--ground",
+    "GND",
+    "--frequency-hz",
+    "1000000",
+    "--prepare-only",
+    "--output",
+    "explicit-prepared",
+  ])
+  const explicitModel = JSON.parse(
+    await readFile(join(consumer, "explicit-prepared/model.json"), "utf8"),
+  )
+  assert.equal(explicitModel.geometry.excitations[0].current, 0.005)
+  assert.deepEqual(
+    explicitModel.ports.map((port: { resistance: number }) => port.resistance),
+    [25, 100],
+  )
+  assert.equal(explicitModel.groundVias.length, 2)
   await run([
     bin,
     ...common,
@@ -143,8 +184,9 @@ withNamedExcitations({ circuitJson, ports, groundNet: "GND" });
 runPalaceSimulation({ circuitJson, ports, groundNet: "GND", frequencyHz: 1e6, outputDirectory: "out" });
 // @ts-expect-error Frequency is required.
 runPalaceSimulation({ circuitJson, ports, groundNet: "GND", outputDirectory: "out" });
-// @ts-expect-error Peak current must be numeric.
-withNamedExcitations({ circuitJson, ports: [{ source: "R1.pin1", load: "U1.pin1", current: "1" }], groundNet: "GND" });
+withNamedExcitations({ circuitJson, ports: [{ source: "R1.pin1", sourceReference: "R1.GND", load: "U1.pin1", loadReference: "U1.GND", current: "5mA", sourceImpedance: "50ohm", loadImpedance: 100 }], groundNet: "GND" });
+// @ts-expect-error Peak current must be a number or string with units.
+withNamedExcitations({ circuitJson, ports: [{ source: "R1.pin1", load: "U1.pin1", current: true }], groundNet: "GND" });
 `,
   )
   await run([

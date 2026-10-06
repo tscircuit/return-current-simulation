@@ -31,6 +31,16 @@ export function palaceGeometrySignature(geometry: SimulationGeometry): string {
       coordinate(excitation.current),
       point(excitation.return_source),
       point(excitation.return_sink),
+      ...(excitation.source_port || excitation.load_port
+        ? [
+            [
+              excitation.source_port?.reference_layer ?? "bottom",
+              coordinate(excitation.source_port?.resistance ?? 50),
+              excitation.load_port?.reference_layer ?? "bottom",
+              coordinate(excitation.load_port?.resistance ?? 50),
+            ],
+          ]
+        : []),
     ]),
   ])
 }

@@ -1,0 +1,20 @@
+name: Palace Mesh Check
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  mesh-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: sudo apt-get update && sudo apt-get install -y libglu1-mesa
+      - run: pip install gmsh==4.13.1 shapely==2.1.2
+      - run: bun install
+      - run: bun test tests/palace/explicit-mesh.test.tsx
+        env:
+          PALACE_MESH_PYTHON: python
