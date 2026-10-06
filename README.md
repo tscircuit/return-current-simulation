@@ -8,7 +8,16 @@ frequency explicitly.
 
 ## CLI
 
-Requires **Node.js 20.11+**. Install globally or run with `npx`:
+Requires **Node.js 20.11+**. Before the first npm release, run from a checkout:
+
+```sh
+bun install
+bun run build
+node dist/cli.js --help
+```
+
+Use `node dist/cli.js` in place of `simulate-return-current` in the examples
+below. Once published, install globally or run with `npx`:
 
 ```sh
 npm install -g simulate-return-current
@@ -40,13 +49,13 @@ rendered. Inspect available pin names and aliases:
 simulate-return-current ports board.json
 ```
 
-Run a **1 MHz**, **1 A peak** excitation from `R1.pin1` to `U1.VDDIO1`, referenced
+Run a **1 MHz**, **100 mA peak** excitation from `R1.pin1` to `U1.VDDIO1`, referenced
 to the bottom copper on `GND`:
 
 ```sh
 simulate-return-current board.json \
   --source R1.pin1 --load U1.VDDIO1 --ground GND \
-  --current 1 --frequency-hz 1000000 \
+  --current 0.1A --frequency-hz 1000000 \
   --output return-current --cell-size 0.05 --image-size 2000
 ```
 
@@ -60,25 +69,174 @@ fields, complex sampled currents and `run-timing.json`.
 resolve through source components/ports to PCB ports and the connecting trace;
 you do not need to look up `pcb_trace_id` or manually inject excitation records.
 
-Each signal endpoint is paired with the **ground plane directly beneath it**.
-`--ground` selects that plane's net by name or `source_net_id`; it does not select
-a separate ground-pad terminal. Palace uses 50 Ω source/load ports and normalizes
-the source current to your requested amplitude. This simulates PCB geometry at
-one frequency; it does not infer a voltage source or solve the components as a
-SPICE circuit.
+### Choose both terminals of each port
 
-For multiple signals, repeat `--excitation source,load,current` instead of
-`--source/--load/--current`. They share the specified frequency and ground net,
-with signed, in-phase peak currents:
+A port is a **pair of terminals**: the signal pin and its reference pin. The
+source port drives the PCB; the load port terminates it. To model a source
+between `U1.OUT` and `U1.GND`, and a load between `U2.IN` and `U2.GND`:
+
+```sh
+simulate-return-current board.json \
+  --source U1.OUT --source-reference U1.GND \
+  --load U2.IN --load-reference U2.GND \
+  --ground GND --current 5mA --frequency-hz 1000000 \
+  --source-impedance 25ohm --load-impedance 100ohm \
+  --output explicit-ports
+```
+
+This imposes a **5 mA peak sinusoidal source current at 1 MHz**, with a 25 Ω
+source-port resistance and a 100 Ω load resistance. The source current is
+`I(t) = 0.005 cos(2π × 1000000 × t)` A. The receiving component's actual
+impedance is not inferred from its pin name or component properties.
+
+| Input | Meaning / default |
+| --- | --- |
+| `--source`, `--load` | Required signal pins: `refdes.pin`, pin name or alias |
+| `--source-reference`, `--load-reference` | Optional named ground pins; omitted endpoints reference bottom copper directly beneath the signal |
+| `--ground` | Common ground net name or `source_net_id`; selecting a net does not create copper |
+| `--current` | Signed peak current; bare numbers are amperes |
+| `--frequency-hz` | Required single frequency in Hz; no implicit frequency |
+| `--source-impedance`, `--load-impedance` | Positive **real resistance**, independently defaulting to 50 Ω |
+
+Palace applies these resistances to its two-terminal lumped ports. The source
+port includes an impressed Norton source and a parallel resistance; the importer
+normalizes the **net injected source current**, after subtracting the
+termination current, to the requested amplitude. The load current and voltage
+are solved quantities; they are not separately forced. The current source is
+prescribed externally: this does not simulate an IC, resistor or power supply
+as a SPICE circuit, or specify an independent source voltage.
+
+**Reference geometry matters.** A named bottom-layer reference must lie on the
+selected ground copper. A named top-layer reference must be a rectangular SMT
+ground pad with a **concentric top-to-bottom ground via already in circuit-json**.
+The tool meshes the pad, drilled hole and copper barrel, and places the lumped
+port across the gap from signal pad to ground pad. It does not silently connect
+a floating pad to the plane. Other ground-via arrangements need future routing
+support. Both reference pins must be connected to `GND` in source connectivity;
+labels such as `GND` alone are insufficient.
+
+The [complete TSX example](tests/fixtures/ExplicitPortBoard.tsx) emits two signal
+pins, two ground pads, both vias, and the bottom pour through tscircuit/core.
+For its `U1.GND` pad at board coordinates `(-2, 1.5)`, the connection includes:
+
+```tsx
+<trace from=".U1 > .GND" to="net.GND" />
+<via
+  name="GV1" pcbX={-2} pcbY={1.5}
+  fromLayer="top" toLayer="bottom"
+  holeDiameter="0.2mm" outerDiameter="0.6mm"
+  connectsTo="net.GND"
+/>
+```
+
+### Current and resistance units
+
+The [completed Palace example](examples/palace/explicit-ports-1mhz) includes a
+TSX-derived visual snapshot, resolved ports, solver evidence and timing: its
+5 mA / 1 MHz case at 0.05 mm sampling took 56.64 seconds including mesh, solve
+and export. Image markers use `S1+`/`S1−` and `L1+`/`L1−` for the two terminal
+pairs; `+`/`−` denote port polarity. CLI images currently use a fixed 50 A/mm²
+color-scale maximum; for small currents, the library renderer can set
+`maxCurrentDensity` to a suitable shared scale, as this example does.
+
+Currents accept numbers or strings in both the CLI and library:
+
+| Example | Peak amperes |
+| --- | ---: |
+| `5mA` | 0.005 |
+| `0.1A` or `0.1` | 0.1 |
+| `250uA`, `250µA`, `250μA` | 0.00025 |
+| `10nA` | 0.00000001 |
+| `-5mA` | -0.005 (180° phase reversal) |
+| `1e-3A` | 0.001 |
+
+Spaces are accepted when quoted, e.g. `--current "5 mA"`. Units are
+case-sensitive (`mA` is supported; `MA` is not). Values are **peak, not RMS**.
+For a sine specified in RMS, supply `√2 × RMS` as the peak value. Resistance
+accepts bare ohms, `50ohm`, `50Ω`, `1kohm`, `1kOhm`, `1kΩ`, `1MOhm`, etc.
+Zero, negative, infinite and complex impedances such as `50+j10` are rejected.
+Ideal shorts/opens and reactive RLC terminations are not implemented.
+
+### Multiple simultaneous signals
+
+Repeat `--excitation source,load,current` for the default reference contacts.
+They share the specified frequency and ground net, with signed, in-phase peak
+currents. Source/load impedance flags apply to each excitation:
 
 ```sh
 simulate-return-current board.json --ground GND --frequency-hz 1000000 \
-  --excitation R1.pin1,U1.VDDIO1,1 \
-  --excitation R2.pin1,U2.IN,0.5 --output return-current
+  --excitation U1.OUT1,U2.IN1,5mA \
+  --excitation U1.OUT2,U2.IN2,0.1A \
+  --source-impedance 25 --load-impedance 100 --output two-signals
 ```
 
+To name both terminals, use the five-field form
+`source,sourceReference,load,loadReference,current`:
+
+```sh
+simulate-return-current board.json --ground GND --frequency-hz 1000000 \
+  --excitation U1.OUT1,U1.GND,U2.IN1,U2.GND,5mA \
+  --excitation U1.OUT2,U1.GND,U2.IN2,U2.GND,-5mA \
+  --output opposing-signals
+```
+
+The negative current gives the second excitation a 180° phase reversal. The EM
+fields are combined as complex vectors **before** calculating the heatmap's
+magnitude. Opposing signals can represent differential drive, but both ports
+still terminate to ground; a true resistor directly between P and N is not
+supported. Other phase angles and different frequencies in one solve are not
+supported.
+
+For per-signal resistances, put an **array** in `ports.json`:
+
+```json
+[
+  {
+    "source": "U1.OUT1", "sourceReference": "U1.GND",
+    "load": "U2.IN1", "loadReference": "U2.GND",
+    "current": "5mA", "sourceImpedance": "25ohm", "loadImpedance": 100
+  },
+  {
+    "source": "U1.OUT2", "sourceReference": "U1.GND",
+    "load": "U2.IN2", "loadReference": "U2.GND",
+    "current": "-0.1A", "sourceImpedance": 50, "loadImpedance": "1kohm"
+  }
+]
+```
+
+```sh
+simulate-return-current board.json --ports-file ports.json \
+  --ground GND --frequency-hz 1000000 --output multi-port
+```
+
+Use exactly one input style: single-source flags, repeated `--excitation`, or
+`--ports-file`. Reference pins go inside each repeated excitation; do not combine
+it with single-source reference flags. Each source/load pair still needs one
+continuous top-layer trace. Shared ground reference pads are allowed, provided
+port apertures do not overlap or intersect unrelated copper.
+
+### Frequency and geometry comparisons
+
+Run independent cases to compare frequencies or load resistances:
+
+```sh
+for hz in 500000 1000000 2000000; do
+  simulate-return-current board.json \
+    --source U1.OUT --load U2.IN --ground GND --current 5mA \
+    --frequency-hz "$hz" --output "result-$hz"
+done
+```
+
+Changing frequency, terminals, termination resistance, geometry or FEM mesh
+requires a new solve. A digital waveform needs separate harmonic amplitudes and
+phases; waveform reconstruction is not implemented. To compare slot shapes,
+export separate circuit-json files and use the same excitation and numerical
+settings for each.
+
 Use `--prepare-only` to inspect the resolved ports, model and sample grid before
-running an EM solve. For JSON that already contains
+running an EM solve. `excitation-ports.json` records currents in amperes,
+resolved terminal coordinates/layers and resistances; inspect `model.json` too.
+For JSON that already contains
 `simulation_return_current_excitation` records, explicitly use
 `--use-circuit-excitations` with `--frequency-hz` instead of naming pins.
 
@@ -133,7 +291,11 @@ const result = await runPalaceSimulation({
   circuitJson,
   frequencyHz: 1e6,
   groundNet: "GND",
-  ports: [{ source: "R1.pin1", load: "U1.VDDIO1", current: 1 }],
+  ports: [{
+    source: "U1.OUT", sourceReference: "U1.GND",
+    load: "U2.IN", loadReference: "U2.GND",
+    current: "5mA", sourceImpedance: 25, loadImpedance: "100ohm",
+  }],
   outputDirectory: "return-current",
 })
 console.log(result.pngPath)
@@ -143,6 +305,9 @@ The Node-only `/palace` entry also exports `preparePalaceSimulation`,
 `resamplePalaceCase` and `setupPalacePython`. The root entry exports
 `withNamedExcitations`, `simulateReturnCurrent` (the approximation),
 `renderReturnCurrentSvg`, `renderPalaceModelSvg` and the comparison helpers.
+The same `ports` array can be written to a CLI `--ports-file`. Reference pins
+and impedances are optional for the library too. Root exports `parseCurrentAmps`
+and `parseResistanceOhms` normalize supported units to SI numbers.
 Use `renderPalaceModelSvg(model, { reference, phaseDegrees: 90 })` to render saved
 Palace fields at a different arrow phase.
 
@@ -150,9 +315,14 @@ Palace fields at a different arrow phase.
 
 The current model needs one **two-layer** board, continuous **top-layer** wire
 traces, and **bottom ground copper** on the selected net. Each source/load pair
-must be the endpoints of one PCB trace. Branched/component-spanning paths, vias,
-drilled/plated holes and multi-layer routing are not supported. Pin/refdes
-selectors must be unambiguous. Palace supports rectangular top SMT pads.
+must be the endpoints of one PCB trace. Branched/component-spanning paths,
+signal vias, arbitrary drilled/plated holes and multi-layer routing are not
+supported. The supported ground vias are limited to concentric vias in selected
+top reference pads; their outer diameter must fit inside the pad, with room for
+the plated barrel. Pin/refdes selectors must be unambiguous. Palace supports
+rectangular top SMT pads, a clear non-overlapping gap for each top port, and
+bottom reference contacts fully on selected ground copper. The approximation
+rejects explicit reference terminals, non-default impedances and drilled boards.
 
 Ground copper comes from bottom `pcb_copper_pour` records or
 `pcb_ground_plane`/`pcb_ground_plane_region` records. Declaring `GND` alone does
@@ -162,7 +332,15 @@ also removes substrate, so signals must route around it.
 Physical defaults: board thickness for signal/ground separation (0.8 mm when
 missing), 0.035 mm copper, 5.8 × 10⁷ S/m conductivity, substrate relative
 permittivity 4.3, and loss tangent 0.02. The library's `PalaceSimulationOptions`
-allows material and stackup overrides. The current volume mesher requires foil
+allows material and stackup overrides. Ground-via plating thickness is currently
+the specified copper thickness, and drill circles use 32-sided polygons.
+`source_port`/`load_port` on `simulation_return_current_excitation` are temporary
+local circuit-json metadata, injected by named-port resolution and preserved by
+`parseReturnCurrentCircuitJson`; core does not need to emit them yet.
+The original excitation record is proposed in
+[circuit-json PR #870](https://github.com/tscircuit/circuit-json/pull/870);
+the explicit terminal fields remain a local extension.
+The current volume mesher requires foil
 thickness no greater than skin depth. Check mesh refinement and air-domain size
 before treating Palace results as an accuracy reference.
 
@@ -176,6 +354,7 @@ bun run format:check
 bun run build
 bun run smoke:package
 bun run start                 # Cosmos viewer
+PALACE_MESH_PYTHON=python bun test tests/palace/explicit-mesh.test.tsx
 npm pack                     # npm tarball, including CLI and Python assets
 ```
 
@@ -185,8 +364,7 @@ installs a tarball into a clean project and exercises its Node CLI and library.
 
 The **Publish to npm** workflow runs manually from `main`, validates the package,
 and publishes it with provenance. Repository metadata targets
-`tscircuit/simulate-return-current`; rename the repository before the first
-provenance release. The first release needs the repository's
+`tscircuit/simulate-return-current`. The first release needs the repository's
 `NPM_TOKEN` secret; later releases can use npm trusted publishing configured for
 the repository and `publish-npm.yml`. Bump `package.json` before subsequent
 releases. You can also run `npm publish --access public` after authenticating.

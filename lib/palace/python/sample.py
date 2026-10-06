@@ -60,12 +60,10 @@ def read_ground(path):
     copper_cells = np.flatnonzero(attributes == 3)
     ground_cells = vtk.vtkIdList()
     for index in copper_cells:
-        cell = mesh.GetCell(int(index))
-        if all(
-            cell.GetPoints().GetPoint(corner)[2] <= 1e-6
-            for corner in range(cell.GetNumberOfPoints())
-        ):
-            ground_cells.InsertNextId(int(index))
+        # Probe coordinates, not vertex heights, select bottom foil. A plated
+        # barrel can share valid copper tetrahedra across z=0; excluding those
+        # loses real bottom-plane samples around a ground via.
+        ground_cells.InsertNextId(int(index))
     if ground_cells.GetNumberOfIds() == 0:
         raise ValueError("Palace output has no bottom copper volume cells")
     extract = vtk.vtkExtractCells()
@@ -144,6 +142,7 @@ def geometry_signature(geometry):
                 coordinate(excitation["current"]),
                 point(excitation["return_source"]),
                 point(excitation["return_sink"]),
+                *([[excitation.get("source_port", {}).get("reference_layer", "bottom"), coordinate(excitation.get("source_port", {}).get("resistance", 50)), excitation.get("load_port", {}).get("reference_layer", "bottom"), coordinate(excitation.get("load_port", {}).get("resistance", 50))]] if excitation.get("source_port") or excitation.get("load_port") else []),
             ]
             for excitation in geometry["excitations"]
         ],

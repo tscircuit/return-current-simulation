@@ -12,6 +12,16 @@ export interface SimulationReturnCurrentExcitation {
   current: number
   return_source: Point
   return_sink: Point
+  /** Temporary explicit two-terminal Palace port metadata. */
+  source_port?: SimulationTerminalPort
+  load_port?: SimulationTerminalPort
+}
+
+export interface SimulationTerminalPort {
+  signal_pcb_port_id: string
+  reference_pcb_port_id?: string
+  reference_layer: "top" | "bottom"
+  resistance: number
 }
 
 export type ReturnCurrentCircuitJson = readonly (

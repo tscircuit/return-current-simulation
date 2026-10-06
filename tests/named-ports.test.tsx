@@ -58,7 +58,9 @@ test("all three TSX signals can be selected with explicit ports and independent 
     ports: [1, 2, 3].map((index) => ({
       source: `SIG${index}_S.pin1`,
       load: `SIG${index}_L.SIGNAL`,
-      current: index / 10,
+      current: `${index * 100}mA`,
+      sourceImpedance: index * 10,
+      loadImpedance: `${index * 100}ohm`,
     })),
   })
   expect(
@@ -67,6 +69,11 @@ test("all three TSX signals can be selected with explicit ports and independent 
       frequencyHz: 1e6,
     }).geometry.excitations.map((excitation) => excitation.current),
   ).toEqual([0.1, 0.2, 0.3])
+  expect(
+    createPalaceModel({ circuitJson, frequencyHz: 1e6 }).ports?.map(
+      (port) => port.resistance,
+    ),
+  ).toEqual([10, 100, 20, 200, 30, 300])
   expect(
     circuitJson.filter(
       (element) => element.type === "simulation_return_current_excitation",

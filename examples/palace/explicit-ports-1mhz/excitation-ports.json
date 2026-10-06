@@ -1,0 +1,48 @@
+{
+  "frequencyHz": 1000000,
+  "ports": [
+    {
+      "sourceReference": "U1.GND",
+      "loadReference": "U2.GND",
+      "sourceImpedance": 25,
+      "loadImpedance": 100,
+      "source": "U1.OUT",
+      "load": "U2.IN",
+      "current": 0.005
+    }
+  ],
+  "groundNet": "GND",
+  "resolvedTerminals": [
+    {
+      "signal": {
+        "x": -2,
+        "y": 0
+      },
+      "reference": {
+        "x": -2,
+        "y": 1.5
+      },
+      "referenceLayer": "top",
+      "resistance": 25,
+      "signalPcbPortId": "pcb_port_0",
+      "referencePcbPortId": "pcb_port_1"
+    },
+    {
+      "signal": {
+        "x": 2,
+        "y": 0
+      },
+      "reference": {
+        "x": 2,
+        "y": 1.5
+      },
+      "referenceLayer": "top",
+      "resistance": 100,
+      "signalPcbPortId": "pcb_port_2",
+      "referencePcbPortId": "pcb_port_3"
+    }
+  ],
+  "metadataSource": "named_ports",
+  "reference": "explicit reference pins; omitted references use plane beneath signal",
+  "currentConvention": "signed in-phase peak amperes"
+}

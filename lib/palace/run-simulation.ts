@@ -4,6 +4,9 @@ import { withNamedExcitations, type NamedExcitation } from "../named-ports"
 import { preparePalaceCase, runPalaceCase } from "./run-case"
 import { writePalaceImage } from "./write-palace-image"
 import type { PalaceOptions } from "./types"
+import { parseCurrentAmps, parseResistanceOhms } from "../electrical-units"
+import { readJson } from "./read-json"
+import type { PalaceModel } from "./types"
 
 export interface PalaceSimulationOptions extends PalaceOptions {
   outputDirectory: string
@@ -33,7 +36,11 @@ function caseOptions(options: PalaceSimulationOptions) {
   const circuitJson = options.ports
     ? withNamedExcitations({
         circuitJson: options.circuitJson,
-        ports: options.ports,
+        ports: options.ports.map((port) => ({
+          ...port,
+          sourceImpedance: port.sourceImpedance ?? options.portResistance ?? 50,
+          loadImpedance: port.loadImpedance ?? options.portResistance ?? 50,
+        })),
         groundNet: options.groundNet!,
       })
     : options.excitations
@@ -57,15 +64,31 @@ async function writePortSpecification(
   options: PalaceSimulationOptions,
   destination: string,
 ) {
+  const model: PalaceModel = await readJson(join(destination, "model.json"))
   await writeFile(
     join(destination, "excitation-ports.json"),
     JSON.stringify(
       {
         frequencyHz: options.frequencyHz,
-        ports: options.ports ?? null,
+        ports:
+          options.ports?.map((port) => ({
+            ...port,
+            current: parseCurrentAmps(port.current),
+            ...(port.sourceImpedance === undefined
+              ? {}
+              : { sourceImpedance: parseResistanceOhms(port.sourceImpedance) }),
+            ...(port.loadImpedance === undefined
+              ? {}
+              : { loadImpedance: parseResistanceOhms(port.loadImpedance) }),
+          })) ?? null,
         groundNet: options.groundNet ?? null,
+        resolvedTerminals: model.ports,
         metadataSource: options.ports ? "named_ports" : "circuit_json",
-        reference: "ground plane directly beneath each signal endpoint",
+        reference: options.ports?.some(
+          (port) => port.sourceReference || port.loadReference,
+        )
+          ? "explicit reference pins; omitted references use plane beneath signal"
+          : "ground plane directly beneath each signal endpoint",
         currentConvention: "signed in-phase peak amperes",
       },
       null,
