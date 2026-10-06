@@ -9,7 +9,7 @@ permissions:
 jobs:
   palace:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
@@ -22,6 +22,9 @@ jobs:
       - run: bun install
       - run: python -m pip install -r lib/palace/python/requirements.txt
       - run: bun run generate:palace work/palace
+        env:
+          PALACE_PROCESSES: 4
+      - run: bun run generate:palace:wide-gap work/palace/ground-slot-wide-gap-1mhz
         env:
           PALACE_PROCESSES: 4
       - uses: actions/upload-artifact@v4

@@ -9,19 +9,29 @@ import type { PalaceReference, ReturnCurrentCircuitJson } from "lib/index"
 import frozenCircuit from "../examples/palace/ground-slot-1mhz/circuit.json"
 import frozenReference from "../examples/palace/ground-slot-1mhz/reference.json"
 import refinement from "../examples/palace/refinement.json"
+import wideCircuit from "../examples/palace/ground-slot-wide-gap-1mhz/circuit.json"
+import wideReference from "../examples/palace/ground-slot-wide-gap-1mhz/reference.json"
+import wideFlux from "../examples/palace/ground-slot-wide-gap-1mhz/flux-check.json"
 
 export default function PalaceComparisonPage() {
+  const [topGap, setTopGap] = useState(4)
   const [phaseDegrees, setPhaseDegrees] = useState(0)
   const [hideVectors, setHideVectors] = useState(false)
-  const reference = frozenReference as PalaceReference
+  const reference = (
+    topGap === 4 ? wideReference : frozenReference
+  ) as PalaceReference
+  const circuitJson = (
+    topGap === 4 ? wideCircuit : frozenCircuit
+  ) as ReturnCurrentCircuitJson
+  const flux = topGap === 4 ? wideFlux : refinement.fluxCheck
   const result = useMemo(
     () =>
       simulateReturnCurrent({
-        circuitJson: frozenCircuit as ReturnCurrentCircuitJson,
-        cellSize: 0.5,
+        circuitJson,
+        cellSize: reference.cellWidth,
         contactRadius: 0.6,
       }),
-    [],
+    [reference, circuitJson],
   )
   const comparison = useMemo(
     () => comparePalaceReference(result, { reference }),
@@ -31,13 +41,14 @@ export default function PalaceComparisonPage() {
     width: 900,
     height: 1000,
     maxCurrentDensity: 50,
-    vectorSpacing: 3,
+    vectorSpacing: Math.max(1, Math.round(1.5 / reference.cellWidth)),
     hideVectors,
   }
   const palaceSvg = renderPalaceReferenceSvg(result, {
     ...renderOptions,
     reference,
     phaseDegrees,
+    title: `Palace: ${topGap} mm clearance above the slot`,
   })
   const approximationSvg = renderReturnCurrentSvg(result, renderOptions)
   return (
@@ -55,10 +66,22 @@ export default function PalaceComparisonPage() {
         tanδ = 0.02, 50 Ω ports.
       </p>
       <p>
-        Palace solves conductive copper volumes in a 3D Maxwell model. Colors
-        show magnitude of the complex conduction-current vector averaged through
-        the foil. Arrows show the instantaneous return field.
+        Image samples: {reference.columns} × {reference.rows} at{" "}
+        {reference.cellWidth} mm spacing. Palace solves conductive copper
+        volumes in a 3D Maxwell model. Colors show magnitude of the complex
+        conduction-current vector averaged through the foil. Arrows show the
+        instantaneous return field.
       </p>
+      <label>
+        Clearance above slot:{" "}
+        <select
+          value={topGap}
+          onChange={(event) => setTopGap(Number(event.target.value))}
+        >
+          <option value={4}>4 mm</option>
+          <option value={1}>1 mm</option>
+        </select>
+      </label>{" "}
       <label>
         Arrow phase: {phaseDegrees}°{" "}
         <input
@@ -84,10 +107,11 @@ export default function PalaceComparisonPage() {
         copper edges excluded). The approximation does not model frequency.
       </p>
       <p>
-        Reference under validation: coarse/fine field change{" "}
-        {(100 * refinement.relativeComplexL2Change).toFixed(1)}%; dense sampled
-        bridge balance error{" "}
-        {(100 * refinement.fluxCheck.relativeComplexBalanceError).toFixed(2)}%.
+        Reference under validation: dense sampled bridge balance error{" "}
+        {(100 * flux.relativeComplexBalanceError).toFixed(2)}%.
+        {topGap === 1
+          ? ` Coarse/fine field change: ${(100 * refinement.relativeComplexL2Change).toFixed(1)}%.`
+          : " Mesh convergence for the 4 mm clearance has not been established."}
         These results are not established ground truth.
       </p>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 16 }}>

@@ -5,6 +5,7 @@ import { palaceImage } from "./run-case"
 export async function exportEvidence(options: {
   source: string
   destination: string
+  rawOutputCommand?: string
 }) {
   await mkdir(options.destination, { recursive: true })
   for (const filename of [
@@ -14,6 +15,7 @@ export async function exportEvidence(options: {
     "mesh-summary.json",
     "normalization.json",
     "reference.json",
+    "sample-grid.json",
     "comparison.json",
     "palace.svg",
     "palace.png",
@@ -55,8 +57,19 @@ export async function exportEvidence(options: {
         phasorConvention: "peak, exp(+j omega t)",
         sourceNormalization:
           "solve full source-port basis current matrix; net source = 2 I_inc - I_termination",
-        rawOutputCommand: "bun run generate:palace work/palace",
+        rawOutputCommand:
+          options.rawOutputCommand ?? "bun run generate:palace work/palace",
         rawOutputLocation: "work/palace/*/postpro/paraview",
+        imageSampling: await Bun.file(
+          resolve(options.source, "sample-grid.json"),
+        )
+          .json()
+          .then(({ columns, rows, cellWidth, cellHeight }) => ({
+            columns,
+            rows,
+            cellWidth,
+            cellHeight,
+          })),
       },
       null,
       2,

@@ -2,13 +2,13 @@
   "referenceSolver": "Palace v0.14.0",
   "frequencyHz": 100000,
   "approximationFrequencyModel": "none",
-  "comparedSamples": 5390,
-  "excludedSamples": 542,
+  "comparedSamples": 34239,
+  "excludedSamples": 2836,
   "edgeExclusionMm": 0.5,
   "contactExclusionMm": 1,
-  "relativeComplexL2Error": 0.8531679754771391,
-  "relativeRealL2Error": 0.813161821824418,
-  "relativeMagnitudeL2Error": 0.6043875914613756,
-  "rmsSheetCurrentErrorAmpsPerMm": 0.16401329766977085,
-  "maxAbsoluteEquivalentDensityErrorAmpsPerMm2": 28.098480715868387
+  "relativeComplexL2Error": 0.81288656837101,
+  "relativeRealL2Error": 0.7680343807690138,
+  "relativeMagnitudeL2Error": 0.5821320451087867,
+  "rmsSheetCurrentErrorAmpsPerMm": 0.1679239930231142,
+  "maxAbsoluteEquivalentDensityErrorAmpsPerMm2": 49.93728779753141
 }

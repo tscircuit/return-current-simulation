@@ -126,7 +126,8 @@ export function pointInPolygon(
 export function pointInRegion(point: Point, region: CopperRegion): boolean {
   return (
     pointInPolygon(point, region.outer) &&
-    !region.holes.some((hole) => pointInPolygon(point, hole))
+    !region.holes.some((hole) => pointInPolygon(point, hole)) &&
+    !(region.maskCutouts ?? []).some((hole) => pointInPolygon(point, hole))
   )
 }
 

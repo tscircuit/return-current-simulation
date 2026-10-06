@@ -1,0 +1,36 @@
+{
+  "board": "astra/am3352-sbc",
+  "version": "0.1.19",
+  "modelSha256": "35938f7a0e0c7d2159e3929288542451d0fdbfcb6739fc7145bf4fdfa8787a82",
+  "valid": true,
+  "seconds": 22.766906274991925,
+  "traceEndCaps": "round",
+  "circleSides": 32,
+  "checkedLayers": [
+    "top",
+    "inner1",
+    "inner2",
+    "bottom"
+  ],
+  "overlaps": [],
+  "reportedPair": {
+    "layer": "inner1",
+    "nets": [
+      "source_net_23",
+      "source_net_80"
+    ],
+    "netNames": [
+      "MMC0_DAT3",
+      "VIN_5V"
+    ],
+    "squareCapOverlapAreaMm2": 0.0042909589610000305,
+    "roundCapOverlapAreaMm2": 0.0,
+    "roundCapMinimumClearanceMm": 0.11076557155375111
+  },
+  "heatmap": {
+    "quantity": "number of distinct copper nets at each cell center",
+    "cellSizeMm": 0.005,
+    "frequencyApplicable": false,
+    "emSolvePerformed": false
+  }
+}

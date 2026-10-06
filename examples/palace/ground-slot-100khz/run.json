@@ -7,5 +7,11 @@
   "phasorConvention": "peak, exp(+j omega t)",
   "sourceNormalization": "solve full source-port basis current matrix; net source = 2 I_inc - I_termination",
   "rawOutputCommand": "bun run generate:palace work/palace",
-  "rawOutputLocation": "work/palace/*/postpro/paraview"
+  "rawOutputLocation": "work/palace/*/postpro/paraview",
+  "imageSampling": {
+    "columns": 200,
+    "rows": 200,
+    "cellWidth": 0.2,
+    "cellHeight": 0.2
+  }
 }

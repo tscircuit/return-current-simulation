@@ -1,306 +1,512 @@
-# Return-current simulation
+# simulate-return-current
 
-Use **Palace EM** to solve a two-layer PCB at an explicit frequency, then compare
-its complex return-current field with the original image-current approximation.
-Both accept circuit-json; every example and visual snapshot starts from TSX
-rendered by `@tscircuit/core`.
+Generate return-current SVG/PNG images from **tscircuit circuit-json** with
+**Palace EM**. Select the signal's source/load pins, ground net, peak current and
+frequency explicitly.
 
-![Palace return-current reference at 1 MHz](examples/palace/ground-slot-1mhz/palace.svg)
+![1 MHz Palace return current](examples/palace/ground-slot-wide-gap-005mm-1mhz/palace.png)
 
-The Palace fixture has three top traces, a slot in the bottom ground copper,
-0.8 mm of FR4, and 35 µm copper. FR4 remains under signals crossing the slot.
-A physical PCB cutout removes the substrate too; signals must route around it.
-Palace models the copper as **3D conductive volumes**, not PEC or a custom field
-algorithm. The fields use 1 MHz and three simultaneous, in-phase 1 A peak source
-currents, with 50 Ω source/load ports. These assumptions are not known for the
-supplied screenshot, so visual similarity alone cannot validate either model.
+## CLI
 
-The original approximation **does not model frequency**. It is experimental and
-its current-conservation residual is not an electromagnetic accuracy check. Its
-snapshots now state this explicitly.
-
-## Run Palace
-
-Requires Bun, Python 3.12, Gmsh's `libGLU`, and either Docker or Palace v0.14.0.
-The Docker fallback is a **community-built** v0.14.0 binary pinned by digest;
-it is not an AWS-published container. See the pinned image and upstream source in
-[`scripts/palace/run-case.ts`](scripts/palace/run-case.ts).
+Requires **Node.js 20.11+**. Before the first npm release, run from a checkout:
 
 ```sh
 bun install
-python3 -m venv work/palace-python
-work/palace-python/bin/pip install -r lib/palace/python/requirements.txt
-export PALACE_PYTHON="$PWD/work/palace-python/bin/python"
-# Optional native installation instead of Docker:
-# export PALACE_BIN=/path/to/palace-v0.14.0/bin/palace
-bun run palace examples/ground-slot.circuit.json work/palace-slot \
-  --frequency-hz 1000000 --mesh-size 2 --air-padding 6 --order 2 --processes 4
+bun run build
+node dist/cli.js --help
 ```
 
-To generate input circuit-json from TSX and run the example suite:
+Use `node dist/cli.js` in place of `simulate-return-current` in the examples
+below. Once published, install globally or run with `npx`:
 
 ```sh
-bun run generate:palace work/palace
+npm install -g simulate-return-current
+simulate-return-current --help
+# Or: npx simulate-return-current --help
 ```
 
-Each run saves the input circuit, mesher model, Gmsh mesh, Palace configuration,
-solver log, port CSVs, raw ParaView fields, complex sampled currents, numerical
-comparison, and SVG/PNG images. Outputs are under `work/`; curated evidence is
-checked into [`examples/palace`](examples/palace). The manual **Palace reference**
-CI workflow uploads raw meshes and ParaView output as artifacts, then checks
-fresh field changes and independently sampled return-current balance.
-
-`frequencyHz` is required; the CLI has no frequency default. Other explicit
-options include conductivity, copper thickness, FR4 permittivity/loss tangent,
-port resistance, signal/ground separation, mesh size, air padding, and FEM order.
-Use `--processes` (or `PALACE_PROCESSES`) for MPI parallelism.
-Ports currently require ground contacts directly beneath trace endpoints and
-rectangular top SMT pads. Unsupported geometries fail instead of disappearing.
-The volume mesher currently requires foil thickness no larger than skin depth;
-there is no claim of a resolved high-frequency skin-effect benchmark.
-
-## Compare numerical fields
-
-```ts
-import {
-  comparePalaceReference,
-  renderPalaceReferenceSvg,
-  simulateReturnCurrent,
-} from "@tscircuit/return-current-simulation"
-import type { PalaceReference } from "@tscircuit/return-current-simulation"
-
-const reference: PalaceReference = await Bun.file("work/palace-slot/reference.json").json()
-const result = simulateReturnCurrent({
-  circuitJson,
-  cellSize: reference.cellWidth,
-  copperThickness: reference.copperThickness,
-  layerSeparation: 0.8,
-  contactRadius: 0.6,
-})
-console.log(comparePalaceReference(result, { reference }))
-await Bun.write("palace.svg", renderPalaceReferenceSvg(result, {
-  reference,
-  phaseDegrees: 0,
-  maxCurrentDensity: 50,
-}))
-```
-
-The comparison requires identical sampling positions, source currents and foil
-thickness. It reports complex-vector, real-vector and magnitude L2 differences,
-with contact/edge exclusions recorded. It does not fit amplitudes, rotate phase,
-or equate its error to a conservation residual. The heatmap shows the complex
-norm of thickness-averaged conduction current in A/mm²; arrows show an
-instantaneous field at the selected phase. Raw sheet-current phasors are A/mm.
-
-Palace's RF `port-I.csv` reports termination current. Net driven current entering
-the PCB is **2 I_inc − I_termination**. The importer solves the full source-current
-matrix, including coupling, to normalize simultaneous 1 A excitations. Load
-currents are reported separately and are not forced to equal the source current.
-
-**Version-specific units:** Palace v0.14.0's ParaView fields are nondimensional.
-The importer uses `E_SI = E_VTU × sqrt(Z0)/Lc`, then `J = conductivity × E_SI`,
-and integrates five Gauss points through the bottom copper. CSV port currents
-are already amperes. `Lc` is fixed explicitly in newly generated configurations;
-older case files derive the upstream default from the air-domain bounds. Other
-Palace versions are rejected until their output units are audited. See upstream
-[v0.14.0 units](https://github.com/awslabs/palace/blob/v0.14.0/palace/utils/units.hpp)
-and [postprocessing documentation](https://github.com/awslabs/palace/blob/v0.14.0/docs/src/guide/postprocessing.md).
-
-The 100 kHz example is exploratory order-1 evidence. Its frequency comparison
-uses the [matching order-1 1 MHz run](examples/palace/ground-slot-order1-1mhz),
-with identical mesh hashes, rather than attributing a change in FEM order to
-frequency. Use equal numerical refinement when comparing frequencies.
-
-Palace is an independent **point of comparison**, not automatically ground truth.
-The checked-in refinement report records field changes and bridge-current balance.
-Dense cross-section quadrature recovers 0.996 A for the straight 1 A source
-and 3.002 A through the slot bridge for three 1 A sources; complex balance errors
-are 0.64% and 0.064%, respectively. The 0.5 mm image grid gives a misleading
-16.8% slot balance error because only two rows span the 1 mm bridge, so flux
-checks use separate 0.0125 mm samples there. Current balance validates units and
-normalization; the 48.2% coarse/fine field change still prevents treating this
-mesh as converged ground truth.
-Increase FEM order, refine the mesh, and enlarge the air domain before treating a
-result as an accuracy reference. Contact footprints differ from the approximation's
-distributed contacts, so those neighborhoods are excluded from the default metric.
-
-## Library usage
-
-Following the [handbook](https://github.com/tscircuit/handbook/blob/main/guides/bootstrapping-repos.md),
-the package uses GitHub vanilla installation, a TypeScript entrypoint, no package
-build step, and no lockfile.
+For Palace, also install **Python 3.12** and run Docker, or provide native
+**Palace v0.14.0** with `--palace-bin /path/to/palace`. Install the Python
+dependencies into a local environment using the bundled setup command:
 
 ```sh
-bun add github:tscircuit/return-current-simulation
+simulate-return-current setup --python python3
 ```
 
-```ts
-import {
-  parseReturnCurrentCircuitJson,
-  simulateReturnCurrent,
-  renderReturnCurrentSvg,
-} from "@tscircuit/return-current-simulation"
+This creates `.return-current-python/` in the current directory, which subsequent
+runs detect automatically. On Debian/Ubuntu, Gmsh needs `libglu1-mesa` too.
+Use `--python /path/to/venv/bin/python` or `PALACE_PYTHON` for an existing
+environment. The Docker fallback is a community-built image pinned by digest.
 
-const circuitJson = parseReturnCurrentCircuitJson(
-  await Bun.file("input.circuit.json").json(),
-)
-const result = simulateReturnCurrent({
-  circuitJson,
-  cellSize: 0.25, // mm
-  layerSeparation: 0.8, // mm, signal-to-ground distance
-  copperThickness: 0.035, // mm
-  contactRadius: 0.6, // mm
-})
-await Bun.write("return-current.svg", renderReturnCurrentSvg(result))
-```
+### Use your circuit-json
 
-Parsing validates external JSON and normalizes circuit-json units. Already
-validated circuit-json can be passed directly. Results contain copper nodes,
-signed edge currents in A, sheet-current components in A/mm, density in A/mm²,
-and convergence/conservation diagnostics. Non-convergence throws.
-
-SVG rendering requires no DOM, canvas, or native dependency. Render options
-include `maxCurrentDensity` (a fixed **linear** color-scale maximum in A/mm²),
-`hideVectors`, `hideTraces`, `vectorSpacing`, `width`, `height`, and `title`.
-Without a fixed maximum, each image scales to its own peak.
-
-For PNG export with the included script:
+Export the circuit-json array from your tscircuit board with
+`circuit.getCircuitJson()` after `await circuit.renderUntilSettled()`. Save that
+array as `board.json`; traces, vias and reference copper must already be
+rendered. Inspect available pin names and aliases:
 
 ```sh
-git clone https://github.com/tscircuit/return-current-simulation
-cd return-current-simulation
-bun install
-bun run render examples/ground-slot.circuit.json return-current.png 0.25
+simulate-return-current ports board.json
 ```
 
-## Excitations
+Run a **1 MHz**, **100 mA peak** excitation from `R1.pin1` to `U1.VDDIO1`, referenced
+to the bottom copper on `GND`:
 
-Geometry does not determine signal current or spatial ground contacts. Include
-one element per excited trace:
+```sh
+simulate-return-current board.json \
+  --source R1.pin1 --load U1.VDDIO1 --ground GND \
+  --current 0.1A --frequency-hz 1000000 \
+  --output return-current --cell-size 0.05 --image-size 2000
+```
+
+Open `return-current/palace.png` or `palace.svg`. The case also saves the resolved
+`excitation-ports.json`, input circuit, model, mesh, solver logs, raw ParaView
+fields, complex sampled currents and `run-timing.json`.
+
+**Frequency comes from `--frequency-hz`, not from circuit-json or the pin name.**
+`--source` names the driver terminal; `--load` names the receiving terminal.
+`--current` is the signed peak current at that frequency, not RMS. Named pins
+resolve through source components/ports to PCB ports and the connecting trace;
+you do not need to look up `pcb_trace_id` or manually inject excitation records.
+
+### Choose both terminals of each port
+
+A port is a **pair of terminals**: the signal pin and its reference pin. The
+source port drives the PCB; the load port terminates it. To model a source
+between `U1.OUT` and `U1.GND`, and a load between `U2.IN` and `U2.GND`:
+
+```sh
+simulate-return-current board.json \
+  --source U1.OUT --source-reference U1.GND \
+  --load U2.IN --load-reference U2.GND \
+  --ground GND --current 5mA --frequency-hz 1000000 \
+  --source-impedance 25ohm --load-impedance 100ohm \
+  --output explicit-ports
+```
+
+This imposes a **5 mA peak sinusoidal source current at 1 MHz**, with a 25 Ω
+source-port resistance and a 100 Ω load resistance. The source current is
+`I(t) = 0.005 cos(2π × 1000000 × t)` A. The receiving component's actual
+impedance is not inferred from its pin name or component properties.
+
+| Input | Meaning / default |
+| --- | --- |
+| `--source`, `--load` | Required signal pins: `refdes.pin`, pin name or alias |
+| `--source-reference`, `--load-reference` | Optional named ground pins; omitted endpoints reference bottom copper directly beneath the signal |
+| `--ground` | Common ground net name or `source_net_id`; selecting a net does not create copper |
+| `--current` | Signed peak current; bare numbers are amperes |
+| `--frequency-hz` | Required single frequency in Hz; no implicit frequency |
+| `--source-impedance`, `--load-impedance` | Positive **real resistance**, independently defaulting to 50 Ω |
+
+Palace applies these resistances to its two-terminal lumped ports. The source
+port includes an impressed Norton source and a parallel resistance; the importer
+normalizes the **net injected source current**, after subtracting the
+termination current, to the requested amplitude. The load current and voltage
+are solved quantities; they are not separately forced. The current source is
+prescribed externally: this does not simulate an IC, resistor or power supply
+as a SPICE circuit, or specify an independent source voltage.
+
+**Reference geometry matters.** In the legacy two-layer model, a named bottom-layer reference must lie on the
+selected ground copper. A named top-layer reference must be a rectangular SMT
+ground pad with a **concentric top-to-bottom ground via already in circuit-json**.
+The tool meshes the pad, drilled hole and copper barrel, and places the lumped
+port across the gap from signal pad to ground pad. It does not silently connect
+a floating pad to the plane. Other ground-via arrangements need future routing
+support. Both reference pins must be connected to `GND` in source connectivity;
+labels such as `GND` alone are insufficient.
+
+The [complete TSX example](tests/fixtures/ExplicitPortBoard.tsx) emits two signal
+pins, two ground pads, both vias, and the bottom pour through tscircuit/core.
+For its `U1.GND` pad at board coordinates `(-2, 1.5)`, the connection includes:
+
+```tsx
+<trace from=".U1 > .GND" to="net.GND" />
+<via
+  name="GV1" pcbX={-2} pcbY={1.5}
+  fromLayer="top" toLayer="bottom"
+  holeDiameter="0.2mm" outerDiameter="0.6mm"
+  connectsTo="net.GND"
+/>
+```
+
+### Current and resistance units
+
+The [completed Palace example](examples/palace/explicit-ports-1mhz) includes a
+TSX-derived visual snapshot, resolved ports, solver evidence and timing: its
+5 mA / 1 MHz case at 0.05 mm sampling took 56.64 seconds including mesh, solve
+and export. Image markers use `S1+`/`S1−` and `L1+`/`L1−` for the two terminal
+pairs; `+`/`−` denote port polarity. CLI images currently use a fixed 50 A/mm²
+color-scale maximum; for small currents, the library renderer can set
+`maxCurrentDensity` to a suitable shared scale, as this example does.
+
+Currents accept numbers or strings in both the CLI and library:
+
+| Example | Peak amperes |
+| --- | ---: |
+| `5mA` | 0.005 |
+| `0.1A` or `0.1` | 0.1 |
+| `250uA`, `250µA`, `250μA` | 0.00025 |
+| `10nA` | 0.00000001 |
+| `-5mA` | -0.005 (180° phase reversal) |
+| `1e-3A` | 0.001 |
+
+Spaces are accepted when quoted, e.g. `--current "5 mA"`. Units are
+case-sensitive (`mA` is supported; `MA` is not). Values are **peak, not RMS**.
+For a sine specified in RMS, supply `√2 × RMS` as the peak value. Resistance
+accepts bare ohms, `50ohm`, `50Ω`, `1kohm`, `1kOhm`, `1kΩ`, `1MOhm`, etc.
+Zero, negative, infinite and complex impedances such as `50+j10` are rejected.
+Ideal shorts/opens and reactive RLC terminations are not implemented.
+
+### Multiple simultaneous signals
+
+Repeat `--excitation source,load,current` for the default reference contacts.
+They share the specified frequency and ground net, with signed, in-phase peak
+currents. Source/load impedance flags apply to each excitation:
+
+```sh
+simulate-return-current board.json --ground GND --frequency-hz 1000000 \
+  --excitation U1.OUT1,U2.IN1,5mA \
+  --excitation U1.OUT2,U2.IN2,0.1A \
+  --source-impedance 25 --load-impedance 100 --output two-signals
+```
+
+To name both terminals, use the five-field form
+`source,sourceReference,load,loadReference,current`:
+
+```sh
+simulate-return-current board.json --ground GND --frequency-hz 1000000 \
+  --excitation U1.OUT1,U1.GND,U2.IN1,U2.GND,5mA \
+  --excitation U1.OUT2,U1.GND,U2.IN2,U2.GND,-5mA \
+  --output opposing-signals
+```
+
+The negative current gives the second excitation a 180° phase reversal. The EM
+fields are combined as complex vectors **before** calculating the heatmap's
+magnitude. Opposing signals can represent differential drive, but both ports
+still terminate to ground; a true resistor directly between P and N is not
+supported. Other phase angles and different frequencies in one solve are not
+supported.
+
+For per-signal resistances, put an **array** in `ports.json`:
+
+```json
+[
+  {
+    "source": "U1.OUT1", "sourceReference": "U1.GND",
+    "load": "U2.IN1", "loadReference": "U2.GND",
+    "current": "5mA", "sourceImpedance": "25ohm", "loadImpedance": 100
+  },
+  {
+    "source": "U1.OUT2", "sourceReference": "U1.GND",
+    "load": "U2.IN2", "loadReference": "U2.GND",
+    "current": "-0.1A", "sourceImpedance": 50, "loadImpedance": "1kohm"
+  }
+]
+```
+
+```sh
+simulate-return-current board.json --ports-file ports.json \
+  --ground GND --frequency-hz 1000000 --output multi-port
+```
+
+Use exactly one input style: single-source flags, repeated `--excitation`, or
+`--ports-file`. Reference pins go inside each repeated excitation; do not combine
+it with single-source reference flags. Each source/load pair still needs one
+continuous PCB trace, including physical via transitions when a stackup is supplied. Shared ground reference pads are allowed, provided
+port apertures do not overlap or intersect unrelated copper.
+
+### Frequency and geometry comparisons
+
+Run independent cases to compare frequencies or load resistances:
+
+```sh
+for hz in 500000 1000000 2000000; do
+  simulate-return-current board.json \
+    --source U1.OUT --load U2.IN --ground GND --current 5mA \
+    --frequency-hz "$hz" --output "result-$hz"
+done
+```
+
+Changing frequency, terminals, termination resistance, geometry or FEM mesh
+requires a new solve. A digital waveform needs separate harmonic amplitudes and
+phases; waveform reconstruction is not implemented. To compare slot shapes,
+export separate circuit-json files and use the same excitation and numerical
+settings for each.
+
+Use `--prepare-only` to inspect the resolved ports, model and sample grid before
+running an EM solve. `excitation-ports.json` records currents in amperes,
+resolved terminal coordinates/layers and resistances; inspect `model.json` too.
+For JSON that already contains
+`simulation_return_current_excitation` records, explicitly use
+`--use-circuit-excitations` with `--frequency-hz` instead of naming pins.
+
+### Resolution and resampling
+
+`--cell-size` sets image sample spacing in mm (Palace default 0.2). On a 40 mm
+square board, 0.05 mm gives **800 × 800** sample cells. `--image-size` sets square
+SVG/PNG dimensions in pixels (default 1100).
+
+To resample a completed case without rerunning Palace:
+
+```sh
+simulate-return-current resample return-current --cell-size 0.05 --image-size 2000
+```
+
+Keep the case's raw `postpro/` fields. Resampling overwrites its sampled reference
+and images and writes `resample-timing.json`. It evaluates the saved FEM fields
+at new positions; **image sampling does not refine the EM mesh**. Change
+`--mesh-size` (default 2 mm), `--order` (default 2), or `--air-padding` (default
+6 mm) and start a new solve to change the numerical model. Frequency and geometry
+changes also need a new solve. Use `--processes` for MPI parallelism.
+
+Colors show the complex magnitude of thickness-averaged conduction-current
+density in A/mm²; arrows show the instantaneous field at phase 0°. Palace sample
+grids allow up to 1,000,000 candidate cells. The included
+[0.05 mm example](examples/palace/ground-slot-wide-gap-005mm-1mhz) records export
+timings and the original solve's provenance.
+
+### Quick approximation
+
+For a preview without Python or Docker, select the TypeScript approximation:
+
+```sh
+simulate-return-current board.json --solver approximation \
+  --source R1.pin1 --load U1.VDDIO1 --ground GND --current 1 \
+  --cell-size 0.5 --output preview
+```
+
+Open `preview/approximation.png`. This model is **frequency-independent**;
+`--frequency-hz` is rejected for it. Its grid is limited to 100,000 candidate
+cells. Use Palace for the frequency-dependent simulation.
+
+## Multilayer boards
+
+Provide the manufacturing stack **top to bottom**, alternating copper and
+physical dielectric layers. Thicknesses are millimetres; dielectric constants
+are relative permittivities. Each dielectric can specify `lossTangent`
+(default 0.02). For example, `stackup.json`:
 
 ```json
 {
-  "type": "simulation_return_current_excitation",
-  "simulation_return_current_excitation_id": "simulation_return_current_excitation_0",
-  "pcb_trace_id": "pcb_trace_0",
-  "ground_source_net_id": "source_net_0",
-  "current": 1,
-  "return_source": { "x": 12, "y": 0 },
-  "return_sink": { "x": -12, "y": 0 }
+  "nominalBoardThicknessMm": 0.975,
+  "layers": [
+    { "name": "top", "copperThicknessMm": 0.035 },
+    { "material": "prepreg", "dielectricThicknessMm": 0.2, "dielectricConstant": 4.1 },
+    { "name": "inner1", "copperThicknessMm": 0.015 },
+    { "material": "core", "dielectricThicknessMm": 0.475, "dielectricConstant": 4.42 },
+    { "name": "inner2", "copperThicknessMm": 0.015 },
+    { "material": "prepreg", "dielectricThicknessMm": 0.2, "dielectricConstant": 4.1 },
+    { "name": "bottom", "copperThicknessMm": 0.035 }
+  ]
 }
 ```
 
-Positive current follows the ordered signal route. Return current enters ground
-at the load-side `return_source` and leaves at the driver-side `return_sink`.
-Negative current reverses both fields. Contacts can be offset from trace
-endpoints, but must lie on the selected ground copper and share a connected
-region. Currents are signed instantaneous or in-phase amplitudes and superpose
-linearly.
-
-The element is proposed in [circuit-json PR #870](https://github.com/tscircuit/circuit-json/pull/870).
-Until it is released and core emits it, this package exports the temporary type
-and parser. The TSX fixture helper appends **only excitation records** after core
-renders all geometry. `options.excitations` can supply or override the records
-without editing circuit-json. Neither signal current nor a full ground plane is
-silently inferred.
-
-## Geometry and defaults
-
-Supported geometry:
-
-- One board with `num_layers: 2`, rectangular or polygon outline.
-- Continuous top-layer `pcb_trace` wire routes; split at vias or pads.
-- Bottom `pcb_copper_pour` rectangles, polygons, and BReps with inner holes.
-  Circular BRep arcs are tessellated at at most 3° angular intervals.
-- `pcb_ground_plane` with bottom-layer `pcb_ground_plane_region` polygons.
-- Physical `pcb_cutout` rectangles (including rotation), circles, and polygons.
-
-All excitations select one ground net. Path cutouts, rounded rectangular cutouts,
-drilled holes, and vias are rejected explicitly because they are outside the
-current model. Top traces cannot leave the board or cross a physical cutout.
-
-Coordinates are circuit world millimetres, +X right and +Y up. Sheet-current
-components are board-space directions. SVG coordinates are pixels, +Y down.
-
-| Option | Default |
-| --- | --- |
-| `cellSize` | 0.5 mm |
-| `layerSeparation` | `board.thickness` |
-| `copperThickness` | 0.035 mm |
-| `contactRadius` | `cellSize` |
-| `tolerance` | 1e-8 relative L2 residual |
-| `maxIterations` | 5000 |
-
-Override spacing with the actual stackup distance. Contacts distribute current
-uniformly among visible nodes inside their radius. A contact with no nodes fails
-with a refinement hint. The mesh is limited to 100,000 candidate cells.
-
-## Numerical model
-
-For a signal filament at height h carrying current I, preferred image sheet
-current on an infinite plane is
-
-```text
-K₀(r) = −I h / (2π) ∫ dl / (|r − r′|² + h²)^(3/2)
+```sh
+simulate-return-current board.json --stackup-file stackup.json \
+  --source U1.OUT --source-reference U1.GND \
+  --load U2.IN --load-reference U2.GND \
+  --ground GND --sample-layer inner2 --current 5mA --frequency-hz 1000000 \
+  --cell-size 0.05 --output inner2-return
 ```
 
-Straight segments are integrated analytically. Three-point Gaussian quadrature
-integrates K₀ over mesh faces to obtain preferred edge currents F₀. The graph
-projects those currents onto a conservative field:
+`--sample-layer` selects the reference-net foil whose complex conduction
+current is integrated through its thickness and plotted. It defaults to
+`bottom` and is displayed on multilayer snapshots. It does **not** constrain
+where current flows: Palace solves the full emitted conductor geometry. Omitted
+reference pins connect the port to reference copper on the sampled layer
+beneath its signal endpoint. Explicit reference pins can be on another layer,
+but must have real traces/vias connecting them to the sampled reference copper.
 
-```text
-minimize  ½ Σ_edges (F − F₀)² / w
-subject to  B F = b
+Save a separate case for each sampled layer. `resample` changes the XY pitch
+within the saved layer, reusing its solve. Sampling pitch is independent of FEM
+mesh size; 0.05 mm pixels alone do not establish mesh convergence. Stackup
+coordinates use the upper face of bottom copper as z=0. Explicit thicknesses
+are never scaled to `pcb_board.thickness` or nominal fabrication thickness.
+`model-audit.json` reports geometry counts and modeling assumptions.
 
-F = F₀ + w Bᵀ φ
-(B w Bᵀ) φ = b − B F₀
+The [four-layer TSX fixture](tests/fixtures/MultilayerBoard.tsx) routes from top
+through blind signal vias onto `inner1`, with ground on `inner2` and bottom
+connected by through vias. Its recorded [1 MHz Palace case](examples/palace/multilayer-inner2-1mhz)
+uses 5 mA, 25 Ω/100 Ω terminals, and an inner-layer visual snapshot. Tests also
+cover six-layer boards and bottom signal terminals.
+
+### AM3352 SBC
+
+The [astra/am3352-sbc board](https://tscircuit.com/astra/am3352-sbc#files), pinned
+to **0.1.19**, emits a four-layer, 100 × 80 mm board: 750 PCB traces, 835 vias,
+1,056 SMT pads, 46 plated holes, eight unplated holes and 27 pours. Its stackup is
+in `design/fabrication-stackup.json`, separate from `dist/index/circuit.json`.
+
+From a checkout, download the pinned public files, verify their SHA-256 hashes
+and prepare the full model (no EM solve):
+
+```sh
+bun scripts/prepare-am3352-example.ts work/am3352
+# The equivalent CLI preparation, after downloading:
+node dist/cli.js work/am3352/board.json \
+  --stackup-file work/am3352/stackup.json --sample-layer bottom \
+  --source U1.K4 --load U3.A7 --ground GND --current 5mA \
+  --frequency-hz 1000000 --cell-size 0.2 --prepare-only \
+  --output work/am3352/case
 ```
 
-B is the outgoing-current incidence matrix, b the contact injections, and w the
-face-length/cell-distance ratio. The correction φ is a Lagrange multiplier,
-**not a predicted voltage**. Jacobi-preconditioned conjugate gradients fix one
-gauge per connected region and check the recomputed residual before convergence.
-Conservation diagnostics include every cell, including gauge cells.
+`U1.K4 → U3.A7` is `DDR_D12`, used here to exercise input/routing at an explicitly
+chosen **1 MHz**, not to represent its actual DDR waveform. Choose your actual
+ports, harmonics and amplitudes for an analysis. The explicit stack sums to
+**1.5642 mm**, while nominal board thickness is 1.6 mm. Inner1 is adjacent to top
+power copper; inner2 is adjacent to bottom GND. Current returns through whichever
+conductors the field supports, not automatically the selected `GND` net.
 
-Entire graph edges are tested against polygon intersections, so even a slot
-narrower than the cell pitch cannot short the graph across the gap. Rendering
-clips to actual copper. Partial boundary cells still use a cell-centre mask;
-refine near narrow bridges, sharp corners, and curved boundaries.
+The [preparation audit](examples/am3352/preparation-audit.json) retains all
+exported copper. The earlier `inner1` overlap report was **an adapter error**:
+square ends on individual trace segments added copper beyond a VIN_5V width
+change. The board's own PCB SVG uses round ends. The corrected mesher uses
+round ends (32-sided circles), and its [polygon audit](examples/am3352/geometry-audit.json)
+finds **zero overlaps across all four layers**. `MMC0_DAT3` (`source_net_23`) and
+`VIN_5V` (`source_net_80`) have approximately **0.111 mm** minimum clearance;
+the former 0.004291 mm² intersection disappears without changing the board.
 
-This is a qualitative high-frequency return-path model, not a full Maxwell,
-PEEC, or electromagnetic finite-element solution. It omits frequency-dependent
-impedance, skin effect, dielectric losses, displacement current, waves, and
-radiation. Signal width is drawn, while field calculations treat signals as
-filaments. Density peaks are not validated thermal, EMC, or signal-integrity
-predictions. Sharp-corner peaks depend on mesh pitch; contact peaks depend on
-contact radius.
+![AM3352 inner1 copper occupancy before and after correcting trace ends](examples/am3352/inner1-copper-heatmap.png)
 
-## Develop and reproduce
+The close-up heat map uses **0.005 mm cells**: gray = no copper, teal = one net,
+red = two overlapping nets. Area and minimum clearance come from polygon
+geometry, independently of pixel resolution. This validates copper geometry;
+it is not a return-current density plot, so frequency does not apply. Reproduce
+the audit and SVG/PNG from the prepared model:
+
+```sh
+# Use the mesher's Python environment with gmsh, shapely and matplotlib installed.
+MPLCONFIGDIR=work/matplotlib python scripts/audit-am3352-copper.py \
+  work/am3352/case/model.json work/am3352/copper-audit
+```
+
+Preparation validates the circuit/schema and layer metadata; it is not a
+substitute for the mesher's polygon/port/connection checks. Zero copper overlaps
+alone does not establish fabrication readiness or a working EM port setup.
+No full-board EM solve is claimed.
+
+Even after resolving geometry, DDR return paths through power-plane decoupling
+and package impedances need an additional component model. The current adapter
+cannot certify DDR signal integrity. At 100 × 80 mm, use at least 0.1 mm cells
+(800,000 candidates); 0.05 mm exceeds the current one-million-cell sample cap.
+
+## Library
+
+`circuitJson` can be the array from `circuit.getCircuitJson()`. Validate JSON
+loaded from a file with the root export `parseReturnCurrentCircuitJson`.
+
+```ts
+import { runPalaceSimulation } from "simulate-return-current/palace"
+
+const result = await runPalaceSimulation({
+  circuitJson,
+  frequencyHz: 1e6,
+  groundNet: "GND",
+  ports: [{
+    source: "U1.OUT", sourceReference: "U1.GND",
+    load: "U2.IN", loadReference: "U2.GND",
+    current: "5mA", sourceImpedance: 25, loadImpedance: "100ohm",
+  }],
+  outputDirectory: "return-current",
+  // On a multilayer board:
+  // stackup: parseFabricationStackup(stackupJson), sampleLayer: "inner2",
+})
+console.log(result.pngPath)
+```
+
+The Node-only `/palace` entry also exports `preparePalaceSimulation`,
+`resamplePalaceCase` and `setupPalacePython`. The root entry exports
+`withNamedExcitations`, `simulateReturnCurrent` (the approximation),
+`renderReturnCurrentSvg`, `renderPalaceModelSvg` and the comparison helpers.
+The root export `parseFabricationStackup` validates external stackup JSON; pass
+its result as `stackup` and select `sampleLayer` in the library.
+The same `ports` array can be written to a CLI `--ports-file`. Reference pins
+and impedances are optional for the library too. Root exports `parseCurrentAmps`
+and `parseResistanceOhms` normalize supported units to SI numbers.
+Use `renderPalaceModelSvg(model, { reference, phaseDegrees: 90 })` to render saved
+Palace fields at a different arrow phase.
+
+## Supported inputs
+
+Palace accepts one board with **2–10 copper layers**. More than two layers
+require a fabrication stackup; supplying a stackup also enables the layered
+mesher on two-layer boards. Source/load pins must be endpoints of one continuous
+PCB trace, which may route on different layers through physical `pcb_via`
+records. Branched nets, component-spanning paths and through-pad route points
+are rejected. Selectors must be unambiguous.
+
+The layered model retains **all** emitted copper: unexcited signal traces,
+floating pads/nets, ground and power pours, and plated via/hole barrels. SMT pad
+shapes include rectangular, circular, rotated rectangular/pill and polygon
+pads. Circular and slotted plated holes and circular unplated drills are
+supported. Blind/buried via depths and through-hole stubs come from their actual
+layer spans. Copper on different nets may not overlap. The model never replaces
+missing reference copper with a solid plane or invents a via from a pin label.
+A reference pad must have a physical copper path to the sampled reference layer;
+all excited reference terminals must share a connected copper region.
+
+Ground/reference copper comes from `pcb_copper_pour` or
+`pcb_ground_plane`/`pcb_ground_plane_region` records on the chosen layer/net.
+`--ground DDR_1V5` can select an emitted power plane as a reference, but this does
+not create a power-to-ground decoupling path. Plane voids remove copper;
+physical PCB cutouts remove substrate too. Ports need copper at their aperture edges; a noncoplanar port whose pin is
+centered in a drill void is unsupported. A port aperture may not pass through
+intermediate copper or a plated barrel: choose closer explicit reference pins
+if a long vertical default port is obstructed.
+
+Without an explicit stackup, the existing two-layer mesher keeps its previous
+limits: top rectangular SMT pads and concentric top-to-bottom ground vias in
+selected top reference pads. The approximation remains two-layer/top-signal/
+bottom-ground only and rejects drilled boards, explicit reference pins and
+non-default impedances.
+
+Physical defaults: board thickness for signal/ground separation (0.8 mm when
+missing), 0.035 mm copper, 5.8 × 10⁷ S/m conductivity, substrate relative
+permittivity 4.3, and loss tangent 0.02. The library's `PalaceSimulationOptions`
+allows material and stackup overrides. In the legacy model, ground-via plating
+uses the copper thickness. In the layered model, plating is explicitly assumed
+to be **0.025 mm**; fabricated plating thickness is not currently in circuit-json.
+Plane antipads around foreign-net vias use a conservative bounding rectangle around the
+pad plus `--via-clearance` on each side (board pad clearance, or 0.2 mm by default).
+Only plane/pour copper receives generated antipads; trace/pad copper is retained
+and overlaps are rejected. These generated clearances are assumptions, saved in `model.json`; inspect them
+against the actual fabrication geometry. Circular copper/drills are 32-sided
+polygons. Planar unions use 0.000001 mm precision to remove numerical slivers.
+Component/package impedances, decoupling capacitors, solder mask and silkscreen
+are not modeled. The volume mesher still rejects frequency/thickness combinations
+with copper thicker than skin depth; DDR edge-rate/high-frequency analysis needs
+further copper-thickness refinement and a component impedance model.
+`source_port`/`load_port` on `simulation_return_current_excitation` are temporary
+local circuit-json metadata, injected by named-port resolution and preserved by
+`parseReturnCurrentCircuitJson`; core does not need to emit them yet.
+The original excitation record is proposed in
+[circuit-json PR #870](https://github.com/tscircuit/circuit-json/pull/870);
+the explicit terminal fields remain a local extension.
+The current volume mesher requires foil
+thickness no greater than skin depth. Check mesh refinement and air-domain size
+before treating Palace results as an accuracy reference.
+
+## Develop and publish
 
 ```sh
 bun install
 bun test
 bun run typecheck
 bun run format:check
-bun run start
-bun run build:site
-bun run generate:examples
+bun run build
+bun run smoke:package
+bun run start                 # Cosmos viewer
+PALACE_MESH_PYTHON=python bun test tests/palace/explicit-mesh.test.tsx
+npm pack                     # npm tarball, including CLI and Python assets
 ```
 
-Cosmos includes an interactive `ground-slot` page, a `GenericSolverDebugger`
-`solver` page, and a `hello-world` bootstrap page. Compare slotted and intact
-planes on the same scale, vary current, toggle arrows, and download SVGs.
-`ReturnCurrentSolver` extends `BaseSolver` with `step()`, `solve()`, `visualize()`,
-and `getOutput()`.
+Like `tscircuit/check-shorts`, the package ships built ESM and TypeScript
+declarations. Tests generate circuit-json from TSX. The package smoke check
+installs a tarball into a clean project and exercises its Node CLI and library.
 
-All numerical fixtures generate geometry using **TSX and @tscircuit/core**.
-Visual snapshots use `bun-match-svg`. Tests cover emitted trace coordinates,
-bridge conservation, sub-cell slot isolation, physical cutouts, disconnected
-copper, superposition, polarity, thickness units, zero current, JSON validation,
-iteration failure, and mesh refinement against the independent straight-line
-profile `Kx(y) = −I h / [π(h² + y²)]`.
-
-Regenerate snapshots with `BUN_UPDATE_SNAPSHOTS=1 bun test`. The example generator
-emits circuit-json, SVG, PNG, and diagnostics from the same TSX sources. The
-paired examples use a fixed 50 A/mm² scale; the slotted example exceeds it at the
-tip and saturates to red.
+The **Publish to npm** workflow runs manually from `main`, validates the package,
+and publishes it with provenance. Repository metadata targets
+`tscircuit/simulate-return-current`. The first release needs the repository's
+`NPM_TOKEN` secret; later releases can use npm trusted publishing configured for
+the repository and `publish-npm.yml`. Bump `package.json` before subsequent
+releases. You can also run `npm publish --access public` after authenticating.

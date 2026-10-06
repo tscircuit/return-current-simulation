@@ -5,7 +5,9 @@ export function validatePalaceReference(reference: PalaceReference): void {
     (reference.femOrder !== 1 && reference.femOrder !== 2) ||
     reference.schemaVersion !== 1 ||
     reference.solver !== "palace" ||
-    reference.copperModel !== "volumetric_copper"
+    reference.copperModel !== "volumetric_copper" ||
+    (reference.sampleLayer !== undefined &&
+      !/^(top|bottom|inner[1-8])$/.test(reference.sampleLayer))
   )
     throw new Error("Unsupported Palace reference")
   if (

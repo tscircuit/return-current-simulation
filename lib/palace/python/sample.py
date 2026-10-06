@@ -60,12 +60,10 @@ def read_ground(path):
     copper_cells = np.flatnonzero(attributes == 3)
     ground_cells = vtk.vtkIdList()
     for index in copper_cells:
-        cell = mesh.GetCell(int(index))
-        if all(
-            cell.GetPoints().GetPoint(corner)[2] <= 1e-6
-            for corner in range(cell.GetNumberOfPoints())
-        ):
-            ground_cells.InsertNextId(int(index))
+        # Probe coordinates, not vertex heights, select bottom foil. A plated
+        # barrel can share valid copper tetrahedra across z=0; excluding those
+        # loses real bottom-plane samples around a ground via.
+        ground_cells.InsertNextId(int(index))
     if ground_cells.GetNumberOfIds() == 0:
         raise ValueError("Palace output has no bottom copper volume cells")
     extract = vtk.vtkExtractCells()
@@ -126,7 +124,7 @@ def geometry_signature(geometry):
         [
             [
                 [point(position) for position in region["outer"]],
-                [[point(position) for position in hole] for hole in region["holes"]],
+                [[point(position) for position in hole] for hole in [*region["holes"], *region.get("maskCutouts", [])]],
             ]
             for region in geometry["groundRegions"]
         ],
@@ -139,11 +137,13 @@ def geometry_signature(geometry):
             ]
             for signal in geometry["signals"]
         ],
+        *([geometry["physicalModelSignature"]] if geometry.get("physicalModelSignature") else []),
         [
             [
                 coordinate(excitation["current"]),
                 point(excitation["return_source"]),
                 point(excitation["return_sink"]),
+                *([[excitation.get("source_port", {}).get("reference_layer", "bottom"), coordinate(excitation.get("source_port", {}).get("resistance", 50)), excitation.get("load_port", {}).get("reference_layer", "bottom"), coordinate(excitation.get("load_port", {}).get("resistance", 50))]] if excitation.get("source_port") or excitation.get("load_port") else []),
             ]
             for excitation in geometry["excitations"]
         ],
@@ -206,6 +206,10 @@ def sample_case(case):
     coordinates = np.array([[point["x"], point["y"]] for point in grid["points"]])
     depth_nodes, _ = np.polynomial.legendre.leggauss(5)
     depths = (depth_nodes - 1) / 2 * model["copperThickness"]
+    if model.get("multilayer"):
+        foil = next(layer for layer in model["multilayer"]["stackup"]["copperLayers"]
+                    if layer["name"] == model["multilayer"]["sampleLayer"])
+        depths = foil["zMin"] + (depth_nodes + 1) / 2 * (foil["zMax"] - foil["zMin"])
     volume_coordinates = np.concatenate(
         [
             np.column_stack([coordinates, np.full(len(coordinates), depth)])
@@ -286,6 +290,7 @@ def sample_case(case):
     ]
     reference = {
         "schemaVersion": 1,
+        **({"sampleLayer": model["multilayer"]["sampleLayer"]} if model.get("multilayer") else {}),
         "solver": "palace",
         "solverVersion": version[1],
         "femOrder": model["order"],

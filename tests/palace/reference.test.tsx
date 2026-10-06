@@ -21,6 +21,9 @@ test("TSX slot circuit matches Palace evidence and preserves complex currents", 
     `${exampleRoot}/ground-slot-1mhz/reference.json`,
   ).json()
   validatePalaceReference(reference)
+  expect(reference.columns).toBe(200)
+  expect(reference.rows).toBe(200)
+  expect(reference.cellWidth).toBe(0.2)
   const recordedCircuitText = await Bun.file(
     `${exampleRoot}/ground-slot-1mhz/circuit.json`,
   ).text()
@@ -37,7 +40,7 @@ test("TSX slot circuit matches Palace evidence and preserves complex currents", 
   expect(model.topPads).toEqual(recordedModel.topPads)
   const result = simulateReturnCurrent({
     circuitJson,
-    cellSize: 0.5,
+    cellSize: reference.cellWidth,
     contactRadius: 0.6,
   })
   const comparison = comparePalaceReference(result, { reference })
@@ -87,7 +90,7 @@ test("TSX slot circuit matches Palace evidence and preserves complex currents", 
       width: 900,
       height: 1000,
       maxCurrentDensity: 50,
-      vectorSpacing: 3,
+      vectorSpacing: Math.max(1, Math.round(1.5 / reference.cellWidth)),
     })
     expect(svg).toContain("f = 1 MHz")
     expect(svg).toContain("peak phasors")
@@ -119,7 +122,7 @@ test("straight TSX circuit matches Palace units and return polarity", async () =
   expect(model.topPads).toEqual(recordedModel.topPads)
   const result = simulateReturnCurrent({
     circuitJson,
-    cellSize: 0.5,
+    cellSize: reference.cellWidth,
     contactRadius: 0.6,
   })
   expect(
@@ -128,13 +131,13 @@ test("straight TSX circuit matches Palace units and return polarity", async () =
   const centralSamples = reference.samples.filter(
     (sample) => Math.abs(sample.x) < 4,
   )
-  // Cross-section flux averaged over 8 mm, with 0.5 mm midpoint quadrature.
+  // Cross-section flux averaged over 8 mm, with the reference grid midpoint quadrature.
   // Allows finite FEM/grid error; this is separate from approximation accuracy.
   const meanReturnFluxAmps =
     centralSamples.reduce(
       (sum, sample) => sum + sample.sheetCurrentXReal * reference.cellHeight,
       0,
-    ) / 16
+    ) / new Set(centralSamples.map((sample) => sample.x)).size
   expect(meanReturnFluxAmps).toBeCloseTo(-1, 1)
   expect(reference.loadCurrents[0].real).toBeCloseTo(1, 2)
 })
@@ -169,7 +172,7 @@ test("100 kHz Palace evidence is frequency-labelled and changes the field", asyn
   expect(reference.provenance.meshSha256).toBe(oneMhz.provenance.meshSha256)
   const result = simulateReturnCurrent({
     circuitJson,
-    cellSize: 0.5,
+    cellSize: reference.cellWidth,
     contactRadius: 0.6,
   })
   const comparison = comparePalaceReference(result, { reference })
@@ -187,7 +190,7 @@ test("100 kHz Palace evidence is frequency-labelled and changes the field", asyn
     width: 900,
     height: 1000,
     maxCurrentDensity: 50,
-    vectorSpacing: 3,
+    vectorSpacing: Math.max(1, Math.round(1.5 / reference.cellWidth)),
   })
   expect(svg).toContain("f = 0.1 MHz")
   await expect(svg).toMatchSvgSnapshot(import.meta.path, "palace-slot-100khz")

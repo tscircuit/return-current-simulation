@@ -17,7 +17,13 @@ export async function writeSlotRefinementReport(options: {
     (total, current) => total + current.real,
     0,
   )
-  const bridgeColumns = [-5.75, -5.25, -4.75, -4.25, -3.75, -3.25]
+  const bridgeColumns = [
+    ...new Set(
+      fine.samples
+        .filter((sample) => sample.x > -6 && sample.x < -3)
+        .map((sample) => sample.x),
+    ),
+  ]
   const bridgeFlux = bridgeColumns.map((x) => {
     const samples = fine.samples.filter(
       (sample) => Math.abs(sample.x - x) < 1e-6,

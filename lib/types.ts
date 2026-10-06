@@ -12,10 +12,24 @@ export interface SimulationReturnCurrentExcitation {
   current: number
   return_source: Point
   return_sink: Point
+  /** Temporary explicit two-terminal Palace port metadata. */
+  source_port?: SimulationTerminalPort
+  load_port?: SimulationTerminalPort
+}
+
+export interface SimulationTerminalPort {
+  signal_pcb_port_id: string
+  reference_pcb_port_id?: string
+  reference_layer: import("./palace/stackup").CopperLayer
+  resistance: number
 }
 
 export type ReturnCurrentCircuitJson = readonly (
   | AnyCircuitElement
+  // Released core exports board-level labels with no owning component.
+  | (Omit<import("circuit-json").PcbSilkscreenText, "pcb_component_id"> & {
+      pcb_component_id: null
+    })
   | SimulationReturnCurrentExcitation
 )[]
 
@@ -44,6 +58,10 @@ export interface SignalSegment {
 }
 
 export interface CopperRegion {
+  /** Only plane/pour copper receives generated foreign-net antipads. */
+  isPlane?: boolean
+  /** Generated plane voids used only by the sampling mask. */
+  maskCutouts?: Point[][]
   outer: Point[]
   holes: Point[][]
 }
@@ -56,6 +74,8 @@ export interface SimulationGeometry {
   signals: PcbTrace[]
   segments: SignalSegment[]
   excitations: readonly SimulationReturnCurrentExcitation[]
+  /** Canonical layered physical model, included in reference provenance. */
+  physicalModelSignature?: string
 }
 
 /** Node positions and direction components use circuit world coordinates (mm, +Y up).

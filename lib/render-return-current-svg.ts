@@ -78,6 +78,7 @@ export function renderCurrentFieldSvg(
     subtitle: string
     footer: string
     gridLabel?: string
+    separationLabel?: string
   },
 ): string {
   if (!result.diagnostics.converged)
@@ -114,7 +115,7 @@ export function renderCurrentFieldSvg(
   const groundPaths = result.geometry.groundRegions
     .map(
       (region) =>
-        `<path d="${[region.outer, ...region.holes].map(polygonPath).join(" ")}" clip-rule="evenodd"/>`,
+        `<path d="${[region.outer, ...region.holes, ...(region.maskCutouts ?? [])].map(polygonPath).join(" ")}" clip-rule="evenodd"/>`,
     )
     .join("")
   const boardPath = [result.geometry.boardOutline, ...result.geometry.cutouts]
@@ -152,25 +153,62 @@ export function renderCurrentFieldSvg(
         })
         .join("")
   const contacts = result.geometry.excitations
-    .map((excitation, excitationIndex) =>
-      [
+    .map((excitation, excitationIndex) => {
+      const route = result.geometry.signals[excitationIndex].route
+      const explicit = [
         {
-          point: excitation.return_sink,
+          terminal: excitation.source_port,
+          endpoint: route[0],
+          reference: excitation.return_sink,
           label: `S${excitationIndex + 1}`,
           color: "#19394c",
         },
         {
-          point: excitation.return_source,
+          terminal: excitation.load_port,
+          endpoint: route.at(-1)!,
+          reference: excitation.return_source,
           label: `L${excitationIndex + 1}`,
           color: "#ae300f",
         },
-      ]
-        .map((contact) => {
-          const scenePoint = applyToPoint(worldToSvg, contact.point)
-          return `<circle cx="${scenePoint.x}" cy="${scenePoint.y}" r="5" fill="#fff" stroke="${contact.color}" stroke-width="2"/><text x="${scenePoint.x + 10}" y="${scenePoint.y - 8}" font-size="13" font-weight="600" fill="#122735" stroke="white" stroke-width="3" paint-order="stroke">${contact.label}</text>`
+      ].filter(
+        (port) =>
+          port.terminal?.reference_pcb_port_id &&
+          port.endpoint.route_type === "wire",
+      )
+      const links = explicit
+        .map((port) => {
+          if (port.endpoint.route_type !== "wire") return ""
+          const a = applyToPoint(worldToSvg, port.endpoint),
+            b = applyToPoint(worldToSvg, port.reference)
+          return `<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="#64748b" stroke-width="2" stroke-dasharray="4 3"/>`
         })
-        .join(""),
-    )
+        .join("")
+      return (
+        links +
+        [
+          {
+            point: excitation.return_sink,
+            label: `S${excitationIndex + 1}${excitation.source_port?.reference_pcb_port_id ? "−" : ""}`,
+            color: "#19394c",
+          },
+          {
+            point: excitation.return_source,
+            label: `L${excitationIndex + 1}${excitation.load_port?.reference_pcb_port_id ? "−" : ""}`,
+            color: "#ae300f",
+          },
+          ...explicit.map((port) => ({
+            point: port.endpoint as { x: number; y: number },
+            label: `${port.label}+`,
+            color: port.color,
+          })),
+        ]
+          .map((contact) => {
+            const scenePoint = applyToPoint(worldToSvg, contact.point)
+            return `<circle cx="${scenePoint.x}" cy="${scenePoint.y}" r="5" fill="#fff" stroke="${contact.color}" stroke-width="2"/><text x="${scenePoint.x + 10}" y="${scenePoint.y - 8}" font-size="13" font-weight="600" fill="#122735" stroke="white" stroke-width="3" paint-order="stroke">${contact.label}</text>`
+          })
+          .join("")
+      )
+    })
     .join("")
   const ticks = [0, 0.25, 0.5, 0.75, 1]
     .map(
@@ -192,7 +230,7 @@ export function renderCurrentFieldSvg(
 <path d="${polygonPath(result.geometry.boardOutline)}" fill="none" stroke="#94a3b8" stroke-width="${1 / pixelsPerMm}"/>${traces}</g>
 ${contacts}
 <text x="60" y="${boardBottom + 30}" font-size="14" fill="#334155">${result.geometry.excitations.map((excitation, excitationIndex) => `S${excitationIndex + 1} → L${excitationIndex + 1}: ${displayNumber(excitation.current)} A`).join("   ·   ")}</text>
-<text x="60" y="${boardBottom + 53}" font-size="13" fill="#64748b">h = ${displayNumber(result.layerSeparation)} mm · copper = ${displayNumber(result.copperThickness)} mm · ${escapeXml(options.gridLabel ?? "mesh")} = ${result.columns} × ${result.rows}</text>
+<text x="60" y="${boardBottom + 53}" font-size="13" fill="#64748b">${escapeXml(options.separationLabel ?? "h")} = ${displayNumber(result.layerSeparation)} mm · copper = ${displayNumber(result.copperThickness)} mm · ${escapeXml(options.gridLabel ?? "mesh")} = ${result.columns} × ${result.rows}</text>
 <text x="60" y="${boardBottom + 76}" font-size="12" fill="#64748b">${escapeXml(options.footer)}</text></g>
 </svg>`
 }
