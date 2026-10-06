@@ -42,6 +42,7 @@ function caseOptions(options: PalaceSimulationOptions) {
           loadImpedance: port.loadImpedance ?? options.portResistance ?? 50,
         })),
         groundNet: options.groundNet!,
+        referenceLayer: options.sampleLayer,
       })
     : options.excitations
       ? [

@@ -3,6 +3,7 @@ import {
   current,
   getZodPrefixedIdWithDefault,
   point,
+  pcb_silkscreen_text,
 } from "circuit-json"
 import { z } from "zod"
 import type {
@@ -29,7 +30,10 @@ const excitationSchema = z.object({
     .object({
       signal_pcb_port_id: z.string(),
       reference_pcb_port_id: z.string().optional(),
-      reference_layer: z.enum(["top", "bottom"]),
+      reference_layer: z
+        .string()
+        .regex(/^(top|bottom|inner[1-8])$/)
+        .transform((layer) => layer as import("./palace/stackup").CopperLayer),
       resistance: z.number().finite().positive(),
     })
     .optional(),
@@ -37,7 +41,10 @@ const excitationSchema = z.object({
     .object({
       signal_pcb_port_id: z.string(),
       reference_pcb_port_id: z.string().optional(),
-      reference_layer: z.enum(["top", "bottom"]),
+      reference_layer: z
+        .string()
+        .regex(/^(top|bottom|inner[1-8])$/)
+        .transform((layer) => layer as import("./palace/stackup").CopperLayer),
       resistance: z.number().finite().positive(),
     })
     .optional(),
@@ -49,6 +56,17 @@ const excitationSchema = z.object({
 function normalizeDisplayOffsets(
   element: Record<string, unknown>,
 ): Record<string, unknown> {
+  if (element.type === "pcb_hole" && element.pcb_component_id === null)
+    return { ...element, pcb_component_id: undefined }
+  if (
+    element.type === "pcb_plated_hole" &&
+    element.shape === "circular_hole_with_rect_pad"
+  )
+    return {
+      ...element,
+      hole_shape: element.hole_shape ?? "circle",
+      pad_shape: element.pad_shape ?? "rect",
+    }
   if (element.type !== "pcb_component" && element.type !== "pcb_board")
     return element
   return {
@@ -72,6 +90,13 @@ export function parseReturnCurrentCircuitJson(
     .array(z.object({ type: z.string() }).passthrough())
     .parse(input)
   return elements.map((element) => {
+    if (
+      element.type === "pcb_silkscreen_text" &&
+      element.pcb_component_id === null
+    )
+      return pcb_silkscreen_text
+        .extend({ pcb_component_id: z.null() })
+        .parse(element)
     if (element.type !== "simulation_return_current_excitation")
       return any_circuit_element.parse(normalizeDisplayOffsets(element))
     const excitation: SimulationReturnCurrentExcitation =

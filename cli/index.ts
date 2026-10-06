@@ -20,6 +20,10 @@ import {
   resamplePalaceCase,
   setupPalacePython,
 } from "../lib/palace"
+import {
+  parseFabricationStackup,
+  parseCopperLayer,
+} from "../lib/palace/stackup"
 import { imageDimension } from "../lib/palace/run-simulation"
 import { positiveFinite } from "../lib/read-geometry"
 import { version } from "../package.json"
@@ -50,6 +54,9 @@ Options:
   --output, -o <directory>      Output case directory (default: return-current)
   --cell-size <mm>              Image sample pitch (Palace: 0.2; approximation: 0.5)
   --image-size <pixels>         Square SVG/PNG size (default: 1100)
+  --stackup-file <json>         Physical top-to-bottom stackup; required for multilayer
+  --sample-layer <layer>        Reference copper to sample: top, inner1..inner8, bottom
+  --via-clearance <mm>          Radial foreign-net antipad clearance (default: board or 0.2)
   --mesh-size <mm>              FEM mesh target (default: 2)
   --order <1|2>                 FEM polynomial order (default: 2)
   --air-padding <mm>            Air domain padding (default: 6)
@@ -62,8 +69,9 @@ Options:
   --help, -h / --version, -v
 
 Omitted reference terminals use bottom ground directly beneath the signal.
-Named top reference pads require concentric, physical ground vias. Source/load
-must be endpoints of one continuous top-layer trace. No voltage source, signal
+Without a stackup, named top references require concentric ground vias. With a
+stackup, references need real copper paths to the sampled layer. Source/load must be endpoints of one continuous trace. Multilayer routes need physical vias
+and a fabrication stackup. The approximation remains two-layer only. No voltage source, signal
 amplitude, component circuit or frequency is inferred from circuit-json.
 Palace needs Python 3.12 with Gmsh/VTK and Docker or native Palace v0.14.0.
 `
@@ -86,6 +94,9 @@ const definitions = {
   solver: { type: "string" },
   "cell-size": { type: "string" },
   "image-size": { type: "string" },
+  "stackup-file": { type: "string" },
+  "sample-layer": { type: "string" },
+  "via-clearance": { type: "string" },
   "mesh-size": { type: "string" },
   order: { type: "string" },
   "air-padding": { type: "string" },
@@ -355,6 +366,9 @@ async function main() {
         "Explicit reference terminals and impedances require --solver palace",
       )
     for (const flag of [
+      "stackup-file",
+      "sample-layer",
+      "via-clearance",
       "mesh-size",
       "order",
       "air-padding",
@@ -410,6 +424,15 @@ async function main() {
   if (order !== 1 && order !== 2) throw new Error("order must be 1 or 2")
   const options: PalaceSimulationOptions = {
     circuitJson,
+    stackup: values["stackup-file"]
+      ? parseFabricationStackup(
+          JSON.parse(await readFile(resolve(values["stackup-file"]), "utf8")),
+        )
+      : undefined,
+    sampleLayer: values["sample-layer"]
+      ? parseCopperLayer(values["sample-layer"])
+      : undefined,
+    viaClearance: number("via-clearance"),
     ports,
     groundNet: values.ground,
     frequencyHz: frequencyHz!,

@@ -124,7 +124,7 @@ def geometry_signature(geometry):
         [
             [
                 [point(position) for position in region["outer"]],
-                [[point(position) for position in hole] for hole in region["holes"]],
+                [[point(position) for position in hole] for hole in [*region["holes"], *region.get("maskCutouts", [])]],
             ]
             for region in geometry["groundRegions"]
         ],
@@ -137,6 +137,7 @@ def geometry_signature(geometry):
             ]
             for signal in geometry["signals"]
         ],
+        *([geometry["physicalModelSignature"]] if geometry.get("physicalModelSignature") else []),
         [
             [
                 coordinate(excitation["current"]),
@@ -205,6 +206,10 @@ def sample_case(case):
     coordinates = np.array([[point["x"], point["y"]] for point in grid["points"]])
     depth_nodes, _ = np.polynomial.legendre.leggauss(5)
     depths = (depth_nodes - 1) / 2 * model["copperThickness"]
+    if model.get("multilayer"):
+        foil = next(layer for layer in model["multilayer"]["stackup"]["copperLayers"]
+                    if layer["name"] == model["multilayer"]["sampleLayer"])
+        depths = foil["zMin"] + (depth_nodes + 1) / 2 * (foil["zMax"] - foil["zMin"])
     volume_coordinates = np.concatenate(
         [
             np.column_stack([coordinates, np.full(len(coordinates), depth)])
@@ -285,6 +290,7 @@ def sample_case(case):
     ]
     reference = {
         "schemaVersion": 1,
+        **({"sampleLayer": model["multilayer"]["sampleLayer"]} if model.get("multilayer") else {}),
         "solver": "palace",
         "solverVersion": version[1],
         "femOrder": model["order"],

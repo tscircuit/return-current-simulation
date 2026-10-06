@@ -31,7 +31,8 @@ export function renderPalaceModelSvg(
   validatePalaceReference(reference)
   if (
     reference.frequencyHz !== model.frequencyHz ||
-    reference.femOrder !== model.order
+    reference.femOrder !== model.order ||
+    reference.sampleLayer !== model.multilayer?.sampleLayer
   )
     throw new Error(
       "Palace model frequency or FEM order differs from reference",
@@ -174,8 +175,9 @@ export function renderPalaceReferenceSvg(
       title: options.title ?? "Palace ground-plane return current",
       description:
         "Palace driven Maxwell reference. Colors show magnitude of the complex conduction-current vector averaged through copper thickness. Arrows show the real instantaneous field at the selected phase. Copper is an explicitly meshed conductive volume.",
-      subtitle: `Palace ${reference.solverVersion} · f = ${reference.frequencyHz / 1e6} MHz · |K|/t (A/mm²) · peak phasors`,
+      subtitle: `Palace ${reference.solverVersion}${reference.sampleLayer ? ` · layer = ${reference.sampleLayer}` : ""} · f = ${reference.frequencyHz / 1e6} MHz · |K|/t (A/mm²) · peak phasors`,
       gridLabel: "sample grid",
+      separationLabel: reference.sampleLayer ? "outer foil gap" : undefined,
       footer: `FEM order ${reference.femOrder} · conductive copper volumes · arrows at ${phaseDegrees}° · air/substrate domain · source currents normalized`,
     },
   )

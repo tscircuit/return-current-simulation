@@ -1,5 +1,5 @@
 import { writeFile } from "node:fs/promises"
-import { isCopper } from "../geometry"
+import { createSampleMask } from "./create-sample-mask"
 import { positiveFinite } from "../read-geometry"
 import type { SimulationGeometry } from "../types"
 
@@ -23,6 +23,7 @@ export async function writeSampleGrid(options: {
     )
   const cellWidth = (maxX - minX) / columns
   const cellHeight = (maxY - minY) / rows
+  const containsCopper = createSampleMask(options.geometry)
   const points = []
   for (let row = 0; row < rows; row++)
     for (let column = 0; column < columns; column++) {
@@ -30,7 +31,7 @@ export async function writeSampleGrid(options: {
         x: minX + (column + 0.5) * cellWidth,
         y: minY + (row + 0.5) * cellHeight,
       }
-      if (isCopper(point, options.geometry)) points.push(point)
+      if (containsCopper(point)) points.push(point)
     }
   if (!points.length)
     throw new Error("The sample grid contains no ground copper")

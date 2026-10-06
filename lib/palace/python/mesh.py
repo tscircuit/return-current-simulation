@@ -68,7 +68,7 @@ def port_definition(model, index, legacy):
 def port_direction(model, port):
     dx = port["reference"]["x"] - port["signal"]["x"]
     dy = port["reference"]["y"] - port["signal"]["y"]
-    dz = -model["layerSeparation"] if port["referenceLayer"] == "bottom" else 0
+    dz = port["referenceZ"] - port["signalZ"] if model.get("multilayer") else (-model["layerSeparation"] if port["referenceLayer"] == "bottom" else 0)
     length = (dx * dx + dy * dy + dz * dz) ** 0.5
     if length < 1e-9:
         raise ValueError("Signal and reference terminals coincide")
@@ -121,6 +121,9 @@ def add_port(port, model, legacy, signals, ground, ground_pads, board):
 
 
 def generate_mesh(model, destination):
+    if model.get("multilayer"):
+        from mesh_multilayer import generate_multilayer_mesh
+        return generate_multilayer_mesh(model, destination)
     geometry = model["geometry"]
     board = Polygon(points(geometry["boardOutline"]))
     for cutout in geometry["cutouts"]:
@@ -345,7 +348,7 @@ def generate_mesh(model, destination):
         gmsh.option.setNumber("Mesh.MeshSizeExtendFromBoundary", 0)
         gmsh.option.setNumber("Mesh.MeshSizeFromPoints", 0)
         gmsh.option.setNumber("Mesh.MeshSizeFromCurvature", 0)
-        gmsh.option.setNumber("Mesh.Algorithm3D", 10)
+        gmsh.option.setNumber("Mesh.Algorithm3D", 1)
         gmsh.option.setNumber("General.NumThreads", 4)
         gmsh.option.setNumber("Mesh.MshFileVersion", 2.2)
         gmsh.model.mesh.generate(3)
@@ -376,7 +379,7 @@ def create_configuration(model, port_count):
         }
         for index in range(port_count)
     ]
-    return {
+    configuration = {
         "Problem": {"Type": "Driven", "Verbose": 2, "Output": "postpro"},
         "Model": {
             "Mesh": "mesh.msh",
@@ -427,6 +430,16 @@ def create_configuration(model, port_count):
             },
         },
     }
+
+    if model.get("multilayer"):
+        configuration["Domains"]["Materials"] = [
+            configuration["Domains"]["Materials"][0],
+            configuration["Domains"]["Materials"][-1],
+            *[{"Attributes": [layer["attribute"]], "Permittivity": layer["dielectricConstant"],
+               "Permeability": 1.0, "LossTan": layer["lossTangent"]}
+              for layer in model["multilayer"]["stackup"]["dielectrics"]]
+        ]
+    return configuration
 
 
 def main():

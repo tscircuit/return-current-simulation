@@ -32,6 +32,11 @@ export async function preparePalaceCase(options: PalaceCaseOptions) {
     JSON.stringify(options.circuitJson),
   )
   await writeFile(`${destination}/model.json`, JSON.stringify(model, null, 2))
+  if (model.multilayer)
+    await writeFile(
+      `${destination}/model-audit.json`,
+      JSON.stringify(model.multilayer.audit, null, 2),
+    )
   const grid = await writeSampleGrid({
     destination,
     geometry: model.geometry,

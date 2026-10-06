@@ -1,9 +1,19 @@
+import { createMultilayerPalaceModel } from "./create-multilayer-model"
 import { rectangleOutline, isCopper } from "../geometry"
 import { positiveFinite, readGeometry } from "../read-geometry"
 import { portNetIds } from "../port-connectivity"
 import type { PalaceModel, PalaceOptions, PalaceTerminalPort } from "./types"
 
 export function createPalaceModel(options: PalaceOptions): PalaceModel {
+  if (
+    options.stackup ||
+    options.circuitJson.some(
+      (element) => element.type === "pcb_board" && element.num_layers > 2,
+    )
+  )
+    return createMultilayerPalaceModel(options)
+  if (options.sampleLayer && options.sampleLayer !== "bottom")
+    throw new Error("A non-bottom sample layer requires an explicit stackup")
   const frequencyHz = positiveFinite(options.frequencyHz, "frequencyHz")
   // Only Palace models the restricted ground via geometry below. The preview
   // solver continues to reject drilled boards instead of silently ignoring vias.

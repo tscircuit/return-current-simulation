@@ -42,7 +42,7 @@ environment. The Docker fallback is a community-built image pinned by digest.
 
 Export the circuit-json array from your tscircuit board with
 `circuit.getCircuitJson()` after `await circuit.renderUntilSettled()`. Save that
-array as `board.json`; signal traces and bottom ground copper must already be
+array as `board.json`; traces, vias and reference copper must already be
 rendered. Inspect available pin names and aliases:
 
 ```sh
@@ -106,7 +106,7 @@ are solved quantities; they are not separately forced. The current source is
 prescribed externally: this does not simulate an IC, resistor or power supply
 as a SPICE circuit, or specify an independent source voltage.
 
-**Reference geometry matters.** A named bottom-layer reference must lie on the
+**Reference geometry matters.** In the legacy two-layer model, a named bottom-layer reference must lie on the
 selected ground copper. A named top-layer reference must be a rectangular SMT
 ground pad with a **concentric top-to-bottom ground via already in circuit-json**.
 The tool meshes the pad, drilled hole and copper barrel, and places the lumped
@@ -212,7 +212,7 @@ simulate-return-current board.json --ports-file ports.json \
 Use exactly one input style: single-source flags, repeated `--excitation`, or
 `--ports-file`. Reference pins go inside each repeated excitation; do not combine
 it with single-source reference flags. Each source/load pair still needs one
-continuous top-layer trace. Shared ground reference pads are allowed, provided
+continuous PCB trace, including physical via transitions when a stackup is supplied. Shared ground reference pads are allowed, provided
 port apertures do not overlap or intersect unrelated copper.
 
 ### Frequency and geometry comparisons
@@ -279,6 +279,97 @@ Open `preview/approximation.png`. This model is **frequency-independent**;
 `--frequency-hz` is rejected for it. Its grid is limited to 100,000 candidate
 cells. Use Palace for the frequency-dependent simulation.
 
+## Multilayer boards
+
+Provide the manufacturing stack **top to bottom**, alternating copper and
+physical dielectric layers. Thicknesses are millimetres; dielectric constants
+are relative permittivities. Each dielectric can specify `lossTangent`
+(default 0.02). For example, `stackup.json`:
+
+```json
+{
+  "nominalBoardThicknessMm": 0.975,
+  "layers": [
+    { "name": "top", "copperThicknessMm": 0.035 },
+    { "material": "prepreg", "dielectricThicknessMm": 0.2, "dielectricConstant": 4.1 },
+    { "name": "inner1", "copperThicknessMm": 0.015 },
+    { "material": "core", "dielectricThicknessMm": 0.475, "dielectricConstant": 4.42 },
+    { "name": "inner2", "copperThicknessMm": 0.015 },
+    { "material": "prepreg", "dielectricThicknessMm": 0.2, "dielectricConstant": 4.1 },
+    { "name": "bottom", "copperThicknessMm": 0.035 }
+  ]
+}
+```
+
+```sh
+simulate-return-current board.json --stackup-file stackup.json \
+  --source U1.OUT --source-reference U1.GND \
+  --load U2.IN --load-reference U2.GND \
+  --ground GND --sample-layer inner2 --current 5mA --frequency-hz 1000000 \
+  --cell-size 0.05 --output inner2-return
+```
+
+`--sample-layer` selects the reference-net foil whose complex conduction
+current is integrated through its thickness and plotted. It defaults to
+`bottom` and is displayed on multilayer snapshots. It does **not** constrain
+where current flows: Palace solves the full emitted conductor geometry. Omitted
+reference pins connect the port to reference copper on the sampled layer
+beneath its signal endpoint. Explicit reference pins can be on another layer,
+but must have real traces/vias connecting them to the sampled reference copper.
+
+Save a separate case for each sampled layer. `resample` changes the XY pitch
+within the saved layer, reusing its solve. Sampling pitch is independent of FEM
+mesh size; 0.05 mm pixels alone do not establish mesh convergence. Stackup
+coordinates use the upper face of bottom copper as z=0. Explicit thicknesses
+are never scaled to `pcb_board.thickness` or nominal fabrication thickness.
+`model-audit.json` reports geometry counts and modeling assumptions.
+
+The [four-layer TSX fixture](tests/fixtures/MultilayerBoard.tsx) routes from top
+through blind signal vias onto `inner1`, with ground on `inner2` and bottom
+connected by through vias. Its recorded [1 MHz Palace case](examples/palace/multilayer-inner2-1mhz)
+uses 5 mA, 25 Ω/100 Ω terminals, and an inner-layer visual snapshot. Tests also
+cover six-layer boards and bottom signal terminals.
+
+### AM3352 SBC
+
+The [astra/am3352-sbc board](https://tscircuit.com/astra/am3352-sbc#files), pinned
+to **0.1.19**, emits a four-layer, 100 × 80 mm board: 750 PCB traces, 835 vias,
+1,056 SMT pads, 46 plated holes, eight unplated holes and 27 pours. Its stackup is
+in `design/fabrication-stackup.json`, separate from `dist/index/circuit.json`.
+
+From a checkout, download the pinned public files, verify their SHA-256 hashes
+and prepare the full model (no EM solve):
+
+```sh
+bun scripts/prepare-am3352-example.ts work/am3352
+# The equivalent CLI preparation, after downloading:
+node dist/cli.js work/am3352/board.json \
+  --stackup-file work/am3352/stackup.json --sample-layer bottom \
+  --source U1.K4 --load U3.A7 --ground GND --current 5mA \
+  --frequency-hz 1000000 --cell-size 0.2 --prepare-only \
+  --output work/am3352/case
+```
+
+`U1.K4 → U3.A7` is `DDR_D12`, used here to exercise input/routing at an explicitly
+chosen **1 MHz**, not to represent its actual DDR waveform. Choose your actual
+ports, harmonics and amplitudes for an analysis. The explicit stack sums to
+**1.5642 mm**, while nominal board thickness is 1.6 mm. Inner1 is adjacent to top
+power copper; inner2 is adjacent to bottom GND. Current returns through whichever
+conductors the field supports, not automatically the selected `GND` net.
+
+The [preparation/geometry audit](examples/am3352/preparation-audit.json) retains
+all exported copper. **The pinned export is not ready for an EM result:** the
+geometry audit found overlapping `MMC0_DAT3` (`source_net_23`) and `VIN_5V`
+(`source_net_80`) copper on `inner1`, and the mesher rejects that overlap. Fix the
+board routing/export before removing `--prepare-only` to run Palace. Preparation
+validates the circuit/schema and layer metadata; it is not a substitute for the
+mesher's polygon/port/connection checks. No full-board EM solve is claimed.
+
+Even after resolving geometry, DDR return paths through power-plane decoupling
+and package impedances need an additional component model. The current adapter
+cannot certify DDR signal integrity. At 100 × 80 mm, use at least 0.1 mm cells
+(800,000 candidates); 0.05 mm exceeds the current one-million-cell sample cap.
+
 ## Library
 
 `circuitJson` can be the array from `circuit.getCircuitJson()`. Validate JSON
@@ -297,6 +388,8 @@ const result = await runPalaceSimulation({
     current: "5mA", sourceImpedance: 25, loadImpedance: "100ohm",
   }],
   outputDirectory: "return-current",
+  // On a multilayer board:
+  // stackup: parseFabricationStackup(stackupJson), sampleLayer: "inner2",
 })
 console.log(result.pngPath)
 ```
@@ -305,6 +398,8 @@ The Node-only `/palace` entry also exports `preparePalaceSimulation`,
 `resamplePalaceCase` and `setupPalacePython`. The root entry exports
 `withNamedExcitations`, `simulateReturnCurrent` (the approximation),
 `renderReturnCurrentSvg`, `renderPalaceModelSvg` and the comparison helpers.
+The root export `parseFabricationStackup` validates external stackup JSON; pass
+its result as `stackup` and select `sampleLayer` in the library.
 The same `ports` array can be written to a CLI `--ports-file`. Reference pins
 and impedances are optional for the library too. Root exports `parseCurrentAmps`
 and `parseResistanceOhms` normalize supported units to SI numbers.
@@ -313,27 +408,54 @@ Palace fields at a different arrow phase.
 
 ## Supported inputs
 
-The current model needs one **two-layer** board, continuous **top-layer** wire
-traces, and **bottom ground copper** on the selected net. Each source/load pair
-must be the endpoints of one PCB trace. Branched/component-spanning paths,
-signal vias, arbitrary drilled/plated holes and multi-layer routing are not
-supported. The supported ground vias are limited to concentric vias in selected
-top reference pads; their outer diameter must fit inside the pad, with room for
-the plated barrel. Pin/refdes selectors must be unambiguous. Palace supports
-rectangular top SMT pads, a clear non-overlapping gap for each top port, and
-bottom reference contacts fully on selected ground copper. The approximation
-rejects explicit reference terminals, non-default impedances and drilled boards.
+Palace accepts one board with **2–10 copper layers**. More than two layers
+require a fabrication stackup; supplying a stackup also enables the layered
+mesher on two-layer boards. Source/load pins must be endpoints of one continuous
+PCB trace, which may route on different layers through physical `pcb_via`
+records. Branched nets, component-spanning paths and through-pad route points
+are rejected. Selectors must be unambiguous.
 
-Ground copper comes from bottom `pcb_copper_pour` records or
-`pcb_ground_plane`/`pcb_ground_plane_region` records. Declaring `GND` alone does
-not create copper. A ground-plane slot removes copper; a physical PCB cutout
-also removes substrate, so signals must route around it.
+The layered model retains **all** emitted copper: unexcited signal traces,
+floating pads/nets, ground and power pours, and plated via/hole barrels. SMT pad
+shapes include rectangular, circular, rotated rectangular/pill and polygon
+pads. Circular and slotted plated holes and circular unplated drills are
+supported. Blind/buried via depths and through-hole stubs come from their actual
+layer spans. Copper on different nets may not overlap. The model never replaces
+missing reference copper with a solid plane or invents a via from a pin label.
+A reference pad must have a physical copper path to the sampled reference layer;
+all excited reference terminals must share a connected copper region.
+
+Ground/reference copper comes from `pcb_copper_pour` or
+`pcb_ground_plane`/`pcb_ground_plane_region` records on the chosen layer/net.
+`--ground DDR_1V5` can select an emitted power plane as a reference, but this does
+not create a power-to-ground decoupling path. Plane voids remove copper;
+physical PCB cutouts remove substrate too. Ports need copper at their aperture edges; a noncoplanar port whose pin is
+centered in a drill void is unsupported. A port aperture may not pass through
+intermediate copper or a plated barrel: choose closer explicit reference pins
+if a long vertical default port is obstructed.
+
+Without an explicit stackup, the existing two-layer mesher keeps its previous
+limits: top rectangular SMT pads and concentric top-to-bottom ground vias in
+selected top reference pads. The approximation remains two-layer/top-signal/
+bottom-ground only and rejects drilled boards, explicit reference pins and
+non-default impedances.
 
 Physical defaults: board thickness for signal/ground separation (0.8 mm when
 missing), 0.035 mm copper, 5.8 × 10⁷ S/m conductivity, substrate relative
 permittivity 4.3, and loss tangent 0.02. The library's `PalaceSimulationOptions`
-allows material and stackup overrides. Ground-via plating thickness is currently
-the specified copper thickness, and drill circles use 32-sided polygons.
+allows material and stackup overrides. In the legacy model, ground-via plating
+uses the copper thickness. In the layered model, plating is explicitly assumed
+to be **0.025 mm**; fabricated plating thickness is not currently in circuit-json.
+Plane antipads around foreign-net vias use a conservative bounding rectangle around the
+pad plus `--via-clearance` on each side (board pad clearance, or 0.2 mm by default).
+Only plane/pour copper receives generated antipads; trace/pad copper is retained
+and overlaps are rejected. These generated clearances are assumptions, saved in `model.json`; inspect them
+against the actual fabrication geometry. Circular copper/drills are 32-sided
+polygons. Planar unions use 0.000001 mm precision to remove numerical slivers.
+Component/package impedances, decoupling capacitors, solder mask and silkscreen
+are not modeled. The volume mesher still rejects frequency/thickness combinations
+with copper thicker than skin depth; DDR edge-rate/high-frequency analysis needs
+further copper-thickness refinement and a component impedance model.
 `source_port`/`load_port` on `simulation_return_current_excitation` are temporary
 local circuit-json metadata, injected by named-port resolution and preserved by
 `parseReturnCurrentCircuitJson`; core does not need to emit them yet.

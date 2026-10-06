@@ -1,3 +1,8 @@
+import {
+  MultilayerBoard,
+  fourLayerStackup,
+} from "tests/fixtures/MultilayerBoard"
+import { Circuit } from "@tscircuit/core"
 import { mkdtemp, readFile, writeFile, rm, stat } from "node:fs/promises"
 import { tmpdir } from "node:os"
 import { join, resolve } from "node:path"
@@ -150,6 +155,50 @@ try {
     [25, 100],
   )
   assert.equal(explicitModel.groundVias.length, 2)
+  const layeredCircuit = new Circuit()
+  layeredCircuit.add(<MultilayerBoard innerPlane />)
+  await layeredCircuit.renderUntilSettled()
+  await writeFile(
+    join(consumer, "multilayer.json"),
+    JSON.stringify(layeredCircuit.getCircuitJson()),
+  )
+  await writeFile(
+    join(consumer, "stackup.json"),
+    JSON.stringify(fourLayerStackup),
+  )
+  await run([
+    bin,
+    "multilayer.json",
+    "--stackup-file",
+    "stackup.json",
+    "--sample-layer",
+    "inner2",
+    "--ports-file",
+    "ports.json",
+    "--ground",
+    "GND",
+    "--frequency-hz",
+    "1000000",
+    "--prepare-only",
+    "--output",
+    "multilayer-prepared",
+  ])
+  const multilayer = JSON.parse(
+    await readFile(join(consumer, "multilayer-prepared/model.json"), "utf8"),
+  )
+  assert.equal(multilayer.multilayer.sampleLayer, "inner2")
+  assert.equal(multilayer.multilayer.audit.vias, 4)
+  assert.equal(multilayer.multilayer.stackup.copperLayers.length, 4)
+  assert(
+    (
+      await stat(
+        join(
+          consumer,
+          "node_modules/simulate-return-current/dist/python/mesh_multilayer.py",
+        ),
+      )
+    ).size > 1000,
+  )
   await run([
     bin,
     ...common,

@@ -1,0 +1,103 @@
+{
+  "board": "astra/am3352-sbc",
+  "version": "0.1.19",
+  "packageReleaseId": "a56db1f7-99bf-4f14-b32e-ab5431f039d0",
+  "files": [
+    {
+      "remote": "dist/index/circuit.json",
+      "local": "board.json",
+      "sha256": "c9d7059fe536865784f175855e0dcc76510972319eec848c18b0ef6dcd2adb40"
+    },
+    {
+      "remote": "design/fabrication-stackup.json",
+      "local": "stackup.json",
+      "sha256": "e59944a9dd976b0522a9bce45ca6231d9213f13ea65a53a1e076c8c3a91c79a4"
+    }
+  ],
+  "exampleSignal": "DDR_D12",
+  "source": "U1.K4",
+  "load": "U3.A7",
+  "frequencyHz": 1000000,
+  "currentAmps": 0.005,
+  "sampleLayer": "bottom",
+  "preparationSeconds": 11.340967821,
+  "emSolvePerformed": false,
+  "stackup": {
+    "copperLayers": [
+      {
+        "name": "top",
+        "zMin": 1.4942,
+        "zMax": 1.5292
+      },
+      {
+        "name": "inner1",
+        "zMin": 1.3796,
+        "zMax": 1.3948
+      },
+      {
+        "name": "inner2",
+        "zMin": 0.0994,
+        "zMax": 0.11460000000000001
+      },
+      {
+        "name": "bottom",
+        "zMin": -0.035,
+        "zMax": 0
+      }
+    ],
+    "dielectrics": [
+      {
+        "material": "3313 RC57%",
+        "zMin": 0,
+        "zMax": 0.0994,
+        "dielectricConstant": 4.1,
+        "lossTangent": 0.02,
+        "attribute": 105
+      },
+      {
+        "material": "NP-155F core",
+        "zMin": 0.11460000000000001,
+        "zMax": 1.3796,
+        "dielectricConstant": 4.42,
+        "lossTangent": 0.02,
+        "attribute": 103
+      },
+      {
+        "material": "3313 RC57%",
+        "zMin": 1.3948,
+        "zMax": 1.4942,
+        "dielectricConstant": 4.1,
+        "lossTangent": 0.02,
+        "attribute": 101
+      }
+    ],
+    "physicalThicknessMm": 1.5641999999999998,
+    "nominalBoardThicknessMm": 1.6
+  },
+  "audit": {
+    "traces": 750,
+    "vias": 835,
+    "pads": 1056,
+    "platedHoles": 46,
+    "unplatedHoles": 8,
+    "pours": 27,
+    "omittedCopperElements": 0,
+    "warnings": [
+      "Component bodies, package/decoupling impedances, solder mask and silkscreen are not modeled.",
+      "Circular copper/drills use 32-sided polygons. Via plating uses 0.025 mm; override support is not yet provided.",
+      "Explicit stack sums to 1.5641999999999998 mm, nominal 1.6 mm; explicit dimensions are used without scaling."
+    ]
+  },
+  "grid": {
+    "columns": 500,
+    "rows": 400,
+    "cellWidth": 0.2,
+    "cellHeight": 0.2,
+    "copperSamples": 185644
+  },
+  "geometryAudit": {
+    "valid": false,
+    "reason": "Different nets overlap on inner1: source_net_23, source_net_80; area=0.00429090652 mm\u00b2, bounds=(-18.81697299997901, 12.350742213606248, -18.70753582120823, 12.440236629179074)",
+    "seconds": 143.57734834900475
+  }
+}

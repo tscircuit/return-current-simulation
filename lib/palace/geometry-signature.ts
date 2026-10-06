@@ -9,13 +9,15 @@ function point(point: Point): string[] {
   return [coordinate(point.x), coordinate(point.y)]
 }
 
-/** Canonical physical geometry; excludes IDs, warnings and display metadata. */
+/** Canonical sampling geometry, including the full layered physical model when present. */
 export function palaceGeometrySignature(geometry: SimulationGeometry): string {
   return JSON.stringify([
     geometry.boardOutline.map(point),
     geometry.groundRegions.map((region) => [
       region.outer.map(point),
-      region.holes.map((hole) => hole.map(point)),
+      [...region.holes, ...(region.maskCutouts ?? [])].map((hole) =>
+        hole.map(point),
+      ),
     ]),
     geometry.cutouts.map((outline) => outline.map(point)),
     geometry.signals.map((signal) =>
@@ -27,6 +29,9 @@ export function palaceGeometrySignature(geometry: SimulationGeometry): string {
           route.layer,
         ]),
     ),
+    ...(geometry.physicalModelSignature
+      ? [geometry.physicalModelSignature]
+      : []),
     geometry.excitations.map((excitation) => [
       coordinate(excitation.current),
       point(excitation.return_source),

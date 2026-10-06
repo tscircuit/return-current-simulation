@@ -12,7 +12,7 @@ import type {
   SimulationOptions,
 } from "./types"
 
-function pourRegion(pour: PcbCopperPour): CopperRegion {
+export function pourRegion(pour: PcbCopperPour): CopperRegion {
   if (pour.shape === "rect") return { outer: rectangleOutline(pour), holes: [] }
   if (pour.shape === "polygon") return { outer: pour.points, holes: [] }
   return {

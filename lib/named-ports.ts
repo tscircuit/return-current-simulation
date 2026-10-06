@@ -1,3 +1,4 @@
+import { normalizeLayeredRoute } from "./palace/normalize-layered-route"
 import type { PcbPort, PcbTrace, SourcePort } from "circuit-json"
 import type {
   ReturnCurrentCircuitJson,
@@ -66,7 +67,6 @@ export function listCircuitPorts(circuitJson: ReturnCurrentCircuitJson) {
 function resolvePort(
   circuitJson: ReturnCurrentCircuitJson,
   selector: string,
-  signal = true,
 ): { source: SourcePort; pcb: PcbPort } {
   const match = /^([^\.\s]+)\.([^\.\s]+)$/.exec(selector)
   if (!match)
@@ -99,8 +99,7 @@ function resolvePort(
   )
   if (pcbPorts.length !== 1)
     throw new Error(`Port "${selector}" needs exactly one PCB port location`)
-  if (signal && !pcbPorts[0].layers.includes("top"))
-    throw new Error(`Port "${selector}" must be on the top layer`)
+
   return { source: ports[0], pcb: pcbPorts[0] }
 }
 
@@ -112,6 +111,7 @@ function endpointMatches(
 ): boolean {
   if (
     endpoint.route_type !== "wire" ||
+    !port.pcb.layers.includes(endpoint.layer) ||
     Math.hypot(endpoint.x - port.pcb.x, endpoint.y - port.pcb.y) > 1e-6
   )
     return false
@@ -138,7 +138,14 @@ export function withNamedExcitations(options: {
   circuitJson: ReturnCurrentCircuitJson
   groundNet: string
   ports: readonly NamedExcitation[]
+  referenceLayer?: import("./palace/stackup").CopperLayer
 }): ReturnCurrentCircuitJson {
+  options = {
+    ...options,
+    circuitJson: options.circuitJson.map((e) =>
+      e.type === "pcb_trace" ? normalizeLayeredRoute(e) : e,
+    ),
+  }
   if (!options.ports.length)
     throw new Error("Specify at least one source/load/current excitation")
   const nets = options.circuitJson.filter(
@@ -162,10 +169,10 @@ export function withNamedExcitations(options: {
       if (!selector)
         return {
           point: { x: signal.pcb.x, y: signal.pcb.y },
-          layer: "bottom" as const,
+          layer: options.referenceLayer ?? "bottom",
           pcbPortId: undefined,
         }
-      const port = resolvePort(options.circuitJson, selector, false)
+      const port = resolvePort(options.circuitJson, selector)
       if (
         !portNetIds(options.circuitJson, port.source.source_port_id).includes(
           groundId,
@@ -178,14 +185,13 @@ export function withNamedExcitations(options: {
         throw new Error(
           "Signal and reference terminals must be different ports",
         )
-      const layer =
-        port.pcb.layers.includes("bottom") && !port.pcb.layers.includes("top")
-          ? ("bottom" as const)
-          : ("top" as const)
+      const layer = port.pcb.layers.includes("top")
+        ? "top"
+        : port.pcb.layers.includes("bottom")
+          ? "bottom"
+          : port.pcb.layers[0]
       if (!port.pcb.layers.includes(layer))
-        throw new Error(
-          `Reference "${selector}" must be on the top or bottom layer`,
-        )
+        throw new Error(`Reference "${selector}" needs a physical copper layer`)
       return {
         point: { x: port.pcb.x, y: port.pcb.y },
         layer,
@@ -210,22 +216,20 @@ export function withNamedExcitations(options: {
     })
     if (candidates.length !== 1)
       throw new Error(
-        `"${excitation.source}" → "${excitation.load}" needs exactly one continuous PCB trace; found ${candidates.length}. Branched nets, vias and component-spanning paths are not supported`,
+        `"${excitation.source}" → "${excitation.load}" needs exactly one continuous PCB trace; found ${candidates.length}. Branched nets and component-spanning paths are not supported`,
       )
     const { trace, reverse } = candidates[0]
-    if (
-      trace.route.some(
-        (point) => point.route_type !== "wire" || point.layer !== "top",
-      )
-    )
-      throw new Error(
-        "Named excitation requires a continuous top-layer wire trace without vias",
-      )
     if (oriented.has(trace.pcb_trace_id))
       throw new Error(`Trace ${trace.pcb_trace_id} is selected more than once`)
     const route = reverse
       ? trace.route
           .map((point, routeIndex) => {
+            if (point.route_type === "via")
+              return {
+                ...point,
+                from_layer: point.to_layer,
+                to_layer: point.from_layer,
+              }
             if (point.route_type !== "wire") return point
             const previous = trace.route[Math.max(0, routeIndex - 1)]
             return {

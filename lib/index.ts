@@ -28,3 +28,10 @@ export type {
   PalaceTerminalPort,
 } from "./palace/types"
 export { comparePalaceRuns } from "./palace/compare-palace-runs"
+
+export { parseFabricationStackup } from "./palace/stackup"
+export type {
+  FabricationStackup,
+  PhysicalStackup,
+  CopperLayer,
+} from "./palace/stackup"

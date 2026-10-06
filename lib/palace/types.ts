@@ -1,3 +1,9 @@
+import type {
+  CopperLayer,
+  FabricationStackup,
+  PhysicalStackup,
+} from "./stackup"
+import type { CopperRegion, SignalSegment } from "../types"
 import type { Point } from "circuit-json"
 import type { SimulationGeometry, SimulationOptions } from "../types"
 
@@ -8,6 +14,12 @@ export interface PalaceOptions
   > {
   /** Required; peak phasors use exp(+jωt). No frequency is inferred. */
   frequencyHz: number
+  /** Required on boards with more than two copper layers. */
+  stackup?: FabricationStackup
+  /** Reference-net copper layer to sample; default bottom. */
+  sampleLayer?: CopperLayer
+  /** Radial clearance from foreign-net via pads; default board clearance or 0.2 mm. */
+  viaClearance?: number
   /** Relative permittivity of the substrate; default 4.3. */
   substratePermittivity?: number
   substrateLossTangent?: number
@@ -22,6 +34,7 @@ export interface PalaceOptions
 
 export interface PalaceModel {
   schemaVersion: 1
+  multilayer?: PalaceLayeredGeometry
   geometry: SimulationGeometry
   topPads: Point[][]
   /** Ground pads with a modeled, concentric top-to-bottom ground via. */
@@ -52,7 +65,10 @@ export interface PalaceModel {
 export interface PalaceTerminalPort {
   signal: Point
   reference: Point
-  referenceLayer: "top" | "bottom"
+  referenceLayer: CopperLayer
+  signalLayer?: CopperLayer
+  signalZ?: number
+  referenceZ?: number
   resistance: number
   signalPcbPortId?: string
   referencePcbPortId?: string
@@ -68,6 +84,7 @@ export interface PalaceSample extends Point {
 
 export interface PalaceReference {
   schemaVersion: 1
+  sampleLayer?: CopperLayer
   solver: "palace"
   solverVersion: string
   femOrder: 1 | 2
@@ -90,5 +107,42 @@ export interface PalaceReference {
     circuitSha256: string
     modelSha256: string
     meshSha256: string
+  }
+}
+
+/** All physical copper is retained, including unexcited and floating nets. */
+export interface PalaceLayeredGeometry {
+  stackup: PhysicalStackup
+  sampleLayer: CopperLayer
+  referenceNetId: string
+  viaClearance: number
+  copper: {
+    layer: CopperLayer
+    netId: string
+    regions: CopperRegion[]
+    segments: SignalSegment[]
+  }[]
+  drills: { hole: Point[]; zMin: number; zMax: number }[]
+  barrels: {
+    netId: string
+    hole: Point[]
+    outer: Point[]
+    clearance?: Point[]
+    pads: Point[]
+    layers: CopperLayer[]
+    zMin: number
+    zMax: number
+    platingThickness: number
+  }[]
+  boardCutouts: Point[][]
+  audit: {
+    traces: number
+    vias: number
+    pads: number
+    platedHoles: number
+    unplatedHoles: number
+    pours: number
+    omittedCopperElements: number
+    warnings: string[]
   }
 }
