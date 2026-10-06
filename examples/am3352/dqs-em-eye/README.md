@@ -69,6 +69,26 @@ sensitivity check, not proof that unrecorded tails are negligible. Small
 routed/reference voltage differences must not be interpreted as physical
 copper loss: PEC is lossless and passivity correction also changes amplitude.
 
+Changing the local XY mesh from 0.1 mm to 0.05 mm with the same 1.5 ns
+record changes raw S21 group delay at 400 MHz from **422.7 ps to 362.8 ps**.
+The maximum complex S21 difference below 1 GHz is **0.345**, largely reflecting
+that phase shift. Two resolutions do not establish convergence; absolute
+flight time and small waveform differences need further refinement before
+using this for routing signoff. This is a source-port-1 spectral comparison,
+not a second fully extracted coarse two-port eye.
+
+The longer 0.1 mm source-port-1 run took **13.8 minutes including setup**
+for a 3 ns record. Comparing that record with its 1.5 ns prefix changes raw
+transmission by up to **0.0294 below 1 GHz**. It also stops above the requested
+−50 dB decay criterion. Longer records alone do not resolve mesh uncertainty.
+
+The four DQS0 vias have 13 fine-grid XY nodes within each barrel and their
+exported full-board spans are preserved, including the stubs below the inner1
+route. The native log also reports **588 unused cylinder primitives**: many
+vias outside the DDR region are unresolved by the graded outer grid. Full
+copper area coverage is not equivalent to full electrical mesh resolution.
+This limitation precludes a validated whole-board EM claim.
+
 An independent same-seed 2 ps → 1 ps ngspice check on the pilot channel changed
 zero crossings by at most **0.0097 ps**, validating transient resolution only.
 Final ngspice wall times (seconds): `{"clock-routed": 118.2, "clock-reference": 74.1, "prbs-routed": 48.5, "prbs-reference": 29.8}`.

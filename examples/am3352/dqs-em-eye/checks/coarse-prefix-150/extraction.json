@@ -1,0 +1,77 @@
+{
+  "solver": "openEMS 0.0.35",
+  "lane": 0,
+  "excitedPort": 1,
+  "cellMm": 0.1,
+  "fineMarginMm": 2,
+  "fineBoundsMm": [
+    -10.800231,
+    -33.300000000000004,
+    6.450000000000001,
+    -4.0
+  ],
+  "maxTimeNs": 1.5,
+  "endCriteria": 1e-05,
+  "gridCells": [
+    278,
+    366,
+    35
+  ],
+  "foilPolygons": {
+    "bottom": 520,
+    "inner2": 288,
+    "inner1": 293,
+    "top": 520
+  },
+  "contacts": [
+    {
+      "positive": [
+        3.6,
+        -6.800000000000001
+      ],
+      "negative": [
+        3.6,
+        -6.0
+      ],
+      "axis": "y",
+      "leadHeightMm": 0.15,
+      "portWidthMm": 0.2
+    },
+    {
+      "positive": [
+        -8.0,
+        -30.400000000000002
+      ],
+      "negative": [
+        -8.8,
+        -30.400000000000002
+      ],
+      "axis": "x",
+      "leadHeightMm": 0.15,
+      "portWidthMm": 0.2
+    }
+  ],
+  "dielectricLoss": "omitted",
+  "copperLoss": "PEC for initial routing extraction",
+  "input": {
+    "circuitJson": "AM3352 release 0.1.19",
+    "copper": "round-capped rendered full-board copper with holes",
+    "sha256": {
+      "circuitJson": "c9d7059fe536865784f175855e0dcc76510972319eec848c18b0ef6dcd2adb40",
+      "model": "df6b49acab399463b772965f1f57722d6bf0e563658e1c522c59eca1e364b762",
+      "compactCopper": "a45b995b797b1b5495d12ce898e99c0ed265df84c8e271764936ee95564b576b"
+    }
+  },
+  "limitations": [
+    "Thin conductive foil placement, solid high-conductivity via exterior approximation",
+    "Fine DDR region with graded coarser mesh outside; compare mesh and margin refinement",
+    "Differential two-terminal ports, balanced excitation; no common-mode I/O or active aggressors in this extraction",
+    "0.15 mm matched launch posts; not exact IC packaging",
+    "Energy decay and mesh/time convergence must be assessed separately from reaching the requested finite record"
+  ],
+  "wallSeconds": 6.524382527015405,
+  "actualTimeNs": 1.49956380231,
+  "sourceIncidentMinAbs": 6.618036496517991e-15,
+  "solverCompleted": false,
+  "recordLengthIsEnergyConvergence": false
+}

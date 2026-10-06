@@ -1,0 +1,104 @@
+{
+  "check": "DQS0 via geometric mesh coverage, not native primitive-use audit",
+  "passed": true,
+  "vias": [
+    {
+      "trace": "source_trace_15",
+      "xyMm": [
+        2.7,
+        -7.6000000000000005
+      ],
+      "radiusMm": 0.10000000000000017,
+      "xyGridNodesInsideBarrel": 13,
+      "zGridPlanesInsideSpan": 13,
+      "routeConnectionLayers": [
+        "top",
+        "inner1"
+      ],
+      "exportedPhysicalBarrelLayers": [
+        "top",
+        "inner1",
+        "inner2",
+        "bottom"
+      ],
+      "exportedPhysicalZSpanMm": [
+        -0.035,
+        1.5292
+      ]
+    },
+    {
+      "trace": "source_trace_15",
+      "xyMm": [
+        -7.6,
+        -30.800000000000004
+      ],
+      "radiusMm": 0.10000000000000017,
+      "xyGridNodesInsideBarrel": 13,
+      "zGridPlanesInsideSpan": 13,
+      "routeConnectionLayers": [
+        "inner1",
+        "top"
+      ],
+      "exportedPhysicalBarrelLayers": [
+        "top",
+        "inner1",
+        "inner2",
+        "bottom"
+      ],
+      "exportedPhysicalZSpanMm": [
+        -0.035,
+        1.5292
+      ]
+    },
+    {
+      "trace": "source_trace_16",
+      "xyMm": [
+        4.000000000000001,
+        -6.4
+      ],
+      "radiusMm": 0.10000000000000017,
+      "xyGridNodesInsideBarrel": 13,
+      "zGridPlanesInsideSpan": 13,
+      "routeConnectionLayers": [
+        "top",
+        "inner1"
+      ],
+      "exportedPhysicalBarrelLayers": [
+        "top",
+        "inner1",
+        "inner2",
+        "bottom"
+      ],
+      "exportedPhysicalZSpanMm": [
+        -0.035,
+        1.5292
+      ]
+    },
+    {
+      "trace": "source_trace_16",
+      "xyMm": [
+        -8.4,
+        -30.800000000000004
+      ],
+      "radiusMm": 0.09999999999999928,
+      "xyGridNodesInsideBarrel": 13,
+      "zGridPlanesInsideSpan": 13,
+      "routeConnectionLayers": [
+        "inner1",
+        "top"
+      ],
+      "exportedPhysicalBarrelLayers": [
+        "top",
+        "inner1",
+        "inner2",
+        "bottom"
+      ],
+      "exportedPhysicalZSpanMm": [
+        -0.035,
+        1.5292
+      ]
+    }
+  ],
+  "unusedCylinderWarningsInFineSolverLog": 588,
+  "limitation": "Many outer-region barrel primitives are not resolved by the graded coarse grid; this is not a validated whole-board EM solve."
+}

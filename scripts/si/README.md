@@ -136,7 +136,8 @@ and discrete components electrically unloaded. It uses PEC thin foils and
 solid barrel exteriors, omits copper/dielectric loss and component PDN models,
 and extracts **balanced differential** ports with short launch posts. The
 transient projects receiver ODT into a lumped transmitter common-mode DC load;
-common-mode propagation/conversion is not extracted. Power/ground supplies are
+common-mode propagation/conversion is not extracted. Many vias outside the fine DDR region remain unresolved by the graded grid;
+the saved solver logs retain unused-primitive warnings. Power/ground supplies are
 ideal. Preamble/postamble, turnaround and simultaneous DQ sampling are absent.
 Therefore this eye gives a conditional view of the **DQS interconnect**, not
 whole-board DDR setup/hold compliance. The independent TI routing-length audit
