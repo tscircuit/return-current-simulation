@@ -1,0 +1,35 @@
+{
+  "status": "timestep refinement checks the assumed transmission-line circuit only, not physical board accuracy",
+  "nominalTimestepPs": 2,
+  "refinedTimestepPs": 1,
+  "compareStartUi": 16,
+  "compareEndUi": 30,
+  "lanes": [
+    {
+      "lane": 0,
+      "maxDifferentialWaveformDifferenceV": 1.8586505808493303e-05,
+      "rmsDifferentialWaveformDifferenceV": 5.487914489391105e-06
+    },
+    {
+      "lane": 1,
+      "maxDifferentialWaveformDifferenceV": 1.3478099796293552e-05,
+      "rmsDifferentialWaveformDifferenceV": 4.617306443096885e-06
+    }
+  ],
+  "maximumPermittedDifferenceV": 0.005,
+  "passed": true,
+  "runs": [
+    {
+      "case": "nominal",
+      "solveSeconds": 52.94660694999038,
+      "netlistSha256": "f5c9aee63b4f33c71d17a1db8d500d01f83964de1577955129d52c4a5df6eab5",
+      "waveformsNpzSha256": "add9a2e9a5ab703c3519b5bc081a04c1dab1dba768d3ff72e99f708e7a5dfbc8"
+    },
+    {
+      "case": "refined",
+      "solveSeconds": 179.38198695899337,
+      "netlistSha256": "ad109d134f6d4878c21e6ba12a58962dacf5ecc9b11b8bb5e8213951f16ee308",
+      "waveformsNpzSha256": "f584b552bfd884cb5486b7561c6a259f701953119b9247501502edc60568675e"
+    }
+  ]
+}

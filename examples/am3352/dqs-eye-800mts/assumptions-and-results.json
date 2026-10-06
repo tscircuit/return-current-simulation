@@ -1,0 +1,287 @@
+{
+  "status": "unvalidated transmission-line estimate",
+  "source": "circuit-json and stackup identified by the SHA-256 hashes below",
+  "inputCircuitSha256": "c9d7059fe536865784f175855e0dcc76510972319eec848c18b0ef6dcd2adb40",
+  "inputStackupSha256": "e59944a9dd976b0522a9bce45ca6231d9213f13ea65a53a1e076c8c3a91c79a4",
+  "direction": "write",
+  "rateMTs": 800,
+  "strobeFrequencyHz": 400000000.0,
+  "uiSeconds": 1.25e-09,
+  "assumptions": {
+    "supplyVolts": 1.5,
+    "driveResistanceOhmsPerLeg": 40,
+    "terminationOhmsPerLegToHalfSupply": 60,
+    "differentialImpedanceOhms": 100.921304738,
+    "receiverCapacitancePfPerLeg": 2,
+    "sourceRiseFall10To90Ps": 200,
+    "topBottomEffectivePermittivity": 3.0,
+    "innerEffectivePermittivity": 4.1,
+    "viaEffectivePermittivity": 4.3,
+    "lineLossModel": "total DC copper resistance redistributed along a uniform line; no skin-effect or dielectric loss",
+    "jitterNoiseInjected": false,
+    "references": "ideal continuous AC reference; exported pours not field-solved"
+  },
+  "excluded": [
+    "IBIS nonlinear drivers/receivers and actual register settings",
+    "Package/via parasitics and stubs",
+    "Mutual/crosstalk and common-mode channel extraction",
+    "Discontinuous references and decoupling networks",
+    "Frequency-dependent losses",
+    "Preamble/postamble/tri-state and read-write turnaround",
+    "Jitter/noise, PVT/BER/mask compliance",
+    "DQ-to-DQS setup/hold"
+  ],
+  "lanes": [
+    {
+      "lane": "0",
+      "legs": [
+        {
+          "wireLengthMm": 44.79676712103152,
+          "layerWireLengthsMm": {
+            "top": 2.060714634125978,
+            "inner1": 42.73605248690555
+          },
+          "viaCount": 2,
+          "estimatedDelaySeconds": 3.0227415127548977e-10,
+          "segments": [
+            {
+              "layer": "top",
+              "widthMm": 0.1,
+              "lengthMm": 1.4949747468305858,
+              "assumedEffectivePermittivity": 3.0,
+              "dcResistanceOhmsPerMetre": 4.926108374384236
+            },
+            {
+              "layer": "via",
+              "widthMm": 0.0,
+              "lengthMm": 0.12450000000000001,
+              "assumedEffectivePermittivity": 4.3,
+              "dcResistanceOhmsPerMetre": 0.0
+            },
+            {
+              "layer": "inner1",
+              "widthMm": 0.1,
+              "lengthMm": 42.73605248690555,
+              "assumedEffectivePermittivity": 4.1,
+              "dcResistanceOhmsPerMetre": 11.343012704174228
+            },
+            {
+              "layer": "via",
+              "widthMm": 0.0,
+              "lengthMm": 0.12450000000000001,
+              "assumedEffectivePermittivity": 4.3,
+              "dcResistanceOhmsPerMetre": 0.0
+            },
+            {
+              "layer": "top",
+              "widthMm": 0.1,
+              "lengthMm": 0.5657398872953919,
+              "assumedEffectivePermittivity": 3.0,
+              "dcResistanceOhmsPerMetre": 4.926108374384236
+            }
+          ],
+          "signal": "DDR_DQS0",
+          "pcbTraceId": "saved_phase_null_1_0",
+          "terminals": [
+            "U1.P1",
+            "U3.F3"
+          ],
+          "dcResistanceOhms": 0.49490688990161036
+        },
+        {
+          "wireLengthMm": 44.919032093373616,
+          "layerWireLengthsMm": {
+            "top": 1.1314960436875254,
+            "inner1": 43.78753604968609
+          },
+          "viaCount": 2,
+          "estimatedDelaySeconds": 3.04007477510429e-10,
+          "segments": [
+            {
+              "layer": "top",
+              "widthMm": 0.1,
+              "lengthMm": 0.5656854249492388,
+              "assumedEffectivePermittivity": 3.0,
+              "dcResistanceOhmsPerMetre": 4.926108374384236
+            },
+            {
+              "layer": "via",
+              "widthMm": 0.0,
+              "lengthMm": 0.12450000000000001,
+              "assumedEffectivePermittivity": 4.3,
+              "dcResistanceOhmsPerMetre": 0.0
+            },
+            {
+              "layer": "inner1",
+              "widthMm": 0.1,
+              "lengthMm": 43.78753604968609,
+              "assumedEffectivePermittivity": 4.1,
+              "dcResistanceOhmsPerMetre": 11.343012704174228
+            },
+            {
+              "layer": "via",
+              "widthMm": 0.0,
+              "lengthMm": 0.12450000000000001,
+              "assumedEffectivePermittivity": 4.3,
+              "dcResistanceOhmsPerMetre": 0.0
+            },
+            {
+              "layer": "top",
+              "widthMm": 0.1,
+              "lengthMm": 0.5658106187382865,
+              "assumedEffectivePermittivity": 3.0,
+              "dcResistanceOhmsPerMetre": 4.926108374384236
+            }
+          ],
+          "signal": "DDR_DQSn0",
+          "pcbTraceId": "saved_phase_null_1_1",
+          "terminals": [
+            "U1.P2",
+            "U3.G3"
+          ],
+          "dcResistanceOhms": 0.5022564498324681
+        }
+      ],
+      "estimateMetrics": {
+        "boardDelaySeconds": 3.031408143929594e-10,
+        "legDelaySkewSeconds": 1.7333262349392214e-12,
+        "differentialCentreLevelVolts": [
+          -0.9422704115329809,
+          0.9422702124761996
+        ],
+        "plottedUIWindows": 14,
+        "eyeAlignment": "route-estimated mean propagation delay; no clock recovery or individual-edge alignment"
+      }
+    },
+    {
+      "lane": "1",
+      "legs": [
+        {
+          "wireLengthMm": 39.44786378893572,
+          "layerWireLengthsMm": {
+            "top": 1.1314691381656916,
+            "inner2": 38.31639465077003
+          },
+          "viaCount": 2,
+          "estimatedDelaySeconds": 2.847644812562955e-10,
+          "segments": [
+            {
+              "layer": "top",
+              "widthMm": 0.1,
+              "lengthMm": 0.5656854249492379,
+              "assumedEffectivePermittivity": 3.0,
+              "dcResistanceOhmsPerMetre": 4.926108374384236
+            },
+            {
+              "layer": "via",
+              "widthMm": 0.0,
+              "lengthMm": 1.4046999999999998,
+              "assumedEffectivePermittivity": 4.3,
+              "dcResistanceOhmsPerMetre": 0.0
+            },
+            {
+              "layer": "inner2",
+              "widthMm": 0.1,
+              "lengthMm": 38.31639465077003,
+              "assumedEffectivePermittivity": 4.1,
+              "dcResistanceOhmsPerMetre": 11.343012704174228
+            },
+            {
+              "layer": "via",
+              "widthMm": 0.0,
+              "lengthMm": 1.4046999999999998,
+              "assumedEffectivePermittivity": 4.3,
+              "dcResistanceOhmsPerMetre": 0.0
+            },
+            {
+              "layer": "top",
+              "widthMm": 0.1,
+              "lengthMm": 0.5657837132164537,
+              "assumedEffectivePermittivity": 3.0,
+              "dcResistanceOhmsPerMetre": 4.926108374384236
+            }
+          ],
+          "signal": "DDR_DQS1",
+          "pcbTraceId": "saved_phase_null_1_2",
+          "terminals": [
+            "U1.L1",
+            "U3.C7"
+          ],
+          "dcResistanceOhms": 0.4401970908987133
+        },
+        {
+          "wireLengthMm": 39.574863788935716,
+          "layerWireLengthsMm": {
+            "top": 1.1315780473052817,
+            "inner2": 38.44328574163043
+          },
+          "viaCount": 2,
+          "estimatedDelaySeconds": 2.8562215297414377e-10,
+          "segments": [
+            {
+              "layer": "top",
+              "widthMm": 0.1,
+              "lengthMm": 0.5656854249492386,
+              "assumedEffectivePermittivity": 3.0,
+              "dcResistanceOhmsPerMetre": 4.926108374384236
+            },
+            {
+              "layer": "via",
+              "widthMm": 0.0,
+              "lengthMm": 1.4046999999999998,
+              "assumedEffectivePermittivity": 4.3,
+              "dcResistanceOhmsPerMetre": 0.0
+            },
+            {
+              "layer": "inner2",
+              "widthMm": 0.1,
+              "lengthMm": 38.44328574163043,
+              "assumedEffectivePermittivity": 4.1,
+              "dcResistanceOhmsPerMetre": 11.343012704174228
+            },
+            {
+              "layer": "via",
+              "widthMm": 0.0,
+              "lengthMm": 1.4046999999999998,
+              "assumedEffectivePermittivity": 4.3,
+              "dcResistanceOhmsPerMetre": 0.0
+            },
+            {
+              "layer": "top",
+              "widthMm": 0.1,
+              "lengthMm": 0.5658926223560431,
+              "assumedEffectivePermittivity": 3.0,
+              "dcResistanceOhmsPerMetre": 4.926108374384236
+            }
+          ],
+          "signal": "DDR_DQSn1",
+          "pcbTraceId": "saved_phase_null_1_3",
+          "terminals": [
+            "U1.L2",
+            "U3.B7"
+          ],
+          "dcResistanceOhms": 0.4416369546526139
+        }
+      ],
+      "estimateMetrics": {
+        "boardDelaySeconds": 2.8519331711521964e-10,
+        "legDelaySkewSeconds": 8.576717178482644e-13,
+        "differentialCentreLevelVolts": [
+          -0.9456293917118322,
+          0.9456292947075913
+        ],
+        "plottedUIWindows": 14,
+        "eyeAlignment": "route-estimated mean propagation delay; no clock recovery or individual-edge alignment"
+      }
+    }
+  ],
+  "solver": {
+    "program": "ngspice",
+    "version": "******\n** ngspice-44.2 : Circuit level simulation program\n** Compiled with KLU Direct Linear Solver\n** The U. C. Berkeley CAD Group\n** Copyright 1985-1994, Regents of the University of California.\n** Copyright 2001-2024, The ngspice team.\n** Please get your ngspice manual from https://ngspice.sourceforge.io/docs.html\n** Please file your bug-reports at http://ngspice.sourceforge.net/bugrep.html\n** Creation Date: Sun Jan 12 08:19:15 UTC 2025\n******",
+    "solveSeconds": 52.94660694999038,
+    "maxTimestepSeconds": 2e-12,
+    "transientRows": 21696
+  },
+  "totalSeconds": 53.49886673298897,
+  "dataset": "astra/am3352-sbc 0.1.19"
+}

@@ -390,6 +390,50 @@ and package impedances need an additional component model. The current adapter
 cannot certify DDR signal integrity. At 100 × 80 mm, use at least 0.1 mm cells
 (800,000 candidates); 0.05 mm exceeds the current one-million-cell sample cap.
 
+### DQS eye estimate
+
+The [DQS0/DQS1 example](examples/am3352/dqs-eye-800mts) plots differential
+receiver voltage in the **write direction** at an assumed **800 MT/s**:
+400 MHz periodic DQS, with a **1.25 ns unit interval**. It is an **unvalidated
+transmission-line estimate**, not a Palace/IBIS result or a DDR compliance check.
+The exported routes supply lengths and layer transitions. Electrical settings
+are explicit assumptions; circuit-json does not supply the configured DDR clock,
+drive strength, ODT, jitter or package model.
+
+![Estimated AM3352 DQS eyes](examples/am3352/dqs-eye-800mts/dqs-eye.png)
+
+Install ngspice (the snapshot uses **44.2**) and Python with `numpy` and
+`matplotlib`. From a checkout, prepare the pinned board files and generate:
+
+```sh
+bun scripts/prepare-am3352-example.ts work/am3352
+python scripts/generate-dqs-eye.py \
+  work/am3352/board.json work/am3352/stackup.json \
+  --rate-mts 800 --direction write --lanes 0,1 \
+  --source-ohms 40 --termination-ohms 60 \
+  --input-cap-pf 2 --rise-time-ps 200 \
+  --output work/dqs-eye
+```
+
+`--termination-ohms` is **per leg to half supply**: 60 Ω per leg represents
+120 Ω differential termination. It is not inferred from a DDR ODT register.
+`--rise-time-ps` is the source's 10–90% rise/fall time. The default 1.5 V sources
+are complementary periodic strobes, with no injected jitter or noise.
+`--direction read` reverses the channel; choose appropriate source/receiver
+settings separately. `--ngspice` accepts an executable path.
+
+The model assumes uniform 100.921 Ω differential impedance and ideal continuous
+AC references. It includes estimated propagation delay and DC copper resistance;
+it omits frequency-dependent loss, package/via parasitics, reference-plane gaps,
+decoupling, crosstalk, preamble/postamble and turnaround. An open eye under these
+assumptions does not establish the real board's timing margin. DQ setup/hold
+requires DQ waveforms compared with DQS crossings.
+
+Each run saves PNG/SVG, the ngspice netlist/log, transient CSV/NPZ and
+`assumptions-and-results.json`. The example includes a 2 ps versus 1 ps timestep
+comparison; this checks the assumed circuit's transient solution, not the
+accuracy of its physical assumptions. No vendor IBIS models are redistributed.
+
 ## Library
 
 `circuitJson` can be the array from `circuit.getCircuitJson()`. Validate JSON

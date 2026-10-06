@@ -1,0 +1,247 @@
+
+Note: No compatibility mode selected!
+
+
+Circuit: dqs route-based estimate: not em/ibis-validated
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+ref                                       0.75
+d0pideal                                     0
+d0p0                                  0.298523
+d0pload                               0.302216
+d0nideal                                   1.5
+d0n0                                    1.2015
+d0nload                                1.19775
+d1pideal                                     0
+d1p0                                  0.298685
+d1pload                               0.301972
+d1nideal                                   1.5
+d1n0                                   1.20132
+d1nload                                1.19802
+vd1n#branch                        -0.00746702
+vd1p#branch                         0.00746713
+vd0n#branch                        -0.00746252
+vd0p#branch                         0.00746306
+vref#branch                       -6.52805e-07
+
+ Reference value :  2.99675e-09
+ Reference value :  4.19475e-09
+ Reference value :  5.12560e-09
+ Reference value :  5.82576e-09
+ Reference value :  6.51109e-09
+ Reference value :  7.09576e-09
+ Reference value :  7.69909e-09
+ Reference value :  8.15809e-09
+ Reference value :  8.67400e-09
+ Reference value :  9.10109e-09
+ Reference value :  9.47811e-09
+ Reference value :  9.90600e-09
+ Reference value :  1.02511e-08
+ Reference value :  1.06441e-08
+ Reference value :  1.10058e-08
+ Reference value :  1.12979e-08
+ Reference value :  1.15811e-08
+ Reference value :  1.19264e-08
+ Reference value :  1.22635e-08
+ Reference value :  1.25641e-08
+ Reference value :  1.28931e-08
+ Reference value :  1.31801e-08
+ Reference value :  1.34438e-08
+ Reference value :  1.37380e-08
+ Reference value :  1.40091e-08
+ Reference value :  1.42967e-08
+ Reference value :  1.44815e-08
+ Reference value :  1.47095e-08
+ Reference value :  1.49620e-08
+ Reference value :  1.51598e-08
+ Reference value :  1.54111e-08
+ Reference value :  1.56461e-08
+ Reference value :  1.58138e-08
+ Reference value :  1.59858e-08
+ Reference value :  1.62020e-08
+ Reference value :  1.63966e-08
+ Reference value :  1.65811e-08
+ Reference value :  1.67627e-08
+ Reference value :  1.70028e-08
+ Reference value :  1.71435e-08
+ Reference value :  1.73860e-08
+ Reference value :  1.76021e-08
+ Reference value :  1.77311e-08
+ Reference value :  1.79106e-08
+ Reference value :  1.80527e-08
+ Reference value :  1.82328e-08
+ Reference value :  1.84038e-08
+ Reference value :  1.85778e-08
+ Reference value :  1.87600e-08
+ Reference value :  1.89166e-08
+ Reference value :  1.90911e-08
+ Reference value :  1.92367e-08
+ Reference value :  1.93904e-08
+ Reference value :  1.95478e-08
+ Reference value :  1.97575e-08
+ Reference value :  1.99620e-08
+ Reference value :  2.01454e-08
+ Reference value :  2.03311e-08
+ Reference value :  2.05247e-08
+ Reference value :  2.06681e-08
+ Reference value :  2.08738e-08
+ Reference value :  2.10778e-08
+ Reference value :  2.12520e-08
+ Reference value :  2.14285e-08
+ Reference value :  2.15931e-08
+ Reference value :  2.17907e-08
+ Reference value :  2.19777e-08
+ Reference value :  2.21138e-08
+ Reference value :  2.23055e-08
+ Reference value :  2.24400e-08
+ Reference value :  2.26252e-08
+ Reference value :  2.28111e-08
+ Reference value :  2.30007e-08
+ Reference value :  2.31841e-08
+ Reference value :  2.33598e-08
+ Reference value :  2.34818e-08
+ Reference value :  2.35998e-08
+ Reference value :  2.37380e-08
+ Reference value :  2.38946e-08
+ Reference value :  2.40731e-08
+ Reference value :  2.42467e-08
+ Reference value :  2.44164e-08
+ Reference value :  2.45368e-08
+ Reference value :  2.47135e-08
+ Reference value :  2.48820e-08
+ Reference value :  2.50581e-08
+ Reference value :  2.52031e-08
+ Reference value :  2.53871e-08
+ Reference value :  2.55547e-08
+ Reference value :  2.57121e-08
+ Reference value :  2.58658e-08
+ Reference value :  2.60418e-08
+ Reference value :  2.62020e-08
+ Reference value :  2.63695e-08
+ Reference value :  2.65211e-08
+ Reference value :  2.66807e-08
+ Reference value :  2.68489e-08
+ Reference value :  2.70028e-08
+ Reference value :  2.71595e-08
+ Reference value :  2.73155e-08
+ Reference value :  2.74360e-08
+ Reference value :  2.75561e-08
+ Reference value :  2.76991e-08
+ Reference value :  2.78671e-08
+ Reference value :  2.80147e-08
+ Reference value :  2.81541e-08
+ Reference value :  2.82918e-08
+ Reference value :  2.84378e-08
+ Reference value :  2.85883e-08
+ Reference value :  2.87280e-08
+ Reference value :  2.88475e-08
+ Reference value :  2.89671e-08
+ Reference value :  2.90971e-08
+ Reference value :  2.92327e-08
+ Reference value :  2.93744e-08
+ Reference value :  2.95228e-08
+ Reference value :  2.96615e-08
+ Reference value :  2.98215e-08
+ Reference value :  2.99620e-08
+ Reference value :  3.00781e-08
+ Reference value :  3.01931e-08
+ Reference value :  3.03331e-08
+ Reference value :  3.04707e-08
+ Reference value :  3.05889e-08
+ Reference value :  3.07081e-08
+ Reference value :  3.08138e-08
+ Reference value :  3.09398e-08
+ Reference value :  3.10498e-08
+ Reference value :  3.11680e-08
+ Reference value :  3.12971e-08
+ Reference value :  3.13750e-08
+ Reference value :  3.14551e-08
+ Reference value :  3.15691e-08
+ Reference value :  3.16927e-08
+ Reference value :  3.18047e-08
+ Reference value :  3.19084e-08
+ Reference value :  3.20308e-08
+ Reference value :  3.21475e-08
+ Reference value :  3.22675e-08
+ Reference value :  3.23880e-08
+ Reference value :  3.25340e-08
+ Reference value :  3.26598e-08
+ Reference value :  3.27931e-08
+ Reference value :  3.29207e-08
+ Reference value :  3.30627e-08
+ Reference value :  3.31841e-08
+ Reference value :  3.33018e-08
+ Reference value :  3.34438e-08
+ Reference value :  3.35835e-08
+ Reference value :  3.37080e-08
+ Reference value :  3.38435e-08
+ Reference value :  3.39571e-08
+ Reference value :  3.40631e-08
+ Reference value :  3.41747e-08
+ Reference value :  3.43027e-08
+ Reference value :  3.43944e-08
+ Reference value :  3.45008e-08
+ Reference value :  3.46018e-08
+ Reference value :  3.46915e-08
+ Reference value :  3.47915e-08
+ Reference value :  3.48880e-08
+ Reference value :  3.49800e-08
+ Reference value :  3.51041e-08
+ Reference value :  3.52051e-08
+ Reference value :  3.53331e-08
+ Reference value :  3.54407e-08
+ Reference value :  3.55667e-08
+ Reference value :  3.56721e-08
+ Reference value :  3.57824e-08
+ Reference value :  3.59038e-08
+ Reference value :  3.60258e-08
+ Reference value :  3.61300e-08
+ Reference value :  3.62280e-08
+ Reference value :  3.63075e-08
+ Reference value :  3.64186e-08
+ Reference value :  3.65191e-08
+ Reference value :  3.66151e-08
+ Reference value :  3.67167e-08
+ Reference value :  3.68247e-08
+ Reference value :  3.69304e-08
+ Reference value :  3.70340e-08
+ Reference value :  3.71455e-08
+ Reference value :  3.72355e-08
+ Reference value :  3.73295e-08
+ Reference value :  3.74040e-08
+ Reference value :  3.74960e-08
+ Reference value :  3.75641e-08
+ Reference value :  3.76498e-08
+ Reference value :  3.77491e-08
+ Reference value :  3.78551e-08
+ Reference value :  3.79627e-08
+ Reference value :  3.80687e-08
+ Reference value :  3.81581e-08
+ Reference value :  3.82688e-08
+ Reference value :  3.83638e-08
+ Reference value :  3.84878e-08
+ Reference value :  3.85818e-08
+ Reference value :  3.86780e-08
+ Reference value :  3.87967e-08
+ Reference value :  3.88906e-08
+ Reference value :  3.89971e-08
+ Reference value :  3.91131e-08
+ Reference value :  3.92127e-08
+ Reference value :  3.93207e-08
+ Reference value :  3.94304e-08
+ Reference value :  3.95324e-08
+ Reference value :  3.96395e-08
+ Reference value :  3.97595e-08
+ Reference value :  3.98678e-08
+ Reference value :  3.99878e-08
+No. of Data Rows : 21696
+ngspice-44.2 done
+Warning: can't find the initialization file spinit.
