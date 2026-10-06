@@ -1,0 +1,320 @@
+
+Note: No compatibility mode selected!
+
+
+Circuit: am3352 dqs0 routing eye: actual em channel / explicit i/o assumptions
+
+Reducing trtol to 1 for xspice 'A' devices
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+xpositive.ku                        0.00360479
+xpositive.kd                           1.00919
+xpositive.power                            1.5
+diep                                  0.306096
+xpositive.gc_gnd0                            0
+xpositive.pc_pwr0                          1.5
+xpositive.diebuff0                    0.306096
+xpositive.pd_gnd0                            0
+xpositive.pu_pwr0                          1.5
+xnegative.ku                          0.997633
+xnegative.kd                        0.00936932
+xnegative.power                            1.5
+dien                                   1.18166
+xnegative.gc_gnd0                            0
+xnegative.pc_pwr0                          1.5
+xnegative.diebuff0                     1.18166
+xnegative.pd_gnd0                            0
+xnegative.pu_pwr0                          1.5
+pkp                                   0.307434
+pkn                                    1.18031
+txp                                   0.307434
+txn                                    1.18031
+csrc                                 -0.872874
+xpcb.s1                              -0.872874
+xpcb.x1_re_a1                     -2.57239e-13
+xpcb.x1_im_a1                      4.03132e-12
+xpcb.x2_re_a1                     -5.18587e-13
+xpcb.x2_im_a1                      4.69751e-12
+xpcb.x3_re_a1                     -9.78727e-13
+xpcb.x3_im_a1                      4.96799e-12
+xpcb.x4_re_a1                     -9.91055e-13
+xpcb.x4_im_a1                      5.51015e-12
+xpcb.x5_re_a1                     -1.65117e-12
+xpcb.x5_im_a1                      6.48313e-12
+xpcb.x6_re_a1                      -1.4684e-12
+xpcb.x6_im_a1                      6.67662e-12
+xpcb.x7_re_a1                     -2.52213e-12
+xpcb.x7_im_a1                      6.83515e-12
+xpcb.x8_re_a1                     -3.17207e-12
+xpcb.x8_im_a1                      7.91495e-12
+xpcb.x9_re_a1                     -5.03728e-12
+xpcb.x9_im_a1                      1.05586e-11
+xpcb.x10_re_a1                    -5.32748e-12
+xpcb.x10_im_a1                     1.08109e-11
+xpcb.x11_re_a1                    -1.66689e-11
+xpcb.x11_im_a1                     6.19371e-12
+xpcb.x12_re_a1                    -1.56047e-11
+xpcb.x12_im_a1                     1.16894e-11
+xpcb.x13_re_a1                    -1.18061e-11
+xpcb.x13_im_a1                     9.87208e-12
+cload                                -0.866792
+xpcb.x1_re_a2                     -2.33155e-14
+xpcb.x1_im_a2                      3.65389e-13
+xpcb.x2_re_a2                     -4.70035e-14
+xpcb.x2_im_a2                      4.25771e-13
+xpcb.x3_re_a2                     -8.87095e-14
+xpcb.x3_im_a2                      4.50287e-13
+xpcb.x4_re_a2                     -8.98268e-14
+xpcb.x4_im_a2                      4.99427e-13
+xpcb.x5_re_a2                     -1.49658e-13
+xpcb.x5_im_a2                      5.87615e-13
+xpcb.x6_re_a2                     -1.33092e-13
+xpcb.x6_im_a2                      6.05153e-13
+xpcb.x7_re_a2                       -2.286e-13
+xpcb.x7_im_a2                      6.19522e-13
+xpcb.x8_re_a2                     -2.87509e-13
+xpcb.x8_im_a2                      7.17392e-13
+xpcb.x9_re_a2                     -4.56567e-13
+xpcb.x9_im_a2                      9.57011e-13
+xpcb.x10_re_a2                     -4.8287e-13
+xpcb.x10_im_a2                     9.79875e-13
+xpcb.x11_re_a2                    -1.51083e-12
+xpcb.x11_im_a2                     5.61383e-13
+xpcb.x12_re_a2                    -1.41437e-12
+xpcb.x12_im_a2                      1.0595e-12
+xpcb.x13_re_a2                    -1.07008e-12
+xpcb.x13_im_a2                     8.94782e-13
+xpcb.s2                              -0.866792
+cm                                        0.75
+halfcm                                0.153717
+srccm                                 0.743871
+rxp0                                  0.316604
+rxp                                   0.316605
+rxn0                                    1.1834
+rxn                                    1.18339
+rkp                                   0.319623
+rkn                                    1.18057
+rdiep                                 0.319623
+rdien                                  1.18057
+b.xnegative.bdiebuff#branch         -0.0324296
+v.xnegative.vmeaspu#branch         -0.00789428
+v.xnegative.vmeaspd#branch          -0.0245353
+b.xpositive.bdiebuff#branch         -0.0347328
+v.xpositive.vmeaspu#branch          -0.0268584
+v.xpositive.vmeaspd#branch         -0.00787444
+erxn#branch                        -0.00717609
+erxp#branch                         0.00717295
+ecmsrc#branch                      0.000204297
+v.xpcb.v2#branch                    0.00717452
+v.xpcb.v1#branch                   -0.00774785
+ebal#branch                         0.00774785
+lrn#branch                          0.00717609
+lrp#branch                         -0.00717295
+lpn#branch                           0.0076457
+lpp#branch                            -0.00785
+ecmhalf#branch                     0.000204297
+vnn#branch                         -0.00717609
+vnp#branch                          0.00717295
+vcm#branch                        -0.000204297
+v.xnegative.vmeaspc#branch                   0
+v.xnegative.vmeasgc#branch        -2.06599e-10
+v.xnegative.vpwr#branch            1.86954e-05
+v.xnegative.vkd#branch                       0
+v.xnegative.vku#branch                       0
+v.xpositive.vmeaspc#branch                   0
+v.xpositive.vmeasgc#branch         1.92526e-09
+v.xpositive.vpwr#branch              0.0267616
+v.xpositive.vkd#branch                       0
+v.xpositive.vku#branch                       0
+
+ Reference value :  5.53083e-09
+ Reference value :  1.46786e-08
+ Reference value :  2.25810e-08
+ Reference value :  2.97979e-08
+ Reference value :  3.36686e-08
+ Reference value :  4.15446e-08
+ Reference value :  4.60416e-08
+ Reference value :  5.08444e-08
+ Reference value :  5.43492e-08
+ Reference value :  5.79147e-08
+ Reference value :  6.19262e-08
+ Reference value :  6.44951e-08
+ Reference value :  6.74228e-08
+ Reference value :  7.07226e-08
+ Reference value :  7.50317e-08
+ Reference value :  7.72690e-08
+ Reference value :  8.23484e-08
+ Reference value :  8.54656e-08
+ Reference value :  8.87939e-08
+ Reference value :  9.11800e-08
+ Reference value :  9.36834e-08
+ Reference value :  9.66545e-08
+ Reference value :  9.96027e-08
+ Reference value :  1.01441e-07
+ Reference value :  1.03560e-07
+ Reference value :  1.05212e-07
+ Reference value :  1.06592e-07
+ Reference value :  1.09011e-07
+ Reference value :  1.11000e-07
+ Reference value :  1.15108e-07
+ Reference value :  1.16949e-07
+ Reference value :  1.19455e-07
+ Reference value :  1.22728e-07
+ Reference value :  1.24881e-07
+ Reference value :  1.26548e-07
+ Reference value :  1.28075e-07
+ Reference value :  1.30330e-07
+ Reference value :  1.31802e-07
+ Reference value :  1.33198e-07
+ Reference value :  1.35943e-07
+ Reference value :  1.37789e-07
+ Reference value :  1.39050e-07
+ Reference value :  1.41743e-07
+ Reference value :  1.44185e-07
+ Reference value :  1.46357e-07
+ Reference value :  1.48060e-07
+ Reference value :  1.50073e-07
+ Reference value :  1.51425e-07
+ Reference value :  1.52677e-07
+ Reference value :  1.53949e-07
+ Reference value :  1.55422e-07
+ Reference value :  1.56908e-07
+ Reference value :  1.58509e-07
+ Reference value :  1.62740e-07
+ Reference value :  1.65911e-07
+ Reference value :  1.69071e-07
+ Reference value :  1.72736e-07
+ Reference value :  1.73880e-07
+ Reference value :  1.75383e-07
+ Reference value :  1.78561e-07
+ Reference value :  1.80532e-07
+ Reference value :  1.81952e-07
+ Reference value :  1.83222e-07
+ Reference value :  1.85172e-07
+ Reference value :  1.87457e-07
+ Reference value :  1.88556e-07
+ Reference value :  1.89649e-07
+ Reference value :  1.90635e-07
+ Reference value :  1.91684e-07
+ Reference value :  1.92540e-07
+ Reference value :  1.94937e-07
+ Reference value :  1.95995e-07
+ Reference value :  1.98020e-07
+ Reference value :  2.00413e-07
+ Reference value :  2.01681e-07
+ Reference value :  2.03195e-07
+ Reference value :  2.04480e-07
+ Reference value :  2.07081e-07
+ Reference value :  2.08388e-07
+ Reference value :  2.09390e-07
+ Reference value :  2.10194e-07
+ Reference value :  2.11500e-07
+ Reference value :  2.13202e-07
+ Reference value :  2.15254e-07
+ Reference value :  2.16588e-07
+ Reference value :  2.18926e-07
+ Reference value :  2.19886e-07
+ Reference value :  2.20820e-07
+ Reference value :  2.21871e-07
+ Reference value :  2.23096e-07
+ Reference value :  2.24192e-07
+ Reference value :  2.25244e-07
+ Reference value :  2.26917e-07
+ Reference value :  2.28400e-07
+ Reference value :  2.31201e-07
+ Reference value :  2.33122e-07
+ Reference value :  2.34070e-07
+ Reference value :  2.34901e-07
+ Reference value :  2.36007e-07
+ Reference value :  2.37760e-07
+ Reference value :  2.40196e-07
+ Reference value :  2.41109e-07
+ Reference value :  2.42831e-07
+ Reference value :  2.44380e-07
+ Reference value :  2.45330e-07
+ Reference value :  2.47311e-07
+ Reference value :  2.48374e-07
+ Reference value :  2.49276e-07
+ Reference value :  2.50200e-07
+ Reference value :  2.51654e-07
+ Reference value :  2.52721e-07
+ Reference value :  2.53631e-07
+ Reference value :  2.55351e-07
+ Reference value :  2.56639e-07
+ Reference value :  2.58148e-07
+ Reference value :  2.59028e-07
+ Reference value :  2.59901e-07
+ Reference value :  2.61649e-07
+ Reference value :  2.62520e-07
+ Reference value :  2.63264e-07
+ Reference value :  2.64070e-07
+ Reference value :  2.64890e-07
+ Reference value :  2.65704e-07
+ Reference value :  2.66881e-07
+ Reference value :  2.67907e-07
+ Reference value :  2.68903e-07
+ Reference value :  2.69919e-07
+ Reference value :  2.71753e-07
+ Reference value :  2.73937e-07
+ Reference value :  2.74772e-07
+ Reference value :  2.75529e-07
+ Reference value :  2.76380e-07
+ Reference value :  2.77815e-07
+ Reference value :  2.78604e-07
+ Reference value :  2.80041e-07
+ Reference value :  2.81657e-07
+ Reference value :  2.82457e-07
+ Reference value :  2.83900e-07
+ Reference value :  2.84580e-07
+ Reference value :  2.85326e-07
+ Reference value :  2.86117e-07
+ Reference value :  2.86865e-07
+ Reference value :  2.87718e-07
+ Reference value :  2.89100e-07
+ Reference value :  2.89771e-07
+ Reference value :  2.90444e-07
+ Reference value :  2.91180e-07
+ Reference value :  2.91819e-07
+ Reference value :  2.92628e-07
+ Reference value :  2.94441e-07
+ Reference value :  2.95621e-07
+ Reference value :  2.96439e-07
+ Reference value :  2.97160e-07
+ Reference value :  2.98144e-07
+ Reference value :  3.00060e-07
+ Reference value :  3.01000e-07
+ Reference value :  3.02222e-07
+ Reference value :  3.03320e-07
+ Reference value :  3.04452e-07
+ Reference value :  3.05431e-07
+ Reference value :  3.06340e-07
+ Reference value :  3.07840e-07
+ Reference value :  3.08640e-07
+ Reference value :  3.09333e-07
+ Reference value :  3.10221e-07
+ Reference value :  3.11062e-07
+ Reference value :  3.11761e-07
+ Reference value :  3.12406e-07
+ Reference value :  3.13050e-07
+ Reference value :  3.13660e-07
+ Reference value :  3.14229e-07
+ Reference value :  3.14993e-07
+ Reference value :  3.15879e-07
+ Reference value :  3.17238e-07
+ Reference value :  3.19100e-07
+ Reference value :  3.21613e-07
+ Reference value :  3.23761e-07
+ Reference value :  3.24463e-07
+ Reference value :  3.25395e-07
+ Reference value :  3.27193e-07
+No. of Data Rows : 392163
+ngspice-44.2 done
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed

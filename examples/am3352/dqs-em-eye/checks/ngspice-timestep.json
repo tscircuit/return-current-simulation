@@ -1,0 +1,15 @@
+{
+  "coarseChannelTransientCheck": {
+    "coarseStepPs": 2,
+    "fineStepPs": 1,
+    "windowNs": [
+      20,
+      150
+    ],
+    "maximumVoltageDifferenceMv": 0.06996599999997688,
+    "rmsVoltageDifferenceMv": 0.0160704935755518,
+    "maximumCrossingDifferencePs": 0.009664574396900915,
+    "jitterAndNoiseSeedsIdentical": true
+  },
+  "note": "This verifies ngspice transient resolution, not field-mesh or I/O model accuracy."
+}

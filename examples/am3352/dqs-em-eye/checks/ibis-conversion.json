@@ -1,0 +1,42 @@
+{
+  "vendorIbisSha256": "23011a68eb8ff35562615b5b108edcb9f017c5e61f4f68e32f35c5fb88f163be",
+  "converter": "KiCad sch export netlist; ngspice-backed IBIS converter",
+  "packageMatrixDisabled": true,
+  "isolatedEdgeOnOffNs": 10,
+  "models": [
+    "Model_655",
+    "Model_847"
+  ],
+  "pins": [
+    "P1",
+    "P2"
+  ],
+  "registerAssumption": "0x18B, TI model selection-guide example, not confirmed board registers",
+  "switchingChecks": [
+    {
+      "ku": {
+        "points": 4269,
+        "minimum": 0.002915248,
+        "maximum": 1.04149
+      },
+      "kd": {
+        "points": 4269,
+        "minimum": 0.008826949,
+        "maximum": 1.039567
+      }
+    },
+    {
+      "ku": {
+        "points": 3296,
+        "minimum": 0.002915248,
+        "maximum": 1.04149
+      },
+      "kd": {
+        "points": 3296,
+        "minimum": 0.008826949,
+        "maximum": 1.039567
+      }
+    }
+  ],
+  "vendorFilesRedistributed": false
+}

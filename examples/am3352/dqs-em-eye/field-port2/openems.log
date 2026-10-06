@@ -1,0 +1,730 @@
+{"solver": "openEMS 0.0.35", "lane": 0, "excitedPort": 2, "cellMm": 0.05, "fineMarginMm": 2, "fineBoundsMm": [-10.800231, -33.300000000000004, 6.450000000000001, -4.0], "maxTimeNs": 1.5, "endCriteria": 1e-05, "gridCells": [454, 663, 35], "foilPolygons": {"bottom": 520, "inner2": 288, "inner1": 293, "top": 520}, "contacts": [{"positive": [3.6, -6.800000000000001], "negative": [3.6, -6.0], "axis": "y", "leadHeightMm": 0.15, "portWidthMm": 0.2}, {"positive": [-8.0, -30.400000000000002], "negative": [-8.8, -30.400000000000002], "axis": "x", "leadHeightMm": 0.15, "portWidthMm": 0.2}], "dielectricLoss": "omitted", "copperLoss": "PEC for initial routing extraction", "input": {"circuitJson": "AM3352 release 0.1.19", "copper": "round-capped rendered full-board copper with holes", "sha256": {"circuitJson": "c9d7059fe536865784f175855e0dcc76510972319eec848c18b0ef6dcd2adb40", "model": "df6b49acab399463b772965f1f57722d6bf0e563658e1c522c59eca1e364b762", "compactCopper": "a45b995b797b1b5495d12ce898e99c0ed265df84c8e271764936ee95564b576b"}}, "limitations": ["Thin conductive foil placement, solid high-conductivity via exterior approximation", "Fine DDR region with graded coarser mesh outside; compare mesh and margin refinement", "Differential two-terminal ports, balanced excitation; no common-mode I/O or active aggressors in this extraction", "0.15 mm matched launch posts; not exact IC packaging", "Energy decay and mesh/time convergence must be assessed separately from reaching the requested finite record"]}
+ ---------------------------------------------------------------------- 
+ | openEMS 64bit -- version v0.0.35
+ | (C) 2010-2018 Thorsten Liebig <thorsten.liebig@gmx.de>  GPL license
+ ---------------------------------------------------------------------- 
+	Used external libraries:
+		CSXCAD -- Version: v0.6.2
+		hdf5   -- Version: 1.10.8
+		          compiled against: HDF5 library version: 1.10.8
+		tinyxml -- compiled against: 2.6.2
+		fparser
+		boost  -- compiled against: 1_74
+		vtk -- Version: 9.1.0
+		       compiled against: 9.1.0
+
+Create FDTD operator (compressed SSE + multi-threading)
+Multithreaded operator using 3 threads.
+Compressing the FDTD operator... this may take a while...
+------- Stat: FDTD Operator -------
+Dimensions		: 455x664x36 = 10876320 Cells (10.8763 MCells)
+Size of Operator	: 522063360 Byte (497.878 MiB) 
+Size of Field-Data	: 261031680 Byte (248.939 MiB) 
+-----------------------------------
+Background materials (epsR/mueR/kappa/sigma): 1/1/0/0
+-----------------------------------
+Number of PEC edges	: 1269531
+in x direction		: 620678
+in y direction		: 622377
+in z direction		: 26476
+-----------------------------------
+Timestep (s)		: 9.9658e-14
+Timestep method name	: Rennings_2
+Nyquist criteria (TS)	: 1003
+Nyquist criteria (s)	: 9.9957e-11
+-----------------------------------
+SSE compression enabled	: yes
+Unique SSE operators	: 16421
+-----------------------------------
+-----------------------------------
+--- Excitation Extension ---
+Voltage excitations	: 64	 (64, 0, 0)
+Current excitations	: 0	 (0, 0, 0)
+Excitation Length (TS)	: 5750
+Excitation Length (s)	: 5.73034e-10
+--- Uniaxial PML Extension ---
+ PML range		: [0,0,0] to [8,663,35]
+ Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
+--- Uniaxial PML Extension ---
+ PML range		: [446,0,0] to [454,663,35]
+ Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
+--- Uniaxial PML Extension ---
+ PML range		: [9,0,0] to [445,8,35]
+ Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
+--- Uniaxial PML Extension ---
+ PML range		: [9,655,0] to [445,663,35]
+ Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
+--- Uniaxial PML Extension ---
+ PML range		: [9,9,0] to [445,654,8]
+ Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
+--- Uniaxial PML Extension ---
+ PML range		: [9,9,27] to [445,654,35]
+ Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
+-----------------------------------
+Creation time for operator: 266.51 s
+FDTD simulation size: 455x664x36 --> 1.08763e+07 FDTD cells 
+FDTD timestep is: 9.9658e-14 s; Nyquist rate: 1003 timesteps @5.00215e+09 Hz
+openEMS::SetupFDTD: Warning, the timestep seems to be very small --> long simulation. Check your mesh!?
+Excitation signal length is: 5750 timesteps (5.73034e-10s)
+Max. number of timesteps: 15051 ( --> 2.61757 * Excitation signal length)
+openEMS::SetupFDTD: Warning, max. number of timesteps is smaller than three times the excitation. 
+	You may want to choose a higher number of max. timesteps... 
+Create FDTD engine (compressed SSE + multi-threading)
+Multithreaded engine using 3 threads. Utilization: (152;152;151)
+Setting up processing...
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2Running FDTD engine... this may take a while... grab a cup of coffee?!?
+!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner2!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Polygon) detected in property: copper_inner1!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+Warning: Unused primitive (type: Cylinder) detected in property: via_barrels_outer_surface!
+[@       42s] Timestep:          250 || Speed:   64.7 MC/s (1.680e-01 s/TS) || Energy: ~4.98e-23 (- 0.00dB)
+[@     1m26s] Timestep:          500 || Speed:   61.3 MC/s (1.775e-01 s/TS) || Energy: ~8.25e-22 (- 0.00dB)
+[@     2m05s] Timestep:          750 || Speed:   69.4 MC/s (1.568e-01 s/TS) || Energy: ~1.04e-20 (- 0.00dB)
+[@     2m49s] Timestep:         1000 || Speed:   61.7 MC/s (1.764e-01 s/TS) || Energy: ~1.01e-19 (- 0.00dB)
+[@     3m36s] Timestep:         1250 || Speed:   58.4 MC/s (1.861e-01 s/TS) || Energy: ~7.48e-19 (- 0.00dB)
+[@     4m17s] Timestep:         1500 || Speed:   65.6 MC/s (1.657e-01 s/TS) || Energy: ~4.30e-18 (- 0.00dB)
+[@     5m04s] Timestep:         1750 || Speed:   58.5 MC/s (1.858e-01 s/TS) || Energy: ~1.92e-17 (- 0.00dB)
+[@     5m53s] Timestep:         2000 || Speed:   54.5 MC/s (1.995e-01 s/TS) || Energy: ~6.70e-17 (- 0.00dB)
+[@     6m40s] Timestep:         2250 || Speed:   58.5 MC/s (1.858e-01 s/TS) || Energy: ~1.84e-16 (- 0.00dB)
+[@     7m21s] Timestep:         2500 || Speed:   66.2 MC/s (1.644e-01 s/TS) || Energy: ~4.05e-16 (- 0.00dB)
+[@     8m06s] Timestep:         2750 || Speed:   61.0 MC/s (1.784e-01 s/TS) || Energy: ~7.22e-16 (- 0.00dB)
+[@     8m30s] Timestep:         2875 || Speed:   55.7 MC/s (1.954e-01 s/TS) || Energy: ~8.97e-16 (- 0.00dB)
+[@     8m53s] Timestep:         3000 || Speed:   59.6 MC/s (1.825e-01 s/TS) || Energy: ~1.07e-15 (- 0.00dB)
+[@     9m35s] Timestep:         3250 || Speed:   64.5 MC/s (1.687e-01 s/TS) || Energy: ~1.36e-15 (- 0.00dB)
+[@    10m15s] Timestep:         3500 || Speed:   67.9 MC/s (1.603e-01 s/TS) || Energy: ~1.54e-15 (- 0.00dB)
+[@    10m56s] Timestep:         3750 || Speed:   67.0 MC/s (1.624e-01 s/TS) || Energy: ~1.62e-15 (- 0.00dB)
+[@    11m35s] Timestep:         4000 || Speed:   69.6 MC/s (1.562e-01 s/TS) || Energy: ~1.64e-15 (- 0.00dB)
+[@    12m14s] Timestep:         4250 || Speed:   70.0 MC/s (1.555e-01 s/TS) || Energy: ~1.64e-15 (- 0.00dB)
+[@    12m54s] Timestep:         4500 || Speed:   67.9 MC/s (1.602e-01 s/TS) || Energy: ~1.65e-15 (- 0.00dB)
+[@    13m34s] Timestep:         4750 || Speed:   67.8 MC/s (1.604e-01 s/TS) || Energy: ~1.66e-15 (- 0.00dB)
+[@    14m14s] Timestep:         5000 || Speed:   68.4 MC/s (1.591e-01 s/TS) || Energy: ~1.66e-15 (- 0.00dB)
+[@    14m54s] Timestep:         5250 || Speed:   67.6 MC/s (1.609e-01 s/TS) || Energy: ~1.66e-15 (- 0.02dB)
+[@    15m35s] Timestep:         5500 || Speed:   65.6 MC/s (1.657e-01 s/TS) || Energy: ~1.63e-15 (- 0.09dB)
+[@    16m20s] Timestep:         5750 || Speed:   60.4 MC/s (1.800e-01 s/TS) || Energy: ~1.56e-15 (- 0.28dB)
+[@    17m03s] Timestep:         6000 || Speed:   63.3 MC/s (1.717e-01 s/TS) || Energy: ~1.43e-15 (- 0.66dB)
+[@    17m48s] Timestep:         6250 || Speed:   60.6 MC/s (1.794e-01 s/TS) || Energy: ~1.21e-15 (- 1.39dB)
+[@    18m32s] Timestep:         6500 || Speed:   61.4 MC/s (1.772e-01 s/TS) || Energy: ~9.13e-16 (- 2.61dB)
+[@    19m12s] Timestep:         6750 || Speed:   68.7 MC/s (1.584e-01 s/TS) || Energy: ~5.98e-16 (- 4.44dB)
+[@    19m57s] Timestep:         7000 || Speed:   59.6 MC/s (1.824e-01 s/TS) || Energy: ~3.38e-16 (- 6.93dB)
+[@    20m39s] Timestep:         7250 || Speed:   65.2 MC/s (1.668e-01 s/TS) || Energy: ~1.70e-16 (- 9.90dB)
+[@    21m21s] Timestep:         7500 || Speed:   65.7 MC/s (1.655e-01 s/TS) || Energy: ~8.62e-17 (-12.86dB)
+[@    22m03s] Timestep:         7750 || Speed:   63.4 MC/s (1.716e-01 s/TS) || Energy: ~5.10e-17 (-15.14dB)
+[@    22m46s] Timestep:         8000 || Speed:   63.7 MC/s (1.708e-01 s/TS) || Energy: ~3.71e-17 (-16.52dB)
+[@    23m24s] Timestep:         8250 || Speed:   72.7 MC/s (1.496e-01 s/TS) || Energy: ~3.11e-17 (-17.28dB)
+[@    24m06s] Timestep:         8500 || Speed:   64.8 MC/s (1.678e-01 s/TS) || Energy: ~2.87e-17 (-17.63dB)
+[@    24m44s] Timestep:         8750 || Speed:   71.1 MC/s (1.529e-01 s/TS) || Energy: ~2.92e-17 (-17.55dB)
+[@    25m24s] Timestep:         9000 || Speed:   67.0 MC/s (1.625e-01 s/TS) || Energy: ~3.26e-17 (-17.08dB)
+[@    26m05s] Timestep:         9250 || Speed:   67.3 MC/s (1.616e-01 s/TS) || Energy: ~3.78e-17 (-16.44dB)
+[@    26m48s] Timestep:         9500 || Speed:   62.9 MC/s (1.730e-01 s/TS) || Energy: ~4.21e-17 (-15.97dB)
+[@    27m30s] Timestep:         9750 || Speed:   65.3 MC/s (1.666e-01 s/TS) || Energy: ~4.31e-17 (-15.87dB)
+[@    28m15s] Timestep:        10000 || Speed:   59.7 MC/s (1.822e-01 s/TS) || Energy: ~4.08e-17 (-16.11dB)
+[@    28m58s] Timestep:        10250 || Speed:   63.2 MC/s (1.722e-01 s/TS) || Energy: ~3.72e-17 (-16.50dB)
+[@    29m47s] Timestep:        10500 || Speed:   56.1 MC/s (1.938e-01 s/TS) || Energy: ~3.48e-17 (-16.80dB)
+[@    30m29s] Timestep:        10750 || Speed:   64.1 MC/s (1.697e-01 s/TS) || Energy: ~3.40e-17 (-16.89dB)
+[@    31m08s] Timestep:        11000 || Speed:   69.7 MC/s (1.559e-01 s/TS) || Energy: ~3.39e-17 (-16.90dB)
+[@    31m50s] Timestep:        11250 || Speed:   64.5 MC/s (1.686e-01 s/TS) || Energy: ~3.31e-17 (-17.01dB)
+[@    32m34s] Timestep:        11500 || Speed:   61.6 MC/s (1.765e-01 s/TS) || Energy: ~3.13e-17 (-17.26dB)
+[@    33m18s] Timestep:        11750 || Speed:   62.1 MC/s (1.750e-01 s/TS) || Energy: ~2.93e-17 (-17.54dB)
+[@    34m05s] Timestep:        12000 || Speed:   58.6 MC/s (1.855e-01 s/TS) || Energy: ~2.81e-17 (-17.73dB)
+[@    34m52s] Timestep:        12250 || Speed:   57.8 MC/s (1.881e-01 s/TS) || Energy: ~2.74e-17 (-17.84dB)
+[@    35m37s] Timestep:        12500 || Speed:   59.2 MC/s (1.838e-01 s/TS) || Energy: ~2.74e-17 (-17.83dB)
+[@    36m22s] Timestep:        12750 || Speed:   61.4 MC/s (1.773e-01 s/TS) || Energy: ~2.96e-17 (-17.50dB)
+[@    37m05s] Timestep:        13000 || Speed:   62.5 MC/s (1.740e-01 s/TS) || Energy: ~3.39e-17 (-16.91dB)
+[@    37m48s] Timestep:        13250 || Speed:   64.2 MC/s (1.693e-01 s/TS) || Energy: ~3.75e-17 (-16.48dB)
+[@    38m36s] Timestep:        13500 || Speed:   55.9 MC/s (1.946e-01 s/TS) || Energy: ~3.70e-17 (-16.53dB)
+[@    39m28s] Timestep:        13750 || Speed:   52.6 MC/s (2.066e-01 s/TS) || Energy: ~3.32e-17 (-17.00dB)
+[@    40m16s] Timestep:        14000 || Speed:   56.7 MC/s (1.917e-01 s/TS) || Energy: ~3.00e-17 (-17.44dB)
+[@    40m56s] Timestep:        14250 || Speed:   67.8 MC/s (1.604e-01 s/TS) || Energy: ~3.01e-17 (-17.43dB)
+[@    41m36s] Timestep:        14500 || Speed:   67.2 MC/s (1.618e-01 s/TS) || Energy: ~3.29e-17 (-17.03dB)
+[@    42m18s] Timestep:        14750 || Speed:   64.6 MC/s (1.684e-01 s/TS) || Energy: ~3.61e-17 (-16.64dB)
+[@    42m42s] Timestep:        15000 || Speed:  113.2 MC/s (9.608e-02 s/TS) || Energy: ~3.74e-17 (-16.48dB)
+[@    42m47s] Timestep:        15051 || Speed:  120.8 MC/s (9.001e-02 s/TS) || Energy: ~3.74e-17 (-16.48dB)
+Time for 15051 iterations with 10876320.00 cells : 2567.60 sec
+Speed: 63.76 MCells/s 
+RunFDTD: Warning: Max. number of timesteps was reached before the end-criteria of -50dB was reached... 
+	You may want to choose a higher number of max. timesteps... 
+COMPLETE {"solver": "openEMS 0.0.35", "lane": 0, "excitedPort": 2, "cellMm": 0.05, "fineMarginMm": 2, "fineBoundsMm": [-10.800231, -33.300000000000004, 6.450000000000001, -4.0], "maxTimeNs": 1.5, "endCriteria": 1e-05, "gridCells": [454, 663, 35], "foilPolygons": {"bottom": 520, "inner2": 288, "inner1": 293, "top": 520}, "contacts": [{"positive": [3.6, -6.800000000000001], "negative": [3.6, -6.0], "axis": "y", "leadHeightMm": 0.15, "portWidthMm": 0.2}, {"positive": [-8.0, -30.400000000000002], "negative": [-8.8, -30.400000000000002], "axis": "x", "leadHeightMm": 0.15, "portWidthMm": 0.2}], "dielectricLoss": "omitted", "copperLoss": "PEC for initial routing extraction", "input": {"circuitJson": "AM3352 release 0.1.19", "copper": "round-capped rendered full-board copper with holes", "sha256": {"circuitJson": "c9d7059fe536865784f175855e0dcc76510972319eec848c18b0ef6dcd2adb40", "model": "df6b49acab399463b772965f1f57722d6bf0e563658e1c522c59eca1e364b762", "compactCopper": "a45b995b797b1b5495d12ce898e99c0ed265df84c8e271764936ee95564b576b"}}, "limitations": ["Thin conductive foil placement, solid high-conductivity via exterior approximation", "Fine DDR region with graded coarser mesh outside; compare mesh and margin refinement", "Differential two-terminal ports, balanced excitation; no common-mode I/O or active aggressors in this extraction", "0.15 mm matched launch posts; not exact IC packaging", "Energy decay and mesh/time convergence must be assessed separately from reaching the requested finite record"], "wallSeconds": 2840.140254290978, "actualTimeNs": 1.49487062889, "sourceIncidentMinAbs": 7.997784464524138e-15, "solverCompleted": true, "recordLengthIsEnergyConvergence": false}

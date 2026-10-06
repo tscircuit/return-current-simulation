@@ -1,0 +1,17 @@
+{
+  "z0Ohms": 100,
+  "solver": "openEMS 0.0.35",
+  "fitter": "scikit-rf 1.8.0",
+  "fitRmsErrorBeforePassivity": 2.9001108855190232e-06,
+  "fitRmsError": 0.05162314738512888,
+  "fitRmsPerEntry": 0.025811573692564444,
+  "fitMaxError": 0.04225571625971363,
+  "fitPassive": true,
+  "fitPassiveBeforeEnforcement": false,
+  "passivityCorrectionRmsPerEntry": 0.0258115736518332,
+  "passivityCorrectionMaxAbs": 0.04225360316250261,
+  "stablePoles": true,
+  "extractionMaxSingularValue": 1.0666356072616037,
+  "extractionReciprocityMaxAbs": 0.015768470562531615,
+  "s21At400MHzDb": 0.025118145144636807
+}

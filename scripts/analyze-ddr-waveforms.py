@@ -218,12 +218,22 @@ def plot(table, result, arrays, out):
         figsize=(16 if data_names else 12, 5),
         layout="constrained",
     )
-    # Two UIs preserve the alternate rising and falling strobe edges. Use a
-    # uniformly resampled grid so adaptive simulator steps do not bias density.
+    # Superpose both rising and falling edges at the same fixed nominal UI,
+    # then repeat that eye across two UIs. No individual edge realignment.
+    # Uniform resampling prevents adaptive simulator steps from biasing density.
     grid = np.arange(t[0], t[-1], np.max(np.diff(t)))
-    fold = ((grid - phase + ui) % (2 * ui) - ui) * 1e12
+    fold = ((grid - phase) % ui - ui / 2) * 1e12
+    voltage = np.interp(grid, t, v)
+    fold = np.concatenate([fold - ui * 1e12, fold, fold + ui * 1e12])
+    voltage = np.tile(voltage, 3)
+    visible = np.abs(fold) <= ui * 1e12
     axes[0].hist2d(
-        fold, np.interp(grid, t, v), bins=(300, 180), norm=LogNorm(), cmap="inferno"
+        fold[visible],
+        voltage[visible],
+        bins=(500, 250),
+        norm=LogNorm(),
+        cmap="inferno",
+        rasterized=True,
     )
     axes[0].set_title("DQS differential density — fixed nominal clock")
     axes[0].set_xlabel("Time (ps), 2 UI")

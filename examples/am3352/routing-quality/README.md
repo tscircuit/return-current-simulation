@@ -58,17 +58,24 @@ case or interpret 1 MHz as the DDR clock.
 
 ## Model availability and remaining work
 
+A [conditional DQS0 EM/ngspice eye](../dqs-em-eye) now runs end to end. It uses
+openEMS differential extraction, a compatible local TI isolated-edge conversion,
+selected package parasitics and an explicit linear receiver load. Source jitter
+and receiver noise are configured scenario budgets. This is a routing-dependent
+interconnect check; the full-bus and exact-receiver requirements below remain.
+
+
 Primary vendor sources were checked. Files are kept locally and not redistributed:
 
 | Model | Status |
 | --- | --- |
-| [TI AM335x ZCZ IBIS Rev C](https://www.ti.com/lit/zip/SPRM552) | Available. `sprm552c.ibs` SHA256 `23011a68eb8ff35562615b5b108edcb9f017c5e61f4f68e32f35c5fb88f163be`. KiCad 9.0.2 rejects its coupled package matrix at line 1281831; export exits 2. Its incomplete netlist must not be simulated. |
+| [TI AM335x ZCZ IBIS Rev C](https://www.ti.com/lit/zip/SPRM552) | Available. `sprm552c.ibs` SHA256 `23011a68eb8ff35562615b5b108edcb9f017c5e61f4f68e32f35c5fb88f163be`. KiCad 9.0.2 rejects its original coupled package matrix. The new adapter disables that section in a local compatibility copy, converts isolated switching edges and attaches selected pin R/L/C plus mutual inductance separately. It checks exported switching sources before using them. |
 | [TI model-selection guide](https://e2e.ti.com/cfs-file/__key/communityserver-discussions-components-files/791/How-to-use-the-AM335x-IBIS-Models.pdf) | Maps IOCTRL settings to models. Its **example** 0x18B setting uses DQS Model_655, DQS# Model_847 and DQ Model_352 for writes; Model_1002/496 for receiving DQS/DQ. These are not verified board register settings. TI explicitly directs timing assessment to the data-manual rules. |
 | [Exact Winbond W631GG6MB HSPICE model](https://www.winbond.com/resource-files/w631gg6mb_hspice.zip) | Downloaded successfully. SHA256 `a033f6b9d7f8ff7ba50625b3c3cd5128f48bbe4345223c5a3bfa72555a15eaed`. Its transistor models and device netlist use `.PROT freelib` encryption; ngspice cannot run them. HSPICE is not available in this environment. No different Winbond die is substituted. |
-| Actual broadband board channel | Unavailable. Prior full-board Palace meshing failed; no AM3352 EM-derived multiport channel or trustworthy field/eye result exists. |
-| DDR settings and jitter budget | Not provided. 800 MT/s is an assumed operating point. No measured/configured jitter or noise budget is silently invented. |
+| Actual broadband board channel | A balanced DQS0 two-port now runs with openEMS. Full-bus multiport extraction, active aggressors and mesh/time convergence are not established by that conditional example. Prior full-board Palace meshing still failed. |
+| DDR settings and jitter budget | Actual registers and measured jitter/noise are not provided. The new eye explicitly assumes 800 MT/s and declares its source jitter/noise budgets; it does not infer them from the board. |
 
-To produce routing-sensitive eyes, obtain a compatible exact I/O/package model
+For complete DDR routing compliance, obtain a compatible exact I/O/package model
 and simulator, extract a converged broadband coupled channel with real signal,
 ground and power-reference paths, then simulate both read/write directions and
 drive/ODT/PVT corners with DQ aggressors and declared source jitter/noise.
@@ -85,5 +92,6 @@ waveform regressions use known input timing and are explicitly synthetic tests,
 not results for this board. Circuit geometry tests generate their input through
 TSX/core, including a reference-pour void and a length failure with passing skew.
 
-Full eye/signoff generation remains blocked by the model/simulator and broadband
-channel requirements above. This report does not mark the board fabrication ready.
+The new workflow provides a conditional DQS interconnect eye. Complete DDR
+signoff still needs the model, multiport and validation requirements above.
+This report does not mark the board fabrication ready.

@@ -1,0 +1,67 @@
+{
+  "cases": [
+    {
+      "label": "Routed DQS0: 0.05 mm EM + IBIS",
+      "finiteCaptureEyeHeightV": 1.718654518540164,
+      "commonOpeningAt200mVThresholdPs": 1139.2983870456935,
+      "receiverTie": {
+        "count": 120,
+        "rmsPs": 10.114436492671791,
+        "peakToPeakPs": 48.91309485699766,
+        "minPs": -27.73363765639792,
+        "maxPs": 21.17945720059974
+      },
+      "samplingThresholdMv": 200,
+      "sourceBudgets": {
+        "jitter": {
+          "configuredInputRjRmsPs": 10,
+          "configuredPeriodicJitterPeakPs": 5,
+          "periodicJitterPeriodUI": 31,
+          "seed": 40501,
+          "provenance": "assumed source timing budget, not measured board jitter; injected before ngspice"
+        },
+        "noise": {
+          "kind": "assumed differential receiver-input voltage noise; ideal supplies",
+          "configuredRmsMv": 2,
+          "lowPassBandwidthMHz": 500,
+          "seed": 40502,
+          "provenance": "assumed noise budget, not measured board noise"
+        }
+      },
+      "signoff": false
+    },
+    {
+      "label": "Matched 100 \u03a9 channel: identical I/O and budgets",
+      "finiteCaptureEyeHeightV": 1.7539912917371883,
+      "commonOpeningAt200mVThresholdPs": 1139.1825156796267,
+      "receiverTie": {
+        "count": 120,
+        "rmsPs": 10.188336574880049,
+        "peakToPeakPs": 48.85468726190261,
+        "minPs": -26.669680629348886,
+        "maxPs": 22.185006632553726
+      },
+      "samplingThresholdMv": 200,
+      "sourceBudgets": {
+        "jitter": {
+          "configuredInputRjRmsPs": 10,
+          "configuredPeriodicJitterPeakPs": 5,
+          "periodicJitterPeriodUI": 31,
+          "seed": 40501,
+          "provenance": "assumed source timing budget, not measured board jitter; injected before ngspice"
+        },
+        "noise": {
+          "kind": "assumed differential receiver-input voltage noise; ideal supplies",
+          "configuredRmsMv": 2,
+          "lowPassBandwidthMHz": 500,
+          "seed": 40502,
+          "provenance": "assumed noise budget, not measured board noise"
+        }
+      },
+      "signoff": false
+    }
+  ],
+  "receiverInputThresholdMv": 200,
+  "signoff": false,
+  "definition": "Finite-record extrema at a single nominal sampling phase, not a receiver timing mask or BER extrapolation"
+}

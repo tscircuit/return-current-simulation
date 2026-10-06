@@ -383,7 +383,7 @@ MPLCONFIGDIR=work/matplotlib python scripts/audit-am3352-copper.py \
 Preparation validates the circuit/schema and layer metadata; it is not a
 substitute for the mesher's polygon/port/connection checks. Zero copper overlaps
 alone does not establish fabrication readiness or a working EM port setup.
-No full-board EM solve is claimed.
+No full-board Palace EM solve is claimed in this return-current example.
 
 Even after resolving geometry, DDR return paths through power-plane decoupling
 and package impedances need an additional component model. The current adapter
@@ -466,12 +466,44 @@ receiver PHY's sampling delay, independently for reads and writes. Data and stro
 alignment differ by direction. These are observed validity windows, not device
 setup/hold compliance or bit-error counts; no expected data sequence is supplied.
 
-**Full AM3352 channel co-simulation is not working yet.** The exact Winbond model
-is HSPICE-encrypted, the available KiCad converter rejects TI's coupled package
-section, and no converged broadband multiport board extraction has been produced.
-The [model status and remaining requirements](examples/am3352/routing-quality)
-are explicit. Neither this analyzer nor the single-frequency return-current CLI
-creates the missing channel or IC models. No vendor model files are redistributed.
+A **balanced DQS0 channel now runs end to end with openEMS and ngspice**, using
+actual four-layer copper geometry and locally converted TI driver models. Its
+receiver load, jitter and noise are explicit engineering assumptions. The
+[EM eye workflow](scripts/si) documents the model and validation limits; complete
+DDR bus crosstalk, PDN noise and DQ setup/hold are not established by this DQS
+plot. No vendor model files are redistributed.
+
+### Simulate a routing-derived DQS eye
+
+![AM3352 DQS0 EM and ngspice eye](examples/am3352/dqs-em-eye/eye-comparison.png)
+
+The routed eye uses a broadband **openEMS differential two-port extraction**, a
+stable passive scikit-rf equivalent and **ngspice** with the nonlinear TI IBIS
+driver, package parasitics, reflections and receiver loading. The adjacent
+matched-channel control uses the same I/O and source budgets. At **800 MT/s**,
+DQS runs at **400 MHz** with a **1250 ps UI**. This frequency comes from the
+explicit timed stimulus; it is not inferred from the circuit-json terminals.
+
+After installing the [native dependencies and local TI model](scripts/si):
+
+```sh
+SI_PYTHON=work/si-python/bin/python SI_NGSPICE=ngspice \
+CELL_MM=0.05 FIELD_MAX_NS=1.5 \
+bash scripts/generate-em-dqs-eye.sh /path/to/sprm552c.ibs work/em-eye
+```
+
+Defaults inject **10 ps RMS Gaussian timing jitter**, **5 ps peak periodic
+jitter** and **2 mV RMS receiver input noise before plotting**. These are
+configured budgets, not measured board values. The example explicitly assumes
+**60 Ω per-leg ODT** and **2 pF per-leg die capacitance**. Use `RJ_PS`, `PJ_PS`,
+`NOISE_MV` on the wrapper; load corners use `--odt-ohms`/`--cin-pf` on the
+transient command. See [usage, model choices and limitations](scripts/si) and
+[the saved example](examples/am3352/dqs-em-eye) for reproducible outputs.
+
+This experimental adapter currently targets the pinned AM3352 stackup and
+DQS0, `U1.P1/P2 → U3.F3/G3`. Its observed eye openings are conditional routing
+diagnostics, not a DDR mask or BER/compliance result. Mesh/time sensitivity,
+passivity correction, and omitted aggressor/PDN/I/O behavior remain explicit.
 
 ### Simplified DQS eye estimate
 
