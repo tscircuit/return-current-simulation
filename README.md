@@ -670,3 +670,15 @@ and publishes it with provenance. Repository metadata targets
 `NPM_TOKEN` secret; later releases can use npm trusted publishing configured for
 the repository and `publish-npm.yml`. Bump `package.json` before subsequent
 releases. You can also run `npm publish --access public` after authenticating.
+
+The AM3352 CAD failure is now isolated in
+[tscircuit/circuit-json-to-gmsh](https://github.com/tscircuit/circuit-json-to-gmsh).
+GEOS-valid polygons can have a hole touching another boundary at a single
+point; extruding them creates invalid OCC solids despite a correct volume.
+The Palace primitive builder opens these contacts with a local square notch
+of half width 0.0001 mm (0.1 µm), rejects repairs that split a copper region,
+and saves `geometry-repairs.json` before the large Boolean operations.
+Successful mesh summaries also include the repair receipt. The converter repo
+contains the original and repaired native solids, TSX reproductions, and PoppyGL
+cross-sections. Its pad-outline antipads and 2D union strategy are available for
+geometry export; full AM3352 conformal Palace meshing remains unvalidated.

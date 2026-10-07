@@ -9,6 +9,7 @@ from shapely import set_precision
 from shapely.geometry import Point
 from shapely.strtree import STRtree
 from mesh import points, add_polygon, polygons
+from topology import regularize
 
 
 def clean(shape):
@@ -23,9 +24,15 @@ def nonempty_polygons(shape):
 
 def prism(options):
     shape, z_min, z_max = [options[k] for k in ["shape", "zMin", "zMax"]]
-    return [entity for polygon in nonempty_polygons(clean(shape))
-            for entity in gmsh.model.occ.extrude([add_polygon(polygon, z_min)], 0, 0, z_max - z_min)
-            if entity[0] == 3]
+    result = []
+    for polygon in nonempty_polygons(clean(shape)):
+        polygon, repairs = regularize(polygon, {"radiusMm": 0.0001, "context": {
+            "zMin": z_min, "zMax": z_max, **options.get("context", {})}})
+        if options.get("repairs") is not None:
+            options["repairs"].extend(repairs)
+        result.extend(entity for entity in gmsh.model.occ.extrude(
+            [add_polygon(polygon, z_min)], 0, 0, z_max - z_min) if entity[0] == 3)
+    return result
 
 
 def build_layer_copper(model, trace_caps="round"):
@@ -248,9 +255,10 @@ def generate_multilayer_mesh(model, destination):
         foil_layers = layered["stackup"]["copperLayers"]
         bottom, top = foil_layers[-1], foil_layers[0]
         copper_by_net = {}
+        geometry_repairs = []
         for foil in foil_layers:
             for net_id, shape in planar_copper[foil["name"]].items():
-                copper_by_net.setdefault(net_id, []).extend(prism({"shape": shape, "zMin": foil["zMin"], "zMax": foil["zMax"]}))
+                copper_by_net.setdefault(net_id, []).extend(prism({"shape": shape, "zMin": foil["zMin"], "zMax": foil["zMax"], "repairs": geometry_repairs, "context": {"material": "copper", "layer": foil["name"], "netId": net_id}}))
         for barrel in layered["barrels"]:
             hole = Polygon(points(barrel["hole"]))
             outer = hole.buffer(barrel["platingThickness"], join_style="mitre")
@@ -258,6 +266,7 @@ def generate_multilayer_mesh(model, destination):
             if not pads.buffer(2e-6).covers(outer) or not board.covers(pads):
                 raise ValueError("Plated barrel does not fit its pad/board")
             copper_by_net.setdefault(barrel["netId"], []).extend(prism({"shape": outer.difference(hole), "zMin": barrel["zMin"], "zMax": barrel["zMax"]}))
+        (destination / "geometry-repairs.json").write_text(json.dumps(geometry_repairs, indent=2) + "\n")
         copper = []
         for net_id, volumes in copper_by_net.items():
             if len(volumes) > 1:
@@ -369,7 +378,7 @@ def generate_multilayer_mesh(model, destination):
                    "copperVolumeMm3": sum(gmsh.model.occ.getMass(3, tag) for tag in copper_tags),
                    "dielectricAttributes": [a for a, _ in dielectric_counts],
                    "portAttributes": list(range(21, 21 + len(port_surfaces))),
-                   "sampleLayer": layered["sampleLayer"]}
+                   "sampleLayer": layered["sampleLayer"], "geometryRepairs": geometry_repairs}
         (destination / "mesh-summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     finally:
         gmsh.finalize()
