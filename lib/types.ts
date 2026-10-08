@@ -1,12 +1,15 @@
 import type { AnyCircuitElement, PcbBoard, PcbTrace, Point } from "circuit-json"
 
-/** Temporary circuit-json extension; see the linked schema PR in README.md.
+/** Legacy point-only excitation, retained for backwards compatibility.
+ * New definitions/results use the official circuit-json PR887 types.
  * Positions use circuit world coordinates: millimetres, +X right, +Y up.
  * Positive current runs along the ordered signal trace, and returns source → sink.
  */
 export interface SimulationReturnCurrentExcitation {
   type: "simulation_return_current_excitation"
   simulation_return_current_excitation_id: string
+  /** Official circuit-json experiments; absent in legacy point-only inputs. */
+  simulation_experiment_id?: string
   pcb_trace_id: string
   ground_source_net_id: string
   current: number

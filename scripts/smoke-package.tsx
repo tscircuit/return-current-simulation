@@ -47,7 +47,12 @@ try {
   assert(
     packed.files.some((file: { path: string }) => file.path === "dist/cli.js"),
   )
-  for (const asset of ["mesh.py", "sample.py", "requirements.txt"])
+  for (const asset of [
+    "mesh.py",
+    "sample.py",
+    "surface_sample.py",
+    "requirements.txt",
+  ])
     assert(
       packed.files.some(
         (file: { path: string }) => file.path === `dist/python/${asset}`,
@@ -155,6 +160,29 @@ try {
     [25, 100],
   )
   assert.equal(explicitModel.groundVias.length, 2)
+  await run([
+    bin,
+    "explicit-prepared/circuit-definition.json",
+    "--experiment-id",
+    explicitModel.geometry.excitations[0].simulation_experiment_id,
+    "--frequency-hz",
+    "100000000",
+    "--copper-model",
+    "surface_impedance",
+    "--cell-size",
+    "0.05",
+    "--prepare-only",
+    "--output",
+    "surface-prepared",
+  ])
+  const surface = JSON.parse(
+    await readFile(join(consumer, "surface-prepared/model.json"), "utf8"),
+  )
+  assert.equal(surface.copperModel, "surface_impedance_copper")
+  assert.equal(surface.copperThickness, 0.035)
+  assert.equal(surface.groundVias[0].platingThickness, 0.035)
+  assert(surface.surfaceImpedance.minimumThicknessToSkinDepth > 5)
+  assert.deepEqual(surface.geometry, explicitModel.geometry)
   const layeredCircuit = new Circuit()
   layeredCircuit.add(<MultilayerBoard innerPlane />)
   await layeredCircuit.renderUntilSettled()
@@ -208,17 +236,38 @@ try {
     "preview",
   ])
   assert((await stat(join(consumer, "preview/approximation.png"))).size > 1000)
+  const circuitResult = JSON.parse(
+    await readFile(join(consumer, "preview/circuit-result.json"), "utf8"),
+  )
+  assert(
+    circuitResult.some(
+      (element: { type: string }) =>
+        element.type === "simulation_pcb_return_current_result",
+    ),
+  )
+  assert(
+    circuitResult.some(
+      (element: { type: string; field_asset?: { url: string } }) =>
+        element.type === "simulation_pcb_return_current_field" &&
+        element.field_asset?.url.startsWith("data:application/gzip;base64,"),
+    ),
+  )
   await writeFile(
     join(consumer, "import.mjs"),
     `
 import { readFileSync } from "node:fs";
-import { parseReturnCurrentCircuitJson, withNamedExcitations, simulateReturnCurrent, renderReturnCurrentSvg } from "simulate-return-current";
+import { parseReturnCurrentCircuitJson, withNamedExcitations, simulateReturnCurrent, renderReturnCurrentSvg, createReturnCurrentExperiment, selectReturnCurrentExperiment } from "simulate-return-current";
+import { exportReturnCurrentCircuitJson } from "simulate-return-current/circuit-json";
 import { preparePalaceSimulation } from "simulate-return-current/palace";
 const input = parseReturnCurrentCircuitJson(JSON.parse(readFileSync("board.json", "utf8")));
 const ports = [{ source: "SIG_S.pin1", load: "SIG_L.SIGNAL", current: 0.25 }];
 const circuitJson = withNamedExcitations({ circuitJson: input, ports, groundNet: "GND" });
 if (!renderReturnCurrentSvg(simulateReturnCurrent({ circuitJson })).includes("<svg")) throw new Error("Missing SVG");
 await preparePalaceSimulation({ circuitJson: input, ports, groundNet: "GND", frequencyHz: 1e6, outputDirectory: "library-prepared" });
+const definitions = createReturnCurrentExperiment({ circuitJson: input, ports, groundNet: "GND", experimentId: "simulation_experiment_smoke" });
+const selected = selectReturnCurrentExperiment({ circuitJson: definitions });
+const result = exportReturnCurrentCircuitJson({ circuitJson: definitions, experimentId: selected.experiment.simulation_experiment_id, simulation: simulateReturnCurrent({ circuitJson: selected.solverCircuitJson, excitations: selected.excitations }) });
+if (!result.some((element) => element.type === "simulation_pcb_return_current_field")) throw new Error("Missing official Circuit JSON field");
 `,
   )
   await run(["node", "import.mjs"])
@@ -231,6 +280,7 @@ const circuitJson = parseReturnCurrentCircuitJson([]);
 const ports = [{ source: "R1.pin1", load: "U1.VDDIO1", current: 1 }];
 withNamedExcitations({ circuitJson, ports, groundNet: "GND" });
 runPalaceSimulation({ circuitJson, ports, groundNet: "GND", frequencyHz: 1e6, outputDirectory: "out" });
+runPalaceSimulation({ circuitJson, ports, groundNet: "GND", frequencyHz: 1e8, copperModel: "surface_impedance_copper", outputDirectory: "out" });
 // @ts-expect-error Frequency is required.
 runPalaceSimulation({ circuitJson, ports, groundNet: "GND", outputDirectory: "out" });
 withNamedExcitations({ circuitJson, ports: [{ source: "R1.pin1", sourceReference: "R1.GND", load: "U1.pin1", loadReference: "U1.GND", current: "5mA", sourceImpedance: "50ohm", loadImpedance: 100 }], groundNet: "GND" });

@@ -5,11 +5,22 @@ export function validatePalaceReference(reference: PalaceReference): void {
     (reference.femOrder !== 1 && reference.femOrder !== 2) ||
     reference.schemaVersion !== 1 ||
     reference.solver !== "palace" ||
-    reference.copperModel !== "volumetric_copper" ||
+    !["volumetric_copper", "surface_impedance_copper"].includes(
+      reference.copperModel,
+    ) ||
     (reference.sampleLayer !== undefined &&
       !/^(top|bottom|inner[1-8])$/.test(reference.sampleLayer))
   )
     throw new Error("Unsupported Palace reference")
+  if (
+    reference.copperModel === "surface_impedance_copper" &&
+    (reference.samplingMethod !== "sum_foil_face_surface_currents" ||
+      !Number.isFinite(reference.surfaceCurrentScaleAmpsPerMm) ||
+      reference.surfaceCurrentScaleAmpsPerMm! <= 0)
+  )
+    throw new Error(
+      "Surface impedance reference must identify its face-current sampling and finite positive A/mm scale",
+    )
   if (
     ![
       reference.frequencyHz,

@@ -38,7 +38,20 @@ export function createPalaceModel(options: PalaceOptions): PalaceModel {
   const skinDepthMm =
     1000 /
     Math.sqrt(Math.PI * frequencyHz * 4e-7 * Math.PI * copperConductivity)
-  if (copperThickness > skinDepthMm)
+  const copperModel = options.copperModel ?? "volumetric_copper"
+  if (
+    copperModel !== "volumetric_copper" &&
+    copperModel !== "surface_impedance_copper"
+  )
+    throw new Error("Unknown copperModel")
+  if (
+    copperModel === "surface_impedance_copper" &&
+    copperThickness < 3 * skinDepthMm
+  )
+    throw new Error(
+      "The half-space surface-impedance model requires foil and via-wall thickness >= 3 skin depths; use volumetric copper at lower frequencies",
+    )
+  if (copperModel === "volumetric_copper" && copperThickness > skinDepthMm)
     throw new Error(
       "The current volume mesher requires copper thickness <= skin depth; refine copper through its thickness before using higher frequencies",
     )
@@ -97,7 +110,7 @@ export function createPalaceModel(options: PalaceOptions): PalaceModel {
         throw new Error("Top reference requires an explicit PCB port")
       ports.push({
         signal: { x: endpoint.x, y: endpoint.y },
-        reference: contact,
+        reference: { x: contact.x, y: contact.y },
         referenceLayer: terminal?.reference_layer ?? "bottom",
         resistance: positiveFinite(
           terminal?.resistance ?? options.portResistance ?? 50,
@@ -227,6 +240,16 @@ export function createPalaceModel(options: PalaceOptions): PalaceModel {
     meshSize: positiveFinite(options.meshSize ?? 1, "meshSize"),
     airPadding: positiveFinite(options.airPadding ?? 10, "airPadding"),
     order,
-    copperModel: "volumetric_copper",
+    copperModel,
+    ...(copperModel === "surface_impedance_copper"
+      ? {
+          surfaceImpedance: {
+            boundaryModel: "half_space" as const,
+            skinDepthMm,
+            minimumThicknessToSkinDepth: copperThickness / skinDepthMm,
+            currentSampling: "sum_foil_face_surface_currents" as const,
+          },
+        }
+      : {}),
   }
 }
