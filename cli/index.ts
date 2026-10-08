@@ -436,7 +436,7 @@ async function main() {
           port.sourceImpedance !== undefined ||
           port.loadImpedance !== undefined,
       ) ||
-      circuitJson.some(
+      (selected?.excitations ?? circuitJson).some(
         (element) =>
           element.type === "simulation_return_current_excitation" &&
           (element.source_port?.reference_pcb_port_id ||

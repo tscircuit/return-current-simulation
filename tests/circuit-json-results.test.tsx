@@ -292,6 +292,29 @@ test("CLI accepts pending definitions and flags; rejects ambiguous or broken exp
       selectReturnCurrentExperiment({ circuitJson: other, experimentId })
         .excitations[0].current,
     ).toBe(0.005)
+    const withOtherTermination = other.map((e) =>
+      e.type === "simulation_return_current_excitation" &&
+      e.simulation_experiment_id === "simulation_experiment_other" &&
+      e.load_port
+        ? { ...e, load_port: { ...e.load_port, resistance: 100 } }
+        : e,
+    )
+    await Bun.write(filename, JSON.stringify(withOtherTermination))
+    expect(
+      (
+        await run([
+          filename,
+          "--solver",
+          "approximation",
+          "--experiment-id",
+          experimentId,
+          "--output",
+          join(directory, "selected-case"),
+          "--cell-size",
+          "1",
+        ])
+      ).code,
+    ).toBe(0)
     const broken = input.map((e) =>
       e.type === "simulation_return_current_excitation"
         ? { ...e, ground_source_net_id: "missing" }
