@@ -207,6 +207,21 @@ test("phasor serializer keeps numerical A/mm channels and frequency, rejecting s
         model,
         reference: {
           ...reference,
+          copperModel: "surface_impedance_copper",
+          samplingMethod: "sum_foil_face_surface_currents",
+          surfaceCurrentScaleAmpsPerMm: 0.05152,
+        },
+      },
+    }),
+  ).toThrow("copper model")
+  expect(() =>
+    exportReturnCurrentCircuitJson({
+      circuitJson: input,
+      experimentId,
+      simulation: {
+        model,
+        reference: {
+          ...reference,
           provenance: { ...reference.provenance, geometrySignature: "wrong" },
         },
       },

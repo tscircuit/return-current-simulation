@@ -215,6 +215,8 @@ export function exportReturnCurrentCircuitJson(options: {
       throw new Error("The result grid exceeds 1,000,000 cells")
     if (reference.frequencyHz !== model.frequencyHz)
       throw new Error("Palace model/reference frequencies differ")
+    if (reference.copperModel !== model.copperModel)
+      throw new Error("Palace model/reference copper models differ")
     if (reference.copperThickness !== model.copperThickness)
       throw new Error("Palace model/reference copper thicknesses differ")
     if (
@@ -254,6 +256,7 @@ export function exportReturnCurrentCircuitJson(options: {
       portResistance: model.portResistance,
       portWidth: model.portWidth,
       meshSize: model.meshSize,
+      copperModel: model.copperModel,
       airPadding: model.airPadding,
       order: model.order,
     })

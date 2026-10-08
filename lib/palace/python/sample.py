@@ -12,6 +12,7 @@ from pathlib import Path
 import numpy as np
 import vtk
 from vtk.util.numpy_support import numpy_to_vtk, vtk_to_numpy
+from surface_sample import sample_surface
 
 # Keep VTK sampling deterministic and avoid oversubscribing FEM jobs.
 vtk.vtkSMPTools.Initialize(1)
@@ -186,6 +187,7 @@ def sample_case(case):
     source_matrix = np.zeros((count, count), dtype=complex)
     load_matrix = np.zeros_like(source_matrix)
     fields = []
+    surface_receipts = []
     outline = model["geometry"]["boardOutline"]
     width = (
         max(p["x"] for p in outline)
@@ -203,6 +205,8 @@ def sample_case(case):
     )
     impedance_free_space = math.sqrt((4e-7 * math.pi) / 8.8541878176e-12)
     electric_field_scale = impedance_free_space**0.5 / characteristic_length_m
+    surface_impedance = model["copperModel"] == "surface_impedance_copper"
+    surface_current_scale = 1 / (impedance_free_space**0.5 * characteristic_length_m * 1000)
     coordinates = np.array([[point["x"], point["y"]] for point in grid["points"]])
     depth_nodes, _ = np.polynomial.legendre.leggauss(5)
     depths = (depth_nodes - 1) / 2 * model["copperThickness"]
@@ -251,11 +255,11 @@ def sample_case(case):
             load_matrix[index, basis] = complex(
                 row[f"Re{{I{load_label}}} (A)"], row[f"Im{{I{load_label}}} (A)"]
             )
-        boundary = postpro / "paraview" / "driven"
+        boundary = postpro / "paraview" / ("driven_boundary" if surface_impedance else "driven")
         if count > 1:
             boundary = boundary / f"excitation_{excitation_index}"
         path = boundary / "Cycle000001" / "data.pvtu"
-        fields.append(
+        fields.append(sample_surface(path, coordinates, model, surface_current_scale, surface_receipts) if surface_impedance else
             probe_ground(
                 read_ground(path),
                 {
@@ -296,6 +300,7 @@ def sample_case(case):
         "femOrder": model["order"],
         "frequencyHz": model["frequencyHz"],
         "copperModel": model["copperModel"],
+        **({"samplingMethod": "sum_foil_face_surface_currents", "surfaceCurrentScaleAmpsPerMm": surface_current_scale} if surface_impedance else {}),
         "copperThickness": model["copperThickness"],
         "layerSeparation": model["layerSeparation"],
         **{key: grid[key] for key in ["cellWidth", "cellHeight", "columns", "rows"]},
@@ -326,6 +331,14 @@ def sample_case(case):
         )
         + "\n"
     )
+    if surface_impedance:
+        (case / "surface-sampling.json").write_text(json.dumps({
+            "copperModel": model["copperModel"],
+            "method": "sum_foil_face_surface_currents",
+            "normalConvention": "metal-outward normal crossed with H; no additional face sign flip",
+            "units": "A/mm, complex peak phasors after source-current basis normalization",
+            "bases": surface_receipts,
+        }, indent=2, allow_nan=False) + "\n")
 
 
 def main():

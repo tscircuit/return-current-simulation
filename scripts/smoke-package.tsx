@@ -47,7 +47,12 @@ try {
   assert(
     packed.files.some((file: { path: string }) => file.path === "dist/cli.js"),
   )
-  for (const asset of ["mesh.py", "sample.py", "requirements.txt"])
+  for (const asset of [
+    "mesh.py",
+    "sample.py",
+    "surface_sample.py",
+    "requirements.txt",
+  ])
     assert(
       packed.files.some(
         (file: { path: string }) => file.path === `dist/python/${asset}`,
@@ -155,6 +160,29 @@ try {
     [25, 100],
   )
   assert.equal(explicitModel.groundVias.length, 2)
+  await run([
+    bin,
+    "explicit-prepared/circuit-definition.json",
+    "--experiment-id",
+    explicitModel.geometry.excitations[0].simulation_experiment_id,
+    "--frequency-hz",
+    "100000000",
+    "--copper-model",
+    "surface_impedance",
+    "--cell-size",
+    "0.05",
+    "--prepare-only",
+    "--output",
+    "surface-prepared",
+  ])
+  const surface = JSON.parse(
+    await readFile(join(consumer, "surface-prepared/model.json"), "utf8"),
+  )
+  assert.equal(surface.copperModel, "surface_impedance_copper")
+  assert.equal(surface.copperThickness, 0.035)
+  assert.equal(surface.groundVias[0].platingThickness, 0.035)
+  assert(surface.surfaceImpedance.minimumThicknessToSkinDepth > 5)
+  assert.deepEqual(surface.geometry, explicitModel.geometry)
   const layeredCircuit = new Circuit()
   layeredCircuit.add(<MultilayerBoard innerPlane />)
   await layeredCircuit.renderUntilSettled()
@@ -252,6 +280,7 @@ const circuitJson = parseReturnCurrentCircuitJson([]);
 const ports = [{ source: "R1.pin1", load: "U1.VDDIO1", current: 1 }];
 withNamedExcitations({ circuitJson, ports, groundNet: "GND" });
 runPalaceSimulation({ circuitJson, ports, groundNet: "GND", frequencyHz: 1e6, outputDirectory: "out" });
+runPalaceSimulation({ circuitJson, ports, groundNet: "GND", frequencyHz: 1e8, copperModel: "surface_impedance_copper", outputDirectory: "out" });
 // @ts-expect-error Frequency is required.
 runPalaceSimulation({ circuitJson, ports, groundNet: "GND", outputDirectory: "out" });
 withNamedExcitations({ circuitJson, ports: [{ source: "R1.pin1", sourceReference: "R1.GND", load: "U1.pin1", loadReference: "U1.GND", current: "5mA", sourceImpedance: "50ohm", loadImpedance: 100 }], groundNet: "GND" });

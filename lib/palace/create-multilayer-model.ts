@@ -34,6 +34,10 @@ export function createMultilayerPalaceModel(
   const boards = options.circuitJson.filter((e) => e.type === "pcb_board")
   if (boards.length !== 1) throw new Error("Exactly one PCB board is required")
   const board = boards[0]
+  if (options.copperModel === "surface_impedance_copper")
+    throw new Error(
+      "surface_impedance_copper currently supports the two-layer mesher only",
+    )
   if (!options.stackup)
     throw new Error(
       "Multilayer boards require an explicit fabrication stackup (--stackup-file); layer spacing is not inferred",

@@ -61,6 +61,7 @@ Options:
   --sample-layer <layer>        Reference copper to sample: top, inner1..inner8, bottom
   --via-clearance <mm>          Radial foreign-net antipad clearance (default: board or 0.2)
   --mesh-size <mm>              FEM mesh target (default: 2)
+  --copper-model <volumetric|surface_impedance>  Two-layer copper model (default volumetric)
   --order <1|2>                 FEM polynomial order (default: 2)
   --air-padding <mm>            Air domain padding (default: 6)
   --processes <count>           MPI processes (default: PALACE_PROCESSES or 1)
@@ -106,6 +107,7 @@ const definitions = {
   "sample-layer": { type: "string" },
   "via-clearance": { type: "string" },
   "mesh-size": { type: "string" },
+  "copper-model": { type: "string" },
   order: { type: "string" },
   "air-padding": { type: "string" },
   processes: { type: "string" },
@@ -453,6 +455,7 @@ async function main() {
       "sample-layer",
       "via-clearance",
       "mesh-size",
+      "copper-model",
       "order",
       "air-padding",
       "processes",
@@ -522,6 +525,17 @@ async function main() {
     cellSize: number("cell-size", 0.2),
     imageSize,
     meshSize: number("mesh-size", 2),
+    copperModel:
+      values["copper-model"] === undefined ||
+      values["copper-model"] === "volumetric"
+        ? "volumetric_copper"
+        : values["copper-model"] === "surface_impedance"
+          ? "surface_impedance_copper"
+          : (() => {
+              throw new Error(
+                "--copper-model must be volumetric or surface_impedance",
+              )
+            })(),
     order,
     airPadding: number("air-padding", 6),
     processes: number("processes"),

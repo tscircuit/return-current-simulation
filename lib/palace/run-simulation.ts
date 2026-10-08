@@ -71,6 +71,10 @@ async function writePortSpecification(
     JSON.stringify(
       {
         frequencyHz: options.frequencyHz,
+        copperModel: model.copperModel,
+        ...(model.surfaceImpedance
+          ? { surfaceImpedance: model.surfaceImpedance }
+          : {}),
         ports:
           options.ports?.map((port) => ({
             ...port,
@@ -120,6 +124,7 @@ export async function runPalaceSimulation(options: PalaceSimulationOptions) {
     startedAt,
     completedAt: new Date().toISOString(),
     frequencyHz: options.frequencyHz,
+    copperModel: options.copperModel ?? "volumetric_copper",
     totalSeconds: (performance.now() - started) / 1000,
     reusedCompletedFemSolve: false,
     image,
