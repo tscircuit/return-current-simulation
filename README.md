@@ -63,6 +63,76 @@ Open `return-current/palace.png` or `palace.svg`. The case also saves the resolv
 `excitation-ports.json`, input circuit, model, mesh, solver logs, raw ParaView
 fields, complex sampled currents and `run-timing.json`.
 
+### Circuit JSON definitions and results (PR887)
+
+Named flags now create official `simulation_experiment` (`pcb_return_current`)
+and `simulation_return_current_excitation` elements. Completed runs write the
+full board plus official result, field, heatmap and marker records to
+`return-current/circuit-result.json`, or the path given by `--result-json`:
+
+```sh
+simulate-return-current board.json \
+  --source U1.OUT --source-reference U1.GND \
+  --load U2.IN --load-reference U2.GND \
+  --ground GND --current 5mA --frequency-hz 1000000 \
+  --source-impedance 25 --load-impedance 100 \
+  --experiment-id simulation_experiment_example \
+  --experiment-name "U1 to U2 return path" \
+  --result-json results.circuit.json --output example
+
+# Or run an existing pending definition, without redefining its terminals:
+simulate-return-current pending.circuit.json \
+  --experiment-id simulation_experiment_example --frequency-hz 1000000 \
+  --result-json results.circuit.json --output example
+```
+
+If exactly one PCB return-current experiment exists, `--experiment-id` can be
+omitted. With multiple experiments it is required. Named flags create a new
+experiment; supplying an ID already present in the board is rejected. Results
+from other experiments/frequencies are preserved. Rerunning replaces the selected
+experiment's results at that frequency and their associated fields, heatmaps and
+markers. `--result-id` sets an explicit result ID; collision with another result
+is rejected. Frequency-independent approximation results form a separate slot.
+
+PR887 does not define frequency, solver, or fabrication stackup on a pending PCB
+return-current experiment. These remain explicit run options:
+`--frequency-hz` is required for Palace, and multilayer Palace requires
+`--stackup-file`. The optional result `frequency_hz` records the frequency actually
+solved. `--solver approximation` emits a **real**, frequency-independent field
+and omits `frequency_hz`; it cannot accept a frequency or explicit reference pins.
+`--prepare-only` saves definitions/model inputs without result elements or a solve.
+No renderer output or approximation is relabeled as EM evidence.
+
+Fields are row-major from the **bottom-left**, in **A/mm** sheet current. Palace
+fields contain real/imaginary peak phasor channels using `exp(+jωt)`; missing
+conductor cells are `null` in every channel, and valid zero-current copper is
+zero. Copper thickness and grid geometry are millimetres. Heatmaps are field-only
+transparent PNGs, with top-left pixel at `(min_x, max_y)`; their linear scale uses
+the maximum vector magnitude divided by copper thickness (A/mm²) for that run.
+For absolute comparisons, render from the field using a common fixed density
+scale rather than comparing independently scaled PNG colors.
+
+Assets are embedded data URLs so moving the result file preserves the numerical
+field and image. `--field-format gzip` (default) uses `application/gzip`;
+`--field-format json` embeds plain `application/json`. `project_relative_path`
+provides a suggested export filename, and decoding is selected by MIME type.
+The exporter validates decoded channels against the official grid schema and
+checks model/current/contact/provenance consistency before writing any results.
+Markers only identify actual PCB ports or vias. An omitted named reference
+becomes an identified copper-pour contact beneath the signal, never a fabricated
+GND pad. Missing or wrong-net contacts and unrepresentable via contacts are rejected.
+
+Library exports are `createReturnCurrentExperiment`,
+`selectReturnCurrentExperiment` and `exportReturnCurrentCircuitJson`.
+`selectReturnCurrentExperiment` also returns `solverCircuitJson`, which orients
+selected routes driver → load without changing the output board's route order.
+Pass the selected `excitations` to the chosen solver, then supply either its
+`SimulationResult` or `{model, reference}` from the completed Palace run to the
+exporter. Input display-offset numbers are normalized to strings by the parser;
+unknown board metadata is preserved. Legacy point-only excitation inputs remain
+accepted by the old APIs and `--use-circuit-excitations`; official result output
+requires an identified PR887 experiment/contact definition.
+
 **Frequency comes from `--frequency-hz`, not from circuit-json or the pin name.**
 `--source` names the driver terminal; `--load` names the receiving terminal.
 `--current` is the signed peak current at that frequency, not RMS. Named pins
@@ -476,12 +546,10 @@ Component/package impedances, decoupling capacitors, solder mask and silkscreen
 are not modeled. The volume mesher still rejects frequency/thickness combinations
 with copper thicker than skin depth; DDR edge-rate/high-frequency analysis needs
 further copper-thickness refinement and a component impedance model.
-`source_port`/`load_port` on `simulation_return_current_excitation` are temporary
-local circuit-json metadata, injected by named-port resolution and preserved by
-`parseReturnCurrentCircuitJson`; core does not need to emit them yet.
-The original excitation record is proposed in
-[circuit-json PR #870](https://github.com/tscircuit/circuit-json/pull/870);
-the explicit terminal fields remain a local extension.
+`source_port`/`load_port`, identified contacts and spatial result records are
+official schemas released in `circuit-json@0.0.522` following
+[circuit-json PR #887](https://github.com/tscircuit/circuit-json/pull/887).
+Legacy point-only excitation records are still accepted by the original APIs.
 The current volume mesher requires foil
 thickness no greater than skin depth. Check mesh refinement and air-domain size
 before treating Palace results as an accuracy reference.

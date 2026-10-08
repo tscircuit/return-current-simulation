@@ -409,7 +409,7 @@ export function createMultilayerPalaceModel(
       const below = referenceFoil.zMin < signalFoil.zMin
       ports.push({
         signal: { x: endpoint.x, y: endpoint.y },
-        reference,
+        reference: { x: reference.x, y: reference.y },
         signalLayer: signalFoil.name,
         referenceLayer: referenceFoil.name,
         signalZ: below ? signalFoil.zMin : signalFoil.zMax,

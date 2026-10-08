@@ -97,7 +97,7 @@ export function createPalaceModel(options: PalaceOptions): PalaceModel {
         throw new Error("Top reference requires an explicit PCB port")
       ports.push({
         signal: { x: endpoint.x, y: endpoint.y },
-        reference: contact,
+        reference: { x: contact.x, y: contact.y },
         referenceLayer: terminal?.reference_layer ?? "bottom",
         resistance: positiveFinite(
           terminal?.resistance ?? options.portResistance ?? 50,

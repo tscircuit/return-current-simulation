@@ -85,9 +85,7 @@ async function writePortSpecification(
         groundNet: options.groundNet ?? null,
         resolvedTerminals: model.ports,
         metadataSource: options.ports ? "named_ports" : "circuit_json",
-        reference: options.ports?.some(
-          (port) => port.sourceReference || port.loadReference,
-        )
+        reference: model.ports?.some((port) => port.referencePcbPortId)
           ? "explicit reference pins; omitted references use plane beneath signal"
           : "ground plane directly beneath each signal endpoint",
         currentConvention: "signed in-phase peak amperes",

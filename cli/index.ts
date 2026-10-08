@@ -7,11 +7,13 @@ import { z } from "zod"
 import {
   parseReturnCurrentCircuitJson,
   listCircuitPorts,
-  withNamedExcitations,
   simulateReturnCurrent,
   renderReturnCurrentSvg,
   parseCurrentAmps,
   parseResistanceOhms,
+  createReturnCurrentExperiment,
+  selectReturnCurrentExperiment,
+  exportReturnCurrentCircuitJson,
 } from "../lib/index"
 import type { ReturnCurrentCircuitJson, NamedExcitation } from "../lib/index"
 import {
@@ -28,6 +30,7 @@ import { imageDimension } from "../lib/palace/run-simulation"
 import { positiveFinite } from "../lib/read-geometry"
 import { version } from "../package.json"
 import type { PalaceSimulationOptions } from "../lib/palace"
+import type { PalaceModel, PalaceReference } from "../lib/palace/types"
 
 const help = `simulate-return-current — PCB return-current images from circuit-json
 
@@ -65,6 +68,11 @@ Options:
   --palace-bin <path>           Native Palace v0.14.0; or PALACE_BIN; otherwise Docker
   --prepare-only               Resolve ports/save inputs without running a solver
   --use-circuit-excitations     Explicitly use excitation records already in JSON
+  --experiment-id <id>          Select an existing PR887 experiment, or name a new one
+  --experiment-name <name>      Name a new experiment created from named flags
+  --result-json <path>          Full circuit-json result (default: output/circuit-result.json)
+  --result-id <id>              Optional result ID; reruns replace same experiment/frequency
+  --field-format <gzip|json>    Embedded field encoding (default: gzip)
   --solver <palace|approximation> Default: palace; approximation has no frequency model
   --help, -h / --version, -v
 
@@ -106,6 +114,11 @@ const definitions = {
   directory: { type: "string" },
   "prepare-only": { type: "boolean" },
   "use-circuit-excitations": { type: "boolean" },
+  "experiment-id": { type: "string" },
+  "experiment-name": { type: "string" },
+  "result-json": { type: "string" },
+  "result-id": { type: "string" },
+  "field-format": { type: "string" },
 } as const
 
 async function inputCircuit(
@@ -211,7 +224,7 @@ async function main() {
     throw new Error(
       "The approximation has no frequency model; use --solver palace to specify frequency",
     )
-  const circuitJson = await inputCircuit(command)
+  let circuitJson = await inputCircuit(command)
   const namedFlags =
     values.source !== undefined ||
     values.load !== undefined ||
@@ -224,7 +237,14 @@ async function main() {
     values["source-impedance"] !== undefined ||
     values["load-impedance"] !== undefined
   let ports: NamedExcitation[] | undefined
-  if (values["use-circuit-excitations"]) {
+  const officialInput =
+    !namedFlags &&
+    circuitJson.some(
+      (e) =>
+        e.type === "simulation_experiment" &&
+        e.experiment_type === "pcb_return_current",
+    )
+  if (values["use-circuit-excitations"] || officialInput) {
     if (namedFlags)
       throw new Error("Choose named ports or --use-circuit-excitations")
     if (
@@ -344,6 +364,69 @@ async function main() {
   }
   const outputDirectory = resolve(values.output ?? "return-current")
   const imageSize = imageDimension(number("image-size", 1100))
+  const fieldFormat = values["field-format"] ?? "gzip"
+  if (fieldFormat !== "gzip" && fieldFormat !== "json")
+    throw new Error("--field-format must be gzip or json")
+  if (ports)
+    circuitJson = createReturnCurrentExperiment({
+      circuitJson,
+      ports,
+      groundNet: values.ground!,
+      experimentId: values["experiment-id"],
+      name: values["experiment-name"],
+      referenceLayer: values["sample-layer"]
+        ? parseCopperLayer(values["sample-layer"])
+        : undefined,
+    })
+  const createdExperimentId = ports
+    ? circuitJson.findLast(
+        (e) =>
+          e.type === "simulation_experiment" &&
+          e.experiment_type === "pcb_return_current",
+      )
+    : undefined
+  const selected =
+    ports || officialInput
+      ? selectReturnCurrentExperiment({
+          circuitJson,
+          experimentId:
+            values["experiment-id"] ??
+            (createdExperimentId?.type === "simulation_experiment"
+              ? createdExperimentId.simulation_experiment_id
+              : undefined),
+        })
+      : undefined
+  if (!ports && values["experiment-name"])
+    throw new Error(
+      "--experiment-name is only used when creating a new experiment from named flags",
+    )
+  if (
+    !selected &&
+    (values["experiment-id"] || values["result-json"] || values["result-id"])
+  )
+    throw new Error(
+      "Circuit-json results require an official pcb_return_current experiment; use named flags to create one",
+    )
+  const resultPath = resolve(
+    values["result-json"] ?? join(outputDirectory, "circuit-result.json"),
+  )
+  const saveResult = async (
+    simulation: Parameters<
+      typeof exportReturnCurrentCircuitJson
+    >[0]["simulation"],
+  ) => {
+    if (!selected) return
+    const result = exportReturnCurrentCircuitJson({
+      circuitJson,
+      experimentId: selected.experiment.simulation_experiment_id,
+      resultId: values["result-id"],
+      simulation,
+      fieldFormat,
+    })
+    await mkdir(resolve(resultPath, ".."), { recursive: true })
+    await writeFile(resultPath, JSON.stringify(result, null, 2))
+    console.log(`Circuit-json simulation result: ${resultPath}`)
+  }
   if (solver === "approximation") {
     if (
       ports?.some(
@@ -379,11 +462,10 @@ async function main() {
     ] as const)
       if (values[flag] !== undefined)
         throw new Error(`--${flag} is a Palace option`)
-    const input = ports
-      ? withNamedExcitations({ circuitJson, ports, groundNet: values.ground! })
-      : circuitJson
+    const input = selected?.solverCircuitJson ?? circuitJson
     const result = simulateReturnCurrent({
       circuitJson: input,
+      excitations: selected?.excitations,
       cellSize: number("cell-size", 0.5),
     })
     const svg = renderReturnCurrentSvg(result, {
@@ -418,12 +500,13 @@ async function main() {
     console.log(
       `Frequency-independent approximation: ${join(outputDirectory, "approximation.png")}`,
     )
+    await saveResult(result)
     return
   }
   const order = number("order", 2)
   if (order !== 1 && order !== 2) throw new Error("order must be 1 or 2")
   const options: PalaceSimulationOptions = {
-    circuitJson,
+    circuitJson: selected?.solverCircuitJson ?? circuitJson,
     stackup: values["stackup-file"]
       ? parseFabricationStackup(
           JSON.parse(await readFile(resolve(values["stackup-file"]), "utf8")),
@@ -433,8 +516,7 @@ async function main() {
       ? parseCopperLayer(values["sample-layer"])
       : undefined,
     viaClearance: number("via-clearance"),
-    ports,
-    groundNet: values.ground,
+    excitations: selected?.excitations,
     frequencyHz: frequencyHz!,
     outputDirectory,
     cellSize: number("cell-size", 0.2),
@@ -448,11 +530,30 @@ async function main() {
   }
   if (values["prepare-only"]) {
     const prepared = await preparePalaceSimulation(options)
+    if (selected) {
+      await writeFile(
+        join(outputDirectory, "circuit-definition.json"),
+        JSON.stringify(circuitJson, null, 2),
+      )
+      if (values["result-json"]) {
+        await mkdir(resolve(resultPath, ".."), { recursive: true })
+        await writeFile(resultPath, JSON.stringify(circuitJson, null, 2))
+      }
+    }
     console.log(
       `Prepared ${prepared.model.frequencyHz} Hz Palace input at ${prepared.destination}; no EM solve performed`,
     )
-  } else
+  } else {
     console.log(JSON.stringify(await runPalaceSimulation(options), null, 2))
+    await saveResult({
+      model: JSON.parse(
+        await readFile(join(outputDirectory, "model.json"), "utf8"),
+      ) as PalaceModel,
+      reference: JSON.parse(
+        await readFile(join(outputDirectory, "reference.json"), "utf8"),
+      ) as PalaceReference,
+    })
+  }
 }
 
 main().catch((error: unknown) => {

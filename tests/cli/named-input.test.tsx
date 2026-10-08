@@ -52,16 +52,17 @@ test("CLI prepares raw TSX circuit-json with explicit frequency and named termin
     const model = await Bun.file(join(directory, "case/model.json")).json()
     expect(model.frequencyHz).toBe(1e6)
     expect(model.geometry.excitations[0].current).toBe(0.25)
-    expect(model.geometry.excitations[0].return_sink).toEqual({ x: -12, y: 0 })
+    expect(model.geometry.excitations[0].return_sink).toMatchObject({
+      x: -12,
+      y: 0,
+      contact_type: "pcb_copper_pour",
+      layer: "bottom",
+    })
     const provenance = await Bun.file(
       join(directory, "case/excitation-ports.json"),
     ).json()
-    expect(provenance.ports[0]).toEqual({
-      source: "R1.pin1",
-      load: "U1.VDDIO1",
-      current: 0.25,
-    })
-    expect(provenance.groundNet).toBe("GND")
+    expect(provenance.metadataSource).toBe("circuit_json")
+    expect(provenance.resolvedTerminals[0].signalPcbPortId).toBeDefined()
     expect((await cli([input, ...flags, "--prepare-only"])).stderr).toContain(
       "--frequency-hz",
     )
@@ -200,8 +201,8 @@ test("CLI explicit reference pins, impedances and unit currents reach the saved 
     const provenance = await Bun.file(
       join(directory, "case/excitation-ports.json"),
     ).json()
-    expect(provenance.ports[0].current).toBe(0.00025)
-    expect(provenance.ports[0].loadImpedance).toBe(100)
+    expect(provenance.reference).toContain("explicit reference pins")
+    expect(provenance.resolvedTerminals[1].resistance).toBe(100)
     expect(
       (await cli([...common, "--ports-file", file, "--current", "5mA"])).stderr,
     ).toContain("Choose --ports-file")

@@ -208,17 +208,37 @@ try {
     "preview",
   ])
   assert((await stat(join(consumer, "preview/approximation.png"))).size > 1000)
+  const circuitResult = JSON.parse(
+    await readFile(join(consumer, "preview/circuit-result.json"), "utf8"),
+  )
+  assert(
+    circuitResult.some(
+      (element: { type: string }) =>
+        element.type === "simulation_pcb_return_current_result",
+    ),
+  )
+  assert(
+    circuitResult.some(
+      (element: { type: string; field_asset?: { url: string } }) =>
+        element.type === "simulation_pcb_return_current_field" &&
+        element.field_asset?.url.startsWith("data:application/gzip;base64,"),
+    ),
+  )
   await writeFile(
     join(consumer, "import.mjs"),
     `
 import { readFileSync } from "node:fs";
-import { parseReturnCurrentCircuitJson, withNamedExcitations, simulateReturnCurrent, renderReturnCurrentSvg } from "simulate-return-current";
+import { parseReturnCurrentCircuitJson, withNamedExcitations, simulateReturnCurrent, renderReturnCurrentSvg, createReturnCurrentExperiment, selectReturnCurrentExperiment, exportReturnCurrentCircuitJson } from "simulate-return-current";
 import { preparePalaceSimulation } from "simulate-return-current/palace";
 const input = parseReturnCurrentCircuitJson(JSON.parse(readFileSync("board.json", "utf8")));
 const ports = [{ source: "SIG_S.pin1", load: "SIG_L.SIGNAL", current: 0.25 }];
 const circuitJson = withNamedExcitations({ circuitJson: input, ports, groundNet: "GND" });
 if (!renderReturnCurrentSvg(simulateReturnCurrent({ circuitJson })).includes("<svg")) throw new Error("Missing SVG");
 await preparePalaceSimulation({ circuitJson: input, ports, groundNet: "GND", frequencyHz: 1e6, outputDirectory: "library-prepared" });
+const definitions = createReturnCurrentExperiment({ circuitJson: input, ports, groundNet: "GND", experimentId: "simulation_experiment_smoke" });
+const selected = selectReturnCurrentExperiment({ circuitJson: definitions });
+const result = exportReturnCurrentCircuitJson({ circuitJson: definitions, experimentId: selected.experiment.simulation_experiment_id, simulation: simulateReturnCurrent({ circuitJson: selected.solverCircuitJson, excitations: selected.excitations }) });
+if (!result.some((element) => element.type === "simulation_pcb_return_current_field")) throw new Error("Missing official Circuit JSON field");
 `,
   )
   await run(["node", "import.mjs"])
