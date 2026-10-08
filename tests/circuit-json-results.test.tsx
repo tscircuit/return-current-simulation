@@ -11,11 +11,11 @@ import {
 import {
   createReturnCurrentExperiment,
   selectReturnCurrentExperiment,
-  exportReturnCurrentCircuitJson,
   parseReturnCurrentCircuitJson,
   simulateReturnCurrent,
   createPalaceModel,
 } from "lib/index"
+import { exportReturnCurrentCircuitJson } from "lib/circuit-json-simulation"
 import { palaceGeometrySignature } from "lib/palace/geometry-signature"
 import { createSampleMask } from "lib/palace/create-sample-mask"
 import type { PalaceReference } from "lib/palace/types"

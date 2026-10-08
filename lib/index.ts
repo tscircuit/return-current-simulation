@@ -8,8 +8,7 @@ export { parseCurrentAmps, parseResistanceOhms } from "./electrical-units"
 export {
   createReturnCurrentExperiment,
   selectReturnCurrentExperiment,
-  exportReturnCurrentCircuitJson,
-} from "./circuit-json-simulation"
+} from "./circuit-json-experiment"
 export type {
   SimulationOptions,
   SimulationResult,

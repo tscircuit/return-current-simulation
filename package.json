@@ -12,6 +12,10 @@
     "./palace": {
       "types": "./dist/palace.d.ts",
       "import": "./dist/palace.js"
+    },
+    "./circuit-json": {
+      "types": "./dist/circuit-json-simulation.d.ts",
+      "import": "./dist/circuit-json.js"
     }
   },
   "files": [

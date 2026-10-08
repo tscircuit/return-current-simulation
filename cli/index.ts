@@ -13,8 +13,8 @@ import {
   parseResistanceOhms,
   createReturnCurrentExperiment,
   selectReturnCurrentExperiment,
-  exportReturnCurrentCircuitJson,
 } from "../lib/index"
+import { exportReturnCurrentCircuitJson } from "../lib/circuit-json-simulation"
 import type { ReturnCurrentCircuitJson, NamedExcitation } from "../lib/index"
 import {
   runPalaceSimulation,

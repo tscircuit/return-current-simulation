@@ -124,6 +124,10 @@ GND pad. Missing or wrong-net contacts and unrepresentable via contacts are reje
 
 Library exports are `createReturnCurrentExperiment`,
 `selectReturnCurrentExperiment` and `exportReturnCurrentCircuitJson`.
+The definition/selection helpers are available from the browser-compatible main
+entry. The Node exporter is imported from `simulate-return-current/circuit-json`,
+which also exports both helpers; gzip and native PNG rendering stay out of browser
+bundles.
 `selectReturnCurrentExperiment` also returns `solverCircuitJson`, which orients
 selected routes driver → load without changing the output board's route order.
 Pass the selected `excitations` to the chosen solver, then supply either its

@@ -228,7 +228,8 @@ try {
     join(consumer, "import.mjs"),
     `
 import { readFileSync } from "node:fs";
-import { parseReturnCurrentCircuitJson, withNamedExcitations, simulateReturnCurrent, renderReturnCurrentSvg, createReturnCurrentExperiment, selectReturnCurrentExperiment, exportReturnCurrentCircuitJson } from "simulate-return-current";
+import { parseReturnCurrentCircuitJson, withNamedExcitations, simulateReturnCurrent, renderReturnCurrentSvg, createReturnCurrentExperiment, selectReturnCurrentExperiment } from "simulate-return-current";
+import { exportReturnCurrentCircuitJson } from "simulate-return-current/circuit-json";
 import { preparePalaceSimulation } from "simulate-return-current/palace";
 const input = parseReturnCurrentCircuitJson(JSON.parse(readFileSync("board.json", "utf8")));
 const ports = [{ source: "SIG_S.pin1", load: "SIG_L.SIGNAL", current: 0.25 }];

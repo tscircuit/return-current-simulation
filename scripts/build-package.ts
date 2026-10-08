@@ -41,6 +41,7 @@ await fixDeclarations("dist")
 for (const [entry, filename] of [
   ["lib/index.ts", "index.js"],
   ["lib/palace.ts", "palace.js"],
+  ["lib/circuit-json-simulation.ts", "circuit-json.js"],
   ["cli/index.ts", "cli.js"],
 ]) {
   const built = await Bun.build({
