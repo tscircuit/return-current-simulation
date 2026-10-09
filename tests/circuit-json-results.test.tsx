@@ -17,6 +17,7 @@ import {
 } from "lib/index"
 import { exportReturnCurrentCircuitJson } from "lib/circuit-json-simulation"
 import { palaceGeometrySignature } from "lib/palace/geometry-signature"
+import { palaceInputManifest } from "lib/palace/input-provenance"
 import { createSampleMask } from "lib/palace/create-sample-mask"
 import type { PalaceReference } from "lib/palace/types"
 import type { ReturnCurrentCircuitJson } from "lib/types"
@@ -184,6 +185,7 @@ test("phasor serializer keeps numerical A/mm channels and frequency, rejecting s
       circuitSha256: "test",
       modelSha256: "test",
       meshSha256: "test",
+      inputManifest: palaceInputManifest(input, model),
     },
   }
   const output = exportReturnCurrentCircuitJson({

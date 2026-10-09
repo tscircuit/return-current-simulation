@@ -1,6 +1,9 @@
 import { comparePalaceRuns } from "lib/palace/compare-palace-runs"
 import type { PalaceReference } from "lib/palace/types"
-import { palaceGeometrySignature } from "lib/palace/geometry-signature"
+import {
+  matchingGeometrySignatures,
+  palaceGeometrySignature,
+} from "lib/palace/geometry-signature"
 import { createPalaceModel } from "lib/palace/create-palace-model"
 import { SlotBoard } from "tests/fixtures/SlotBoard"
 import { StraightBoard } from "tests/fixtures/StraightBoard"
@@ -21,8 +24,10 @@ for (const [name, element, currents] of [
   ).json()
   const model = createPalaceModel({ circuitJson, frequencyHz: 1e6 })
   if (
-    reference.provenance.geometrySignature !==
-    palaceGeometrySignature(model.geometry)
+    !matchingGeometrySignatures(
+      reference.provenance.geometrySignature,
+      palaceGeometrySignature(model.geometry),
+    )
   )
     throw new Error(`${name}: fresh Palace geometry does not match TSX`)
   const change = comparePalaceRuns(recorded, reference).relativeComplexL2Change

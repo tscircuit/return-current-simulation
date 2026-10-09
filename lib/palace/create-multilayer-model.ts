@@ -1,4 +1,5 @@
 import { normalizeLayeredRoute } from "./normalize-layered-route"
+import { canonicalJson } from "./canonical-json"
 import type { PcbTrace, Point } from "circuit-json"
 import { cutoutOutline, rectangleOutline, pointInPolygon } from "../geometry"
 import { positiveFinite, pourRegion } from "../read-geometry"
@@ -439,7 +440,7 @@ export function createMultilayerPalaceModel(
     layered.audit.warnings.push(
       `Explicit stack sums to ${stackup.physicalThicknessMm} mm, nominal ${stackup.nominalBoardThicknessMm} mm; explicit dimensions are used without scaling.`,
     )
-  geometry.physicalModelSignature = JSON.stringify({
+  geometry.physicalModelSignature = canonicalJson({
     ...layered,
     traceEndCaps: "round_32",
     audit: undefined,

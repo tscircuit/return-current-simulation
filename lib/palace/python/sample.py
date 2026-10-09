@@ -13,6 +13,7 @@ import numpy as np
 import vtk
 from vtk.util.numpy_support import numpy_to_vtk, vtk_to_numpy
 from surface_sample import sample_surface
+from provenance import geometry_signature, validate_inputs
 
 # Keep VTK sampling deterministic and avoid oversubscribing FEM jobs.
 vtk.vtkSMPTools.Initialize(1)
@@ -111,47 +112,6 @@ def probe_ground(ground, options):
     return np.einsum("d,dnc->nc", weights / 2, current) * model["copperThickness"]
 
 
-def coordinate(number):
-    return f"{0 if number == 0 else number:.9f}"
-
-
-def point(position):
-    return [coordinate(position["x"]), coordinate(position["y"])]
-
-
-def geometry_signature(geometry):
-    signature = [
-        [point(position) for position in geometry["boardOutline"]],
-        [
-            [
-                [point(position) for position in region["outer"]],
-                [[point(position) for position in hole] for hole in [*region["holes"], *region.get("maskCutouts", [])]],
-            ]
-            for region in geometry["groundRegions"]
-        ],
-        [[point(position) for position in outline] for outline in geometry["cutouts"]],
-        [
-            [
-                [*point(route), coordinate(route["width"]), route["layer"]]
-                for route in signal["route"]
-                if route["route_type"] == "wire"
-            ]
-            for signal in geometry["signals"]
-        ],
-        *([geometry["physicalModelSignature"]] if geometry.get("physicalModelSignature") else []),
-        [
-            [
-                coordinate(excitation["current"]),
-                point(excitation["return_source"]),
-                point(excitation["return_sink"]),
-                *([[excitation.get("source_port", {}).get("reference_layer", "bottom"), coordinate(excitation.get("source_port", {}).get("resistance", 50)), excitation.get("load_port", {}).get("reference_layer", "bottom"), coordinate(excitation.get("load_port", {}).get("resistance", 50))]] if excitation.get("source_port") or excitation.get("load_port") else []),
-            ]
-            for excitation in geometry["excitations"]
-        ],
-    ]
-    return json.dumps(signature, separators=(",", ":"))
-
-
 def serialize_currents(currents):
     return [
         {"real": float(current.real), "imag": float(current.imag)}
@@ -161,6 +121,7 @@ def serialize_currents(currents):
 
 def sample_case(case):
     model = json.loads((case / "model.json").read_text())
+    manifest = validate_inputs(case, model)
     grid = json.loads((case / "sample-grid.json").read_text())
     config = json.loads((case / "palace.json").read_text())
     log = (case / "palace.log").read_text()
@@ -314,6 +275,7 @@ def sample_case(case):
             "geometrySignature": geometry_signature(model["geometry"]),
             "modelSha256": digest(case / "model.json"),
             "meshSha256": digest(case / "mesh.msh"),
+            "inputManifest": manifest,
         },
     }
     (case / "reference.json").write_text(

@@ -47,6 +47,16 @@ export function validatePalaceReference(reference: PalaceReference): void {
     !reference.provenance.geometrySignature.length
   )
     throw new Error("Palace reference needs a physical geometry signature")
+  const manifest = reference.provenance.inputManifest
+  if (
+    manifest &&
+    (manifest.schemaVersion !== 1 ||
+      manifest.numericPrecision !== "model_12_input_17_significant_digits" ||
+      ![manifest.circuitSha256, manifest.modelSha256].every((hash) =>
+        /^[a-f0-9]{64}$/.test(hash),
+      ))
+  )
+    throw new Error("Unsupported Palace input manifest")
   const locations = new Set<string>()
   for (const sample of reference.samples) {
     if (

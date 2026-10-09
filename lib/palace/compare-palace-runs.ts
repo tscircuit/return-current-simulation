@@ -1,3 +1,4 @@
+import { matchingGeometrySignatures } from "./geometry-signature"
 import type { PalaceReference } from "./types"
 import { validatePalaceReference } from "./validate-reference"
 
@@ -12,7 +13,10 @@ export function comparePalaceRuns(
     coarse.frequencyHz !== fine.frequencyHz ||
     coarse.copperThickness !== fine.copperThickness ||
     coarse.samples.length !== fine.samples.length ||
-    coarse.provenance.geometrySignature !== fine.provenance.geometrySignature
+    !matchingGeometrySignatures(
+      coarse.provenance.geometrySignature,
+      fine.provenance.geometrySignature,
+    )
   )
     throw new Error(
       "Refinement requires the same circuit, frequency and sampling positions",
