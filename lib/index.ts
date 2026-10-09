@@ -39,3 +39,10 @@ export type {
   PhysicalStackup,
   CopperLayer,
 } from "./palace/stackup"
+
+export { analyzeCrosstalk } from "./crosstalk/analyze-crosstalk"
+export type {
+  CrosstalkReport,
+  CrosstalkModel,
+  CrosstalkIssue,
+} from "./crosstalk/types"
