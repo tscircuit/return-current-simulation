@@ -1,0 +1,64 @@
+{
+  "rj": {
+    "kind": "stationary Gaussian OU sampled as AR(1) at nominal UI",
+    "configuredRmsS": 3e-12,
+    "cornerHz": 500000000.0,
+    "sampleIntervalS": 1e-10,
+    "ar1Coefficient": 0.7304026910486456,
+    "stationaryInitialization": true,
+    "seed": 50701,
+    "sampleCount": 35008,
+    "perRealizationRmsNormalization": false,
+    "observedSeconds": {
+      "mean": -5.1673894071903354e-14,
+      "rms": 3.0160441218148054e-12,
+      "acRms": 3.015601424824754e-12,
+      "minimum": -1.3065916493594631e-11,
+      "maximum": 1.3542627227170389e-11
+    }
+  },
+  "configuredPeriodicJitterPeakS": 3e-12,
+  "periodicJitterHz": 100000000.0,
+  "periodicJitterPhaseRadians": 0,
+  "periodicJitterPhaseOriginS": 5.0005e-09,
+  "sharedByComplementaryLegs": true,
+  "nominalFirstCrossingS": 5.0005e-09,
+  "actualFirstCrossingS": 4.997586134102011e-09,
+  "transitionDurationS": 1e-12,
+  "eventCount": 35008,
+  "observedTotalJitterSeconds": {
+    "mean": -5.1525889404958373e-14,
+    "rms": 3.660609982548224e-12,
+    "acRms": 3.66024733140436e-12,
+    "minimum": -1.5220141303295476e-11,
+    "maximum": 1.517169638413787e-11
+  },
+  "minimumTransitionSeparationS": 9.07953640602348e-11,
+  "strictlyOrderedTransitions": true,
+  "transitionOverlap": false,
+  "analysisWindow": {
+    "eventCount": 5000,
+    "randomJitterSeconds": {
+      "mean": 8.191290014426444e-14,
+      "rms": 3.0349558655560723e-12,
+      "acRms": 3.0338502571259455e-12,
+      "minimum": -9.851492436290123e-12,
+      "maximum": 1.1712376728731e-11
+    },
+    "periodicJitterSeconds": {
+      "mean": -9.693522803355793e-28,
+      "rms": 2.121320343559643e-12,
+      "acRms": 2.121320343559643e-12,
+      "minimum": -3e-12,
+      "maximum": 3e-12
+    },
+    "totalJitterSeconds": {
+      "mean": 8.191290014426343e-14,
+      "rms": 3.624509804519977e-12,
+      "acRms": 3.623584082072803e-12,
+      "minimum": -1.0947008547629986e-11,
+      "maximum": 1.1114566080149903e-11
+    }
+  },
+  "theoreticalCombinedRmsS": 3.674234614174768e-12
+}

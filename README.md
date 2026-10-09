@@ -458,12 +458,172 @@ MPLCONFIGDIR=work/matplotlib python scripts/audit-am3352-copper.py \
 Preparation validates the circuit/schema and layer metadata; it is not a
 substitute for the mesher's polygon/port/connection checks. Zero copper overlaps
 alone does not establish fabrication readiness or a working EM port setup.
-No full-board EM solve is claimed.
+No full-board Palace EM solve is claimed in this return-current example.
 
 Even after resolving geometry, DDR return paths through power-plane decoupling
 and package impedances need an additional component model. The current adapter
 cannot certify DDR signal integrity. At 100 × 80 mm, use at least 0.1 mm cells
 (800,000 candidates); 0.05 mm exceeds the current one-million-cell sample cap.
+
+### Judge DDR routing quality
+
+The [AM3352 routing audit](examples/am3352/routing-quality) checks the pinned
+`astra/am3352-sbc` **0.1.19** circuit-json against TI's DDR3 length/skew rules and
+maps traces against the actual reference-pour polygons, including their voids.
+Both byte groups exceed the placement-derived DQ/DM length limit even though
+their length matching passes. This is a concrete routing issue; a clean eye from
+the simplified model below does not override it.
+
+![AM3352 DDR routing audit](examples/am3352/routing-quality/routing-audit.png)
+
+From a checkout, use Python with `numpy`, `matplotlib` and `shapely` installed:
+
+```sh
+python scripts/audit-am335x-ddr.py work/am3352/board.json \
+  --reference inner1:top:GND,DDR_1V5 \
+  --reference inner2:bottom:GND --output work/ddr-routing
+```
+
+The reference mappings are explicit: signal layer, reference layer, then accepted
+net names. Red segments are outside the selected **pour's XY projection**. This
+does not establish an electrical discontinuity: nearby pads/traces, other layers,
+ground stitching and power-to-ground decoupling require a coupled EM model.
+The script checks two DQ/DM bytes and their DQS pairs, not the address/clock bus.
+It fails on missing or ambiguous signals instead of skipping unrouted members.
+
+### Analyze DQS jitter and DQ timing
+
+Jitter should come from measured waveforms or an explicit source model and budget.
+Reflections, loss, coupling, supply noise and unequal paths can add variation.
+A periodic strobe with ideal timing can legitimately produce a thin eye, but
+the previous estimate omits the effects needed to judge this board. Adding an
+arbitrary jitter distribution would not make that model accurate.
+
+Use `scripts/analyze-ddr-waveforms.py` on receiver waveforms from an oscilloscope
+or a channel/I/O co-simulation. CSV columns use seconds and volts:
+
+```text
+time_s,dqs_p_v,dqs_n_v,tx_p_v,tx_n_v,dq0_v,dq1_v
+```
+
+The two transmitter columns and `dqN_v` columns are optional. Supply a JSON
+provenance file describing `kind`, `direction`, `channel`, `ioModels`, `jitter`
+and `noise`; [this template](examples/am3352/routing-quality/waveform-provenance.example.json)
+shows the fields. Declare unknowns explicitly. This file records provenance;
+it does not certify the inputs or create models.
+
+```sh
+python scripts/analyze-ddr-waveforms.py receiver.csv \
+  --provenance waveform-provenance.json --rate-mts 800 \
+  --start-ns 20 --stop-ns 1000 --max-gap-ps 5 \
+  --vil 0.6 --vih 0.9 --sample-delay-ps 0 \
+  --output work/ddr-eye
+```
+
+The voltage thresholds above are **illustrative**, not an installed Winbond mask;
+use the receiving device's thresholds and timing requirements. Crop to one
+continuous active burst, excluding preamble, turnaround and high impedance.
+At least 32 DQS crossings are required. Set the actual data rate; 800 MT/s means
+a 1.25 ns UI and 400 MHz DQS. Resolve edges with the sample interval and check
+timestep convergence for simulated input.
+
+The analyzer saves density eyes, a jitter histogram and JSON metrics. The DQS
+eye uses a fixed nominal clock and removes only mean phase, retaining jitter,
+duty-cycle distortion and drift. Time interval error (TIE) is each crossing's
+deviation from its expected edge on that clock. It reports finite-capture TIE RMS/peak-to-peak;
+with corresponding TX crossings it separates source TIE from added channel edge
+variation. It rejects missing/extra crossings rather than silently realigning them.
+It does not extrapolate BER or claim to separate random and deterministic jitter.
+
+For each DQ, it measures voltage headroom and time valid before/after the **actual
+DQS sampling edge**. `--sample-delay-ps` is required when DQ is present: choose the
+receiver PHY's sampling delay, independently for reads and writes. Data and strobe
+alignment differ by direction. These are observed validity windows, not device
+setup/hold compliance or bit-error counts; no expected data sequence is supplied.
+
+A **balanced DQS0 channel now runs end to end with openEMS and ngspice**, using
+actual four-layer copper geometry and locally converted TI driver models. Its
+receiver load, jitter and noise are explicit engineering assumptions. The
+[EM eye workflow](scripts/si) documents the model and validation limits; complete
+DDR bus crosstalk, PDN noise and DQ setup/hold are not established by this DQS
+plot. No vendor model files are redistributed.
+
+### Simulate a routing-derived DQS eye
+
+![AM3352 DQS0 EM and ngspice eye](examples/am3352/dqs-em-eye/eye-comparison.png)
+
+The routed eye uses a broadband **openEMS differential two-port extraction**, a
+stable passive scikit-rf equivalent and **ngspice** with the nonlinear TI IBIS
+driver, package parasitics, reflections and receiver loading. The adjacent
+matched-channel control uses the same I/O and source budgets. At **800 MT/s**,
+DQS runs at **400 MHz** with a **1250 ps UI**. This frequency comes from the
+explicit timed stimulus; it is not inferred from the circuit-json terminals.
+
+After installing the [native dependencies and local TI model](scripts/si):
+
+```sh
+SI_PYTHON=work/si-python/bin/python SI_NGSPICE=ngspice \
+CELL_MM=0.05 FIELD_MAX_NS=1.5 \
+bash scripts/generate-em-dqs-eye.sh /path/to/sprm552c.ibs work/em-eye
+```
+
+Defaults inject **10 ps RMS Gaussian timing jitter**, **5 ps peak periodic
+jitter** and **2 mV RMS receiver input noise before plotting**. These are
+configured budgets, not measured board values. The example explicitly assumes
+**60 Ω per-leg ODT** and **2 pF per-leg die capacitance**. Use `RJ_PS`, `PJ_PS`,
+`NOISE_MV` on the wrapper; load corners use `--odt-ohms`/`--cin-pf` on the
+transient command. See [usage, model choices and limitations](scripts/si) and
+[the saved example](examples/am3352/dqs-em-eye) for reproducible outputs.
+
+This experimental adapter currently targets the pinned AM3352 stackup and
+DQS0, `U1.P1/P2 → U3.F3/G3`. Its observed eye openings are conditional routing
+diagnostics, not a DDR mask or BER/compliance result. Mesh/time sensitivity,
+passivity correction, and omitted aggressor/PDN/I/O behavior remain explicit.
+
+### Simplified DQS eye estimate
+
+The [DQS0/DQS1 example](examples/am3352/dqs-eye-800mts) plots differential
+receiver voltage in the **write direction** at an assumed **800 MT/s**:
+400 MHz periodic DQS, with a **1.25 ns unit interval**. It is an **unvalidated
+transmission-line estimate**, not a Palace/IBIS result or a DDR compliance check.
+The exported routes supply lengths and layer transitions. Electrical settings
+are explicit assumptions; circuit-json does not supply the configured DDR clock,
+drive strength, ODT, jitter or package model.
+
+This example is retained as a simplified transmission-line demonstration. Use
+the routing audit and model-backed waveforms above to assess the board.
+
+Install ngspice (the snapshot uses **44.2**) and Python with `numpy` and
+`matplotlib`. From a checkout, prepare the pinned board files and generate:
+
+```sh
+bun scripts/prepare-am3352-example.ts work/am3352
+python scripts/generate-dqs-eye.py \
+  work/am3352/board.json work/am3352/stackup.json \
+  --rate-mts 800 --direction write --lanes 0,1 \
+  --source-ohms 40 --termination-ohms 60 \
+  --input-cap-pf 2 --rise-time-ps 200 \
+  --output work/dqs-eye
+```
+
+`--termination-ohms` is **per leg to half supply**: 60 Ω per leg represents
+120 Ω differential termination. It is not inferred from a DDR ODT register.
+`--rise-time-ps` is the source's 10–90% rise/fall time. The default 1.5 V sources
+are complementary periodic strobes, with no injected jitter or noise.
+`--direction read` reverses the channel; choose appropriate source/receiver
+settings separately. `--ngspice` accepts an executable path.
+
+The model assumes uniform 100.921 Ω differential impedance and ideal continuous
+AC references. It includes estimated propagation delay and DC copper resistance;
+it omits frequency-dependent loss, package/via parasitics, reference-plane gaps,
+decoupling, crosstalk, preamble/postamble and turnaround. An open eye under these
+assumptions does not establish the real board's timing margin. DQ setup/hold
+requires DQ waveforms compared with DQS crossings.
+
+Each run saves PNG/SVG, the ngspice netlist/log, transient CSV/NPZ and
+`assumptions-and-results.json`. The example includes a 2 ps versus 1 ps timestep
+comparison; this checks the assumed circuit's transient solution, not the
+accuracy of its physical assumptions. No vendor IBIS models are redistributed.
 
 ## Library
 
@@ -628,3 +788,15 @@ and publishes it with provenance. Repository metadata targets
 `NPM_TOKEN` secret; later releases can use npm trusted publishing configured for
 the repository and `publish-npm.yml`. Bump `package.json` before subsequent
 releases. You can also run `npm publish --access public` after authenticating.
+
+The AM3352 CAD failure is now isolated in
+[tscircuit/circuit-json-to-gmsh](https://github.com/tscircuit/circuit-json-to-gmsh).
+GEOS-valid polygons can have a hole touching another boundary at a single
+point; extruding them creates invalid OCC solids despite a correct volume.
+The Palace primitive builder opens these contacts with a local square notch
+of half width 0.0001 mm (0.1 µm), rejects repairs that split a copper region,
+and saves `geometry-repairs.json` before the large Boolean operations.
+Successful mesh summaries also include the repair receipt. The converter repo
+contains the original and repaired native solids, TSX reproductions, and PoppyGL
+cross-sections. Its pad-outline antipads and 2D union strategy are available for
+geometry export; full AM3352 conformal Palace meshing remains unvalidated.

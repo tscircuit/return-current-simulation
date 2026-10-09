@@ -1,0 +1,5 @@
+# Preserve byte-exact native solver records and upstream patch context.
+examples/am3352/dqs-em-eye/bench-assumptions/**/*.dat -whitespace
+examples/am3352/dqs-em-eye/bench-assumptions/**/*.log -whitespace
+examples/am3352/dqs-em-eye/bench-assumptions/**/*.csv -whitespace
+scripts/si/ngspice-pwl-binary-search.patch -whitespace

@@ -1,0 +1,58 @@
+Independent clean probe-loaded ideal-source native AC groundcheck
+Vpositive srcp 0 DC 0 AC 1 0
+Vnegative srcn 0 DC 1.5 AC 1 180
+Rsourcep srcp diep 50
+Rsourcen srcn dien 50
+Rpp diep pkp .170474
+Rpn dien pkn .176587
+Lpp pkp txp 5.06641n
+Lpn pkn txn 4.91396n
+Kpkg Lpp Lpn .627032
+Cpp txp 0 1.19704p
+Cpn txn 0 1.34626p
+* Lossless balanced transformer: differential PCB channel with no common-mode propagation.
+Ebal csrc 0 txp txn 1
+Fpos txp 0 Ebal -1
+Fneg txn 0 Ebal 1
+Tref csrc 0 cload 0 Z0=100 TD=.4n
+Vcm cm 0 .75
+* Common-mode DC return: receiver ODT projected as a lumped ideal channel.
+Ecmhalf halfcm 0 txp 0 .5
+Ecmsrc srccm halfcm txn 0 .5
+Rcm srccm cm 30
+Fcmp txp 0 Ecmsrc -.5
+Fcmn txn 0 Ecmsrc -.5
+Erxp rxp0 cm cload 0 .5
+Vnp rxp rxp0 0
+Erxn rxn0 cm cload 0 -.5
+Vnn rxn rxn0 0
+Frxp cload 0 Erxp -.5
+Frxn cload 0 Erxn .5
+* Winbond LDQS/LDQSB package parasitics; independent lumped package model.
+Rrp rxp rkp .42069
+Rrn rxn rkn .39422
+Lrp rkp rdiep 1.1804n
+Lrn rkn rdien 1.1796n
+Crp rxp 0 .41107p
+Crn rxn 0 .42404p
+Rtp rdiep cm 60
+Rtn rdien cm 60
+Cip rdiep 0 2p
+Cin rdien 0 2p
+
+Cprobep rxp 0 .2p
+Cproben rxn 0 .2p
+.options reltol=1e-7 abstol=1e-12 vntol=1e-9
+.control
+set wr_vecnames
+set wr_singlescale
+set numdgt=17
+ac lin 201 5e9 2.00500000000000000e+12
+let tx_difference = v(txp)-v(txn)
+let pad_difference = v(rxp)-v(rxn)
+let die_difference = v(rdiep)-v(rdien)
+wrdata ac-response.dat tx_difference pad_difference die_difference v(csrc) v(cload)
+echo BENCH_AC_COMPLETE
+quit
+.endc
+.end

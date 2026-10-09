@@ -1,0 +1,40 @@
+{
+  "label": "Source 1: 0.05 versus 0.1 mm local grid, both 1.5 ns records",
+  "convergenceProven": false,
+  "bands": {
+    "1MHz-1GHz": {
+      "s1": {
+        "maximumComplexDifference": 0.10144111218141537,
+        "rmsComplexDifference": 0.06423717555584811
+      },
+      "s2": {
+        "maximumComplexDifference": 0.34543025110841696,
+        "rmsComplexDifference": 0.20419785642133173
+      }
+    },
+    "1MHz-2GHz": {
+      "s1": {
+        "maximumComplexDifference": 0.14363361508963693,
+        "rmsComplexDifference": 0.10038241274213393
+      },
+      "s2": {
+        "maximumComplexDifference": 0.658569390437461,
+        "rmsComplexDifference": 0.3697268431911805
+      }
+    },
+    "1MHz-5GHz": {
+      "s1": {
+        "maximumComplexDifference": 0.292066031942836,
+        "rmsComplexDifference": 0.17299494512745278
+      },
+      "s2": {
+        "maximumComplexDifference": 1.4603884110412797,
+        "rmsComplexDifference": 0.8476953859528462
+      }
+    }
+  },
+  "sha256": {
+    "baseline": "604c35486cc158e3eefdab27293a5f3b6ae5d85f124baa720064375c58c02ea2",
+    "comparison": "c7da4c8d73d98f67de5ea1e285097223940d247ee7b6fe910a64c5dd2332e7b4"
+  }
+}

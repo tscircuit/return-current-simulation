@@ -1,0 +1,12 @@
+{
+  "comparison": "0.05 mm, 1.5 ns versus 1.25 ns native field record; identical source/load/seeds",
+  "convergenceProven": false,
+  "mainDelayPs": 427.14426025902765,
+  "shorterRecordDelayPs": 433.91249329963034,
+  "mainTieRmsPs": 10.349053529713771,
+  "shorterRecordTieRmsPs": 10.229165953063292,
+  "mainEyeHeightV": 1.7964635236942432,
+  "mainOpeningPs": 1134.453904887062,
+  "shorterRecordEyeHeightV": 1.7891484464461724,
+  "shorterRecordOpeningPs": 1134.4594301627303
+}

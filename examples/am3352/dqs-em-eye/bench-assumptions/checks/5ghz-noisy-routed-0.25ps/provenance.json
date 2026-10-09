@@ -1,0 +1,283 @@
+{
+  "kind": "ngspice assumed noisy bench companion with virtual ideal source",
+  "experimentDescription": "Assumed source timing jitter, differential series disturbance and probe loading before a separate scope observation",
+  "frequencyStress": true,
+  "direction": "write",
+  "mode": "clock",
+  "rateMTs": 10000.0,
+  "clockMHz": 5000.0,
+  "strobeGHz": 5.0,
+  "analysisStartNs": 3000.0,
+  "analysisStopNs": 3500.0000000000005,
+  "analysisWindowUiCount": 5000.000000000003,
+  "analysisWindowExplicit": true,
+  "nominalSourcePhasePs": 5000.5,
+  "nominalSourceFirstCenterPositive": true,
+  "nominalSourceRising": true,
+  "nominalSourcePhaseIncludesPropagation": false,
+  "channel": {
+    "model": "supplied differential two-port channel fit",
+    "modelSha256": "ac3a8f58bbc9b58474b703f0d2e0fc9cc6cad70af05789b66df41c262bfa1a37",
+    "suppliedModelSha256": "ac3a8f58bbc9b58474b703f0d2e0fc9cc6cad70af05789b66df41c262bfa1a37",
+    "maximumExtractedFrequencyGHz": 5,
+    "fundamentalExceedsExtractedBandwidth": false,
+    "commonMode": "ideal fixed receiver 0.75V; transmitter common-mode DC load from ODT; no extracted common-mode propagation"
+  },
+  "source": {
+    "kind": "ideal complementary PWL sources with shared assumed timing error",
+    "openCircuitDifferentialLowV": -1.5,
+    "openCircuitDifferentialHighV": 1.5,
+    "commonModeV": 0.75,
+    "legLowV": 0,
+    "legHighV": 1.5,
+    "resistanceOhmsPerLeg": 50,
+    "riseTimePs": 1,
+    "fallTimePs": 1,
+    "delayNs": 5.0,
+    "pulseWidthPs": null,
+    "periodPs": 200.0,
+    "unitIntervalPs": 100.0,
+    "firstPositiveRisingCrossingPs": 5000.5,
+    "ibis": false,
+    "vendorSwitchingRetimed": false,
+    "actualFirstPositiveRisingCrossingPs": 4997.586134102011,
+    "pulseWidthMeaning": "event spacing varies with injected timing error"
+  },
+  "ioModels": {
+    "transmitter": "virtual ideal complementary PWL stimulus; no actual AM3352 at 5 GHz",
+    "conversion": "none; no IBIS or vendor switching model used",
+    "driverModelSha256": null,
+    "negativeDriverModelSha256": null,
+    "package": "selected TI pin self R/L/C plus mutual P1-P2 inductance; mutual package capacitance omitted due sign ambiguity",
+    "receiver": "Winbond unencrypted LDQS/LDQSB package RLC with assumed linear 60 ohm ODT and 2pF per leg; no transistor-level receiver",
+    "receiverCapacitancePf": 2,
+    "odtOhmsPerLeg": 60,
+    "sourceResistanceOhmsPerLeg": 50,
+    "probeCapacitancePfPerLeg": 0.2
+  },
+  "jitter": {
+    "configuredInputRjRmsPs": 3.0,
+    "configuredPeriodicJitterPeakPs": 3.0,
+    "periodicJitterFrequencyHz": 100000000.0,
+    "periodicJitterPeriodUI": 100.0,
+    "randomJitterCornerHz": 500000000.0,
+    "seed": 50701,
+    "provenance": "assumed stationary correlated source timing; shared by complementary legs before simulation"
+  },
+  "noise": {
+    "kind": "commanded differential receiver-pad series voltage disturbance",
+    "configuredRmsMv": 5.0,
+    "cutoffHz": 1000000000.0,
+    "order": 2,
+    "sampleIntervalPs": 10.0,
+    "seed": 50702,
+    "provenance": "assumed stationary shaped series source, not observed total pad/die noise or instrument noise"
+  },
+  "timeStepPs": 2.0,
+  "uiCount": 35000,
+  "integrationMethod": "trap",
+  "captureStartNs": 2990.0,
+  "launchHistoryComputed": true,
+  "transientEndNs": 3505.8,
+  "wallSeconds": 360.0876267300009,
+  "ngspiceVersion": "******\n** ngspice-44.2 : Circuit level simulation program\n** Compiled with KLU Direct Linear Solver\n** The U. C. Berkeley CAD Group\n** Copyright 1985-1994, Regents of the University of California.\n** Copyright 2001-2024, The ngspice team.\n** Please get your ngspice manual from https://ngspice.sourceforge.io/docs.html\n** Please file your bug-reports at http://ngspice.sourceforge.net/bugrep.html\n** Creation Date: Fri Oct  9 19:16:53 UTC 2026\n******",
+  "netlistSha256": "df69f4a7ae1bb42de07b63fa95b4dd66b4289fb81c82b562ea3aec78b9b01925",
+  "completionVerified": true,
+  "finiteCaptureVerified": true,
+  "captureValidation": {
+    "adaptive": {
+      "duplicateTimestampCount": 0,
+      "maximumDuplicateVoltageDeltaV": 0.0,
+      "timeOrdering": "nondecreasing",
+      "duplicateVoltageToleranceV": 1e-10,
+      "rawDuplicateRowsPreserved": true,
+      "analysisStartCoverageVerified": true
+    },
+    "linearized": {
+      "timeOrdering": "strictly increasing",
+      "analysisStartCoverageVerified": true,
+      "maximumGapToleranceFactor": 1.00000001
+    }
+  },
+  "signoff": false,
+  "limitations": [
+    "All disturbance budgets are assumptions, not bench measurements or validated DDR operating limits",
+    "Virtual 1ps ideal source does not represent an AM3352 switching at 5 GHz; no vendor I/O model is retimed",
+    "Fast-edge harmonics extend beyond the supplied channel's 5GHz extraction range; their response uses rational-fit extrapolation",
+    "Timing modulation creates out-of-band carrier sidebands, including a 5.1GHz upper sideband for 100MHz periodic jitter at 5GHz",
+    "Commanded series-source noise RMS does not guarantee observed total pad or die noise RMS",
+    "Receiver ODT/Cin and ideal shunt probe capacitance are assumptions; no active receiver, measured probe transfer, PDN or aggressors",
+    "Scope filtering and instrument noise belong to a separate observation artifact; this native capture is not a measured bench eye",
+    "Finite captures and assumed distributions do not establish DDR compliance, BER or rare-event tails"
+  ],
+  "benchScenario": true,
+  "sampleTimeStepPs": 2.0,
+  "electricalTimeStepPs": 0.25,
+  "sourceTimingReport": {
+    "rj": {
+      "kind": "stationary Gaussian OU sampled as AR(1) at nominal UI",
+      "configuredRmsS": 3e-12,
+      "cornerHz": 500000000.0,
+      "sampleIntervalS": 1e-10,
+      "ar1Coefficient": 0.7304026910486456,
+      "stationaryInitialization": true,
+      "seed": 50701,
+      "sampleCount": 35008,
+      "perRealizationRmsNormalization": false,
+      "observedSeconds": {
+        "mean": -5.1673894071903354e-14,
+        "rms": 3.0160441218148054e-12,
+        "acRms": 3.015601424824754e-12,
+        "minimum": -1.3065916493594631e-11,
+        "maximum": 1.3542627227170389e-11
+      }
+    },
+    "configuredPeriodicJitterPeakS": 3e-12,
+    "periodicJitterHz": 100000000.0,
+    "periodicJitterPhaseRadians": 0,
+    "periodicJitterPhaseOriginS": 5.0005e-09,
+    "sharedByComplementaryLegs": true,
+    "nominalFirstCrossingS": 5.0005e-09,
+    "actualFirstCrossingS": 4.997586134102011e-09,
+    "transitionDurationS": 1e-12,
+    "eventCount": 35008,
+    "observedTotalJitterSeconds": {
+      "mean": -5.1525889404958373e-14,
+      "rms": 3.660609982548224e-12,
+      "acRms": 3.66024733140436e-12,
+      "minimum": -1.5220141303295476e-11,
+      "maximum": 1.517169638413787e-11
+    },
+    "minimumTransitionSeparationS": 9.07953640602348e-11,
+    "strictlyOrderedTransitions": true,
+    "transitionOverlap": false,
+    "analysisWindow": {
+      "eventCount": 5000,
+      "randomJitterSeconds": {
+        "mean": 8.191290014426444e-14,
+        "rms": 3.0349558655560723e-12,
+        "acRms": 3.0338502571259455e-12,
+        "minimum": -9.851492436290123e-12,
+        "maximum": 1.1712376728731e-11
+      },
+      "periodicJitterSeconds": {
+        "mean": -9.693522803355793e-28,
+        "rms": 2.121320343559643e-12,
+        "acRms": 2.121320343559643e-12,
+        "minimum": -3e-12,
+        "maximum": 3e-12
+      },
+      "totalJitterSeconds": {
+        "mean": 8.191290014426343e-14,
+        "rms": 3.624509804519977e-12,
+        "acRms": 3.623584082072803e-12,
+        "minimum": -1.0947008547629986e-11,
+        "maximum": 1.1114566080149903e-11
+      }
+    },
+    "theoreticalCombinedRmsS": 3.674234614174768e-12
+  },
+  "receiverSeriesNoiseReport": {
+    "kind": "stationary Gaussian two-pole digital Butterworth low-pass",
+    "configuredRmsV": 0.005,
+    "cutoffHz": 1000000000.0,
+    "sampleIntervalS": 1e-11,
+    "sampleCount": 350581,
+    "order": 2,
+    "seed": 50702,
+    "firstOrderHold": true,
+    "stationaryInitialization": true,
+    "perRealizationRmsNormalization": false,
+    "stationaryGain": 0.1489531762781957,
+    "whiteInputRmsV": 0.033567595703106315,
+    "unitWhiteKnotVariance": 0.02220073314348859,
+    "unitWhiteLagOneCovariance": 0.02215967988311256,
+    "unitWhiteFirstOrderHoldVariance": 0.022187048723363245,
+    "theoreticalLagOneCorrelation": 0.9981508151054881,
+    "theoreticalKnotRmsV": 0.005001541700170881,
+    "theoreticalContinuousRmsV": 0.005,
+    "filterNumerator": [
+      0.0009446918438401507,
+      0.0018893836876803015,
+      0.0009446918438401507
+    ],
+    "filterDenominator": [
+      1.0,
+      -1.911197067426073,
+      0.9149758348014336
+    ],
+    "observedRmsV": 0.005015969721934399,
+    "observedAcRmsV": 0.005015909545641239,
+    "observedMeanV": -2.456992689759116e-05,
+    "observedContinuousRmsV": 0.005014430542000312,
+    "observedContinuousAcRmsV": 0.005014370401579202,
+    "location": "differential series voltage sources at receiver package pins, split +/- half",
+    "budgetMeaning": "commanded differential series-source RMS after shaping; not guaranteed total pad or die noise RMS",
+    "gridEndS": 3.5058e-06,
+    "observedAnalysis": {
+      "samples": 250000,
+      "observedSeriesSourceVolts": {
+        "mean": -0.0001761816914612938,
+        "rms": 0.004965602296592729,
+        "acRms": 0.004962475811479672,
+        "minimum": -0.01644151892469381,
+        "maximum": 0.016777379030827433
+      },
+      "totalPadDifferentialVolts": {
+        "mean": -4.5685338423470055e-05,
+        "rms": 0.36062340244134394,
+        "acRms": 0.3606233995475354,
+        "minimum": -0.6525159368744653,
+        "maximum": 0.6560278715886625
+      },
+      "totalDieDifferentialVolts": {
+        "mean": -4.371091702283081e-05,
+        "rms": 0.24549036773621932,
+        "acRms": 0.24549036384473408,
+        "minimum": -0.45520870447043826,
+        "maximum": 0.4409677332372439
+      },
+      "totalWaveformStatisticsAreNotIsolatedNoiseBudgets": true
+    }
+  },
+  "inputFilesSha256": {
+    "simulation.cir": "df69f4a7ae1bb42de07b63fa95b4dd66b4289fb81c82b562ea3aec78b9b01925",
+    "transmitter-stimulus.sp": "9cd6d1796ac26818afd3ee7c4c0e3ae1c2873e0018d809658143f789044a66f4",
+    "receiver-noise.sp": "f76b229134ddc891788865e8cd62a63ccd5c6dd393ceea343760cbe3eeb04e10",
+    "stimulus-events.csv": "5db076fa78098f07b4295f27484674d5f5db0cdddc6bbf96eba17ecb816b7d9d",
+    "source-timing.npz": "019e00ed3ca642c4c8e9e812463ae4e666b9ca9411a7807935ca2e7c8256596f",
+    "commanded-noise.npz": "b06cc701a0ec30e536695e83427840efbfaf99e4b84c07850a2721237f24b42b"
+  },
+  "solver": {
+    "path": "/workspace/work/tools/ngspice-44.2-fast-pwl/bin/ngspice",
+    "sha256": "371046ceac2ab7cea9f01aeb393e3958d8dc57b8d5508e40f3f0e155457f8d2c",
+    "buildProvenanceFileSha256": "0d7bc1165b0379a4099cf5099a24e15b31f51833e2aa4803ebfe79392941f7df",
+    "buildProvenance": {
+      "baseVersion": "44.2",
+      "sourceUrl": "https://sourceforge.net/projects/ngspice/files/ng-spice-rework/44.2/ngspice-44.2.tar.gz/download",
+      "sourceArchiveSha256": "e7dadfb7bd5474fd22409c1e5a67acdec19f77e597df68e17c5549bc1390d7fd",
+      "configureArguments": [
+        "--prefix=/workspace/work/tools/ngspice-44.2-install",
+        "--without-x",
+        "--with-readline=no",
+        "--disable-openmp"
+      ],
+      "buildCommand": "make -j4",
+      "originalBinary": "/workspace/work/tools/ngspice-44.2-install/bin/ngspice",
+      "originalBinarySha256": "18cf37b7ddf399ed68752371e8dbc12aa594f00dab459cffaa3a82921181cfa4",
+      "optimizedBinary": "/workspace/work/tools/ngspice-44.2-fast-pwl/bin/ngspice",
+      "optimizedBinarySha256": "371046ceac2ab7cea9f01aeb393e3958d8dc57b8d5508e40f3f0e155457f8d2c",
+      "patchFile": "/workspace/work/simulate-return-current/scripts/si/ngspice-pwl-binary-search.patch",
+      "patchSha256": "859acd456c7e4f52b331cfb58cba783878d81cf2cd22dc43d9b49ac4b1610f08",
+      "patchPurpose": "Binary-search finite nondecreasing VSRC PWL knot arrays; preserve original scan for unordered/nonfinite/incomplete arrays. Interpolation and breakpoint arithmetic unchanged.",
+      "originalInstallUnchanged": true,
+      "optimizedVersionOutput": "******\n** ngspice-44.2 : Circuit level simulation program\n** Compiled with KLU Direct Linear Solver\n** The U. C. Berkeley CAD Group\n** Copyright 1985-1994, Regents of the University of California.\n** Copyright 2001-2024, The ngspice team.\n** Please get your ngspice manual from https://ngspice.sourceforge.io/docs.html\n** Please file your bug-reports at http://ngspice.sourceforge.net/bugrep.html\n** Creation Date: Fri Oct  9 19:16:53 UTC 2026\n******\n"
+    },
+    "patchSha256": "859acd456c7e4f52b331cfb58cba783878d81cf2cd22dc43d9b49ac4b1610f08"
+  },
+  "implementationSha256": {
+    "generator": "88658ed4350fcdb346c055aa11325b0fa47285c25086d42c11e13d8df3bac3f1",
+    "stimulusHelper": "c2b7c85a33a5cdbabaa8f82be883b35a14703b235b49c6b63762207ac9aaaeaf",
+    "passiveAndValidationSource": "dba4cc55b4afe83b5d29ef39e5ea80c908a6d668f7d2355cb3aa5091476ca5ea"
+  }
+}

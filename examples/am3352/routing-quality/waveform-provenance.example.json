@@ -1,0 +1,8 @@
+{
+  "kind": "template: replace with measurement or co-simulation details",
+  "direction": "write or read; specify the receiver and active burst",
+  "channel": "Specify the board/release and extraction file/hash, or measurement points. No converged AM3352 broadband channel is supplied here.",
+  "ioModels": "Specify exact device models, file hashes, PVT corner, package model, configured drive/slew and ODT; or measured hardware configuration.",
+  "jitter": "Specify clock/source jitter model, correlation and budget provenance, or measured source timing. Unknown jitter is not zero jitter.",
+  "noise": "Specify supply/reference/noise and aggressor stimuli, or measurement bandwidth/noise floor. This analyzer does not inject noise."
+}

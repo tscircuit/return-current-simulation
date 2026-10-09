@@ -1,0 +1,10 @@
+{
+  "complete-005-port1": {
+    "s21Magnitude400MHz": 1.0028960187121903,
+    "groupDelay400MHzPs": 362.82115945834585
+  },
+  "coarse-prefix-150": {
+    "s21Magnitude400MHz": 1.0060022391647978,
+    "groupDelay400MHzPs": 422.6901040331087
+  }
+}

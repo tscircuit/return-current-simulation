@@ -1,0 +1,17 @@
+Private PWL original-scan fallback: descending knot warning input
+V0 src0 0 PWL(0 -.6 .4n .3 .2n -.8 .7n .5)
+R0 src0 out0 1k
+C0 out0 0 1p
+.options reltol=1e-5 abstol=1e-11 vntol=1e-7 method=trap maxord=2 trtol=3
+.control
+set wr_vecnames
+set wr_singlescale
+set numdgt=17
+tran .013n 4n 0 .037n
+wrdata capture.dat v(src0) v(out0) i(V0)
+linearize v(src0) v(out0) i(V0)
+wrdata linearized.dat v(src0) v(out0) i(V0)
+echo PWL_CASE_COMPLETE
+quit
+.endc
+.end

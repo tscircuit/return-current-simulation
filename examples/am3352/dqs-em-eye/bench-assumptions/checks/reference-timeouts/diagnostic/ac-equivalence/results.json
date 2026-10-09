@@ -1,0 +1,107 @@
+{
+  "fundamental": {
+    "t": {
+      "frequency_hz": 5000000000.0,
+      "transmitter_H": {
+        "real": 0.2598134945600081,
+        "imag": -0.6709959253587255,
+        "magnitude": 0.7195405365950522,
+        "db": -2.85889468573202,
+        "phase_deg": -68.83330916515087
+      },
+      "receiver_die_H": {
+        "real": -0.35847754026980316,
+        "imag": 0.3329724611546163,
+        "magnitude": 0.4892614911938715,
+        "db": -6.209179307125041,
+        "phase_deg": 137.11247546684902
+      },
+      "receiver_pin_H": {
+        "real": 0.25981349456000846,
+        "imag": -0.6709959253587261,
+        "magnitude": 0.7195405365950529,
+        "db": -2.858894685732012,
+        "phase_deg": -68.83330916515084
+      },
+      "loaded_channel_H": {
+        "real": 1.0000000000000007,
+        "imag": 2.877726903373548e-16,
+        "magnitude": 1.0000000000000007,
+        "db": 5.785964799319721e-15,
+        "phase_deg": 1.6488160615455585e-14
+      }
+    },
+    "ltra": {
+      "frequency_hz": 5000000000.0,
+      "transmitter_H": {
+        "real": 0.25981349456000824,
+        "imag": -0.6709959253587252,
+        "magnitude": 0.719540536595052,
+        "db": -2.8588946857320225,
+        "phase_deg": -68.83330916515084
+      },
+      "receiver_die_H": {
+        "real": -0.35847754026980316,
+        "imag": 0.33297246115461593,
+        "magnitude": 0.48926149119387125,
+        "db": -6.209179307125046,
+        "phase_deg": 137.11247546684905
+      },
+      "receiver_pin_H": {
+        "real": 0.25981349456000874,
+        "imag": -0.6709959253587255,
+        "magnitude": 0.7195405365950525,
+        "db": -2.8588946857320168,
+        "phase_deg": -68.83330916515081
+      },
+      "loaded_channel_H": {
+        "real": 1.0000000000000007,
+        "imag": 1.4388634516867742e-16,
+        "magnitude": 1.0000000000000007,
+        "db": 5.785964799319721e-15,
+        "phase_deg": 8.244080307727794e-15
+      }
+    }
+  },
+  "frequency_grid_hz": [
+    4000000000.0,
+    6000000000.0
+  ],
+  "grid_points": 401,
+  "grid_step_hz": 5000000.0,
+  "grid_comparisons": {
+    "transmitter": {
+      "maximum_absolute_complex_difference": 9.582710459383785e-16,
+      "maximum_relative_complex_difference": 1.6748193191211222e-15,
+      "maximum_relative_amplitude_difference": 1.5543122344752192e-15,
+      "maximum_phase_difference_deg": 8.095067620970844e-14
+    },
+    "receiver_die": {
+      "maximum_absolute_complex_difference": 8.391472671209644e-16,
+      "maximum_relative_complex_difference": 5.7344193012163185e-15,
+      "maximum_relative_amplitude_difference": 3.552713678800501e-15,
+      "maximum_phase_difference_deg": 3.001764113728422e-13
+    },
+    "receiver_pin": {
+      "maximum_absolute_complex_difference": 1.9766958974948127e-15,
+      "maximum_relative_complex_difference": 5.735208400518042e-15,
+      "maximum_relative_amplitude_difference": 3.774758283725532e-15,
+      "maximum_phase_difference_deg": 3.002258975483804e-13
+    },
+    "loaded_channel": {
+      "maximum_absolute_complex_difference": 1.0126792072454708e-14,
+      "maximum_relative_complex_difference": 1.776751348154813e-15,
+      "maximum_relative_amplitude_difference": 1.7763568394002505e-15,
+      "maximum_phase_difference_deg": 6.574020710171517e-14
+    }
+  },
+  "expected_5GHz_receiver_clock_firstharmonic_peak_v": 0.9343821914226024,
+  "matched_line_derived": {
+    "impedance_ohms": 100.0,
+    "delay_s": 4e-10,
+    "lossless_LTRA_R": 0,
+    "lossless_LTRA_G": 0,
+    "native_case": "LTRA_MOD_LC; attenuation1; realpropagationconstant0"
+  },
+  "scope": "AC transfer equivalence with exact supplied bench, including0.2pF per-leg probe loading and physical seriesnoise sources setDC0. No transient integration equivalence claim."
+}

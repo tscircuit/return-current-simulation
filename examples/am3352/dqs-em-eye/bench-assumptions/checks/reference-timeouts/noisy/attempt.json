@@ -1,0 +1,13 @@
+{
+  "completed": false,
+  "usableCapture": false,
+  "timeoutSeconds": 600,
+  "scope": "Long matched Tref attempt; no valid waveforms were saved and no eye metric is inferred.",
+  "inputsSha256": {
+    "transmitter-stimulus.sp": "9cd6d1796ac26818afd3ee7c4c0e3ae1c2873e0018d809658143f789044a66f4",
+    "receiver-noise.sp": "f76b229134ddc891788865e8cd62a63ccd5c6dd393ceea343760cbe3eeb04e10",
+    "stimulus-events.csv": "5db076fa78098f07b4295f27484674d5f5db0cdddc6bbf96eba17ecb816b7d9d",
+    "source-timing.npz": "019e00ed3ca642c4c8e9e812463ae4e666b9ca9411a7807935ca2e7c8256596f",
+    "commanded-noise.npz": "b06cc701a0ec30e536695e83427840efbfaf99e4b84c07850a2721237f24b42b"
+  }
+}

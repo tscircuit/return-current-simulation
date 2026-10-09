@@ -1,0 +1,25 @@
+{
+  "kind": "ideal shunt capacitance to ground at receiver package pins",
+  "configuredCapacitancePfPerLeg": 0.2,
+  "nodes": [
+    "rxp",
+    "rxn"
+  ],
+  "identicalInCleanAndNoisyCases": true,
+  "observedAnalysis": {
+    "totalPadDifferentialVolts": {
+      "mean": 2.6008971414285044e-08,
+      "rms": 0.35877808573494957,
+      "acRms": 0.35877808573494857,
+      "minimum": -0.5062655670891445,
+      "maximum": 0.5062653134102675
+    },
+    "totalDieDifferentialVolts": {
+      "mean": 2.012493736401666e-08,
+      "rms": 0.24394041525871163,
+      "acRms": 0.2439404152587108,
+      "minimum": -0.3449013455938257,
+      "maximum": 0.34490224712038753
+    }
+  }
+}

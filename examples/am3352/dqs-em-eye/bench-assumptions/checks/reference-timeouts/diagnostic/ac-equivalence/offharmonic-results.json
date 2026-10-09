@@ -1,0 +1,192 @@
+{
+  "low_frequency_and_sidebands": [
+    {
+      "frequency_hz": 400000000.0,
+      "t": {
+        "actual_frequency_hz": 400000000.0,
+        "receiver_die_H": {
+          "real": 0.12684914750919488,
+          "imag": -0.5209371559330154,
+          "magnitude": 0.5361587700069712,
+          "phase_deg": -76.3147057575227
+        },
+        "loaded_channel_H": {
+          "real": 0.48737603046924544,
+          "imag": -1.1925436019628095,
+          "magnitude": 1.2882917517621506,
+          "phase_deg": -67.77084636604194
+        }
+      },
+      "ltra": {
+        "actual_frequency_hz": 400000000.0,
+        "receiver_die_H": {
+          "real": 0.1268491475091949,
+          "imag": -0.5209371559330156,
+          "magnitude": 0.5361587700069714,
+          "phase_deg": -76.3147057575227
+        },
+        "loaded_channel_H": {
+          "real": 0.48737603046924566,
+          "imag": -1.1925436019628097,
+          "magnitude": 1.2882917517621508,
+          "phase_deg": -67.77084636604194
+        }
+      },
+      "receiver_relative_complex_difference": 4.46928508977879e-16,
+      "receiver_relative_amplitude_difference": 4.440892098500626e-16,
+      "receiver_phase_difference_deg": 2.881850033877684e-15,
+      "channel_relative_complex_difference": 2.5223443536509025e-16
+    },
+    {
+      "frequency_hz": 4500000000.0,
+      "t": {
+        "actual_frequency_hz": 4500000000.0,
+        "receiver_die_H": {
+          "real": -0.06527745342795169,
+          "imag": -0.16155043029267546,
+          "magnitude": 0.1742403152367069,
+          "phase_deg": -112.0020862836702
+        },
+        "loaded_channel_H": {
+          "real": -0.5453485654960063,
+          "imag": 0.3004347598586223,
+          "magnitude": 0.6226283826006167,
+          "phase_deg": 151.1494509762756
+        }
+      },
+      "ltra": {
+        "actual_frequency_hz": 4500000000.0,
+        "receiver_die_H": {
+          "real": -0.06527745342795169,
+          "imag": -0.16155043029267546,
+          "magnitude": 0.1742403152367069,
+          "phase_deg": -112.0020862836702
+        },
+        "loaded_channel_H": {
+          "real": -0.5453485654960062,
+          "imag": 0.30043475985862234,
+          "magnitude": 0.6226283826006166,
+          "phase_deg": 151.1494509762756
+        }
+      },
+      "receiver_relative_complex_difference": 0.0,
+      "receiver_relative_amplitude_difference": 0.0,
+      "receiver_phase_difference_deg": 0.0,
+      "channel_relative_complex_difference": 1.5618041646042754e-16
+    },
+    {
+      "frequency_hz": 4900000000.0,
+      "t": {
+        "actual_frequency_hz": 4900000000.0,
+        "receiver_die_H": {
+          "real": -0.41650848780059935,
+          "imag": -0.09368948852618572,
+          "magnitude": 0.4269157301742819,
+          "phase_deg": -167.32287957573584
+        },
+        "loaded_channel_H": {
+          "real": 1.5019120307351104,
+          "imag": 0.2781878173189028,
+          "magnitude": 1.5274580877299115,
+          "phase_deg": 10.49354100135735
+        }
+      },
+      "ltra": {
+        "actual_frequency_hz": 4900000000.0,
+        "receiver_die_H": {
+          "real": -0.41650848780059924,
+          "imag": -0.09368948852618576,
+          "magnitude": 0.42691573017428186,
+          "phase_deg": -167.32287957573584
+        },
+        "loaded_channel_H": {
+          "real": 1.50191203073511,
+          "imag": 0.2781878173189034,
+          "magnitude": 1.5274580877299113,
+          "phase_deg": 10.493541001357377
+        }
+      },
+      "receiver_relative_complex_difference": 2.7285392827269376e-16,
+      "receiver_relative_amplitude_difference": 2.220446049250313e-16,
+      "receiver_phase_difference_deg": 9.085575074849452e-15,
+      "channel_relative_complex_difference": 4.4295152858551915e-16
+    },
+    {
+      "frequency_hz": 5100000000.0,
+      "t": {
+        "actual_frequency_hz": 5100000000.0,
+        "receiver_die_H": {
+          "real": -0.04154299412424986,
+          "imag": 0.30019633345454766,
+          "magnitude": 0.30305718764015716,
+          "phase_deg": 97.87889720766354
+        },
+        "loaded_channel_H": {
+          "real": 0.8008899219724749,
+          "imag": -0.060733089170357954,
+          "magnitude": 0.8031893769449715,
+          "phase_deg": -4.336554148664888
+        }
+      },
+      "ltra": {
+        "actual_frequency_hz": 5100000000.0,
+        "receiver_die_H": {
+          "real": -0.04154299412424989,
+          "imag": 0.30019633345454777,
+          "magnitude": 0.30305718764015727,
+          "phase_deg": 97.87889720766354
+        },
+        "loaded_channel_H": {
+          "real": 0.8008899219724752,
+          "imag": -0.06073308917035762,
+          "magnitude": 0.8031893769449718,
+          "phase_deg": -4.336554148664862
+        }
+      },
+      "receiver_relative_complex_difference": 4.463998075167614e-16,
+      "receiver_relative_amplitude_difference": 4.440892098500626e-16,
+      "receiver_phase_difference_deg": 2.598956923991898e-15,
+      "channel_relative_complex_difference": 6.246853887806727e-16
+    },
+    {
+      "frequency_hz": 5500000000.0,
+      "t": {
+        "actual_frequency_hz": 5500000000.0,
+        "receiver_die_H": {
+          "real": 0.06064251302722409,
+          "imag": 0.10782645727351252,
+          "magnitude": 0.1237095763246066,
+          "phase_deg": 60.64623033325164
+        },
+        "loaded_channel_H": {
+          "real": 0.9337401985880395,
+          "imag": -0.21625111539262526,
+          "magnitude": 0.9584546433544917,
+          "phase_deg": -13.039620021149771
+        }
+      },
+      "ltra": {
+        "actual_frequency_hz": 5500000000.0,
+        "receiver_die_H": {
+          "real": 0.06064251302722405,
+          "imag": 0.10782645727351248,
+          "magnitude": 0.12370957632460654,
+          "phase_deg": 60.64623033325164
+        },
+        "loaded_channel_H": {
+          "real": 0.933740198588039,
+          "imag": -0.21625111539262543,
+          "magnitude": 0.9584546433544914,
+          "phase_deg": -13.039620021149787
+        }
+      },
+      "receiver_relative_complex_difference": 5.741600657440537e-16,
+      "receiver_relative_amplitude_difference": 5.551115123125783e-16,
+      "receiver_phase_difference_deg": 8.403357337689957e-15,
+      "channel_relative_complex_difference": 4.364916931723727e-16
+    }
+  ],
+  "maximum_receiver_relative_complex_difference": 5.741600657440537e-16,
+  "maximum_receiver_phase_difference_deg": 9.085575074849452e-15,
+  "scope": "Exact same bench with0.2pF per-leg probe; off-harmonic frequencies independently demonstrate that equivalence does not rely on5GHz400psdelay integer-period identity."
+}

@@ -1,0 +1,307 @@
+{
+  "cases": [
+    {
+      "finiteCaptureEyeHeightV": 0.9984143129216955,
+      "commonOpeningAt200mVThresholdPs": 73.848899594527,
+      "receiverTie": {
+        "count": 5000,
+        "rmsPs": 0.0006155504429963815,
+        "peakToPeakPs": 0.007218435105291882,
+        "minPs": -0.003641130365966694,
+        "maxPs": 0.0035773047393251878
+      },
+      "timingAvailable": true,
+      "timingUnavailableReason": null,
+      "observedCrossingCount": 5000,
+      "nominalPhasePs": 3000002.9584851004,
+      "nominalPhaseBasis": "receiver mean phase from strict crossing association",
+      "nominalSamplePolarityBasis": "first observed crossing and fixed nominal clock",
+      "nominalCenterSamples": 5000,
+      "nominalThresholdFailures": 0,
+      "completeThresholdWindows": 5000,
+      "samplingThresholdMv": 200,
+      "analysisStartNs": 3000.0000000002756,
+      "analysisStopNs": 3499.9980000140777,
+      "rateMTs": 10000.0,
+      "uiPs": 100.0,
+      "signoff": false,
+      "label": "Clean routed DQS0: assumed 5 GHz bench",
+      "sourceBudgets": {
+        "jitter": {
+          "configuredInputRjRmsPs": 0.0,
+          "configuredPeriodicJitterPeakPs": 0.0,
+          "periodicJitterFrequencyHz": 100000000.0,
+          "periodicJitterPeriodUI": 100.0,
+          "randomJitterCornerHz": 500000000.0,
+          "seed": 50701,
+          "provenance": "assumed stationary correlated source timing; shared by complementary legs before simulation"
+        },
+        "noise": {
+          "kind": "commanded differential receiver-pad series voltage disturbance",
+          "configuredRmsMv": 0.0,
+          "cutoffHz": 1000000000.0,
+          "order": 2,
+          "sampleIntervalPs": 10.0,
+          "seed": 50702,
+          "provenance": "assumed stationary shaped series source, not observed total pad/die noise or instrument noise"
+        }
+      },
+      "frequencyStress": true,
+      "experimentDescription": "Assumed source timing jitter, differential series disturbance and probe loading before a separate scope observation",
+      "limitations": [
+        "All disturbance budgets are assumptions, not bench measurements or validated DDR operating limits",
+        "Virtual 1ps ideal source does not represent an AM3352 switching at 5 GHz; no vendor I/O model is retimed",
+        "Fast-edge harmonics extend beyond the supplied channel's 5GHz extraction range; their response uses rational-fit extrapolation",
+        "Timing modulation creates out-of-band carrier sidebands, including a 5.1GHz upper sideband for 100MHz periodic jitter at 5GHz",
+        "Commanded series-source noise RMS does not guarantee observed total pad or die noise RMS",
+        "Receiver ODT/Cin and ideal shunt probe capacitance are assumptions; no active receiver, measured probe transfer, PDN or aggressors",
+        "Scope filtering and instrument noise belong to a separate observation artifact; this native capture is not a measured bench eye",
+        "Finite captures and assumed distributions do not establish DDR compliance, BER or rare-event tails",
+        "Instrument processing is a simulated nonloading 12 GHz response and independent additive voltage noise, not a hardware measurement.",
+        "No scope sampling, trigger or clock-recovery jitter is modeled; folding uses a fixed nominal clock or one mean phase.",
+        "Scope noise is separate from the physical source and circuit noise budgets retained in provenance."
+      ],
+      "benchScenario": true,
+      "observation": {
+        "plane": "receiver package pads",
+        "planeKeys": [
+          "pad_p_v",
+          "pad_n_v"
+        ],
+        "scopeBandwidthGHz": 12,
+        "scopeResponse": "causal digital two-pole Butterworth; bilinear transform prewarped at 12 GHz",
+        "scopeFilterOrder": 2,
+        "scopeNoiseRmsMv": 0.0,
+        "noiseDefinition": "differential voltage; +/-noise/2 added to filtered legs",
+        "scopeNoiseRmsDefinition": "theoretical stationary RMS of final differential scope noise after 12 GHz shaping",
+        "noiseScaling": "theoretical stationary filter variance; no finite-realization renormalization",
+        "seed": 50703,
+        "pairedNoise": "same realization only for the same seed and identical physical timestamp grid",
+        "noiseGenerationGrid": {
+          "startNs": 2989.9999999999995,
+          "stopNs": 3505.800000014238,
+          "sampleIntervalPs": 2,
+          "sampleCount": 257901,
+          "independentOfElectricalMaxdt": true,
+          "changedSampling": "other sampling grids are rejected; no pointwise realization equivalence is claimed"
+        },
+        "causal": true,
+        "sampleTimeStepPs": 2,
+        "warmupNs": 10.000000000000329,
+        "signalInitialization": "steady state at first captured leg voltage; full captured warmup is filtered",
+        "samplingJitterRmsPs": 0,
+        "supplies": "ideal supplies as in the native bench",
+        "phaseHandling": "fixed nominal clock; one receiver mean phase may be estimated; no individual edge alignment",
+        "sourceCapture": "/workspace/work/dqs-bench-assumptions/captures/5ghz-clean-routed",
+        "sourceWaveformsSha256": "48fc8b937e7ce92a6b4aa12296f0961029a36ad4a9c962535f39a697021e505c",
+        "sourceProvenanceSha256": "8524fa1df709c585e188ac21e7999d003102fd464e3f872df949f3bc7338132c",
+        "noise": {
+          "kind": "stationary Gaussian two-pole digital Butterworth low-pass",
+          "configuredRmsV": 0.0,
+          "cutoffHz": 12000000000.0,
+          "sampleIntervalS": 2e-12,
+          "sampleCount": 257901,
+          "order": 2,
+          "seed": 50703,
+          "firstOrderHold": false,
+          "stationaryInitialization": true,
+          "perRealizationRmsNormalization": false,
+          "stationaryGain": 0.2305252058037881,
+          "whiteInputRmsV": 0.0,
+          "unitWhiteKnotVariance": 0.053141870510878854,
+          "unitWhiteLagOneCovariance": 0.05262302207419597,
+          "unitWhiteFirstOrderHoldVariance": 0.052968921031984556,
+          "theoreticalLagOneCorrelation": 0.9902365417006412,
+          "theoreticalKnotRmsV": 0.0,
+          "theoreticalContinuousRmsV": 0.0,
+          "filterNumerator": [
+            0.0051292683661071465,
+            0.010258536732214293,
+            0.0051292683661071465
+          ],
+          "filterDenominator": [
+            1.0,
+            -1.7874325179564847,
+            0.8079495914209134
+          ],
+          "observedRmsV": 0.0,
+          "observedAcRmsV": 0.0,
+          "observedMeanV": 0.0,
+          "observedContinuousRmsV": 0.0,
+          "observedContinuousAcRmsV": 0.0
+        },
+        "measuredAnalysisNoise": {
+          "meanMv": 0.0,
+          "acRmsMv": 0.0,
+          "rmsMv": 0.0,
+          "maximumAbsoluteMv": 0.0
+        },
+        "analysisSamples": 250000,
+        "analysisWindowUiCount": 5000.0000000000055,
+        "rawVersusObserved": "native fields retained; raw_dqs_* preserves circuit die voltage; dqs_* is the rendered instrument observation",
+        "signoff": false,
+        "waveformsSha256": "c2cac577f59b721bd097b6c64e77be9ac8ca72c04c0e60038d6785973ec932d5",
+        "sourceStimulusEventsSha256": "6c1b422450b0c973b67a592cdc7d2ed045683f6f5edb594ea62c7ea26949b8bf"
+      },
+      "densityDisplay": {
+        "timeBins": 100,
+        "voltageBins": 350,
+        "timeBinWidthPs": 2.0,
+        "policy": "saved samples; no display interpolation or additional noise"
+      }
+    },
+    {
+      "finiteCaptureEyeHeightV": 0.6749261328131991,
+      "commonOpeningAt200mVThresholdPs": 42.31493112804137,
+      "receiverTie": {
+        "count": 5000,
+        "rmsPs": 4.096978308099757,
+        "peakToPeakPs": 27.68771235529905,
+        "minPs": -13.057695622244262,
+        "maxPs": 14.630016733054788
+      },
+      "timingAvailable": true,
+      "timingUnavailableReason": null,
+      "observedCrossingCount": 5000,
+      "nominalPhasePs": 3000003.162539221,
+      "nominalPhaseBasis": "receiver mean phase from strict crossing association",
+      "nominalSamplePolarityBasis": "first observed crossing and fixed nominal clock",
+      "nominalCenterSamples": 5000,
+      "nominalThresholdFailures": 0,
+      "completeThresholdWindows": 5000,
+      "samplingThresholdMv": 200,
+      "analysisStartNs": 3000.0000000002756,
+      "analysisStopNs": 3499.9980000140777,
+      "rateMTs": 10000.0,
+      "uiPs": 100.0,
+      "signoff": false,
+      "label": "Noisy routed DQS0: assumed 5 GHz bench",
+      "sourceBudgets": {
+        "jitter": {
+          "configuredInputRjRmsPs": 3.0,
+          "configuredPeriodicJitterPeakPs": 3.0,
+          "periodicJitterFrequencyHz": 100000000.0,
+          "periodicJitterPeriodUI": 100.0,
+          "randomJitterCornerHz": 500000000.0,
+          "seed": 50701,
+          "provenance": "assumed stationary correlated source timing; shared by complementary legs before simulation"
+        },
+        "noise": {
+          "kind": "commanded differential receiver-pad series voltage disturbance",
+          "configuredRmsMv": 5.0,
+          "cutoffHz": 1000000000.0,
+          "order": 2,
+          "sampleIntervalPs": 10.0,
+          "seed": 50702,
+          "provenance": "assumed stationary shaped series source, not observed total pad/die noise or instrument noise"
+        }
+      },
+      "frequencyStress": true,
+      "experimentDescription": "Assumed source timing jitter, differential series disturbance and probe loading before a separate scope observation",
+      "limitations": [
+        "All disturbance budgets are assumptions, not bench measurements or validated DDR operating limits",
+        "Virtual 1ps ideal source does not represent an AM3352 switching at 5 GHz; no vendor I/O model is retimed",
+        "Fast-edge harmonics extend beyond the supplied channel's 5GHz extraction range; their response uses rational-fit extrapolation",
+        "Timing modulation creates out-of-band carrier sidebands, including a 5.1GHz upper sideband for 100MHz periodic jitter at 5GHz",
+        "Commanded series-source noise RMS does not guarantee observed total pad or die noise RMS",
+        "Receiver ODT/Cin and ideal shunt probe capacitance are assumptions; no active receiver, measured probe transfer, PDN or aggressors",
+        "Scope filtering and instrument noise belong to a separate observation artifact; this native capture is not a measured bench eye",
+        "Finite captures and assumed distributions do not establish DDR compliance, BER or rare-event tails",
+        "Instrument processing is a simulated nonloading 12 GHz response and independent additive voltage noise, not a hardware measurement.",
+        "No scope sampling, trigger or clock-recovery jitter is modeled; folding uses a fixed nominal clock or one mean phase.",
+        "Scope noise is separate from the physical source and circuit noise budgets retained in provenance."
+      ],
+      "benchScenario": true,
+      "observation": {
+        "plane": "receiver package pads",
+        "planeKeys": [
+          "pad_p_v",
+          "pad_n_v"
+        ],
+        "scopeBandwidthGHz": 12,
+        "scopeResponse": "causal digital two-pole Butterworth; bilinear transform prewarped at 12 GHz",
+        "scopeFilterOrder": 2,
+        "scopeNoiseRmsMv": 2.0,
+        "noiseDefinition": "differential voltage; +/-noise/2 added to filtered legs",
+        "scopeNoiseRmsDefinition": "theoretical stationary RMS of final differential scope noise after 12 GHz shaping",
+        "noiseScaling": "theoretical stationary filter variance; no finite-realization renormalization",
+        "seed": 50703,
+        "pairedNoise": "same realization only for the same seed and identical physical timestamp grid",
+        "noiseGenerationGrid": {
+          "startNs": 2989.9999999999995,
+          "stopNs": 3505.800000014238,
+          "sampleIntervalPs": 2,
+          "sampleCount": 257901,
+          "independentOfElectricalMaxdt": true,
+          "changedSampling": "other sampling grids are rejected; no pointwise realization equivalence is claimed"
+        },
+        "causal": true,
+        "sampleTimeStepPs": 2,
+        "warmupNs": 10.000000000000329,
+        "signalInitialization": "steady state at first captured leg voltage; full captured warmup is filtered",
+        "samplingJitterRmsPs": 0,
+        "supplies": "ideal supplies as in the native bench",
+        "phaseHandling": "fixed nominal clock; one receiver mean phase may be estimated; no individual edge alignment",
+        "sourceCapture": "/workspace/work/dqs-bench-assumptions/captures/5ghz-noisy-routed",
+        "sourceWaveformsSha256": "cac6ad056ced5dfe0dc1f7681744cd9bfba7b5bacd5b989a8758cce665f69fe8",
+        "sourceProvenanceSha256": "d4af672639bb82fed3b4da66fd777288857d06e45ae69792da335240e234679d",
+        "noise": {
+          "kind": "stationary Gaussian two-pole digital Butterworth low-pass",
+          "configuredRmsV": 0.002,
+          "cutoffHz": 12000000000.0,
+          "sampleIntervalS": 2e-12,
+          "sampleCount": 257901,
+          "order": 2,
+          "seed": 50703,
+          "firstOrderHold": false,
+          "stationaryInitialization": true,
+          "perRealizationRmsNormalization": false,
+          "stationaryGain": 0.2305252058037881,
+          "whiteInputRmsV": 0.008675840860987251,
+          "unitWhiteKnotVariance": 0.053141870510878854,
+          "unitWhiteLagOneCovariance": 0.05262302207419597,
+          "unitWhiteFirstOrderHoldVariance": 0.052968921031984556,
+          "theoreticalLagOneCorrelation": 0.9902365417006412,
+          "theoreticalKnotRmsV": 0.002,
+          "theoreticalContinuousRmsV": 0.0019967428616626767,
+          "filterNumerator": [
+            0.0051292683661071465,
+            0.010258536732214293,
+            0.0051292683661071465
+          ],
+          "filterDenominator": [
+            1.0,
+            -1.7874325179564847,
+            0.8079495914209134
+          ],
+          "observedRmsV": 0.0019836354982484265,
+          "observedAcRmsV": 0.0019833353901848147,
+          "observedMeanV": -3.450391212213988e-05,
+          "observedContinuousRmsV": 0.00198035075644202,
+          "observedContinuousAcRmsV": 0.0019800500605204907
+        },
+        "measuredAnalysisNoise": {
+          "meanMv": -0.036049521527191444,
+          "acRmsMv": 1.9837173742175818,
+          "rmsMv": 1.9840449059371208,
+          "maximumAbsoluteMv": 8.797530720429707
+        },
+        "analysisSamples": 250000,
+        "analysisWindowUiCount": 5000.0000000000055,
+        "rawVersusObserved": "native fields retained; raw_dqs_* preserves circuit die voltage; dqs_* is the rendered instrument observation",
+        "signoff": false,
+        "waveformsSha256": "d329827ff30a001af673b1f394b105a3a4f2233b8bd1c06fd685402d7da60493",
+        "sourceStimulusEventsSha256": "5db076fa78098f07b4295f27484674d5f5db0cdddc6bbf96eba17ecb816b7d9d"
+      },
+      "densityDisplay": {
+        "timeBins": 100,
+        "voltageBins": 350,
+        "timeBinWidthPs": 2.0,
+        "policy": "saved samples; no display interpolation or additional noise"
+      }
+    }
+  ],
+  "receiverInputThresholdMv": 200,
+  "signoff": false,
+  "definition": "Finite-record extrema at a single nominal sampling phase, not a receiver timing mask or BER extrapolation"
+}

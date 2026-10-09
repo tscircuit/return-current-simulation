@@ -1,0 +1,29 @@
+Private PWL boundary-equivalence audit: repeat_delay
+V0 src0 0 PWL(0 -.6 .1n .3 .4n -.8 .7n .5) R=0
+R0 src0 out0 1k
+C0 out0 0 1p
+V1 src1 0 PWL(0 -.6 .1n .3 .4n -.8 .7n .5) R=.1n
+R1 src1 out1 1k
+C1 out1 0 1p
+V2 src2 0 PWL(0 -.6 .1n .3 .4n -.8 .7n .5) TD=.37n
+R2 src2 out2 1k
+C2 out2 0 1p
+V3 src3 0 PWL(0 -.6 .1n .3 .4n -.8 .7n .5) R=.1n TD=.37n
+R3 src3 out3 1k
+C3 out3 0 1p
+V4 src4 0 PWL(0 -.6 .1n .3 .4n -.8 .7n .5) R=-1 TD=.37n
+R4 src4 out4 1k
+C4 out4 0 1p
+.options reltol=1e-5 abstol=1e-11 vntol=1e-7 method=trap maxord=2 trtol=3
+.control
+set wr_vecnames
+set wr_singlescale
+set numdgt=17
+tran .013n 4n 0 .037n
+wrdata capture.dat v(src0) v(out0) i(V0) v(src1) v(out1) i(V1) v(src2) v(out2) i(V2) v(src3) v(out3) i(V3) v(src4) v(out4) i(V4)
+linearize v(src0) v(out0) i(V0) v(src1) v(out1) i(V1) v(src2) v(out2) i(V2) v(src3) v(out3) i(V3) v(src4) v(out4) i(V4)
+wrdata linearized.dat v(src0) v(out0) i(V0) v(src1) v(out1) i(V1) v(src2) v(out2) i(V2) v(src3) v(out3) i(V3) v(src4) v(out4) i(V4)
+echo PWL_CASE_COMPLETE
+quit
+.endc
+.end

@@ -1,0 +1,46 @@
+{
+  "top": {
+    "inputAreaMm2": 6636.470983184891,
+    "tiledAreaMm2": 6636.470983184847,
+    "inputBoundsMm": [
+      -49.674129,
+      -39.78,
+      49.6,
+      39.6
+    ],
+    "nativeContourChecksPassed": true
+  },
+  "inner1": {
+    "inputAreaMm2": 377.49138140475515,
+    "tiledAreaMm2": 377.4913814047565,
+    "inputBoundsMm": [
+      -49.674129,
+      -39.66,
+      49.354987,
+      38.251088
+    ],
+    "nativeContourChecksPassed": true
+  },
+  "inner2": {
+    "inputAreaMm2": 350.2897407692902,
+    "tiledAreaMm2": 350.28974076929154,
+    "inputBoundsMm": [
+      -49.674129,
+      -39.66,
+      49.354987,
+      38.251088
+    ],
+    "nativeContourChecksPassed": true
+  },
+  "bottom": {
+    "inputAreaMm2": 7524.905187552271,
+    "tiledAreaMm2": 7524.9051875523255,
+    "inputBoundsMm": [
+      -49.674129,
+      -39.66,
+      49.6,
+      39.6
+    ],
+    "nativeContourChecksPassed": true
+  }
+}

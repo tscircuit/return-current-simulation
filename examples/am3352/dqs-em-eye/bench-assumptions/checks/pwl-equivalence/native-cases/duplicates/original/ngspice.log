@@ -1,0 +1,41 @@
+Warning : voltage source v0 has non-increasing PWL time points.
+Warning : voltage source v1 has non-increasing PWL time points.
+Warning : voltage source v2 has non-increasing PWL time points.
+Warning : voltage source v3 has non-increasing PWL time points.
+Warning : voltage source v3 has non-increasing PWL time points.
+Warning : voltage source v4 has non-increasing PWL time points.
+
+Note: No compatibility mode selected!
+
+
+Circuit: private pwl boundary-equivalence audit: duplicates
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+src0                                      -0.6
+out0                                      -0.6
+src1                                      -0.6
+out1                                      -0.6
+src2                                      -0.6
+out2                                      -0.6
+src3                                      -0.6
+out3                                      -0.6
+src4                                      -0.6
+out4                                      -0.6
+v4#branch                                    0
+v3#branch                                    0
+v2#branch                                    0
+v1#branch                                    0
+v0#branch                                    0
+
+
+No. of Data Rows : 215
+PWL_CASE_COMPLETE
+ngspice-44.2 done

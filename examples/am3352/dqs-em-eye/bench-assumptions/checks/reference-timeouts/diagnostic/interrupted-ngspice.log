@@ -1,0 +1,81 @@
+******
+** ngspice-44.2 : Circuit level simulation program
+** Compiled with KLU Direct Linear Solver
+** The U. C. Berkeley CAD Group
+** Copyright 1985-1994, Regents of the University of California.
+** Copyright 2001-2024, The ngspice team.
+** Please get your ngspice manual from https://ngspice.sourceforge.io/docs.html
+** Please file your bug-reports at http://ngspice.sourceforge.net/bugrep.html
+** Creation Date: Fri Oct  9 19:16:53 UTC 2026
+******
+
+Note: No compatibility mode selected!
+
+
+Circuit: assumed noisy bench companion: virtual ideal differential source
+
+ngspice 1 -> ngspice 2 -> ngspice 3 -> ngspice 4 -> ngspice 5 -> Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+srcp                                         0
+srcn                                       1.5
+rxp                                   0.337863
+rxp0                                  0.342315
+rxn                                    1.16214
+rxn0                                   1.15768
+diep                                  0.341141
+dien                                   1.15888
+pkp                                   0.342304
+pkn                                    1.15767
+txp                                   0.342304
+txn                                    1.15767
+csrc                                  -0.81537
+cload                                 -0.81537
+cm                                        0.75
+halfcm                                0.171152
+srccm                                 0.749989
+rkp                                   0.340732
+rkn                                    1.15945
+rdiep                                 0.340732
+rdien                                  1.15945
+erxn#branch                        -0.00682412
+erxp#branch                         0.00682113
+ecmsrc#branch                      3.78555e-07
+ebal#branch                         0.00682262
+lrn#branch                          0.00682412
+lrp#branch                         -0.00682113
+lpn#branch                          0.00682243
+lpp#branch                         -0.00682281
+ecmhalf#branch                     3.78555e-07
+vcm#branch                        -3.78555e-07
+vnn#branch                         -0.00682412
+vnp#branch                          0.00682113
+vnegative#branch                   -0.00682243
+vpositive#branch                    0.00682281
+
+
+Interrupted once . . .
+doAnalyses: pause requested
+
+tran simulation interrupted
+ngspice 6 -> ngspice 7 -> 
+Total analysis time (seconds) = 7.02511
+
+Total elapsed time (seconds) = 8.606 
+
+Total DRAM available = 18007.945 MB.
+DRAM currently available = 10305.715 MB.
+Maximum ngspice program size =  242.879 MB.
+Current ngspice program size =  219.480 MB.
+
+Shared ngspice pages =    7.559 MB.
+Text (code) pages =    5.902 MB.
+Stack = 0 bytes.
+Library pages =  229.492 MB.
+ngspice 8 -> ngspice-44.2 done

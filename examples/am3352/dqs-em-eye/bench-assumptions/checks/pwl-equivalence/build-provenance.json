@@ -1,0 +1,21 @@
+{
+  "baseVersion": "44.2",
+  "sourceUrl": "https://sourceforge.net/projects/ngspice/files/ng-spice-rework/44.2/ngspice-44.2.tar.gz/download",
+  "sourceArchiveSha256": "e7dadfb7bd5474fd22409c1e5a67acdec19f77e597df68e17c5549bc1390d7fd",
+  "configureArguments": [
+    "--prefix=/workspace/work/tools/ngspice-44.2-install",
+    "--without-x",
+    "--with-readline=no",
+    "--disable-openmp"
+  ],
+  "buildCommand": "make -j4",
+  "originalBinary": "/workspace/work/tools/ngspice-44.2-install/bin/ngspice",
+  "originalBinarySha256": "18cf37b7ddf399ed68752371e8dbc12aa594f00dab459cffaa3a82921181cfa4",
+  "optimizedBinary": "/workspace/work/tools/ngspice-44.2-fast-pwl/bin/ngspice",
+  "optimizedBinarySha256": "371046ceac2ab7cea9f01aeb393e3958d8dc57b8d5508e40f3f0e155457f8d2c",
+  "patchFile": "/workspace/work/simulate-return-current/scripts/si/ngspice-pwl-binary-search.patch",
+  "patchSha256": "859acd456c7e4f52b331cfb58cba783878d81cf2cd22dc43d9b49ac4b1610f08",
+  "patchPurpose": "Binary-search finite nondecreasing VSRC PWL knot arrays; preserve original scan for unordered/nonfinite/incomplete arrays. Interpolation and breakpoint arithmetic unchanged.",
+  "originalInstallUnchanged": true,
+  "optimizedVersionOutput": "******\n** ngspice-44.2 : Circuit level simulation program\n** Compiled with KLU Direct Linear Solver\n** The U. C. Berkeley CAD Group\n** Copyright 1985-1994, Regents of the University of California.\n** Copyright 2001-2024, The ngspice team.\n** Please get your ngspice manual from https://ngspice.sourceforge.io/docs.html\n** Please file your bug-reports at http://ngspice.sourceforge.net/bugrep.html\n** Creation Date: Fri Oct  9 19:16:53 UTC 2026\n******\n"
+}

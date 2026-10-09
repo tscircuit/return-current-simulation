@@ -1,0 +1,63 @@
+{
+  "kind": "stationary Gaussian two-pole digital Butterworth low-pass",
+  "configuredRmsV": 0.0,
+  "cutoffHz": 1000000000.0,
+  "sampleIntervalS": 1e-11,
+  "sampleCount": 350581,
+  "order": 2,
+  "seed": 50702,
+  "firstOrderHold": true,
+  "stationaryInitialization": true,
+  "perRealizationRmsNormalization": false,
+  "stationaryGain": 0.1489531762781957,
+  "whiteInputRmsV": 0.0,
+  "unitWhiteKnotVariance": 0.02220073314348859,
+  "unitWhiteLagOneCovariance": 0.02215967988311256,
+  "unitWhiteFirstOrderHoldVariance": 0.022187048723363245,
+  "theoreticalLagOneCorrelation": 0.9981508151054881,
+  "theoreticalKnotRmsV": 0.0,
+  "theoreticalContinuousRmsV": 0.0,
+  "filterNumerator": [
+    0.0009446918438401507,
+    0.0018893836876803015,
+    0.0009446918438401507
+  ],
+  "filterDenominator": [
+    1.0,
+    -1.911197067426073,
+    0.9149758348014336
+  ],
+  "observedRmsV": 0.0,
+  "observedAcRmsV": 0.0,
+  "observedMeanV": 0.0,
+  "observedContinuousRmsV": 0.0,
+  "observedContinuousAcRmsV": 0.0,
+  "location": "differential series voltage sources at receiver package pins, split +/- half",
+  "budgetMeaning": "commanded differential series-source RMS after shaping; not guaranteed total pad or die noise RMS",
+  "gridEndS": 3.5058e-06,
+  "observedAnalysis": {
+    "samples": 250000,
+    "observedSeriesSourceVolts": {
+      "mean": 1.837249530990448e-08,
+      "rms": 1.2066561798807757e-05,
+      "acRms": 1.2066547811858319e-05,
+      "minimum": -0.002179246956075076,
+      "maximum": 0.0019986526895081624
+    },
+    "totalPadDifferentialVolts": {
+      "mean": 2.6008971414285044e-08,
+      "rms": 0.35877808573494957,
+      "acRms": 0.35877808573494857,
+      "minimum": -0.5062655670891445,
+      "maximum": 0.5062653134102675
+    },
+    "totalDieDifferentialVolts": {
+      "mean": 2.012493736401666e-08,
+      "rms": 0.24394041525871163,
+      "acRms": 0.2439404152587108,
+      "minimum": -0.3449013455938257,
+      "maximum": 0.34490224712038753
+    },
+    "totalWaveformStatisticsAreNotIsolatedNoiseBudgets": true
+  }
+}

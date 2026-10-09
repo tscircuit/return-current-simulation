@@ -1,0 +1,124 @@
+{
+  "rateMts": 800.0,
+  "uiPs": 1250.0,
+  "dqsMHz": 400.0,
+  "samples": 145001,
+  "durationNs": 290.0,
+  "maxSampleGapPs": 2.000000000002268,
+  "receiverTie": {
+    "count": 232,
+    "rmsPs": 10.337786268167008,
+    "peakToPeakPs": 52.710180959537254,
+    "minPs": -31.077751881828828,
+    "maxPs": 21.63242907770843
+  },
+  "halfCycleError": {
+    "count": 231,
+    "rmsPs": 14.143811665440118,
+    "peakToPeakPs": 76.40287346497689,
+    "minPs": -33.12548433039514,
+    "maxPs": 43.27738913458176
+  },
+  "dqsCommonModeMinV": 0.7498437385,
+  "dqsCommonModeMaxV": 0.7501548865,
+  "signoff": false,
+  "limitations": [
+    "Finite-capture TIE, not a random/deterministic jitter decomposition or BER extrapolation.",
+    "Nominal frequency is fixed; only one mean phase is removed. Individual edges are not realigned.",
+    "Waveform quality depends on the supplied measurement/co-simulation and declared provenance.",
+    "TX/RX edges are paired by index; the input capture must identify corresponding physical edges. Periodic waveforms alone cannot disambiguate an integer-cycle delay."
+  ],
+  "transmitterTie": {
+    "count": 232,
+    "rmsPs": 10.511773233316076,
+    "peakToPeakPs": 54.143589270509054,
+    "minPs": -32.17938645569585,
+    "maxPs": 21.964202814813206
+  },
+  "meanPropagationDelayPs": 464.7462746754533,
+  "channelAddedEdgeVariation": {
+    "count": 232,
+    "rmsPs": 0.38005347771838477,
+    "peakToPeakPs": 2.088015337136782,
+    "minPs": -0.7363765037624708,
+    "maxPs": 1.351638833374311
+  },
+  "provenance": {
+    "kind": "ngspice IBIS plus extracted EM differential channel",
+    "direction": "write",
+    "rateMTs": 800,
+    "clockMHz": 400.0,
+    "mode": "clock",
+    "channel": {
+      "model": "ideal matched 100 ohm, 400ps control",
+      "modelSha256": "fb3c6a0a06a95228cd94f304f6df11d2eac54726166177d620da495098a12998",
+      "commonMode": "ideal fixed receiver 0.75V; transmitter common-mode DC load from ODT; no extracted common-mode propagation"
+    },
+    "ioModels": {
+      "transmitter": "TI AM335x Model_655/847 0x18B example; not confirmed board register values",
+      "conversion": "KiCad 9.0.2 isolated-edge Ku/Kd via ngspice, locally retimed; no redistributed vendor tables",
+      "driverModelSha256": "ca22c3b2fa68316fd20f88519b60ce19348e793be8f79f7527ebbe9ad5f488d5",
+      "negativeDriverModelSha256": "a0192365c3bd72b34c46be409dea6434b2bc05512367ee41ec181d0ea8914e57",
+      "package": "selected TI pin self R/L/C plus mutual P1-P2 inductance; mutual package capacitance omitted due sign ambiguity",
+      "receiver": "Winbond unencrypted LDQS/LDQSB package RLC, assumed linear ODT and capacitance; no transistor-level receiver",
+      "receiverCapacitancePf": 2,
+      "odtOhmsPerLeg": 60
+    },
+    "jitter": {
+      "configuredInputRjRmsPs": 10,
+      "configuredPeriodicJitterPeakPs": 5,
+      "periodicJitterPeriodUI": 31,
+      "seed": 40501,
+      "provenance": "assumed source timing budget, not measured board jitter; injected before ngspice"
+    },
+    "noise": {
+      "kind": "assumed differential receiver-input voltage noise; ideal supplies",
+      "configuredRmsMv": 2,
+      "lowPassBandwidthMHz": 500,
+      "seed": 40502,
+      "provenance": "assumed noise budget, not measured board noise"
+    },
+    "timeStepPs": 2,
+    "uiCount": 256,
+    "wallSeconds": 74.08135571700404,
+    "netlistSha256": "bdf2dfb711d8445a4bd3a590bd9d7ef270d6f5c5e8ebe07c63cc8fab82ca8b30",
+    "signoff": false,
+    "edgeWeightChecks": {
+      "positive": {
+        "ku": {
+          "minimum": 0.002915248,
+          "maximum": 1.04149,
+          "clippedSettledTails": 0,
+          "maxClippedTailWeightChange": 0.0
+        },
+        "kd": {
+          "minimum": 0.008826949,
+          "maximum": 1.039567,
+          "clippedSettledTails": 0,
+          "maxClippedTailWeightChange": 0.0
+        }
+      },
+      "negative": {
+        "ku": {
+          "minimum": 0.002915248,
+          "maximum": 1.04149,
+          "clippedSettledTails": 0,
+          "maxClippedTailWeightChange": 0.0
+        },
+        "kd": {
+          "minimum": 0.008826949,
+          "maximum": 1.039567,
+          "clippedSettledTails": 0,
+          "maxClippedTailWeightChange": 0.0
+        }
+      }
+    },
+    "limitations": [
+      "Balanced differential excitation; no active DQ aggressors, extracted common-mode conversion or simulated PDN noise",
+      "Receiver Cin and ODT are assumptions, actual mode registers are unknown",
+      "Isolated vendor switching edges retimed; settled tails may be clipped on unusually close jittered edges",
+      "No DDR protocol preamble/postamble or turnaround; PRBS is a channel stress test, not DQS protocol"
+    ]
+  },
+  "waveformSha256": "6b423465e2614def001255d1de7a8703e69ac042dff178c92f6ba4f0ab7ba296"
+}

@@ -1,0 +1,433 @@
+{
+  "captures": [
+    {
+      "capture": "/workspace/work/dqs-5ghz-final/captures/5ghz-reference",
+      "waveformsSha256": "d476e4ad48946bff04d517f6c25eee57858576a31c5f761ceeb8e1f752d7941d",
+      "netlistSha256": "97cb165a228e2961f9141d70a976ca9f3e78685abbcc210c2ef60aae5076a4f0",
+      "frequencyHz": 5000000000.0,
+      "timeStepPs": 0.25,
+      "windows": [
+        {
+          "window": {
+            "label": "whole analysis",
+            "startNs": 2980.0000000000005,
+            "stopNs": 3000.0,
+            "frequencyHz": 5000000000.0
+          },
+          "samples": 80000,
+          "signals": {
+            "receiverDieDifferential": {
+              "meanV": 1.860282368433275e-08,
+              "acRmsV": 0.7006304467008414,
+              "halfPeakToPeakV": 0.990903226073981,
+              "maximumAbsoluteV": 0.9909041014023483,
+              "fundamentalPeakV": 0.9908403409892548,
+              "fundamentalPhaseRad": 1.1623949214183458,
+              "fittedDcOffsetV": 1.8839774021907567e-08
+            },
+            "transmitterBgaDifferential": {
+              "meanV": -1.940656643377281e-07,
+              "acRmsV": 1.0305586064215737,
+              "halfPeakToPeakV": 1.4382128459412797,
+              "maximumAbsoluteV": 1.4382199034807854,
+              "fundamentalPeakV": 1.4572188797813501,
+              "fundamentalPhaseRad": -2.432032850387431,
+              "fittedDcOffsetV": -1.9473518443049045e-07
+            },
+            "channel_input_v": {
+              "meanV": -1.940673466741316e-07,
+              "acRmsV": 1.030558606439631,
+              "halfPeakToPeakV": 1.4382128463597041,
+              "maximumAbsoluteV": 1.4382199056072977,
+              "fundamentalPeakV": 1.4572188798068084,
+              "fundamentalPhaseRad": -2.4320328503991226,
+              "fittedDcOffsetV": -1.947368669012678e-07
+            },
+            "channel_output_v": {
+              "meanV": -3.486600326567668e-08,
+              "acRmsV": 1.0305586307618566,
+              "halfPeakToPeakV": 1.439228136497377,
+              "maximumAbsoluteV": 1.4392431262958212,
+              "fundamentalPeakV": 1.457218626600228,
+              "fundamentalPhaseRad": -2.43203264589819,
+              "fittedDcOffsetV": -3.553552324502811e-08
+            }
+          }
+        },
+        {
+          "window": {
+            "label": "early",
+            "startNs": 2980.0000000000005,
+            "stopNs": 2981.6000000000004,
+            "frequencyHz": 5000000000.0
+          },
+          "samples": 6400,
+          "signals": {
+            "receiverDieDifferential": {
+              "meanV": 9.438206573175734e-08,
+              "acRmsV": 0.7006303549958457,
+              "halfPeakToPeakV": 0.9909010782689902,
+              "maximumAbsoluteV": 0.9909023507456136,
+              "fundamentalPeakV": 0.9908402114801106,
+              "fundamentalPhaseRad": 1.162394388067846,
+              "fittedDcOffsetV": 9.461901280763534e-08
+            },
+            "transmitterBgaDifferential": {
+              "meanV": -8.667195220546375e-07,
+              "acRmsV": 1.030558998702874,
+              "halfPeakToPeakV": 1.4380097236146412,
+              "maximumAbsoluteV": 1.4380188125135192,
+              "fundamentalPeakV": 1.4572193135104132,
+              "fundamentalPhaseRad": -2.4320344091033768,
+              "fittedDcOffsetV": -8.673890229775303e-07
+            },
+            "channel_input_v": {
+              "meanV": -8.667269597406602e-07,
+              "acRmsV": 1.0305589987189427,
+              "halfPeakToPeakV": 1.4380097233392348,
+              "maximumAbsoluteV": 1.4380188137317305,
+              "fundamentalPeakV": 1.4572193135331184,
+              "fundamentalPhaseRad": -2.432034409107434,
+              "fittedDcOffsetV": -8.673964607909923e-07
+            },
+            "channel_output_v": {
+              "meanV": 1.924398820625228e-06,
+              "acRmsV": 1.0305561399287313,
+              "halfPeakToPeakV": 1.4369983744453663,
+              "maximumAbsoluteV": 1.436998550102345,
+              "fundamentalPeakV": 1.4572154856048543,
+              "fundamentalPhaseRad": -2.432031501199262,
+              "fittedDcOffsetV": 1.9237293230119877e-06
+            }
+          }
+        },
+        {
+          "window": {
+            "label": "middle",
+            "startNs": 2989.2,
+            "stopNs": 2990.8,
+            "frequencyHz": 5000000000.0
+          },
+          "samples": 6400,
+          "signals": {
+            "receiverDieDifferential": {
+              "meanV": -9.198893204098723e-07,
+              "acRmsV": 0.7006303588625801,
+              "halfPeakToPeakV": 0.9909005916320472,
+              "maximumAbsoluteV": 0.9909041014023483,
+              "fundamentalPeakV": 0.9908402168774402,
+              "fundamentalPhaseRad": 1.1623945442888317,
+              "fittedDcOffsetV": -9.196523734923638e-07
+            },
+            "transmitterBgaDifferential": {
+              "meanV": -1.5410346801303376e-07,
+              "acRmsV": 1.0305589633200363,
+              "halfPeakToPeakV": 1.4382128459412797,
+              "maximumAbsoluteV": 1.4382199034807854,
+              "fundamentalPeakV": 1.4572191442905116,
+              "fundamentalPhaseRad": -2.432033695634612,
+              "fittedDcOffsetV": -1.5477296840875697e-07
+            },
+            "channel_input_v": {
+              "meanV": -1.541106057967312e-07,
+              "acRmsV": 1.0305589633371162,
+              "halfPeakToPeakV": 1.4382128463597041,
+              "maximumAbsoluteV": 1.4382199056072977,
+              "fundamentalPeakV": 1.4572191443140703,
+              "fundamentalPhaseRad": -2.4320336956392383,
+              "fittedDcOffsetV": -1.5478010623620946e-07
+            },
+            "channel_output_v": {
+              "meanV": 2.168866823542004e-06,
+              "acRmsV": 1.0305559530976773,
+              "halfPeakToPeakV": 1.4364089670288358,
+              "maximumAbsoluteV": 1.4364566180024099,
+              "fundamentalPeakV": 1.4572155397772484,
+              "fundamentalPhaseRad": -2.4320310954598767,
+              "fittedDcOffsetV": 2.168197326168675e-06
+            }
+          }
+        },
+        {
+          "window": {
+            "label": "late",
+            "startNs": 2998.4,
+            "stopNs": 3000.0,
+            "frequencyHz": 5000000000.0
+          },
+          "samples": 6400,
+          "signals": {
+            "receiverDieDifferential": {
+              "meanV": 4.57898183023886e-07,
+              "acRmsV": 0.7006296636105109,
+              "halfPeakToPeakV": 0.9908907895932613,
+              "maximumAbsoluteV": 0.9908932534618113,
+              "fundamentalPeakV": 0.9908392334112458,
+              "fundamentalPhaseRad": 1.1623951457571218,
+              "fittedDcOffsetV": 4.581351294177449e-07
+            },
+            "transmitterBgaDifferential": {
+              "meanV": -1.660028981049777e-06,
+              "acRmsV": 1.0305589650333404,
+              "halfPeakToPeakV": 1.437735852572814,
+              "maximumAbsoluteV": 1.4377365719606132,
+              "fundamentalPeakV": 1.457219308019469,
+              "fundamentalPhaseRad": -2.4320339587132764,
+              "fittedDcOffsetV": -1.6606984819791141e-06
+            },
+            "channel_input_v": {
+              "meanV": -1.6600344891681829e-06,
+              "acRmsV": 1.0305589650465743,
+              "halfPeakToPeakV": 1.4377358518864298,
+              "maximumAbsoluteV": 1.4377365714149164,
+              "fundamentalPeakV": 1.457219308037889,
+              "fundamentalPhaseRad": -2.4320339587238413,
+              "fittedDcOffsetV": -1.660703990096721e-06
+            },
+            "channel_output_v": {
+              "meanV": 4.3994993840534845e-06,
+              "acRmsV": 1.030552844137158,
+              "halfPeakToPeakV": 1.4376159957623287,
+              "maximumAbsoluteV": 1.4376720099109832,
+              "fundamentalPeakV": 1.4572107071452018,
+              "fundamentalPhaseRad": -2.4320286851264505,
+              "fittedDcOffsetV": 4.398829890087485e-06
+            }
+          }
+        }
+      ],
+      "lateCycleRepeat": {
+        "cycleDurationPs": 200.0,
+        "receiverAcRmsV": 0.7006249882040285,
+        "maximumAbsoluteDifferenceV": 4.101754587204631e-06,
+        "rmsDifferenceV": 1.5687861386405596e-06
+      },
+      "limitations": [
+        "Windows are finite captures and may include launch settling.",
+        "Response outside the channel's saved frequency band is rational-model extrapolation.",
+        "Amplitude differences include source/package/load filtering and channel extrapolation."
+      ]
+    },
+    {
+      "capture": "/workspace/work/dqs-5ghz-final/checks/5ghz-reference-0.2ps",
+      "waveformsSha256": "c0d91da19f9967675f2792d8ed7c63bdb61b5138fceeb8a28d1f0955bad9ff75",
+      "netlistSha256": "892433ef59abfdd8c23ee2f5b74c35aae8b26a0f1c07e58ab701ad0b33371ff7",
+      "frequencyHz": 5000000000.0,
+      "timeStepPs": 0.2,
+      "windows": [
+        {
+          "window": {
+            "label": "whole analysis",
+            "startNs": 2980.0000000000005,
+            "stopNs": 3000.0,
+            "frequencyHz": 5000000000.0
+          },
+          "samples": 100000,
+          "signals": {
+            "receiverDieDifferential": {
+              "meanV": -1.599121455058139e-08,
+              "acRmsV": 0.7006305112194274,
+              "halfPeakToPeakV": 0.9909031873963965,
+              "maximumAbsoluteV": 0.9909033197164057,
+              "fundamentalPeakV": 0.9908404321427249,
+              "fundamentalPhaseRad": 1.1624093196905363,
+              "fittedDcOffsetV": -1.5753837736866046e-08
+            },
+            "transmitterBgaDifferential": {
+              "meanV": -3.508060160197601e-07,
+              "acRmsV": 1.0305528360912966,
+              "halfPeakToPeakV": 1.438209425301011,
+              "maximumAbsoluteV": 1.4382110311767065,
+              "fundamentalPeakV": 1.4572107088727468,
+              "fundamentalPhaseRad": -2.4320199674705654,
+              "fittedDcOffsetV": -3.514759808281012e-07
+            },
+            "channel_input_v": {
+              "meanV": -3.5081084640125936e-07,
+              "acRmsV": 1.030552836100217,
+              "halfPeakToPeakV": 1.4382094235130012,
+              "maximumAbsoluteV": 1.4382110289955108,
+              "fundamentalPeakV": 1.4572107088851987,
+              "fundamentalPhaseRad": -2.432019967471863,
+              "fittedDcOffsetV": -3.514808112726956e-07
+            },
+            "channel_output_v": {
+              "meanV": -1.486423207484222e-07,
+              "acRmsV": 1.0305528430758573,
+              "halfPeakToPeakV": 1.4391524987882534,
+              "maximumAbsoluteV": 1.4392135772021106,
+              "fundamentalPeakV": 1.4572104137015651,
+              "fundamentalPhaseRad": -2.432019711771294,
+              "fittedDcOffsetV": -1.4931228534554707e-07
+            }
+          }
+        },
+        {
+          "window": {
+            "label": "early",
+            "startNs": 2980.0000000000005,
+            "stopNs": 2981.6000000000004,
+            "frequencyHz": 5000000000.0
+          },
+          "samples": 8000,
+          "signals": {
+            "receiverDieDifferential": {
+              "meanV": -4.9808528807204765e-08,
+              "acRmsV": 0.7006303551029149,
+              "halfPeakToPeakV": 0.9908983353881062,
+              "maximumAbsoluteV": 0.9908985777295456,
+              "fundamentalPeakV": 0.9908402115060658,
+              "fundamentalPhaseRad": 1.1624084646241262,
+              "fittedDcOffsetV": -4.957115217108571e-08
+            },
+            "transmitterBgaDifferential": {
+              "meanV": -6.623199038671146e-07,
+              "acRmsV": 1.0305531389705087,
+              "halfPeakToPeakV": 1.4379376995145776,
+              "maximumAbsoluteV": 1.4379474205636598,
+              "fundamentalPeakV": 1.4572110754517602,
+              "fundamentalPhaseRad": -2.4320211899748645,
+              "fittedDcOffsetV": -6.629898691684769e-07
+            },
+            "channel_input_v": {
+              "meanV": -6.623472979612189e-07,
+              "acRmsV": 1.0305531389848421,
+              "halfPeakToPeakV": 1.4379377001270726,
+              "maximumAbsoluteV": 1.4379474200019473,
+              "fundamentalPeakV": 1.4572110754714929,
+              "fundamentalPhaseRad": -2.432021189976523,
+              "fittedDcOffsetV": -6.630172632254119e-07
+            },
+            "channel_output_v": {
+              "meanV": 1.7299393032885745e-06,
+              "acRmsV": 1.030550654715895,
+              "halfPeakToPeakV": 1.4373379910200939,
+              "maximumAbsoluteV": 1.4373620598148307,
+              "fundamentalPeakV": 1.4572075317479944,
+              "fundamentalPhaseRad": -2.432018753011169,
+              "fittedDcOffsetV": 1.7292693410632968e-06
+            }
+          }
+        },
+        {
+          "window": {
+            "label": "middle",
+            "startNs": 2989.2,
+            "stopNs": 2990.8,
+            "frequencyHz": 5000000000.0
+          },
+          "samples": 8000,
+          "signals": {
+            "receiverDieDifferential": {
+              "meanV": -2.202555155932373e-07,
+              "acRmsV": 0.7006306026578756,
+              "halfPeakToPeakV": 0.9909031873963965,
+              "maximumAbsoluteV": 0.9909033197164057,
+              "fundamentalPeakV": 0.9908405616633543,
+              "fundamentalPhaseRad": 1.162409527063683,
+              "fittedDcOffsetV": -2.2001813995608463e-07
+            },
+            "transmitterBgaDifferential": {
+              "meanV": -5.812440662182894e-07,
+              "acRmsV": 1.0305532610784436,
+              "halfPeakToPeakV": 1.438209425301011,
+              "maximumAbsoluteV": 1.4382110311767065,
+              "fundamentalPeakV": 1.4572111149694744,
+              "fundamentalPhaseRad": -2.4320204405791426,
+              "fittedDcOffsetV": -5.819140294918953e-07
+            },
+            "channel_input_v": {
+              "meanV": -5.812833219849267e-07,
+              "acRmsV": 1.030553261152067,
+              "halfPeakToPeakV": 1.4382094235130012,
+              "maximumAbsoluteV": 1.4382110289955108,
+              "fundamentalPeakV": 1.4572111150731948,
+              "fundamentalPhaseRad": -2.4320204406053954,
+              "fittedDcOffsetV": -5.81953285265293e-07
+            },
+            "channel_output_v": {
+              "meanV": 2.4040586061033765e-06,
+              "acRmsV": 1.0305502826141886,
+              "halfPeakToPeakV": 1.436560005319663,
+              "maximumAbsoluteV": 1.4366754826444321,
+              "fundamentalPeakV": 1.4572073481529537,
+              "fundamentalPhaseRad": -2.4320174709581397,
+              "fittedDcOffsetV": 2.4033886462937623e-06
+            }
+          }
+        },
+        {
+          "window": {
+            "label": "late",
+            "startNs": 2998.4,
+            "stopNs": 3000.0,
+            "frequencyHz": 5000000000.0
+          },
+          "samples": 8000,
+          "signals": {
+            "receiverDieDifferential": {
+              "meanV": -2.3272816292774222e-08,
+              "acRmsV": 0.7006301681586704,
+              "halfPeakToPeakV": 0.9908914488148861,
+              "maximumAbsoluteV": 0.9908917106859416,
+              "fundamentalPeakV": 0.9908399468350652,
+              "fundamentalPhaseRad": 1.1624086814002574,
+              "fittedDcOffsetV": -2.3035441629168535e-08
+            },
+            "transmitterBgaDifferential": {
+              "meanV": -1.3212372475450706e-06,
+              "acRmsV": 1.030553925113263,
+              "halfPeakToPeakV": 1.4377637116288042,
+              "maximumAbsoluteV": 1.4377675559924228,
+              "fundamentalPeakV": 1.4572123056629183,
+              "fundamentalPhaseRad": -2.4320220883293056,
+              "fittedDcOffsetV": -1.321907210995253e-06
+            },
+            "channel_input_v": {
+              "meanV": -1.3212530581014904e-06,
+              "acRmsV": 1.0305539250838396,
+              "halfPeakToPeakV": 1.4377637124178193,
+              "maximumAbsoluteV": 1.4377675548470847,
+              "fundamentalPeakV": 1.4572123056211637,
+              "fundamentalPhaseRad": -2.4320220883361587,
+              "fittedDcOffsetV": -1.3219230216246254e-06
+            },
+            "channel_output_v": {
+              "meanV": 4.784238440301181e-06,
+              "acRmsV": 1.0305473765413433,
+              "halfPeakToPeakV": 1.4375479534357396,
+              "maximumAbsoluteV": 1.4376010810425015,
+              "fundamentalPeakV": 1.45720252252263,
+              "fundamentalPhaseRad": -2.432016322123179,
+              "fittedDcOffsetV": 4.783568484749601e-06
+            }
+          }
+        }
+      ],
+      "lateCycleRepeat": {
+        "cycleDurationPs": 200.0,
+        "receiverAcRmsV": 0.7006278873757082,
+        "maximumAbsoluteDifferenceV": 3.987678460215527e-06,
+        "rmsDifferenceV": 1.6597704280468999e-06
+      },
+      "limitations": [
+        "Windows are finite captures and may include launch settling.",
+        "Response outside the channel's saved frequency band is rational-model extrapolation.",
+        "Amplitude differences include source/package/load filtering and channel extrapolation."
+      ]
+    }
+  ],
+  "timestepComparison": {
+    "coarseCapture": "/workspace/work/dqs-5ghz-final/captures/5ghz-reference",
+    "refinedCapture": "/workspace/work/dqs-5ghz-final/checks/5ghz-reference-0.2ps",
+    "coarseTimeStepPs": 0.25,
+    "refinedTimeStepPs": 0.2,
+    "receiverHalfPeakToPeakRelativeChange": -3.903265566318481e-08,
+    "receiverAcRmsRelativeChange": 9.208647200331654e-08,
+    "receiverFundamentalPeakRelativeChange": 9.199612316379557e-08,
+    "receiverFundamentalPhaseChangeRad": 1.4398272190518924e-05,
+    "receiverFundamentalPhaseEquivalentTimeChangePs": 0.00045831123822073175,
+    "receiverMaximumAbsoluteWaveformDifferenceV": 2.391494854236953e-05,
+    "waveformComparison": "Same absolute time; refined capture linearly interpolated to coarse timestamps; no phase alignment"
+  }
+}

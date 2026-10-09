@@ -1,0 +1,192 @@
+{
+  "kind": "incomplete numerical-fault diagnostic for assumed bench matched reference",
+  "captureComplete": false,
+  "signoff": false,
+  "notForEyeMetrics": true,
+  "physicalReference": {
+    "type": "lossless ideal transmission line",
+    "Z0Ohm": 100,
+    "delayPs": 400
+  },
+  "originalFullRuns": {
+    "cleanReferenceTimeoutSeconds": 600,
+    "noisyReferenceTimeoutSeconds": 600,
+    "completed": false
+  },
+  "partialDiagnostic": {
+    "kind": "private interrupted progress diagnostic",
+    "notACompleteCapture": true,
+    "requestedEndNs": 500,
+    "elapsedSeconds": 8.670000194999375,
+    "interruptedBySigint": true,
+    "returnCode": 0,
+    "rows": 493487,
+    "finite": true,
+    "lastTimeNs": 129.4100000084312,
+    "minimumPositiveStepSeconds": 2.6469779601696886e-23,
+    "duplicateTimes": 24726,
+    "negativeTimeSteps": 11,
+    "stepQuantilesSeconds": [
+      2.6469779601696886e-23,
+      2.6469779601696886e-23,
+      2.6469779601696886e-23,
+      5.293955920339377e-23,
+      3.999999999951596e-13,
+      5.00000000000567e-13,
+      5.00000000000567e-13
+    ],
+    "stepsBelow1fs": 173198,
+    "stepsBelow1as": 173028,
+    "windows": [
+      {
+        "startNs": 0,
+        "stopNs": 100,
+        "rows": 247049,
+        "minimumPositiveStepSeconds": 4.248783437876575e-17
+      },
+      {
+        "startNs": 100,
+        "stopNs": 129,
+        "rows": 129967,
+        "minimumPositiveStepSeconds": 2.6469779601696886e-23
+      },
+      {
+        "startNs": 129.4,
+        "stopNs": 129.42,
+        "rows": 62853,
+        "minimumPositiveStepSeconds": 2.6469779601696886e-23
+      },
+      {
+        "startNs": 129.8,
+        "stopNs": 129.82,
+        "rows": 0,
+        "minimumPositiveStepSeconds": null
+      }
+    ]
+  },
+  "partialAdaptiveFile": {
+    "published": false,
+    "sha256": "243950d1c0ac65aa415767058a5cb2e2b278a6ba19ad591dd3036c9704f0cffc",
+    "bytes": 37505088,
+    "columns": [
+      "time_s",
+      "die_p_v",
+      "die_n_v"
+    ]
+  },
+  "publishedSampleRows": 9,
+  "negativeTimeSteps": {
+    "count": 11,
+    "minimumSeconds": -2.6469779601696886e-23
+  },
+  "zeroStepMaximumAdjacentVoltageChangeV": 1.816324868286756e-13,
+  "analysis": "Numerical timestep chatter around 10 ps source-noise knots and their 400 ps delayed echoes; sampled adaptive times collapse to one double ULP. This is an incomplete diagnostic, not a physical waveform or completed reference eye.",
+  "nativeNumericalDefaults": {
+    "electricalMaxStepSeconds": 5e-13,
+    "traninitDelminMultiplier": 1e-11,
+    "delminSeconds": 5e-24,
+    "xspiceMinbreakMultiplier": 10,
+    "defaultMinbreakSeconds": 5e-23,
+    "localDoubleUlpSeconds": 2.6469779601696886e-23
+  },
+  "minbreak1fsControl": [
+    {
+      "case": "100ns-05",
+      "elapsedSeconds": 2.282118100001753,
+      "returnCode": 0,
+      "timedOut": false,
+      "completed": true,
+      "adaptiveRows": 49430,
+      "linearizedRows": 10001,
+      "lastNs": 100.00000000002268,
+      "finite": true,
+      "minimumPositiveAdaptiveStepSeconds": 4.248783437876575e-17,
+      "timeGridIdentical": true,
+      "maximumPerColumnDifferenceV": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rmsPerColumnDifferenceV": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "case": "500ns-05",
+      "elapsedSeconds": 25.009091968000575,
+      "returnCode": null,
+      "timedOut": true,
+      "completed": false
+    }
+  ],
+  "lineRepresentationControl": {
+    "acTToLosslessLtraEquivalent": true,
+    "acFrequencyGridGHz": [
+      4,
+      6
+    ],
+    "acPointCount": 401,
+    "maximumReceiverRelativeComplexDifference": 5.7345e-15,
+    "bounded500nsTAndLtraBothTimeoutSeconds": 25,
+    "remedyDemonstrated": false
+  },
+  "solverBuild": {
+    "baseVersion": "44.2",
+    "sourceUrl": "https://sourceforge.net/projects/ngspice/files/ng-spice-rework/44.2/ngspice-44.2.tar.gz/download",
+    "sourceArchiveSha256": "e7dadfb7bd5474fd22409c1e5a67acdec19f77e597df68e17c5549bc1390d7fd",
+    "configureArguments": [
+      "--prefix=/workspace/work/tools/ngspice-44.2-install",
+      "--without-x",
+      "--with-readline=no",
+      "--disable-openmp"
+    ],
+    "buildCommand": "make -j4",
+    "originalBinary": "/workspace/work/tools/ngspice-44.2-install/bin/ngspice",
+    "originalBinarySha256": "18cf37b7ddf399ed68752371e8dbc12aa594f00dab459cffaa3a82921181cfa4",
+    "optimizedBinary": "/workspace/work/tools/ngspice-44.2-fast-pwl/bin/ngspice",
+    "optimizedBinarySha256": "371046ceac2ab7cea9f01aeb393e3958d8dc57b8d5508e40f3f0e155457f8d2c",
+    "patchFile": "/workspace/work/simulate-return-current/scripts/si/ngspice-pwl-binary-search.patch",
+    "patchSha256": "859acd456c7e4f52b331cfb58cba783878d81cf2cd22dc43d9b49ac4b1610f08",
+    "patchPurpose": "Binary-search finite nondecreasing VSRC PWL knot arrays; preserve original scan for unordered/nonfinite/incomplete arrays. Interpolation and breakpoint arithmetic unchanged.",
+    "originalInstallUnchanged": true,
+    "optimizedVersionOutput": "******\n** ngspice-44.2 : Circuit level simulation program\n** Compiled with KLU Direct Linear Solver\n** The U. C. Berkeley CAD Group\n** Copyright 1985-1994, Regents of the University of California.\n** Copyright 2001-2024, The ngspice team.\n** Please get your ngspice manual from https://ngspice.sourceforge.io/docs.html\n** Please file your bug-reports at http://ngspice.sourceforge.net/bugrep.html\n** Creation Date: Fri Oct  9 19:16:53 UTC 2026\n******\n"
+  },
+  "inputHashes": {
+    "simulation.cir": "19959cebd7d4503b88449ad5feabc919c43d2e2767fdd7f95874d3330434e705",
+    "transmitter-stimulus.sp": "9cd6d1796ac26818afd3ee7c4c0e3ae1c2873e0018d809658143f789044a66f4",
+    "receiver-noise.sp": "f76b229134ddc891788865e8cd62a63ccd5c6dd393ceea343760cbe3eeb04e10"
+  },
+  "diagnosticOriginalNetlistSha256": "3dec0c3193f8315c2e57d8bae562df92f2dd51079ec3d6e2a42daca7be299586",
+  "portableDiagnosticNetlistSha256": "2a8cda186adc17d3321b477f35e47af571d90bce1f022bd701389dcdffa0dd81",
+  "portableNetlistChange": "Only absolute PWL include paths changed to relative file names; physical values and sourcefile contents unchanged.",
+  "commands": [
+    "Load noisy reference transmitter-stimulus.sp and receiver-noise.sp beside diagnostic.cir",
+    "ngspice -i diagnostic.cir",
+    "set wr_vecnames",
+    "set wr_singlescale",
+    "set numdgt=17",
+    "save v(rdiep) v(rdien)",
+    "tran 2p 500n 0 .5p",
+    "Send SIGINT to this private native child after 8 seconds",
+    "wrdata partial-adaptive.dat v(rdiep) v(rdien)",
+    "rusage",
+    "quit"
+  ],
+  "limitations": [
+    "Only finite early 100 ns controls completed; neither line form nor 1 fs minbreak demonstrated a solution",
+    "Full private partial raw data retained locally; publicfile gives hashes andrepresentative rows",
+    "No generator,physical stimulus, coefficient or tolerance changes were adopted for the user comparison"
+  ]
+}

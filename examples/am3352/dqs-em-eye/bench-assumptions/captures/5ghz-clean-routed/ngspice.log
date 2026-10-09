@@ -1,0 +1,243 @@
+
+Note: No compatibility mode selected!
+
+
+Circuit: assumed noisy bench companion: virtual ideal differential source
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+srcp                                         0
+srcn                                       1.5
+rxp                                   0.356087
+rxp0                                  0.356087
+rxn                                    1.14391
+rxn0                                   1.14391
+diep                                  0.352111
+dien                                   1.14791
+pkp                                   0.353312
+pkn                                    1.14666
+txp                                   0.353312
+txn                                    1.14666
+csrc                                 -0.793353
+xpcb.s1                              -0.793353
+xpcb.x1_re_a1                     -2.33804e-13
+xpcb.x1_im_a1                      3.66406e-12
+xpcb.x2_re_a1                     -4.71344e-13
+xpcb.x2_im_a1                      4.26957e-12
+xpcb.x3_re_a1                     -8.89564e-13
+xpcb.x3_im_a1                       4.5154e-12
+xpcb.x4_re_a1                     -9.00769e-13
+xpcb.x4_im_a1                      5.00817e-12
+xpcb.x5_re_a1                     -1.50075e-12
+xpcb.x5_im_a1                      5.89251e-12
+xpcb.x6_re_a1                     -1.33463e-12
+xpcb.x6_im_a1                      6.06838e-12
+xpcb.x7_re_a1                     -2.29237e-12
+xpcb.x7_im_a1                      6.21246e-12
+xpcb.x8_re_a1                     -2.88309e-12
+xpcb.x8_im_a1                      7.19389e-12
+xpcb.x9_re_a1                     -4.57838e-12
+xpcb.x9_im_a1                      9.59675e-12
+xpcb.x10_re_a1                    -4.84215e-12
+xpcb.x10_im_a1                     9.82603e-12
+xpcb.x11_re_a1                    -1.51504e-11
+xpcb.x11_im_a1                     5.62946e-12
+xpcb.x12_re_a1                    -1.41831e-11
+xpcb.x12_im_a1                     1.06245e-11
+xpcb.x13_re_a1                    -1.07306e-11
+xpcb.x13_im_a1                     8.97273e-12
+cload                                -0.787826
+xpcb.x1_re_a2                     -2.11911e-14
+xpcb.x1_im_a2                      3.32096e-13
+xpcb.x2_re_a2                     -4.27207e-14
+xpcb.x2_im_a2                      3.86977e-13
+xpcb.x3_re_a2                     -8.06266e-14
+xpcb.x3_im_a2                      4.09258e-13
+xpcb.x4_re_a2                     -8.16421e-14
+xpcb.x4_im_a2                      4.53921e-13
+xpcb.x5_re_a2                     -1.36022e-13
+xpcb.x5_im_a2                      5.34074e-13
+xpcb.x6_re_a2                     -1.20965e-13
+xpcb.x6_im_a2                      5.50013e-13
+xpcb.x7_re_a2                     -2.07771e-13
+xpcb.x7_im_a2                      5.63073e-13
+xpcb.x8_re_a2                     -2.61312e-13
+xpcb.x8_im_a2                      6.52026e-13
+xpcb.x9_re_a2                     -4.14966e-13
+xpcb.x9_im_a2                      8.69811e-13
+xpcb.x10_re_a2                    -4.38873e-13
+xpcb.x10_im_a2                     8.90592e-13
+xpcb.x11_re_a2                    -1.37317e-12
+xpcb.x11_im_a2                     5.10232e-13
+xpcb.x12_re_a2                     -1.2855e-12
+xpcb.x12_im_a2                     9.62961e-13
+xpcb.x13_re_a2                    -9.72578e-13
+xpcb.x13_im_a2                     8.13253e-13
+xpcb.s2                              -0.787826
+cm                                        0.75
+halfcm                                0.176656
+srccm                                 0.749988
+rkp                                    0.35883
+rkn                                    1.14134
+rdiep                                  0.35883
+rdien                                  1.14134
+erxn#branch                        -0.00652236
+erxp#branch                          0.0065195
+ecmsrc#branch                      3.90728e-07
+v.xpcb.v2#branch                    0.00652093
+v.xpcb.v1#branch                   -0.00704203
+ebal#branch                         0.00704203
+lrn#branch                          0.00652236
+lrp#branch                          -0.0065195
+lpn#branch                          0.00704183
+lpp#branch                         -0.00704222
+ecmhalf#branch                     3.90728e-07
+vcm#branch                        -3.90728e-07
+vnn#branch                         -0.00652236
+vnp#branch                           0.0065195
+vnegative#branch                   -0.00704183
+vpositive#branch                    0.00704222
+
+ Reference value :  2.99000e-06
+ Reference value :  2.99070e-06
+ Reference value :  2.99295e-06
+ Reference value :  2.99732e-06
+ Reference value :  2.99986e-06
+ Reference value :  3.00291e-06
+ Reference value :  3.00710e-06
+ Reference value :  3.01050e-06
+ Reference value :  3.01304e-06
+ Reference value :  3.01648e-06
+ Reference value :  3.02028e-06
+ Reference value :  3.02390e-06
+ Reference value :  3.02642e-06
+ Reference value :  3.02881e-06
+ Reference value :  3.03324e-06
+ Reference value :  3.03788e-06
+ Reference value :  3.04286e-06
+ Reference value :  3.04774e-06
+ Reference value :  3.05220e-06
+ Reference value :  3.05701e-06
+ Reference value :  3.06153e-06
+ Reference value :  3.06640e-06
+ Reference value :  3.07084e-06
+ Reference value :  3.07544e-06
+ Reference value :  3.08002e-06
+ Reference value :  3.08352e-06
+ Reference value :  3.08823e-06
+ Reference value :  3.09290e-06
+ Reference value :  3.09488e-06
+ Reference value :  3.09687e-06
+ Reference value :  3.09890e-06
+ Reference value :  3.10256e-06
+ Reference value :  3.10270e-06
+ Reference value :  3.10554e-06
+ Reference value :  3.10815e-06
+ Reference value :  3.11074e-06
+ Reference value :  3.11452e-06
+ Reference value :  3.11752e-06
+ Reference value :  3.11965e-06
+ Reference value :  3.12400e-06
+ Reference value :  3.12675e-06
+ Reference value :  3.12920e-06
+ Reference value :  3.13359e-06
+ Reference value :  3.13651e-06
+ Reference value :  3.13864e-06
+ Reference value :  3.14062e-06
+ Reference value :  3.14275e-06
+ Reference value :  3.14480e-06
+ Reference value :  3.14875e-06
+ Reference value :  3.15110e-06
+ Reference value :  3.15501e-06
+ Reference value :  3.15721e-06
+ Reference value :  3.16019e-06
+ Reference value :  3.16262e-06
+ Reference value :  3.16729e-06
+ Reference value :  3.16967e-06
+ Reference value :  3.17164e-06
+ Reference value :  3.17406e-06
+ Reference value :  3.17680e-06
+ Reference value :  3.17945e-06
+ Reference value :  3.18405e-06
+ Reference value :  3.18873e-06
+ Reference value :  3.19345e-06
+ Reference value :  3.19814e-06
+ Reference value :  3.20240e-06
+ Reference value :  3.20713e-06
+ Reference value :  3.21177e-06
+ Reference value :  3.21664e-06
+ Reference value :  3.22110e-06
+ Reference value :  3.22572e-06
+ Reference value :  3.23048e-06
+ Reference value :  3.23527e-06
+ Reference value :  3.23886e-06
+ Reference value :  3.24348e-06
+ Reference value :  3.24740e-06
+ Reference value :  3.25190e-06
+ Reference value :  3.25444e-06
+ Reference value :  3.25699e-06
+ Reference value :  3.26155e-06
+ Reference value :  3.26587e-06
+ Reference value :  3.27003e-06
+ Reference value :  3.27243e-06
+ Reference value :  3.27704e-06
+ Reference value :  3.28171e-06
+ Reference value :  3.28620e-06
+ Reference value :  3.28859e-06
+ Reference value :  3.29258e-06
+ Reference value :  3.29450e-06
+ Reference value :  3.29775e-06
+ Reference value :  3.30221e-06
+ Reference value :  3.30644e-06
+ Reference value :  3.30902e-06
+ Reference value :  3.31372e-06
+ Reference value :  3.31831e-06
+ Reference value :  3.32074e-06
+ Reference value :  3.32545e-06
+ Reference value :  3.32799e-06
+ Reference value :  3.33334e-06
+ Reference value :  3.33618e-06
+ Reference value :  3.34108e-06
+ Reference value :  3.34429e-06
+ Reference value :  3.34880e-06
+ Reference value :  3.35270e-06
+ Reference value :  3.35695e-06
+ Reference value :  3.35917e-06
+ Reference value :  3.36355e-06
+ Reference value :  3.36858e-06
+ Reference value :  3.37350e-06
+ Reference value :  3.37825e-06
+ Reference value :  3.38275e-06
+ Reference value :  3.38750e-06
+ Reference value :  3.39244e-06
+ Reference value :  3.39640e-06
+ Reference value :  3.40048e-06
+ Reference value :  3.40477e-06
+ Reference value :  3.41024e-06
+ Reference value :  3.41680e-06
+ Reference value :  3.41956e-06
+ Reference value :  3.42398e-06
+ Reference value :  3.42922e-06
+ Reference value :  3.43237e-06
+ Reference value :  3.43900e-06
+ Reference value :  3.44380e-06
+ Reference value :  3.44853e-06
+ Reference value :  3.45419e-06
+ Reference value :  3.46061e-06
+ Reference value :  3.46756e-06
+ Reference value :  3.47400e-06
+ Reference value :  3.47743e-06
+ Reference value :  3.48343e-06
+ Reference value :  3.48980e-06
+ Reference value :  3.49623e-06
+ Reference value :  3.49968e-06
+No. of Data Rows : 1259961
+BANDWIDTH_STRESS_COMPLETE
+ngspice-44.2 done

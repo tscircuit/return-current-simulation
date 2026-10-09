@@ -1,0 +1,20 @@
+{
+  "nativeTimeoutSeconds": 20,
+  "optimizedElapsedSeconds": 0.7902178060012375,
+  "returnCode": 0,
+  "completionSentinelPresent": true,
+  "comparisons": {
+    "adaptive.dat": {
+      "byteIdentical": true,
+      "originalSha256": "429cb55fb06da8094d2db3e267d5b4d272f6daa5f6dfbde6dbf6d0d7dd106379",
+      "optimizedSha256": "429cb55fb06da8094d2db3e267d5b4d272f6daa5f6dfbde6dbf6d0d7dd106379",
+      "bytes": 11885566
+    },
+    "waveforms.dat": {
+      "byteIdentical": true,
+      "originalSha256": "49b9cf0cf5afe3c80ce427cd572a326d30b94e9039f063ecbb7ec39cd9c57f2c",
+      "optimizedSha256": "49b9cf0cf5afe3c80ce427cd572a326d30b94e9039f063ecbb7ec39cd9c57f2c",
+      "bytes": 2418652
+    }
+  }
+}

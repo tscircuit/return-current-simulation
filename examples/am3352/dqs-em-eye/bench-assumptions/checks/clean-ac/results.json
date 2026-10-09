@@ -1,0 +1,148 @@
+[
+  {
+    "case": "routed",
+    "fundamental": {
+      "frequencyHz": 5000000000.0,
+      "harmonicNumber": 1,
+      "outsideExtractedChannelBand": false,
+      "sourceDifferentialFourierPeakV": 1.9097807782553446,
+      "signals": {
+        "transmitterBgaDifferential": {
+          "transferReal": -0.07868382620875165,
+          "transferImag": -0.1834482331971117,
+          "expectedPeakV": 0.3812125211607704,
+          "expectedAbsolutePhaseRad": 2.7207020955746772,
+          "expectedPhasorRealV": -0.3479423676112361,
+          "expectedPhasorImagV": 0.15575331492728584
+        },
+        "receiverPadDifferential": {
+          "transferReal": 0.2275580114940975,
+          "transferImag": 0.13703705382003156,
+          "expectedPeakV": 0.5073040759856897,
+          "expectedAbsolutePhaseRad": -1.0444634905209869,
+          "expectedPhasorRealV": 0.2548522658043951,
+          "expectedPhasorImagV": -0.43864307600378283
+        },
+        "receiverDieDifferential": {
+          "transferReal": -0.09836734450103866,
+          "transferImag": -0.1514865201739935,
+          "expectedPeakV": 0.34494838870373956,
+          "expectedAbsolutePhaseRad": 2.549968531910549,
+          "expectedPhasorRealV": -0.28631957579302614,
+          "expectedPhasorImagV": 0.1923811097457538
+        },
+        "channelInput": {
+          "transferReal": -0.07868382620875165,
+          "transferImag": -0.1834482331971117,
+          "expectedPeakV": 0.3812125211607704,
+          "expectedAbsolutePhaseRad": 2.7207020955746772,
+          "expectedPhasorRealV": -0.3479423676112361,
+          "expectedPhasorImagV": 0.15575331492728584
+        },
+        "channelOutput": {
+          "transferReal": 0.2275580114940975,
+          "transferImag": 0.13703705382003156,
+          "expectedPeakV": 0.5073040759856897,
+          "expectedAbsolutePhaseRad": -1.0444634905209869,
+          "expectedPhasorRealV": 0.2548522658043951,
+          "expectedPhasorImagV": -0.43864307600378283
+        },
+        "scopeObservedPadDifferential": {
+          "expectedPeakV": 0.499873129964515,
+          "expectedAbsolutePhaseRad": -1.662841553157335,
+          "expectedPhasorRealV": -0.04594599299379909,
+          "expectedPhasorImagV": -0.49775708110315686
+        }
+      }
+    },
+    "periodicGridStatistics": {
+      "rawPad": {
+        "meanV": -1.4155343563970746e-17,
+        "acRmsV": 0.35871904887847444,
+        "halfPeakToPeakV": 0.5061630166815532
+      },
+      "scopeObservedPad": {
+        "meanV": 7.355227538141662e-18,
+        "acRmsV": 0.3534639426362169,
+        "halfPeakToPeakV": 0.49921038085220526
+      }
+    },
+    "scopeFundamentalAmplitudeRatio": 0.9853520868983038,
+    "scopeFundamentalPhaseRad": -0.6183780626363482,
+    "mathematicalAliasedFundamentalChangeV": 3.298783451721818e-11,
+    "sumIncludedOverNyquistScopeHarmonicPeakV": 7.375390580657632e-10
+  },
+  {
+    "case": "reference",
+    "fundamental": {
+      "frequencyHz": 5000000000.0,
+      "harmonicNumber": 1,
+      "outsideExtractedChannelBand": false,
+      "sourceDifferentialFourierPeakV": 1.9097807782553446,
+      "signals": {
+        "transmitterBgaDifferential": {
+          "transferReal": 0.25981349456000813,
+          "transferImag": -0.6709959253587258,
+          "expectedPeakV": 1.3741646859647678,
+          "expectedAbsolutePhaseRad": -2.7878721700379065,
+          "expectedPhasorRealV": -1.289090794393451,
+          "expectedPhasorImagV": -0.47599738230657307
+        },
+        "receiverPadDifferential": {
+          "transferReal": 0.25981349456000813,
+          "transferImag": -0.6709959253587263,
+          "expectedPeakV": 1.3741646859647685,
+          "expectedAbsolutePhaseRad": -2.787872170037907,
+          "expectedPhasorRealV": -1.289090794393452,
+          "expectedPhasorImagV": -0.47599738230657307
+        },
+        "receiverDieDifferential": {
+          "transferReal": -0.35847754026980305,
+          "transferImag": 0.33297246115461654,
+          "expectedPeakV": 0.9343821914226026,
+          "expectedAbsolutePhaseRad": 0.8065598523936294,
+          "expectedPhasorRealV": 0.6465793977822999,
+          "expectedPhasorImagV": 0.6745407044880121
+        },
+        "channelInput": {
+          "transferReal": 0.2598134945600079,
+          "transferImag": -0.6709959253587259,
+          "expectedPeakV": 1.3741646859647678,
+          "expectedAbsolutePhaseRad": -2.787872170037907,
+          "expectedPhasorRealV": -1.2890907943934513,
+          "expectedPhasorImagV": -0.4759973823065727
+        },
+        "channelOutput": {
+          "transferReal": 0.25981349456000813,
+          "transferImag": -0.6709959253587263,
+          "expectedPeakV": 1.3741646859647685,
+          "expectedAbsolutePhaseRad": -2.787872170037907,
+          "expectedPhasorRealV": -1.289090794393452,
+          "expectedPhasorImagV": -0.47599738230657307
+        },
+        "scopeObservedPadDifferential": {
+          "expectedPeakV": 1.3540360410573369,
+          "expectedAbsolutePhaseRad": 2.8769350745053317,
+          "expectedPhasorRealV": -1.306891386834851,
+          "expectedPhasorImagV": 0.35418710238955026
+        }
+      }
+    },
+    "periodicGridStatistics": {
+      "rawPad": {
+        "meanV": 1.2434497875801754e-16,
+        "acRmsV": 0.9718045410889481,
+        "halfPeakToPeakV": 1.3538420030186007
+      },
+      "scopeObservedPad": {
+        "meanV": 1.2212453270876723e-16,
+        "acRmsV": 0.957482504565016,
+        "halfPeakToPeakV": 1.3442498736585684
+      }
+    },
+    "scopeFundamentalAmplitudeRatio": 0.9853520868983038,
+    "scopeFundamentalPhaseRad": -0.6183780626363482,
+    "mathematicalAliasedFundamentalChangeV": 7.009565200415673e-07,
+    "sumIncludedOverNyquistScopeHarmonicPeakV": 1.544483067271365e-06
+  }
+]
