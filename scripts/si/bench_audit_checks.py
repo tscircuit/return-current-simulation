@@ -292,5 +292,3 @@ def audit_bench(root, routed_only=False):
                             "Noisy cycle differences are not interpreted as settling or attenuation.",
                             "One mean nominal clock phase is allowed; individual edges are not aligned, sorted or clipped.",
                             "Finite noisy eye extrema do not establish DDR compliance, BER or rare-event tails."]}
-
-

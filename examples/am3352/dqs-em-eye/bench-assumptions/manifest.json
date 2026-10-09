@@ -39,7 +39,7 @@
     "scripts/si/bench_stimulus.py": "c2b7c85a33a5cdbabaa8f82be883b35a14703b235b49c6b63762207ac9aaaeaf",
     "scripts/si/bench_observation.py": "26f008842f42708cb0d68f26f82f239780014432d88319e0ebd2b6470239eea6",
     "scripts/si/bench_audit.py": "441211771d2a7ccc97207bb64d1a8ca78076d919e3c15ed96179a79e4779b48e",
-    "scripts/si/bench_audit_checks.py": "c6fc0f16f6b742c37c4c5dbbe1bea448fb83d99d58ceb77e53a22bf683e476cc",
+    "scripts/si/bench_audit_checks.py": "2c996aaa74ddff31bcdd765f4b9ab05260f07ecd3243c8756b750b19d7f9ccd2",
     "scripts/si/compare-eyes.py": "aba220554e64eba12836ba0d800f176e1efd411436acf1e977d3eeb053e78a07",
     "scripts/si/eye_comparison.py": "53dacef617b397c6e5977dcb45d43f0f16f1b45f59fcfcf69727e9f2a1c07c89",
     "scripts/si/ngspice-pwl-binary-search.patch": "859acd456c7e4f52b331cfb58cba783878d81cf2cd22dc43d9b49ac4b1610f08",

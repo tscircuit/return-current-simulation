@@ -343,6 +343,10 @@ Both long matched 100 Ω / 400 ps bench-reference transients exceeded the
 and [noisy attempt](bench-assumptions/checks/reference-timeouts/noisy/attempt.json).
 Their incomplete records are a model/solver limitation, and do not provide
 a verified bench-reference eye. The
+[bounded fault diagnostic](bench-assumptions/checks/reference-timeouts/diagnostic/fault-summary.json)
+shows timestep chatter near **129.41 ns**, with steps down to
+**2.65e−23 s** and duplicate/backward adaptive timestamps; those records are
+invalid for eye analysis. The
 [reference AC model control](bench-assumptions/checks/clean-ac/reference/results.json)
 solves the declared network in frequency space, without validating that
 missing long transient. The clean/noisy routed comparison above and its
