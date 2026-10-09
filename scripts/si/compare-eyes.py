@@ -175,6 +175,7 @@ if meta.get("frequencyStress"):
     maximum = channel.get("maximumExtractedFrequencyGHz")
     bandwidth = f"1 MHz–{maximum:g} GHz fit" if maximum is not None else "supplied differential fit"
     frequency_note = (f"{strobe_ghz:g} GHz is extrapolated" if maximum is not None and strobe_ghz > maximum
+                      else f"{strobe_ghz:g} GHz band edge; higher harmonics extrapolated" if maximum is not None and strobe_ghz == maximum
                       else "fundamental is within the declared fit bandwidth" if maximum is not None
                       else "extracted bandwidth is unspecified")
     source = meta.get("source", {})

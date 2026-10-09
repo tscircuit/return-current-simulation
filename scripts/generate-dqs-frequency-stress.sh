@@ -6,13 +6,19 @@ si_ngspice=${SI_NGSPICE:-ngspice}
 si_channel=${1:-examples/am3352/dqs-em-eye/channel/channel.sp}
 si_output=${2:-work/dqs-frequency-stress}
 
-for si_frequency in 400mhz 20ghz; do
+for si_frequency in 400mhz 5ghz 20ghz; do
   if [ "$si_frequency" = 400mhz ]; then
     si_ghz=0.4
     si_ui_count=128
     si_step_ps=0.5
     si_window=()
     si_label='Routed DQS0: ideal source, 400 MHz control'
+  elif [ "$si_frequency" = 5ghz ]; then
+    si_ghz=5
+    si_ui_count=30000
+    si_step_ps=0.25
+    si_window=(--analysis-start-ns 2980 --analysis-stop-ns 3000)
+    si_label='Routed DQS0: ideal source, 5 GHz band-edge control'
   else
     si_ghz=20
     si_ui_count=120000

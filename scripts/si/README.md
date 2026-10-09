@@ -127,13 +127,15 @@ DQS/DDR timing-mask check.
 ## Interpreting the plots
 
 For a vendor-free frequency sensitivity comparison, run
-`bash scripts/generate-dqs-frequency-stress.sh`. It generates **400 MHz** and
-**20 GHz strobe** companions with an ideal 50 Ω-per-leg source, 1 ps edges and
-zero jitter/noise through the same package and assumed receiver load. The
-20 GHz case extrapolates the saved channel fit beyond its 5 GHz extraction
-range. It is a bandwidth diagnostic, and does not qualify the active IBIS
+`bash scripts/generate-dqs-frequency-stress.sh`. It generates **400 MHz**,
+**5 GHz** and **20 GHz strobe** companions with an ideal 50 Ω-per-leg source,
+1 ps edges and zero jitter/noise through the same package and assumed receiver load. The
+5 GHz companion uses **10 GT/s / 100 ps UI**; its fundamental is at the
+dataset's 5 GHz upper edge, while harmonics above 5 GHz are extrapolated.
+The 20 GHz case extrapolates the saved channel fit beyond that extraction
+range. These are bandwidth diagnostics, and do not qualify the active IBIS
 driver or the high-frequency channel. See the
-[captured stress comparison](../../examples/am3352/dqs-em-eye/README.md#20-ghz-frequency-stress).
+[captured stress comparison](../../examples/am3352/dqs-em-eye/README.md#5-ghz-and-20-ghz-frequency-stress).
 
 The comparison renderer accepts capture-specific time windows and plots closed
 eyes with unavailable timing metrics when receiver crossings cannot be

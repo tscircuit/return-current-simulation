@@ -10,6 +10,10 @@ const frequencyControl = new URL(
   "../examples/am3352/dqs-em-eye/frequency-stress/400mhz/eye-comparison.png",
   import.meta.url,
 ).href
+const frequencyBandEdge = new URL(
+  "../examples/am3352/dqs-em-eye/frequency-stress/5ghz/eye-comparison.png",
+  import.meta.url,
+).href
 const frequencyStress = new URL(
   "../examples/am3352/dqs-em-eye/frequency-stress/20ghz/eye-comparison.png",
   import.meta.url,
@@ -51,13 +55,19 @@ export default function DqsEmEye() {
           style={{ width: "100%", maxWidth: 1800 }}
         />
       </a>
-      <h2>Frequency stress: 400 MHz to 20 GHz</h2>
+      <h2>Frequency stress: 400 MHz, 5 GHz and 20 GHz</h2>
       <p>
         These companion captures use an ideal test source through the same
-        package, routed channel and receiver load. Both use 50 Ω source
+        package, routed channel and receiver load. All use 50 Ω source
         resistance per leg, 1 ps edges and zero jitter or noise to isolate
         frequency sensitivity. The TI IBIS switching model is retained for the
         original captures above.
+      </p>
+      <p>
+        The 5 GHz strobe has a 100 ps unit interval (10 GT/s). Its fundamental
+        lies at the upper edge of the extracted dataset; its harmonics above 5
+        GHz still use fit extrapolation. It retains the same ideal source and
+        assumed receiver load as the other frequency companions.
       </p>
       <p>
         The 20 GHz strobe has a 25 ps unit interval (40 GT/s). Its routed
@@ -70,6 +80,13 @@ export default function DqsEmEye() {
         <img
           src={frequencyControl}
           alt="400 MHz ideal-source bandwidth control through routed and matched channels"
+          style={{ width: "100%", maxWidth: 1800 }}
+        />
+      </a>
+      <a href={frequencyBandEdge} target="_blank" rel="noreferrer">
+        <img
+          src={frequencyBandEdge}
+          alt="5 GHz ideal-source bandwidth companion; fundamental at dataset edge with extrapolated harmonics"
           style={{ width: "100%", maxWidth: 1800 }}
         />
       </a>

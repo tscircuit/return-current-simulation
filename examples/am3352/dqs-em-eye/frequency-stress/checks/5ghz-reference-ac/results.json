@@ -1,0 +1,835 @@
+{
+  "t": [
+    {
+      "frequencyHz": 5000000000.0,
+      "harmonic": 1,
+      "receiverTransfer": {
+        "real": -0.47934006994610945,
+        "imag": 0.19852390768142592,
+        "magnitude": 0.5188242906582579,
+        "db": -5.6995939805221685,
+        "phaseDegrees": 157.50257622541753
+      },
+      "channelTransfer": {
+        "real": 1.0000000000000007,
+        "imag": 1.088806260772702e-16,
+        "magnitude": 1.0000000000000007,
+        "phaseDegrees": 6.23840034496963e-15
+      },
+      "pulseSourceHarmonicPeakV": 1.9097807782553446,
+      "expectedReceiverHarmonicPeakV": 0.9908406575911048,
+      "expectedReceiverAbsolutePhaseDegrees": 66.60257622541758
+    },
+    {
+      "frequencyHz": 15000000000.0,
+      "harmonic": 3,
+      "receiverTransfer": {
+        "real": 0.0017566241309075353,
+        "imag": 0.0007146274170421848,
+        "magnitude": 0.0018964231285435848,
+        "db": -54.4412951343723,
+        "phaseDegrees": 22.13740746152188
+      },
+      "channelTransfer": {
+        "real": 0.9999999999999977,
+        "imag": 4.3719726897652386e-17,
+        "magnitude": 0.9999999999999977,
+        "phaseDegrees": 2.5049558327000716e-15
+      },
+      "pulseSourceHarmonicPeakV": 0.6363841790787249,
+      "expectedReceiverHarmonicPeakV": 0.0012068536758441165,
+      "expectedReceiverAbsolutePhaseDegrees": -70.56259253847747
+    },
+    {
+      "frequencyHz": 25000000000.0,
+      "harmonic": 5,
+      "receiverTransfer": {
+        "real": 0.00022384012729596551,
+        "imag": 5.2085822942708506e-05,
+        "magnitude": 0.00022982022439179114,
+        "db": -72.772235113018,
+        "phaseDegrees": 13.09917286776737
+      },
+      "channelTransfer": {
+        "real": 0.9999999999999926,
+        "imag": 9.730830976585389e-17,
+        "magnitude": 0.9999999999999926,
+        "phaseDegrees": 5.575355461135121e-15
+      },
+      "pulseSourceHarmonicPeakV": 0.3815792854393314,
+      "expectedReceiverHarmonicPeakV": 8.769463700292646e-05,
+      "expectedReceiverAbsolutePhaseDegrees": -81.40082713223092
+    },
+    {
+      "frequencyHz": 35000000000.0,
+      "harmonic": 7,
+      "receiverTransfer": {
+        "real": 5.801230407439007e-05,
+        "imag": 9.525375773903308e-06,
+        "magnitude": 5.8789116404769676e-05,
+        "db": -84.61406134339187,
+        "phaseDegrees": 9.324522382060724
+      },
+      "channelTransfer": {
+        "real": 0.9999999999999847,
+        "imag": 2.2633246301041097e-16,
+        "magnitude": 0.9999999999999847,
+        "phaseDegrees": 1.2967894897297565e-14
+      },
+      "pulseSourceHarmonicPeakV": 0.27228759883888703,
+      "expectedReceiverHarmonicPeakV": 1.600754734371456e-05,
+      "expectedReceiverAbsolutePhaseDegrees": -86.97547761793248
+    },
+    {
+      "frequencyHz": 45000000000.0,
+      "harmonic": 9,
+      "receiverTransfer": {
+        "real": 2.119211598225139e-05,
+        "imag": 2.6931617681171926e-06,
+        "magnitude": 2.1362558370065204e-05,
+        "db": -93.4069347524691,
+        "phaseDegrees": 7.242507954568793
+      },
+      "channelTransfer": {
+        "real": 0.9999999999999746,
+        "imag": 9.418019686176492e-17,
+        "magnitude": 0.9999999999999746,
+        "phaseDegrees": 5.396127793890507e-15
+      },
+      "pulseSourceHarmonicPeakV": 0.21150043846784358,
+      "expectedReceiverHarmonicPeakV": 4.518190462063692e-06,
+      "expectedReceiverAbsolutePhaseDegrees": -90.85749204542662
+    },
+    {
+      "frequencyHz": 55000000000.0,
+      "harmonic": 11,
+      "receiverTransfer": {
+        "real": 9.488304353324191e-06,
+        "imag": 9.841447519689613e-07,
+        "magnitude": 9.539206486607723e-06,
+        "db": -100.40975500659029,
+        "phaseDegrees": 5.921650975324576
+      },
+      "channelTransfer": {
+        "real": 1.0000000000000626,
+        "imag": 1.7142670571717377e-16,
+        "magnitude": 1.0000000000000626,
+        "phaseDegrees": 9.822026733424622e-15
+      },
+      "pulseSourceHarmonicPeakV": 0.17276092505327567,
+      "expectedReceiverHarmonicPeakV": 1.6480021369005579e-06,
+      "expectedReceiverAbsolutePhaseDegrees": -93.97834902466275
+    },
+    {
+      "frequencyHz": 65000000000.0,
+      "harmonic": 13,
+      "receiverTransfer": {
+        "real": 4.8614479141353894e-06,
+        "imag": 4.260635990386239e-07,
+        "magnitude": 4.880082582526353e-06,
+        "db": -106.23145657292925,
+        "phaseDegrees": 5.0086786917620785
+      },
+      "channelTransfer": {
+        "real": 1.0000000000000664,
+        "imag": 1.2700796030192864e-16,
+        "magnitude": 1.0000000000000664,
+        "phaseDegrees": 7.277020089865133e-15
+      },
+      "pulseSourceHarmonicPeakV": 0.1458933642117173,
+      "expectedReceiverHarmonicPeakV": 7.119716655957752e-07,
+      "expectedReceiverAbsolutePhaseDegrees": -96.69132130822982
+    },
+    {
+      "frequencyHz": 75000000000.0,
+      "harmonic": 15,
+      "receiverTransfer": {
+        "real": 2.741802811388659e-06,
+        "imag": 2.080726313271992e-07,
+        "magnitude": 2.7496866869602032e-06,
+        "db": -111.21433578067659,
+        "phaseDegrees": 4.339800116137519
+      },
+      "channelTransfer": {
+        "real": 1.0000000000000668,
+        "imag": 3.103879115971588e-16,
+        "magnitude": 1.0000000000000668,
+        "phaseDegrees": 1.7783917346395708e-14
+      },
+      "pulseSourceHarmonicPeakV": 0.1261491231023816,
+      "expectedReceiverHarmonicPeakV": 3.468705643663225e-07,
+      "expectedReceiverAbsolutePhaseDegrees": -99.1601998838596
+    },
+    {
+      "frequencyHz": 85000000000.0,
+      "harmonic": 17,
+      "receiverTransfer": {
+        "real": 1.6615509493692932e-06,
+        "imag": 1.1119361214893988e-07,
+        "magnitude": 1.6652674189849294e-06,
+        "db": -115.5703202970405,
+        "phaseDegrees": 3.828615329784384
+      },
+      "channelTransfer": {
+        "real": 1.0000000000000653,
+        "imag": -4.594600939315529e-16,
+        "magnitude": 1.0000000000000653,
+        "phaseDegrees": -2.6325124236960633e-14
+      },
+      "pulseSourceHarmonicPeakV": 0.1110142411922712,
+      "expectedReceiverHarmonicPeakV": 1.8486839890082388e-07,
+      "expectedReceiverAbsolutePhaseDegrees": -101.47138467020704
+    },
+    {
+      "frequencyHz": 95000000000.0,
+      "harmonic": 19,
+      "receiverTransfer": {
+        "real": 1.0647081798690578e-06,
+        "imag": 6.372554921130451e-08,
+        "magnitude": 1.0666135447772845e-06,
+        "db": -119.43985811145618,
+        "phaseDegrees": 3.4252149920505395
+      },
+      "channelTransfer": {
+        "real": 0.9999999999997087,
+        "imag": 2.0401310806056283e-16,
+        "magnitude": 0.9999999999997087,
+        "phaseDegrees": 1.1689090057220051e-14
+      },
+      "pulseSourceHarmonicPeakV": 0.09903328684027146,
+      "expectedReceiverHarmonicPeakV": 1.0563024512764755e-07,
+      "expectedReceiverAbsolutePhaseDegrees": -103.6747850079555
+    },
+    {
+      "frequencyHz": 105000000000.0,
+      "harmonic": 21,
+      "receiverTransfer": {
+        "real": 7.133801195311515e-07,
+        "imag": 3.861966055168238e-08,
+        "magnitude": 7.144247148044412e-07,
+        "db": -122.92087059757691,
+        "phaseDegrees": 3.0987486778988003
+      },
+      "channelTransfer": {
+        "real": 1.000000000000054,
+        "imag": -1.3851582168729042e-16,
+        "magnitude": 1.000000000000054,
+        "phaseDegrees": -7.93637197846799e-15
+      },
+      "pulseSourceHarmonicPeakV": 0.0893052958209704,
+      "expectedReceiverHarmonicPeakV": 6.380191049742303e-08,
+      "expectedReceiverAbsolutePhaseDegrees": -105.80125132208923
+    },
+    {
+      "frequencyHz": 115000000000.0,
+      "harmonic": 23,
+      "receiverTransfer": {
+        "real": 4.957374419983399e-07,
+        "imag": 2.44981461622348e-08,
+        "magnitude": 4.963423924716119e-07,
+        "db": -126.08437260484897,
+        "phaseDegrees": 2.829117441178033
+      },
+      "channelTransfer": {
+        "real": 1.0000000000004714,
+        "imag": -4.155213399743543e-16,
+        "magnitude": 1.0000000000004714,
+        "phaseDegrees": -2.38076190781399e-14
+      },
+      "pulseSourceHarmonicPeakV": 0.08124269843365921,
+      "expectedReceiverHarmonicPeakV": 4.032419531141209e-08,
+      "expectedReceiverAbsolutePhaseDegrees": -107.87088255881099
+    },
+    {
+      "frequencyHz": 125000000000.0,
+      "harmonic": 25,
+      "receiverTransfer": {
+        "real": 3.5512072245568005e-07,
+        "imag": 1.6142485382174618e-08,
+        "magnitude": 3.5548742221316053e-07,
+        "db": -128.9835152157056,
+        "phaseDegrees": 2.60266434041666
+      },
+      "channelTransfer": {
+        "real": 1.0000000000000318,
+        "imag": -3.8629023039702267e-16,
+        "magnitude": 1.0000000000000318,
+        "phaseDegrees": -2.2132799868884878e-14
+      },
+      "pulseSourceHarmonicPeakV": 0.07444596158888334,
+      "expectedReceiverHarmonicPeakV": 2.64646029794121e-08,
+      "expectedReceiverAbsolutePhaseDegrees": -109.89733565959614
+    },
+    {
+      "frequencyHz": 135000000000.0,
+      "harmonic": 27,
+      "receiverTransfer": {
+        "real": 2.610115737875967e-07,
+        "imag": 1.0984277773987645e-08,
+        "magnitude": 2.612425999129816e-07,
+        "db": -131.6591200549365,
+        "phaseDegrees": 2.409784403409294
+      },
+      "channelTransfer": {
+        "real": 0.9999999999995156,
+        "imag": -1.145732495629421e-16,
+        "magnitude": 0.9999999999995156,
+        "phaseDegrees": -6.564563645058866e-15
+      },
+      "pulseSourceHarmonicPeakV": 0.06863394551388818,
+      "expectedReceiverHarmonicPeakV": 1.7930110368334068e-08,
+      "expectedReceiverAbsolutePhaseDegrees": -111.89021559659159
+    },
+    {
+      "frequencyHz": 145000000000.0,
+      "harmonic": 29,
+      "receiverTransfer": {
+        "real": 1.9611275756286347e-07,
+        "imag": 7.683095628225195e-09,
+        "magnitude": 1.9626319990600102e-07,
+        "db": -134.1432224925657,
+        "phaseDegrees": 2.24352535841983
+      },
+      "channelTransfer": {
+        "real": 0.9999999999999999,
+        "imag": -3.128635718736991e-16,
+        "magnitude": 0.9999999999999999,
+        "phaseDegrees": -1.7925762231750848e-14
+      },
+      "pulseSourceHarmonicPeakV": 0.06360307836446441,
+      "expectedReceiverHarmonicPeakV": 1.2482943683681927e-08,
+      "expectedReceiverAbsolutePhaseDegrees": -113.8564746415941
+    },
+    {
+      "frequencyHz": 155000000000.0,
+      "harmonic": 31,
+      "receiverTransfer": {
+        "real": 1.5018870146537673e-07,
+        "imag": 5.503838406555032e-09,
+        "magnitude": 1.5028951488730517e-07,
+        "db": -136.46142634773304,
+        "phaseDegrees": 2.09873085261392
+      },
+      "channelTransfer": {
+        "real": 0.9999999999994034,
+        "imag": -1.6114907588377442e-16,
+        "magnitude": 0.9999999999994034,
+        "phaseDegrees": -9.233161920579219e-15
+      },
+      "pulseSourceHarmonicPeakV": 0.0592023342048956,
+      "expectedReceiverHarmonicPeakV": 8.897490087849874e-09,
+      "expectedReceiverAbsolutePhaseDegrees": -115.80126914737048
+    },
+    {
+      "frequencyHz": 165000000000.0,
+      "harmonic": 33,
+      "receiverTransfer": {
+        "real": 1.1695449357578247e-07,
+        "imag": 4.0258867017206716e-09,
+        "magnitude": 1.1702376395973099e-07,
+        "db": -138.63451874651042,
+        "phaseDegrees": 1.9714956422798433
+      },
+      "channelTransfer": {
+        "real": 0.999999999999958,
+        "imag": -5.079449517047713e-16,
+        "magnitude": 0.999999999999958,
+        "phaseDegrees": -2.9103101957661047e-14
+      },
+      "pulseSourceHarmonicPeakV": 0.055317309896890474,
+      "expectedReceiverHarmonicPeakV": 6.473439816261002e-09,
+      "expectedReceiverAbsolutePhaseDegrees": -117.72850435774308
+    },
+    {
+      "frequencyHz": 175000000000.0,
+      "harmonic": 35,
+      "receiverTransfer": {
+        "real": 9.242533284580077e-08,
+        "imag": 2.999544284887765e-09,
+        "magnitude": 9.247399319578485e-08,
+        "db": -140.6796077667602,
+        "phaseDegrees": 1.8588077921516577
+      },
+      "channelTransfer": {
+        "real": 0.9999999999992815,
+        "imag": 3.5312987980317695e-17,
+        "magnitude": 0.9999999999992815,
+        "phaseDegrees": 2.0232851732698626e-15
+      },
+      "pulseSourceHarmonicPeakV": 0.05185976133398455,
+      "expectedReceiverHarmonicPeakV": 4.795679216733914e-09,
+      "expectedReceiverAbsolutePhaseDegrees": -119.64119220786961
+    },
+    {
+      "frequencyHz": 185000000000.0,
+      "harmonic": 37,
+      "receiverTransfer": {
+        "real": 7.400282996234734e-08,
+        "imag": 2.2717303216769926e-09,
+        "magnitude": 7.40376904089432e-08,
+        "db": -142.61094274875978,
+        "phaseDegrees": 1.758307037076449
+      },
+      "channelTransfer": {
+        "real": 0.9999999999999053,
+        "imag": -2.97795637283041e-16,
+        "magnitude": 0.9999999999999053,
+        "phaseDegrees": -1.706243317372857e-14
+      },
+      "pulseSourceHarmonicPeakV": 0.04876053332320453,
+      "expectedReceiverHarmonicPeakV": 3.610117270358375e-09,
+      "expectedReceiverAbsolutePhaseDegrees": -121.54169296292821
+    },
+    {
+      "frequencyHz": 195000000000.0,
+      "harmonic": 39,
+      "receiverTransfer": {
+        "real": 5.99501143872572e-08,
+        "imag": 1.745889567992328e-09,
+        "magnitude": 5.997553122256482e-08,
+        "db": -144.44051793314452,
+        "phaseDegrees": 1.6681175615833312
+      },
+      "channelTransfer": {
+        "real": 0.9999999999991488,
+        "imag": 5.90002911009445e-16,
+        "magnitude": 0.9999999999991488,
+        "phaseDegrees": 3.380467670130267e-14
+      },
+      "pulseSourceHarmonicPeakV": 0.04596466488172446,
+      "expectedReceiverHarmonicPeakV": 2.7567551937485937e-09,
+      "expectedReceiverAbsolutePhaseDegrees": -123.4318824383663
+    }
+  ],
+  "ltra": [
+    {
+      "frequencyHz": 5000000000.0,
+      "harmonic": 1,
+      "receiverTransfer": {
+        "real": -0.47934006994610934,
+        "imag": 0.19852390768142575,
+        "magnitude": 0.5188242906582576,
+        "db": -5.699593980522172,
+        "phaseDegrees": 157.50257622541753
+      },
+      "channelTransfer": {
+        "real": 1.0000000000000004,
+        "imag": 2.177612521545404e-16,
+        "magnitude": 1.0000000000000004,
+        "phaseDegrees": 1.2476800689939263e-14
+      },
+      "pulseSourceHarmonicPeakV": 1.9097807782553446,
+      "expectedReceiverHarmonicPeakV": 0.9908406575911044,
+      "expectedReceiverAbsolutePhaseDegrees": 66.60257622541758
+    },
+    {
+      "frequencyHz": 15000000000.0,
+      "harmonic": 3,
+      "receiverTransfer": {
+        "real": 0.0017566241309075374,
+        "imag": 0.0007146274170421847,
+        "magnitude": 0.001896423128543587,
+        "db": -54.44129513437228,
+        "phaseDegrees": 22.137407461521853
+      },
+      "channelTransfer": {
+        "real": 0.999999999999998,
+        "imag": 4.3719726897652355e-17,
+        "magnitude": 0.999999999999998,
+        "phaseDegrees": 2.504955832700069e-15
+      },
+      "pulseSourceHarmonicPeakV": 0.6363841790787249,
+      "expectedReceiverHarmonicPeakV": 0.0012068536758441178,
+      "expectedReceiverAbsolutePhaseDegrees": -70.56259253847747
+    },
+    {
+      "frequencyHz": 25000000000.0,
+      "harmonic": 5,
+      "receiverTransfer": {
+        "real": 0.00022384012729596551,
+        "imag": 5.20858229427085e-05,
+        "magnitude": 0.00022982022439179114,
+        "db": -72.772235113018,
+        "phaseDegrees": 13.09917286776737
+      },
+      "channelTransfer": {
+        "real": 0.9999999999999926,
+        "imag": 6.487220651056925e-17,
+        "magnitude": 0.9999999999999926,
+        "phaseDegrees": 3.7169036407567474e-15
+      },
+      "pulseSourceHarmonicPeakV": 0.3815792854393314,
+      "expectedReceiverHarmonicPeakV": 8.769463700292646e-05,
+      "expectedReceiverAbsolutePhaseDegrees": -81.40082713223092
+    },
+    {
+      "frequencyHz": 35000000000.0,
+      "harmonic": 7,
+      "receiverTransfer": {
+        "real": 5.80123040743901e-05,
+        "imag": 9.525375773903294e-06,
+        "magnitude": 5.8789116404769696e-05,
+        "db": -84.61406134339187,
+        "phaseDegrees": 9.324522382060707
+      },
+      "channelTransfer": {
+        "real": 0.9999999999999849,
+        "imag": -1.1316623150520546e-16,
+        "magnitude": 0.9999999999999849,
+        "phaseDegrees": -6.4839474486487795e-15
+      },
+      "pulseSourceHarmonicPeakV": 0.27228759883888703,
+      "expectedReceiverHarmonicPeakV": 1.6007547343714563e-05,
+      "expectedReceiverAbsolutePhaseDegrees": -86.97547761793248
+    },
+    {
+      "frequencyHz": 45000000000.0,
+      "harmonic": 9,
+      "receiverTransfer": {
+        "real": 2.1192115982251414e-05,
+        "imag": 2.693161768117192e-06,
+        "magnitude": 2.1362558370065228e-05,
+        "db": -93.40693475246908,
+        "phaseDegrees": 7.242507954568783
+      },
+      "channelTransfer": {
+        "real": 0.9999999999999745,
+        "imag": 8.072588302436983e-17,
+        "magnitude": 0.9999999999999745,
+        "phaseDegrees": 4.625252394763287e-15
+      },
+      "pulseSourceHarmonicPeakV": 0.21150043846784358,
+      "expectedReceiverHarmonicPeakV": 4.5181904620636974e-06,
+      "expectedReceiverAbsolutePhaseDegrees": -90.85749204542662
+    },
+    {
+      "frequencyHz": 55000000000.0,
+      "harmonic": 11,
+      "receiverTransfer": {
+        "real": 9.488304353324188e-06,
+        "imag": 9.84144751968959e-07,
+        "magnitude": 9.539206486607719e-06,
+        "db": -100.40975500659029,
+        "phaseDegrees": 5.921650975324564
+      },
+      "channelTransfer": {
+        "real": 1.0000000000000628,
+        "imag": -2.0167847731432214e-16,
+        "magnitude": 1.0000000000000628,
+        "phaseDegrees": -1.1555325568734851e-14
+      },
+      "pulseSourceHarmonicPeakV": 0.17276092505327567,
+      "expectedReceiverHarmonicPeakV": 1.6480021369005572e-06,
+      "expectedReceiverAbsolutePhaseDegrees": -93.97834902466275
+    },
+    {
+      "frequencyHz": 65000000000.0,
+      "harmonic": 13,
+      "receiverTransfer": {
+        "real": 4.8614479141353894e-06,
+        "imag": 4.2606359903862557e-07,
+        "magnitude": 4.880082582526353e-06,
+        "db": -106.23145657292925,
+        "phaseDegrees": 5.008678691762098
+      },
+      "channelTransfer": {
+        "real": 1.000000000000066,
+        "imag": 6.350398015096427e-16,
+        "magnitude": 1.000000000000066,
+        "phaseDegrees": 3.638510044932565e-14
+      },
+      "pulseSourceHarmonicPeakV": 0.1458933642117173,
+      "expectedReceiverHarmonicPeakV": 7.119716655957752e-07,
+      "expectedReceiverAbsolutePhaseDegrees": -96.69132130822982
+    },
+    {
+      "frequencyHz": 75000000000.0,
+      "harmonic": 15,
+      "receiverTransfer": {
+        "real": 2.7418028113886584e-06,
+        "imag": 2.0807263132719691e-07,
+        "magnitude": 2.7496866869602024e-06,
+        "db": -111.21433578067659,
+        "phaseDegrees": 4.339800116137472
+      },
+      "channelTransfer": {
+        "real": 1.0000000000000668,
+        "imag": -7.524555432658397e-16,
+        "magnitude": 1.0000000000000668,
+        "phaseDegrees": -4.311252690035325e-14
+      },
+      "pulseSourceHarmonicPeakV": 0.1261491231023816,
+      "expectedReceiverHarmonicPeakV": 3.468705643663224e-07,
+      "expectedReceiverAbsolutePhaseDegrees": -99.1601998838596
+    },
+    {
+      "frequencyHz": 85000000000.0,
+      "harmonic": 17,
+      "receiverTransfer": {
+        "real": 1.6615509493692925e-06,
+        "imag": 1.111936121489414e-07,
+        "magnitude": 1.6652674189849288e-06,
+        "db": -115.5703202970405,
+        "phaseDegrees": 3.828615329784438
+      },
+      "channelTransfer": {
+        "real": 1.0000000000000655,
+        "imag": 7.677819990698323e-16,
+        "magnitude": 1.0000000000000655,
+        "phaseDegrees": 4.3990668132815806e-14
+      },
+      "pulseSourceHarmonicPeakV": 0.1110142411922712,
+      "expectedReceiverHarmonicPeakV": 1.8486839890082383e-07,
+      "expectedReceiverAbsolutePhaseDegrees": -101.47138467020704
+    },
+    {
+      "frequencyHz": 95000000000.0,
+      "harmonic": 19,
+      "receiverTransfer": {
+        "real": 1.0647081798690574e-06,
+        "imag": 6.372554921130394e-08,
+        "magnitude": 1.0666135447772841e-06,
+        "db": -119.4398581114562,
+        "phaseDegrees": 3.42521499205051
+      },
+      "channelTransfer": {
+        "real": 0.9999999999997086,
+        "imag": -4.609185033960865e-16,
+        "magnitude": 0.9999999999997086,
+        "phaseDegrees": -2.6408684944089753e-14
+      },
+      "pulseSourceHarmonicPeakV": 0.09903328684027146,
+      "expectedReceiverHarmonicPeakV": 1.0563024512764751e-07,
+      "expectedReceiverAbsolutePhaseDegrees": -103.6747850079555
+    },
+    {
+      "frequencyHz": 105000000000.0,
+      "harmonic": 21,
+      "receiverTransfer": {
+        "real": 7.133801195311517e-07,
+        "imag": 3.8619660551681984e-08,
+        "magnitude": 7.144247148044414e-07,
+        "db": -122.92087059757691,
+        "phaseDegrees": 3.098748677898768
+      },
+      "channelTransfer": {
+        "real": 1.0000000000000537,
+        "imag": -8.957356469111446e-16,
+        "magnitude": 1.0000000000000537,
+        "phaseDegrees": -5.132187212742634e-14
+      },
+      "pulseSourceHarmonicPeakV": 0.0893052958209704,
+      "expectedReceiverHarmonicPeakV": 6.380191049742305e-08,
+      "expectedReceiverAbsolutePhaseDegrees": -105.80125132208923
+    },
+    {
+      "frequencyHz": 115000000000.0,
+      "harmonic": 23,
+      "receiverTransfer": {
+        "real": 4.957374419983397e-07,
+        "imag": 2.4498146162235128e-08,
+        "magnitude": 4.963423924716117e-07,
+        "db": -126.08437260484897,
+        "phaseDegrees": 2.8291174411780715
+      },
+      "channelTransfer": {
+        "real": 1.0000000000004714,
+        "imag": 4.543033317052941e-16,
+        "magnitude": 1.0000000000004714,
+        "phaseDegrees": 2.6029663525432962e-14
+      },
+      "pulseSourceHarmonicPeakV": 0.08124269843365921,
+      "expectedReceiverHarmonicPeakV": 4.032419531141207e-08,
+      "expectedReceiverAbsolutePhaseDegrees": -107.87088255881099
+    },
+    {
+      "frequencyHz": 125000000000.0,
+      "harmonic": 25,
+      "receiverTransfer": {
+        "real": 3.551207224556801e-07,
+        "imag": 1.6142485382174373e-08,
+        "magnitude": 3.554874222131606e-07,
+        "db": -128.9835152157056,
+        "phaseDegrees": 2.60266434041662
+      },
+      "channelTransfer": {
+        "real": 1.000000000000032,
+        "imag": -1.302911116084873e-15,
+        "magnitude": 1.000000000000032,
+        "phaseDegrees": -7.46513080323405e-14
+      },
+      "pulseSourceHarmonicPeakV": 0.07444596158888334,
+      "expectedReceiverHarmonicPeakV": 2.6464602979412105e-08,
+      "expectedReceiverAbsolutePhaseDegrees": -109.89733565959614
+    },
+    {
+      "frequencyHz": 135000000000.0,
+      "harmonic": 27,
+      "receiverTransfer": {
+        "real": 2.610115737875968e-07,
+        "imag": 1.0984277773987653e-08,
+        "magnitude": 2.612425999129817e-07,
+        "db": -131.65912005493647,
+        "phaseDegrees": 2.409784403409295
+      },
+      "channelTransfer": {
+        "real": 0.9999999999995157,
+        "imag": -9.547770796911839e-17,
+        "magnitude": 0.9999999999995157,
+        "phaseDegrees": -5.470469704215719e-15
+      },
+      "pulseSourceHarmonicPeakV": 0.06863394551388818,
+      "expectedReceiverHarmonicPeakV": 1.7930110368334075e-08,
+      "expectedReceiverAbsolutePhaseDegrees": -111.89021559659159
+    },
+    {
+      "frequencyHz": 145000000000.0,
+      "harmonic": 29,
+      "receiverTransfer": {
+        "real": 1.9611275756286353e-07,
+        "imag": 7.683095628225192e-09,
+        "magnitude": 1.9626319990600107e-07,
+        "db": -134.1432224925657,
+        "phaseDegrees": 2.243525358419828
+      },
+      "channelTransfer": {
+        "real": 0.9999999999999999,
+        "imag": -3.5252233450557633e-16,
+        "magnitude": 0.9999999999999999,
+        "phaseDegrees": -2.0198041951268557e-14
+      },
+      "pulseSourceHarmonicPeakV": 0.06360307836446441,
+      "expectedReceiverHarmonicPeakV": 1.248294368368193e-08,
+      "expectedReceiverAbsolutePhaseDegrees": -113.8564746415941
+    },
+    {
+      "frequencyHz": 155000000000.0,
+      "harmonic": 31,
+      "receiverTransfer": {
+        "real": 1.5018870146537673e-07,
+        "imag": 5.503838406555026e-09,
+        "magnitude": 1.5028951488730517e-07,
+        "db": -136.46142634773304,
+        "phaseDegrees": 2.098730852613918
+      },
+      "channelTransfer": {
+        "real": 0.9999999999994034,
+        "imag": -1.7625680174787828e-16,
+        "magnitude": 0.9999999999994034,
+        "phaseDegrees": -1.0098770850633523e-14
+      },
+      "pulseSourceHarmonicPeakV": 0.0592023342048956,
+      "expectedReceiverHarmonicPeakV": 8.897490087849874e-09,
+      "expectedReceiverAbsolutePhaseDegrees": -115.80126914737048
+    },
+    {
+      "frequencyHz": 165000000000.0,
+      "harmonic": 33,
+      "receiverTransfer": {
+        "real": 1.169544935757825e-07,
+        "imag": 4.025886701720668e-09,
+        "magnitude": 1.1702376395973102e-07,
+        "db": -138.63451874651042,
+        "phaseDegrees": 1.9714956422798413
+      },
+      "channelTransfer": {
+        "real": 0.999999999999958,
+        "imag": -5.079449517047713e-16,
+        "magnitude": 0.999999999999958,
+        "phaseDegrees": -2.9103101957661047e-14
+      },
+      "pulseSourceHarmonicPeakV": 0.055317309896890474,
+      "expectedReceiverHarmonicPeakV": 6.473439816261003e-09,
+      "expectedReceiverAbsolutePhaseDegrees": -117.72850435774308
+    },
+    {
+      "frequencyHz": 175000000000.0,
+      "harmonic": 35,
+      "receiverTransfer": {
+        "real": 9.242533284580083e-08,
+        "imag": 2.999544284887764e-09,
+        "magnitude": 9.24739931957849e-08,
+        "db": -140.6796077667602,
+        "phaseDegrees": 1.8588077921516561
+      },
+      "channelTransfer": {
+        "real": 0.9999999999992815,
+        "imag": 2.2471901442020338e-17,
+        "magnitude": 0.9999999999992815,
+        "phaseDegrees": 1.287545110262639e-15
+      },
+      "pulseSourceHarmonicPeakV": 0.05185976133398455,
+      "expectedReceiverHarmonicPeakV": 4.795679216733917e-09,
+      "expectedReceiverAbsolutePhaseDegrees": -119.64119220786961
+    },
+    {
+      "frequencyHz": 185000000000.0,
+      "harmonic": 37,
+      "receiverTransfer": {
+        "real": 7.400282996234736e-08,
+        "imag": 2.271730321677143e-09,
+        "magnitude": 7.403769040894322e-08,
+        "db": -142.61094274875978,
+        "phaseDegrees": 1.7583070370765654
+      },
+      "channelTransfer": {
+        "real": 0.9999999999999052,
+        "imag": 2.4218319899524413e-15,
+        "magnitude": 0.9999999999999052,
+        "phaseDegrees": 1.3876075171405763e-13
+      },
+      "pulseSourceHarmonicPeakV": 0.04876053332320453,
+      "expectedReceiverHarmonicPeakV": 3.6101172703583764e-09,
+      "expectedReceiverAbsolutePhaseDegrees": -121.54169296292821
+    },
+    {
+      "frequencyHz": 195000000000.0,
+      "harmonic": 39,
+      "receiverTransfer": {
+        "real": 5.995011438725726e-08,
+        "imag": 1.7458895679922019e-09,
+        "magnitude": 5.997553122256488e-08,
+        "db": -144.4405179331445,
+        "phaseDegrees": 1.668117561583209
+      },
+      "channelTransfer": {
+        "real": 0.9999999999991493,
+        "imag": -2.2404164593737025e-15,
+        "magnitude": 0.9999999999991493,
+        "phaseDegrees": -1.2836640747386542e-13
+      },
+      "pulseSourceHarmonicPeakV": 0.04596466488172446,
+      "expectedReceiverHarmonicPeakV": 2.756755193748597e-09,
+      "expectedReceiverAbsolutePhaseDegrees": -123.4318824383663
+    }
+  ],
+  "maximumReceiverComplexTToLtraDifference": 2.0014830212433605e-16,
+  "oddHarmonicSteadyWaveformPrediction": {
+    "includedHarmonics": [
+      1,
+      3,
+      5,
+      7,
+      9,
+      11,
+      13,
+      15,
+      17,
+      19,
+      21,
+      23,
+      25,
+      27,
+      29,
+      31,
+      33,
+      35,
+      37,
+      39
+    ],
+    "minimumV": -0.9908927148285593,
+    "maximumV": 0.9908927148285593,
+    "peakToPeakV": 1.9817854296571187,
+    "acRmsV": 0.7006306706110461
+  }
+}

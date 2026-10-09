@@ -1,0 +1,111 @@
+{
+  "cases": [
+    {
+      "finiteCaptureEyeHeightV": 0.577562377836454,
+      "commonOpeningAt200mVThresholdPs": 51.282844366800695,
+      "receiverTie": {
+        "count": 200,
+        "rmsPs": 7.632309157504093e-08,
+        "peakToPeakPs": 4.0234064994579266e-07,
+        "minPs": -2.210755992333724e-07,
+        "maxPs": 1.8126505071242027e-07
+      },
+      "timingAvailable": true,
+      "timingUnavailableReason": null,
+      "observedCrossingCount": 200,
+      "nominalPhasePs": 2980066.6320525715,
+      "nominalPhaseBasis": "receiver mean phase from strict crossing association",
+      "nominalSamplePolarityBasis": "first observed crossing and fixed nominal clock",
+      "nominalCenterSamples": 200,
+      "nominalThresholdFailures": 0,
+      "completeThresholdWindows": 199,
+      "samplingThresholdMv": 200,
+      "analysisStartNs": 2980.0002499999996,
+      "analysisStopNs": 2999.9999999878464,
+      "rateMTs": 10000.0,
+      "uiPs": 100.0,
+      "signoff": false,
+      "label": "Routed DQS0: ideal source, 5 GHz band-edge control",
+      "sourceBudgets": {
+        "jitter": {
+          "configuredInputRjRmsPs": 0,
+          "configuredPeriodicJitterPeakPs": 0,
+          "periodicJitterPeriodUI": null,
+          "seed": null,
+          "provenance": "deterministic ideal clock; no jitter injection"
+        },
+        "noise": {
+          "kind": "zero differential receiver-input noise; ideal supplies",
+          "configuredRmsMv": 0,
+          "seed": null,
+          "provenance": "no noise injection"
+        }
+      },
+      "frequencyStress": true,
+      "experimentDescription": "5 GHz complementary ideal clock through the unchanged TI package, differential channel, Winbond package and assumed ODT/Cin",
+      "limitations": [
+        "Ideal 1ps stimulus does not represent AM3352 switching capability or repair an unqualified vendor I/O model",
+        "Routed high-frequency response extrapolates the supplied channel fit beyond its extracted frequency range; 1ps edge harmonics also exceed that range",
+        "Matched reference is an ideal analytic transmission line, not measured hardware",
+        "Balanced differential channel omits extracted common-mode conversion, active aggressors and PDN noise",
+        "Winbond receiver ODT and 2pF input capacitance are assumptions; transistor behavior is not included",
+        "This frequency stress does not establish DDR compliance, BER or board eye validity"
+      ]
+    },
+    {
+      "finiteCaptureEyeHeightV": 1.9817231450619728,
+      "commonOpeningAt200mVThresholdPs": 87.0638627788493,
+      "receiverTie": {
+        "count": 200,
+        "rmsPs": 0.0002110861399191223,
+        "peakToPeakPs": 0.0009931922939512925,
+        "minPs": -0.0005127183603354478,
+        "maxPs": 0.0004804739336158447
+      },
+      "timingAvailable": true,
+      "timingUnavailableReason": null,
+      "observedCrossingCount": 200,
+      "nominalPhasePs": 2980013.040843938,
+      "nominalPhaseBasis": "receiver mean phase from strict crossing association",
+      "nominalSamplePolarityBasis": "first observed crossing and fixed nominal clock",
+      "nominalCenterSamples": 200,
+      "nominalThresholdFailures": 0,
+      "completeThresholdWindows": 199,
+      "samplingThresholdMv": 200,
+      "analysisStartNs": 2980.0002499999996,
+      "analysisStopNs": 2999.9999999878464,
+      "rateMTs": 10000.0,
+      "uiPs": 100.0,
+      "signoff": false,
+      "label": "Matched 100 \u03a9 channel: identical I/O and budgets",
+      "sourceBudgets": {
+        "jitter": {
+          "configuredInputRjRmsPs": 0,
+          "configuredPeriodicJitterPeakPs": 0,
+          "periodicJitterPeriodUI": null,
+          "seed": null,
+          "provenance": "deterministic ideal clock; no jitter injection"
+        },
+        "noise": {
+          "kind": "zero differential receiver-input noise; ideal supplies",
+          "configuredRmsMv": 0,
+          "seed": null,
+          "provenance": "no noise injection"
+        }
+      },
+      "frequencyStress": true,
+      "experimentDescription": "5 GHz complementary ideal clock through the unchanged TI package, differential channel, Winbond package and assumed ODT/Cin",
+      "limitations": [
+        "Ideal 1ps stimulus does not represent AM3352 switching capability or repair an unqualified vendor I/O model",
+        "Routed high-frequency response extrapolates the supplied channel fit beyond its extracted frequency range; 1ps edge harmonics also exceed that range",
+        "Matched reference is an ideal analytic transmission line, not measured hardware",
+        "Balanced differential channel omits extracted common-mode conversion, active aggressors and PDN noise",
+        "Winbond receiver ODT and 2pF input capacitance are assumptions; transistor behavior is not included",
+        "This frequency stress does not establish DDR compliance, BER or board eye validity"
+      ]
+    }
+  ],
+  "receiverInputThresholdMv": 200,
+  "signoff": false,
+  "definition": "Finite-record extrema at a single nominal sampling phase, not a receiver timing mask or BER extrapolation"
+}

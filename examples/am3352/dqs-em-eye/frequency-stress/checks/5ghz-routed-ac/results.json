@@ -1,0 +1,134 @@
+{
+  "channelSpiceSha256": "ac3a8f58bbc9b58474b703f0d2e0fc9cc6cad70af05789b66df41c262bfa1a37",
+  "generatorSha256": "dba4cc55b4afe83b5d29ef39e5ea80c908a6d668f7d2355cb3aa5091476ca5ea",
+  "netlistSha256": "3e6c0a8d0c54e7c7412614f54817f7244acd448e316b38d73d5ac9021374136a",
+  "phasorConvention": "cosine coefficient minus j*sine coefficient, with absolute capture timestamps",
+  "sourceFormula": "4*1.5/(pi*n)*sinc(f*1ps)*exp(-j*(pi/2+2*pi*f*5000.5ps)), odd n=f/(5GHz)",
+  "normalizedAcSourceDifferentialPeakV": 2,
+  "samples": [
+    {
+      "frequencyHz": 5000000000.0,
+      "harmonicNumber": 1,
+      "outsideExtractedChannelBand": false,
+      "sourceDifferentialFourierPeakV": 1.9097807782553446,
+      "signals": {
+        "transmitterBgaDifferential": {
+          "transferReal": -0.10459084086380196,
+          "transferImag": -0.1953601467411912,
+          "expectedPeakV": 0.423199969696934,
+          "expectedAbsolutePhaseRad": 2.6343395676015926,
+          "expectedPhasorRealV": -0.3699115581058209,
+          "expectedPhasorImagV": 0.2055812577333104
+        },
+        "receiverDieDifferential": {
+          "transferReal": -0.0733440792976397,
+          "transferImag": -0.13221278915051565,
+          "expectedPeakV": 0.2887470788693288,
+          "expectedAbsolutePhaseRad": 2.619407546517826,
+          "expectedPhasorRealV": -0.2502661519605881,
+          "expectedPhasorImagV": 0.14401989007914923
+        },
+        "channelInput": {
+          "transferReal": -0.10459084086380196,
+          "transferImag": -0.1953601467411912,
+          "expectedPeakV": 0.423199969696934,
+          "expectedAbsolutePhaseRad": 2.6343395676015926,
+          "expectedPhasorRealV": -0.3699115581058209,
+          "expectedPhasorImagV": 0.2055812577333104
+        },
+        "channelOutput": {
+          "transferReal": 0.18206472916807048,
+          "transferImag": 0.12764992011192178,
+          "expectedPeakV": 0.4246506864108855,
+          "expectedAbsolutePhaseRad": -0.9750244759137104,
+          "expectedPhasorRealV": 0.23829179616387314,
+          "expectedPhasorImagV": -0.35149000746853576
+        }
+      }
+    },
+    {
+      "frequencyHz": 15000000000.0,
+      "harmonicNumber": 3,
+      "outsideExtractedChannelBand": true,
+      "sourceDifferentialFourierPeakV": 0.6363841790787249,
+      "signals": {
+        "transmitterBgaDifferential": {
+          "transferReal": -0.0467287294681368,
+          "transferImag": -0.0189597146154585,
+          "expectedPeakV": 0.03209197102485452,
+          "expectedAbsolutePhaseRad": 1.909117273541343,
+          "expectedPhasorRealV": -0.010651443522598173,
+          "expectedPhasorImagV": 0.03027278241498464
+        },
+        "receiverDieDifferential": {
+          "transferReal": -3.9807460078087566e-05,
+          "transferImag": -0.00014532824667856,
+          "expectedPeakV": 9.589136220698811e-05,
+          "expectedAbsolutePhaseRad": 2.8271123586952065,
+          "expectedPhasorRealV": -9.118858741746879e-05,
+          "expectedPhasorImagV": 2.966133629353946e-05
+        },
+        "channelInput": {
+          "transferReal": -0.0467287294681368,
+          "transferImag": -0.0189597146154585,
+          "expectedPeakV": 0.03209197102485452,
+          "expectedAbsolutePhaseRad": 1.909117273541343,
+          "expectedPhasorRealV": -0.010651443522598173,
+          "expectedPhasorImagV": 0.03027278241498464
+        },
+        "channelOutput": {
+          "transferReal": 0.0010749405936580818,
+          "transferImag": 0.0028233643721841165,
+          "expectedPeakV": 0.0019225632281580703,
+          "expectedAbsolutePhaseRad": -0.4109089668575881,
+          "expectedPhasorRealV": 0.0017625254531769016,
+          "expectedPhasorImagV": -0.0007679540306353878
+        }
+      }
+    },
+    {
+      "frequencyHz": 25000000000.0,
+      "harmonicNumber": 5,
+      "outsideExtractedChannelBand": true,
+      "sourceDifferentialFourierPeakV": 0.3815792854393314,
+      "signals": {
+        "transmitterBgaDifferential": {
+          "transferReal": -0.017084611365518924,
+          "transferImag": -0.003843933883429987,
+          "expectedPeakV": 0.006682103458042505,
+          "expectedAbsolutePhaseRad": 1.7135651769410811,
+          "expectedPhasorRealV": -0.0009507586532188631,
+          "expectedPhasorImagV": 0.006614118581286025
+        },
+        "receiverDieDifferential": {
+          "transferReal": -4.973915828157488e-06,
+          "transferImag": -7.678809675981802e-07,
+          "expectedPeakV": 1.920427543259803e-06,
+          "expectedAbsolutePhaseRad": 1.6454288397884604,
+          "expectedPhasorRealV": -1.4319331572693705e-07,
+          "expectedPhasorImagV": 1.915081623127852e-06
+        },
+        "channelInput": {
+          "transferReal": -0.017084611365518924,
+          "transferImag": -0.003843933883429987,
+          "expectedPeakV": 0.006682103458042505,
+          "expectedAbsolutePhaseRad": 1.7135651769410811,
+          "expectedPhasorRealV": -0.0009507586532188631,
+          "expectedPhasorImagV": 0.006614118581286025
+        },
+        "channelOutput": {
+          "transferReal": 0.0002870971599967341,
+          "transferImag": 2.7938861843779247e-05,
+          "expectedPeakV": 0.00011006783915098874,
+          "expectedAbsolutePhaseRad": -1.5523266011927213,
+          "expectedPhasorRealV": 2.0328072066307155e-06,
+          "expectedPhasorImagV": -0.00011004906592165423
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Native AC validates the stated linear network, not physical board/device accuracy.",
+    "5 GHz is the extracted channel band edge; 15/25 GHz use rational-fit extrapolation."
+  ]
+}

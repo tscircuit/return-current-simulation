@@ -1,0 +1,54 @@
+Independent 5 GHz ideal reference AC audit
+Vpositive srcp 0 DC .75 AC .5
+Vnegative srcn 0 DC .75 AC .5 180
+Rsourcep srcp diep 50
+Rsourcen srcn dien 50
+Rpp diep pkp .170474
+Rpn dien pkn .176587
+Lpp pkp txp 5.06641n
+Lpn pkn txn 4.91396n
+Kpkg Lpp Lpn .627032
+Cpp txp 0 1.19704p
+Cpn txn 0 1.34626p
+* Lossless balanced transformer: differential PCB channel with no common-mode propagation.
+Ebal csrc 0 txp txn 1
+Fpos txp 0 Ebal -1
+Fneg txn 0 Ebal 1
+Oref csrc 0 cload 0 RefLine
+.model RefLine LTRA(R=0 G=0 L=40n C=4p LEN=1)
+Vcm cm 0 .75
+* Common-mode DC return: receiver ODT projected as a lumped ideal channel.
+Ecmhalf halfcm 0 txp 0 .5
+Ecmsrc srccm halfcm txn 0 .5
+Rcm srccm cm 30
+Fcmp txp 0 Ecmsrc -.5
+Fcmn txn 0 Ecmsrc -.5
+Erxp rxp0 cm cload 0 .5
+Vnp rxp rxp0 0
+Erxn rxn0 cm cload 0 -.5
+Vnn rxn rxn0 0
+Frxp cload 0 Erxp -.5
+Frxn cload 0 Erxn .5
+* Winbond LDQS/LDQSB package parasitics; independent lumped package model.
+Rrp rxp rkp .42069
+Rrn rxn rkn .39422
+Lrp rkp rdiep 1.1804n
+Lrn rkn rdien 1.1796n
+Crp rxp 0 .41107p
+Crn rxn 0 .42404p
+Rtp rdiep cm 60
+Rtn rdien cm 60
+Cip rdiep 0 2p
+Cin rdien 0 2p
+
+.options reltol=1e-5 abstol=1e-11 vntol=1e-7 method=trap maxord=2 trtol=3
+.control
+set wr_vecnames
+set wr_singlescale
+set numdgt=17
+ac lin 20 5g 195g
+wrdata harmonics.dat v(srcp,srcn) v(txp,txn) v(rdiep,rdien) v(csrc) v(cload)
+echo FIVE_GHZ_AC_COMPLETE
+quit
+.endc
+.end

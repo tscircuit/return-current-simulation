@@ -1,0 +1,118 @@
+
+Note: No compatibility mode selected!
+
+
+Circuit: ideal differential clock: passive dqs bandwidth stress
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+srcp                                         0
+srcn                                       1.5
+diep                                  0.352111
+dien                                   1.14791
+pkp                                   0.353312
+pkn                                    1.14666
+txp                                   0.353312
+txn                                    1.14666
+csrc                                 -0.793353
+xpcb.s1                              -0.793353
+xpcb.x1_re_a1                     -2.33804e-13
+xpcb.x1_im_a1                      3.66406e-12
+xpcb.x2_re_a1                     -4.71344e-13
+xpcb.x2_im_a1                      4.26957e-12
+xpcb.x3_re_a1                     -8.89564e-13
+xpcb.x3_im_a1                       4.5154e-12
+xpcb.x4_re_a1                     -9.00769e-13
+xpcb.x4_im_a1                      5.00817e-12
+xpcb.x5_re_a1                     -1.50075e-12
+xpcb.x5_im_a1                      5.89251e-12
+xpcb.x6_re_a1                     -1.33463e-12
+xpcb.x6_im_a1                      6.06838e-12
+xpcb.x7_re_a1                     -2.29237e-12
+xpcb.x7_im_a1                      6.21246e-12
+xpcb.x8_re_a1                     -2.88309e-12
+xpcb.x8_im_a1                      7.19389e-12
+xpcb.x9_re_a1                     -4.57838e-12
+xpcb.x9_im_a1                      9.59675e-12
+xpcb.x10_re_a1                    -4.84215e-12
+xpcb.x10_im_a1                     9.82603e-12
+xpcb.x11_re_a1                    -1.51504e-11
+xpcb.x11_im_a1                     5.62946e-12
+xpcb.x12_re_a1                    -1.41831e-11
+xpcb.x12_im_a1                     1.06245e-11
+xpcb.x13_re_a1                    -1.07306e-11
+xpcb.x13_im_a1                     8.97273e-12
+cload                                -0.787826
+xpcb.x1_re_a2                     -2.11911e-14
+xpcb.x1_im_a2                      3.32096e-13
+xpcb.x2_re_a2                     -4.27207e-14
+xpcb.x2_im_a2                      3.86977e-13
+xpcb.x3_re_a2                     -8.06266e-14
+xpcb.x3_im_a2                      4.09258e-13
+xpcb.x4_re_a2                     -8.16421e-14
+xpcb.x4_im_a2                      4.53921e-13
+xpcb.x5_re_a2                     -1.36022e-13
+xpcb.x5_im_a2                      5.34074e-13
+xpcb.x6_re_a2                     -1.20965e-13
+xpcb.x6_im_a2                      5.50013e-13
+xpcb.x7_re_a2                     -2.07771e-13
+xpcb.x7_im_a2                      5.63073e-13
+xpcb.x8_re_a2                     -2.61312e-13
+xpcb.x8_im_a2                      6.52026e-13
+xpcb.x9_re_a2                     -4.14966e-13
+xpcb.x9_im_a2                      8.69811e-13
+xpcb.x10_re_a2                    -4.38873e-13
+xpcb.x10_im_a2                     8.90592e-13
+xpcb.x11_re_a2                    -1.37317e-12
+xpcb.x11_im_a2                     5.10232e-13
+xpcb.x12_re_a2                     -1.2855e-12
+xpcb.x12_im_a2                     9.62961e-13
+xpcb.x13_re_a2                    -9.72578e-13
+xpcb.x13_im_a2                     8.13253e-13
+xpcb.s2                              -0.787826
+cm                                        0.75
+halfcm                                0.176656
+srccm                                 0.749988
+rxp0                                  0.356087
+rxp                                   0.356087
+rxn0                                   1.14391
+rxn                                    1.14391
+rkp                                    0.35883
+rkn                                    1.14134
+rdiep                                  0.35883
+rdien                                  1.14134
+erxn#branch                        -0.00652236
+erxp#branch                          0.0065195
+ecmsrc#branch                      3.90728e-07
+v.xpcb.v2#branch                    0.00652093
+v.xpcb.v1#branch                   -0.00704203
+ebal#branch                         0.00704203
+lrn#branch                          0.00652236
+lrp#branch                          -0.0065195
+lpn#branch                          0.00704183
+lpp#branch                         -0.00704222
+ecmhalf#branch                     3.90728e-07
+vnn#branch                         -0.00652236
+vnp#branch                           0.0065195
+vcm#branch                        -3.90728e-07
+vnegative#branch                   -0.00704183
+vpositive#branch                    0.00704222
+
+ Reference value :  2.98000e-06
+ Reference value :  2.98346e-06
+ Reference value :  2.98686e-06
+ Reference value :  2.99031e-06
+ Reference value :  2.99395e-06
+ Reference value :  2.99756e-06
+ Reference value :  3.00119e-06
+ Reference value :  3.00481e-06
+No. of Data Rows : 130549
+BANDWIDTH_STRESS_COMPLETE
+ngspice-44.2 done
