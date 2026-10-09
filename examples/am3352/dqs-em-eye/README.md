@@ -153,6 +153,85 @@ Rerun the transient with `--mode prbs --odt-ohms 120 --cin-pf 3.5` on
 `simulate-dqs-eye.py`, for both routed and `--matched-reference` cases, then
 run `compare-eyes.py`. No additional field extraction is required.
 
+## 20 GHz frequency stress
+
+![20 GHz ideal-source frequency stress](frequency-stress/20ghz/eye-comparison.png)
+
+The companion uses a **20 GHz strobe / 40 GT/s / 25 ps UI**. A separate
+[400 MHz ideal-source control](frequency-stress/400mhz/eye-comparison.png)
+uses the same passive network. Both retain the selected transmitter package,
+receiver package, **2 pF/leg** input capacitance and **60 Ω/leg** ODT, with a
+routed channel and an identically loaded matched 100 Ω / 400 ps reference.
+
+These captures replace the active IBIS driver with complementary ideal
+0–1.5 V test sources, **50 Ω source resistance per leg**, **1 ps rise/fall**,
+and **zero jitter and noise** to isolate frequency sensitivity. The original
+IBIS snapshots above retain their existing assumptions. Their isolated-edge
+converter requires at least 1.22 ns UI; it cannot model repeated 25 ps
+transitions. Its guards remain in place, and no vendor edge is compressed.
+
+The extracted spectrum spans **1 MHz–5 GHz**. The 20 GHz fundamental and
+harmonics use the rational fit outside that range. Fast ideal-source edges
+also contain harmonics above 5 GHz in the 400 MHz control. The selected lumped
+package and assumed receiver capacitance contribute attenuation in both
+channels. This comparison tests bandwidth sensitivity of the specified
+network; eye closure alone does not establish accurate device behavior or
+20 GHz routing performance.
+
+| Ideal-source capture | Receiver AC RMS (mV) | Receiver half peak-to-peak (mV) | Opening at ±200 mV (ps) |
+| --- | ---: | ---: | ---: |
+| 400 MHz, routed | 753.283 | 854.503 | 1219.1 |
+| 400 MHz, matched reference | 774.372 | 921.476 | 1219.7 |
+| 20 GHz, routed fit extrapolation | 0.02746 | 0.03885 | 0 |
+| 20 GHz, matched reference | 0.77275 | 1.09980 | 0 |
+
+AC RMS removes the captured differential DC mean. Peak is half the observed
+peak-to-peak span, not the eye height. At 20 GHz every analyzed center fails
+the ±200 mV threshold. Mathematical zero-crossing TIE remains available for
+these tiny periodic signals; it does not imply a detectable receiver strobe.
+
+The 20 GHz native runs compute **3 µs** of source history and analyze
+**2980–3000 ns**. The ideal matched line with these reactive packages has a
+natural mode near **20.213 GHz** with about **414 ns** decay time: the earlier
+80–100 ns reference contained launch ringing. Independent native AC analysis
+predicts a **1.093154 mV** receiver fundamental peak. The late reference's
+eight-cycle windows agree within about **0.11%** complex amplitude. This is
+a numerical check of the specified ideal network.
+
+Refining the maximum step **0.25 → 0.2 ps** changes receiver AC RMS by
+**0.0191% routed / 0.0073% reference**, and half peak-to-peak by
+**0.0248% / −0.1464%**. Maximum waveform differences on the same absolute
+timestamps are **13.9 nV / 30.3 µV**; small local variation remains in the
+high-Q reference. Both threshold openings remain zero. See the
+[amplitude/settling audit](frequency-stress/checks/amplitudes-and-routed-timestep.json),
+[reference timestep audit](frequency-stress/checks/reference-timestep.json),
+and [native AC control](frequency-stress/checks/reference-ac/ac.cir).
+
+The [channel extrapolation audit](frequency-stress/checks/channel-extrapolation.json)
+reconstructs the saved fitted S-matrix from its SPICE export within
+**2.864e−13**. It predicts S21 **−0.220 dB at 400 MHz / −26.757 dB at 20 GHz**.
+The latter is the fitted model's extrapolation, not measured copper loss.
+
+Reproduce these companions without vendor files or another EM extraction:
+
+```sh
+SI_NGSPICE=ngspice bash scripts/generate-dqs-frequency-stress.sh \
+  examples/am3352/dqs-em-eye/channel/channel.sp work/dqs-frequency-stress
+```
+
+The checked PNG and SVG snapshots, compressed waveforms, stimulus events,
+native logs and provenance are in `frequency-stress/`. The reproduction command
+writes corresponding files to `work/dqs-frequency-stress/`. The 20 GHz simulations
+use a **0.25 ps** maximum step; the 400 MHz control uses **0.5 ps**. Analysis
+uses the trapezoidal integration method, and windows are recorded per capture.
+The adaptive native records contain picovolt voltage differences at
+duplicate rounded timestamps after the long reference run. Raw rows are
+preserved; provenance records their count and maximum voltage difference.
+The plotted linearized samples must remain strictly ordered, cover the full
+window and respect the requested sample gap. Closed eyes retain zero threshold opening,
+and ambiguous or missing crossings produce unavailable timing metrics with
+a reason instead of a fabricated TIE value.
+
 ## Scope
 
 PEC thin foils and solid via exteriors omit copper/dielectric loss. Neighboring

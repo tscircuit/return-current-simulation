@@ -5,12 +5,16 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import textwrap
 import numpy as np
+
+from eye_comparison import eye_diagnostics, source_events, transient_bounds, waveform_window
 
 os.environ.setdefault("MPLCONFIGDIR", str(Path("work/matplotlib").resolve()))
 import matplotlib
 
 matplotlib.use("Agg")
+matplotlib.rcParams["svg.hashsalt"] = "simulate-return-current-dqs-eye"
 import matplotlib.pyplot as plt
 from matplotlib.colors import LogNorm
 
@@ -26,6 +30,11 @@ p.add_argument("reference")
 p.add_argument("--out", required=True)
 p.add_argument("--channel-npz")
 p.add_argument("--label", default="Routed DQS0: geometry EM + IBIS")
+p.add_argument("--start-ns", type=float)
+p.add_argument("--stop-ns", type=float)
+p.add_argument("--transient-start-ns", type=float)
+p.add_argument("--transient-stop-ns", type=float)
+p.add_argument("--nominal-phase-ps", type=float, help="fixed nominal fold phase when receiver timing is unavailable, or an explicit override")
 a = p.parse_args()
 out = Path(a.out)
 out.mkdir(parents=True, exist_ok=True)
@@ -55,24 +64,11 @@ for column, (directory, label) in enumerate(
             ]
         )
     meta = json.loads((directory / "provenance.json").read_text())
-    ui = 1 / (meta["rateMTs"] * 1e6)
-    mask = (w[:, 0] >= 20e-9) & (w[:, 0] <= 310e-9)
-    w = w[mask]
-    t = w[:, 0]
-    v = w[:, 3] - w[:, 4]
-    if meta.get("mode") == "prbs":
-        edges = analysis.crossings(t, v)
-        assert len(edges) >= 32, "PRBS stress needs at least 32 transitions"
-        phase = float(
-            np.angle(np.mean(np.exp(2j * np.pi * edges / ui))) * ui / (2 * np.pi)
-        )
-        indices = np.round((edges - phase) / ui).astype(int)
-        assert np.all(np.diff(indices) > 0), (
-            "Multiple crossings in a bit interval; timing association is ambiguous"
-        )
-        tie = edges - (phase + indices * ui)
-    else:
-        edges, tie, phase = analysis.strobe_timing(t, v, ui)
+    if meta.get("frequencyStress") and column == 0 and a.label == "Routed DQS0: geometry EM + IBIS":
+        label = "Routed channel: ideal differential source bandwidth stress"
+    w = waveform_window(w, meta, a.start_ns, a.stop_ns)
+    report, arrays = eye_diagnostics(w, meta, analysis, a.nominal_phase_ps, source_events(directory))
+    t, v, tie, phase, ui = (arrays[key] for key in ("t", "v", "tie", "phase", "ui"))
     fold = ((t - phase) % ui - ui / 2) * 1e12
     voltage = np.tile(v, 3)
     fold = np.concatenate([fold - ui * 1e12, fold, fold + ui * 1e12])
@@ -84,7 +80,7 @@ for column, (directory, label) in enumerate(
         voltage[visible],
         bins=(650, 350),
         range=[[-ui * 1e12, ui * 1e12], [-voltage_limit, voltage_limit]],
-        norm=LogNorm(),
+        norm=LogNorm(vmin=1),
         cmap="inferno",
         rasterized=True,
     )
@@ -94,70 +90,69 @@ for column, (directory, label) in enumerate(
     axis.axvline(0, color="white", alpha=0.3, lw=0.7)
     for threshold in [-0.2, 0.2]:
         axis.axhline(threshold, color="white", ls=":", alpha=0.5, lw=0.7)
-    sample_indices = np.arange(
-        np.ceil((t[0] - phase) / ui - 0.5), np.floor((t[-1] - phase) / ui - 0.5) + 1
-    )
-    samples = phase + (sample_indices + 0.5) * ui
-    samples = samples[(samples > t[0]) & (samples < t[-1])]
-    levels = np.interp(samples, t, v)
-    positive = levels[levels > 0]
-    negative = levels[levels < 0]
-    height = float(positive.min() - negative.max())
-    windows = []
-    for sample, level in zip(samples, levels):
-        margin = analysis.valid_margin(
-            t, v, sample, 0.2 if level > 0 else -0.2, level > 0
-        )
-        if margin:
-            windows.append(margin)
-    width = (
-        float(min(r for l, r in windows) + min(l for l, r in windows)) * 1e12
-        if windows
-        else None
-    )
-    report = {
-        "label": label,
-        "finiteCaptureEyeHeightV": height,
-        "commonOpeningAt200mVThresholdPs": width,
-        "receiverTie": analysis.stats_ps(tie),
-        "samplingThresholdMv": 200,
-        "sourceBudgets": {"jitter": meta["jitter"], "noise": meta["noise"]},
-        "signoff": False,
-    }
+    report.update({"label": label, "sourceBudgets": {"jitter": meta["jitter"], "noise": meta["noise"]},
+                   "frequencyStress": meta.get("frequencyStress", False),
+                   "experimentDescription": meta.get("experimentDescription"), "limitations": meta.get("limitations", [])})
     reports.append(report)
+    height, width = report["finiteCaptureEyeHeightV"], report["commonOpeningAt200mVThresholdPs"]
+    height_text = f"{height:.3f} V" if height is not None else "unavailable"
+    width_text = f"{width:.0f} ps" if width is not None else "unavailable"
+    opening_text = "No ±200 mV opening" if width == 0 else f"Opening at ±0.2 V: {width_text}"
+    timing_text = f"TIE RMS {report['receiverTie']['rmsPs']:.2f} ps" if report["receiverTie"] else "TIE unavailable\n" + textwrap.fill(report["timingUnavailableReason"] or "No associated edges", 44)
+    if report["receiverTie"] and report["nominalThresholdFailures"] == report["nominalCenterSamples"]:
+        timing_text = f"Subthreshold zero-crossing TIE\nRMS {report['receiverTie']['rmsPs']:.3g} ps"
     axis.text(
         0.03,
         0.96,
-        f"Observed height {height:.3f} V\nOpening at ±0.2 V: {width:.0f} ps\nTIE RMS {report['receiverTie']['rmsPs']:.2f} ps",
+        f"Observed height {height_text}\n{opening_text}\n{timing_text}",
         transform=axis.transAxes,
         color="white",
         va="top",
         fontsize=9,
         bbox={"facecolor": "#120d22", "alpha": 0.8, "edgecolor": "none"},
     )
-    axes[1, 1].hist(tie * 1e12, bins=35, alpha=0.55, label=label.split(":")[0])
+    if tie is not None and len(tie):
+        axes[1, 1].hist(tie * 1e12, bins=35, alpha=0.55, label=label.split(":")[0])
+    else:
+        axes[1, 1].text(0.03, 0.92 - 0.30 * column, textwrap.fill(label + ": " + (report["timingUnavailableReason"] or "Timing unavailable"), 65),
+                        transform=axes[1, 1].transAxes, va="top", fontsize=9,
+                        bbox={"facecolor": "white", "alpha": 0.86, "edgecolor": "none"})
     axes[1, 1].set_xlabel("Receiver timing error from fixed nominal clock (ps)")
     axes[1, 1].set_ylabel("Edges")
     axes[1, 1].set_title("Receiver timing variation under the same stimulus")
     if column == 0:
         tx = w[:, 1] - w[:, 2]
-        cut = (t >= 25e-9) & (t < 30e-9)
-        axes[1, 0].plot(t[cut] * 1e9, tx[cut], label="Transmitter BGA", lw=1)
-        axes[1, 0].plot(t[cut] * 1e9, v[cut], label="Receiver die", lw=1)
+        cut = transient_bounds(t, meta, ui, a.transient_start_ns, a.transient_stop_ns)
+        display_time_ns = t[cut] * 1e9
+        if meta.get("frequencyStress"):
+            display_time_ns -= meta.get("analysisStartNs", t[0] * 1e9)
+        axes[1, 0].plot(display_time_ns, tx[cut], label="Transmitter BGA", lw=1)
+        axes[1, 0].plot(display_time_ns, v[cut], label="Receiver die", lw=1)
 axes[1, 0].set_title("Routed transient: delay, slew and reflection response")
 axes[1, 0].set_xlabel("Time (ns)")
+if meta.get("frequencyStress"):
+    axes[1, 0].set_title("Routed differential waveform: analysis window")
+    axes[1, 0].set_xlabel("Time from analysis start (ns)")
+    axes[1, 0].ticklabel_format(axis="x", useOffset=False, style="plain")
 axes[1, 0].set_ylabel("Differential voltage (V)")
 axes[1, 0].legend(fontsize=9)
-axes[1, 1].legend(fontsize=8)
+if axes[1, 1].get_legend_handles_labels()[0]:
+    axes[1, 1].legend(fontsize=8)
 meta = json.loads((Path(a.routed) / "provenance.json").read_text())
 caption = (
     f"AM3352 DQS0 · {meta['rateMTs']:g} MT/s · {meta['clockMHz']:g} MHz strobe · UI {ui * 1e12:g} ps"
     if meta.get("mode") == "clock"
     else f"AM3352 DQS pair · PRBS7 channel stress · {meta['rateMTs']:g} MT/s · not DQS clock protocol"
 )
+if meta.get("frequencyStress"):
+    strobe_ghz = meta.get("strobeGHz", meta["clockMHz"] / 1000)
+    caption = (f"Ideal-source DQS bandwidth stress · {strobe_ghz:g} GHz strobe · "
+               f"{meta['rateMTs'] / 1000:g} GT/s · UI {1e6 / meta['rateMTs']:g} ps")
+elif meta.get("experimentDescription"):
+    caption = textwrap.fill(meta["experimentDescription"], 105)
 fig.suptitle(
     caption,
-    fontsize=18,
+    fontsize=15 if meta.get("frequencyStress") else 18,
     y=0.98,
 )
 fig.text(
@@ -174,17 +169,33 @@ fig.text(
     ha="center",
     fontsize=9,
 )
+limitations = "Experimental differential channel: mesh/time convergence and active crosstalk/PDN are not validated. No DDR pass/fail or BER inference."
+if meta.get("frequencyStress"):
+    channel = meta.get("channel", {})
+    maximum = channel.get("maximumExtractedFrequencyGHz")
+    bandwidth = f"1 MHz–{maximum:g} GHz fit" if maximum is not None else "supplied differential fit"
+    frequency_note = (f"{strobe_ghz:g} GHz is extrapolated" if maximum is not None and strobe_ghz > maximum
+                      else "fundamental is within the declared fit bandwidth" if maximum is not None
+                      else "extracted bandwidth is unspecified")
+    source = meta.get("source", {})
+    source_note = (f"Ideal {source['resistanceOhmsPerLeg']:g} Ω/leg, {source['riseTimePs']:g} ps source"
+                   if "resistanceOhmsPerLeg" in source and "riseTimePs" in source else "Ideal differential source")
+    limitations = (f"Routed response uses {bandwidth}; {frequency_note}. Matched reference is ideal; packages/assumed load retained.\n"
+                   f"{source_note}, zero jitter/noise; no AM3352 switching model, DDR margin or BER claim.")
 fig.text(
     0.5,
-    0.035,
-    "Experimental differential channel: mesh/time convergence and active crosstalk/PDN are not validated. No DDR pass/fail or BER inference.",
+    0.025 if meta.get("frequencyStress") else 0.035,
+    limitations,
     ha="center",
     fontsize=9,
     color="#9b3e2a",
 )
-fig.subplots_adjust(top=0.90, bottom=0.17, hspace=0.40, wspace=0.23)
+fig.subplots_adjust(top=0.88 if meta.get("frequencyStress") else 0.90,
+                    bottom=0.21 if meta.get("frequencyStress") else 0.17, hspace=0.40, wspace=0.23)
 fig.savefig(out / "eye-comparison.png", dpi=160)
-fig.savefig(out / "eye-comparison.svg", dpi=160)
+fig.savefig(out / "eye-comparison.svg", dpi=160, metadata={"Date": None})
+svg_path = out / "eye-comparison.svg"
+svg_path.write_text("\n".join(line.rstrip() for line in svg_path.read_text().splitlines()) + "\n")
 plt.close(fig)
 (out / "comparison.json").write_text(
     json.dumps(

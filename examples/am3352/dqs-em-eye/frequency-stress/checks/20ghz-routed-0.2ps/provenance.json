@@ -1,0 +1,110 @@
+{
+  "kind": "ngspice ideal-source passive differential frequency stress",
+  "experimentDescription": "20 GHz complementary ideal clock through the unchanged TI package, differential channel, Winbond package and assumed ODT/Cin",
+  "frequencyStress": true,
+  "direction": "write",
+  "mode": "clock",
+  "rateMTs": 40000.0,
+  "clockMHz": 20000.0,
+  "strobeGHz": 20.0,
+  "analysisStartNs": 2980.0000000000005,
+  "analysisStopNs": 3000.0,
+  "analysisWindowUiCount": 799.9999999999923,
+  "analysisWindowExplicit": true,
+  "nominalSourcePhasePs": 5000.5,
+  "nominalSourceFirstCenterPositive": true,
+  "nominalSourceRising": true,
+  "nominalSourcePhaseIncludesPropagation": false,
+  "channel": {
+    "model": "supplied differential two-port channel fit",
+    "modelSha256": "ac3a8f58bbc9b58474b703f0d2e0fc9cc6cad70af05789b66df41c262bfa1a37",
+    "suppliedModelSha256": "ac3a8f58bbc9b58474b703f0d2e0fc9cc6cad70af05789b66df41c262bfa1a37",
+    "maximumExtractedFrequencyGHz": 5,
+    "fundamentalExceedsExtractedBandwidth": true,
+    "commonMode": "ideal fixed receiver 0.75V; transmitter common-mode DC load from ODT; no extracted common-mode propagation"
+  },
+  "source": {
+    "kind": "complementary ideal ngspice PULSE voltage sources",
+    "openCircuitDifferentialLowV": -1.5,
+    "openCircuitDifferentialHighV": 1.5,
+    "commonModeV": 0.75,
+    "legLowV": 0,
+    "legHighV": 1.5,
+    "resistanceOhmsPerLeg": 50,
+    "riseTimePs": 1,
+    "fallTimePs": 1,
+    "delayNs": 5.0,
+    "pulseWidthPs": 24.0,
+    "periodPs": 50.0,
+    "unitIntervalPs": 25.0,
+    "firstPositiveRisingCrossingPs": 5000.5,
+    "ibis": false,
+    "vendorSwitchingRetimed": false
+  },
+  "ioModels": {
+    "transmitter": "ideal complementary PULSE stimulus; not an AM3352 switching model",
+    "conversion": "none; no IBIS or vendor switching model used",
+    "driverModelSha256": null,
+    "negativeDriverModelSha256": null,
+    "package": "selected TI pin self R/L/C plus mutual P1-P2 inductance; mutual package capacitance omitted due sign ambiguity",
+    "receiver": "Winbond unencrypted LDQS/LDQSB package RLC with assumed linear 60 ohm ODT and 2pF per leg; no transistor-level receiver",
+    "receiverCapacitancePf": 2,
+    "odtOhmsPerLeg": 60,
+    "sourceResistanceOhmsPerLeg": 50
+  },
+  "jitter": {
+    "configuredInputRjRmsPs": 0,
+    "configuredPeriodicJitterPeakPs": 0,
+    "periodicJitterPeriodUI": null,
+    "seed": null,
+    "provenance": "deterministic ideal clock; no jitter injection"
+  },
+  "noise": {
+    "kind": "zero differential receiver-input noise; ideal supplies",
+    "configuredRmsMv": 0,
+    "seed": null,
+    "provenance": "no noise injection"
+  },
+  "timeStepPs": 0.2,
+  "uiCount": 120000,
+  "integrationMethod": "trap",
+  "captureStartNs": 2980.0000000000005,
+  "launchHistoryComputed": true,
+  "transientEndNs": 3005.2,
+  "wallSeconds": 203.05486599899996,
+  "ngspiceVersion": "******\n** ngspice-44.2 : Circuit level simulation program\n** Compiled with KLU Direct Linear Solver\n** The U. C. Berkeley CAD Group\n** Copyright 1985-1994, Regents of the University of California.\n** Copyright 2001-2024, The ngspice team.\n** Please get your ngspice manual from https://ngspice.sourceforge.io/docs.html\n** Please file your bug-reports at http://ngspice.sourceforge.net/bugrep.html\n** Creation Date: Fri Oct  9 19:16:53 UTC 2026\n******",
+  "netlistSha256": "2cf6a467ff147224cba07da75bf3a396cba4f62ede1b1662e6e266a86e14267f",
+  "completionVerified": true,
+  "finiteCaptureVerified": true,
+  "captureValidation": {
+    "adaptive": {
+      "duplicateTimestampCount": 0,
+      "maximumDuplicateVoltageDeltaV": 0.0,
+      "timeOrdering": "nondecreasing",
+      "analysisStartCoverageVerified": true,
+      "duplicateVoltageToleranceV": 1e-10,
+      "rawDuplicateRowsPreserved": true
+    },
+    "linearized": {
+      "timeOrdering": "strictly increasing",
+      "analysisStartCoverageVerified": true,
+      "maximumGapToleranceFactor": 1.00000001
+    }
+  },
+  "signoff": false,
+  "limitations": [
+    "Ideal 1ps stimulus does not represent AM3352 switching capability or repair an unqualified vendor I/O model",
+    "Routed high-frequency response extrapolates the supplied channel fit beyond its extracted frequency range; 1ps edge harmonics also exceed that range",
+    "Matched reference is an ideal analytic transmission line, not measured hardware",
+    "Balanced differential channel omits extracted common-mode conversion, active aggressors and PDN noise",
+    "Winbond receiver ODT and 2pF input capacitance are assumptions; transistor behavior is not included",
+    "This frequency stress does not establish DDR compliance, BER or board eye validity"
+  ],
+  "postprocessingReplay": {
+    "nativeRunCompleted": true,
+    "electricalDeckUnchanged": true,
+    "reason": "Replayed stricter linearized checks and roundoff-aware adaptive timestamp validation on the existing completed native run.",
+    "validationScriptSha256": "dba4cc55b4afe83b5d29ef39e5ea80c908a6d668f7d2355cb3aa5091476ca5ea",
+    "wallTimeAvailable": true
+  }
+}

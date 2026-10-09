@@ -1,0 +1,74 @@
+{
+  "channelSpiceSha256": "ac3a8f58bbc9b58474b703f0d2e0fc9cc6cad70af05789b66df41c262bfa1a37",
+  "savedFitSha256": "14ef20913aac257efe16a9ff08ccaae297ecffd3149503b66aa300e09036c801",
+  "savedFrequencyBandHz": [
+    1000000.0,
+    5000000000.0
+  ],
+  "maximumReconstructionDifferenceVsSavedFit": 2.864289338439558e-13,
+  "formula": "S_ij = Fd_ij + sqrt(Z0) * sum((Gr_re*q - Gr_im*beta)/(q*q + beta*beta)); q=j*2*pi*f+1/Rp",
+  "samples": [
+    {
+      "frequencyHz": 400000000.0,
+      "s21Magnitude": 0.9749908659130475,
+      "s21Db": -0.21998905838090002,
+      "maximumScatteringSingularValue": 0.9989737305354233,
+      "reciprocityDifferenceAbs": 0.0019225469074646093,
+      "outsideSavedBand": false
+    },
+    {
+      "frequencyHz": 5000000000.0,
+      "s21Magnitude": 0.9555925177433765,
+      "s21Db": -0.3945451883947534,
+      "maximumScatteringSingularValue": 0.9924640380636638,
+      "reciprocityDifferenceAbs": 0.013262845812402887,
+      "outsideSavedBand": false
+    },
+    {
+      "frequencyHz": 7000000000.0,
+      "s21Magnitude": 0.4612958129569258,
+      "s21Db": -6.72040974667946,
+      "maximumScatteringSingularValue": 0.7381943608621306,
+      "reciprocityDifferenceAbs": 0.09601339086650527,
+      "outsideSavedBand": true
+    },
+    {
+      "frequencyHz": 20000000000.0,
+      "s21Magnitude": 0.04593681787863091,
+      "s21Db": -26.75678184830362,
+      "maximumScatteringSingularValue": 0.3882554757388374,
+      "reciprocityDifferenceAbs": 0.026850031048110252,
+      "outsideSavedBand": true
+    },
+    {
+      "frequencyHz": 60000000000.0,
+      "s21Magnitude": 0.030159292539373758,
+      "s21Db": -30.411577002629965,
+      "maximumScatteringSingularValue": 0.3894383720075474,
+      "reciprocityDifferenceAbs": 0.027189904732722363,
+      "outsideSavedBand": true
+    },
+    {
+      "frequencyHz": 100000000000.0,
+      "s21Magnitude": 0.02866419145726007,
+      "s21Db": -30.853206080823092,
+      "maximumScatteringSingularValue": 0.38970744409026403,
+      "reciprocityDifferenceAbs": 0.027262608405853265,
+      "outsideSavedBand": true
+    }
+  ],
+  "sampledPassivity": {
+    "frequencyBandHz": [
+      1000000.0,
+      1000000000000.0
+    ],
+    "sampleCount": 10001,
+    "maximumScatteringSingularValue": 0.9998900707432185,
+    "frequencyAtMaximumHz": 6474407045.688144
+  },
+  "limitations": [
+    "Above 5 GHz these are rational-fit extrapolations, not independent EM samples.",
+    "No coefficients or physical parameters were changed.",
+    "Sampled passivity is a numerical model check, not an accuracy or whole-band proof."
+  ]
+}

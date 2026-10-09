@@ -15,8 +15,8 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install -y libglu1-mesa ngspice
       - run: pip install gmsh==4.13.1 shapely==2.1.2 numpy==2.3.5 scipy==1.16.2 matplotlib==3.10.6
       - run: bun install
-      - name: Check Winbond diagnostic harness with independent native fixtures
-        run: python -m unittest discover -s tests/python -p test_winbond_dc.py -v
+      - name: Check native SI diagnostics and open/closed eye analysis
+        run: python -m unittest discover -s tests/python -p 'test_*.py' -v
       - run: bun test tests/si.test.tsx
         env:
           PALACE_MESH_PYTHON: python

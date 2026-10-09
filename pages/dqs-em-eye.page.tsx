@@ -6,6 +6,14 @@ const stressEye = new URL(
   "../examples/am3352/dqs-em-eye/prbs-eye-comparison.png",
   import.meta.url,
 ).href
+const frequencyControl = new URL(
+  "../examples/am3352/dqs-em-eye/frequency-stress/400mhz/eye-comparison.png",
+  import.meta.url,
+).href
+const frequencyStress = new URL(
+  "../examples/am3352/dqs-em-eye/frequency-stress/20ghz/eye-comparison.png",
+  import.meta.url,
+).href
 
 export default function DqsEmEye() {
   return (
@@ -40,6 +48,35 @@ export default function DqsEmEye() {
         <img
           src={stressEye}
           alt="PRBS7 stress eye on the routed DQS0 channel with matched reference"
+          style={{ width: "100%", maxWidth: 1800 }}
+        />
+      </a>
+      <h2>Frequency stress: 400 MHz to 20 GHz</h2>
+      <p>
+        These companion captures use an ideal test source through the same
+        package, routed channel and receiver load. Both use 50 Ω source
+        resistance per leg, 1 ps edges and zero jitter or noise to isolate
+        frequency sensitivity. The TI IBIS switching model is retained for the
+        original captures above.
+      </p>
+      <p>
+        The 20 GHz strobe has a 25 ps unit interval (40 GT/s). Its routed
+        channel response extrapolates a fit based on data up to 5 GHz. Eye
+        closure shows bandwidth sensitivity under these assumptions; it does not
+        validate the extrapolated channel or imply that AM3352 operates at this
+        rate.
+      </p>
+      <a href={frequencyControl} target="_blank" rel="noreferrer">
+        <img
+          src={frequencyControl}
+          alt="400 MHz ideal-source bandwidth control through routed and matched channels"
+          style={{ width: "100%", maxWidth: 1800 }}
+        />
+      </a>
+      <a href={frequencyStress} target="_blank" rel="noreferrer">
+        <img
+          src={frequencyStress}
+          alt="20 GHz ideal-source bandwidth stress; routed channel uses fit extrapolation"
           style={{ width: "100%", maxWidth: 1800 }}
         />
       </a>

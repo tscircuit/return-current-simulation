@@ -1,0 +1,58 @@
+
+Note: No compatibility mode selected!
+
+
+Circuit: ideal differential clock: passive dqs bandwidth stress
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+srcp                                         0
+srcn                                       1.5
+diep                                  0.339127
+dien                                   1.16089
+pkp                                   0.340284
+pkn                                    1.15969
+txp                                   0.340284
+txn                                    1.15969
+csrc                                  -0.81941
+cload                                 -0.81941
+cm                                        0.75
+halfcm                                0.170142
+srccm                                 0.749989
+rxp0                                  0.340295
+rxp                                   0.340295
+rxn0                                   1.15971
+rxn                                    1.15971
+rkp                                   0.343148
+rkn                                    1.15703
+rdiep                                 0.343148
+rdien                                  1.15703
+erxn#branch                        -0.00678385
+erxp#branch                         0.00678087
+ecmsrc#branch                      3.76321e-07
+ebal#branch                         0.00678236
+lrn#branch                          0.00678385
+lrp#branch                         -0.00678087
+lpn#branch                          0.00678217
+lpp#branch                         -0.00678255
+ecmhalf#branch                     3.76321e-07
+vnn#branch                         -0.00678385
+vnp#branch                          0.00678087
+vcm#branch                        -3.76321e-07
+vnegative#branch                   -0.00678217
+vpositive#branch                    0.00678255
+
+ Reference value :  2.98000e-06
+ Reference value :  2.98756e-06
+ Reference value :  2.99549e-06
+ Reference value :  3.00219e-06
+No. of Data Rows : 146453
+BANDWIDTH_STRESS_COMPLETE
+ngspice-44.2 done
