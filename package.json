@@ -12,6 +12,10 @@
     "./palace": {
       "types": "./dist/palace.d.ts",
       "import": "./dist/palace.js"
+    },
+    "./circuit-json": {
+      "types": "./dist/circuit-json-simulation.d.ts",
+      "import": "./dist/circuit-json.js"
     }
   },
   "files": [
@@ -40,12 +44,12 @@
     "smoke:package": "bun scripts/smoke-package.tsx"
   },
   "dependencies": {
+    "@resvg/resvg-js": "2.6.2",
     "@tscircuit/solver-utils": "0.0.21",
-    "circuit-json": "0.0.515",
+    "circuit-json": "0.0.522",
     "graphics-debug": "0.0.76",
     "transformation-matrix": "2.16.1",
-    "zod": "3.25.76",
-    "@resvg/resvg-js": "2.6.2"
+    "zod": "3.25.76"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",

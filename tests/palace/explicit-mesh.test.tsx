@@ -12,11 +12,16 @@ test.skipIf(!python)(
   async () => {
     const directory = await mkdtemp(join(tmpdir(), "return-current-mesh-"))
     try {
-      for (const referenceLayer of ["top", "bottom"] as const) {
+      let topCopperVolume = 0
+      for (const [referenceLayer, copperModel] of [
+        ["top", "volumetric_copper"],
+        ["bottom", "volumetric_copper"],
+        ["top", "surface_impedance_copper"],
+      ] as const) {
         const circuit = new Circuit()
         circuit.add(<ExplicitPortBoard referenceLayer={referenceLayer} />)
         await circuit.renderUntilSettled()
-        const destination = join(directory, referenceLayer)
+        const destination = join(directory, `${referenceLayer}-${copperModel}`)
         await preparePalaceSimulation({
           circuitJson: circuit.getCircuitJson(),
           groundNet: "GND",
@@ -31,7 +36,8 @@ test.skipIf(!python)(
               loadImpedance: 100,
             },
           ],
-          frequencyHz: 1e6,
+          frequencyHz: copperModel === "surface_impedance_copper" ? 1e8 : 1e6,
+          copperModel,
           outputDirectory: destination,
           order: 1,
           meshSize: 2,
@@ -68,6 +74,27 @@ test.skipIf(!python)(
         )
         expect(summary.tetrahedra).toBeGreaterThan(100)
         expect(summary.portAttributes).toEqual([21, 22])
+        expect(summary.copperSolidVolumeMm3).toBeGreaterThan(0)
+        if (referenceLayer === "top" && copperModel === "volumetric_copper")
+          topCopperVolume = summary.copperSolidVolumeMm3
+        if (copperModel === "surface_impedance_copper") {
+          expect(summary.copperSolidVolumeMm3).toBeCloseTo(topCopperVolume, 9)
+          expect(summary.copperModel).toBe(copperModel)
+          expect(
+            config.Domains.Materials.map(
+              (material: { Attributes: number[] }) => material.Attributes,
+            ),
+          ).toEqual([[1], [2]])
+          expect(config.Boundaries.Conductivity).toEqual([
+            {
+              Attributes: [11, 12],
+              Conductivity: 5.8e7,
+              Permeability: 1,
+              External: true,
+            },
+          ])
+          expect(config.Boundaries).not.toHaveProperty("PEC")
+        }
         // The polygon ring adapter must subtract drill area rather than add it.
         const area = Bun.spawn(
           [

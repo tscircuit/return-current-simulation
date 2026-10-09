@@ -125,6 +125,7 @@ def generate_mesh(model, destination):
         from mesh_multilayer import generate_multilayer_mesh
         return generate_multilayer_mesh(model, destination)
     geometry = model["geometry"]
+    surface_impedance = model["copperModel"] == "surface_impedance_copper"
     board = Polygon(points(geometry["boardOutline"]))
     for cutout in geometry["cutouts"]:
         board = board.difference(Polygon(points(cutout)))
@@ -233,12 +234,12 @@ def generate_mesh(model, destination):
             annulus = add_polygon(outer.difference(hole), -model["copperThickness"])
             copper.extend(entity for entity in gmsh.model.occ.extrude([annulus], 0, 0,
                           height + 2 * model["copperThickness"]) if entity[0] == 3)
-        if model.get("groundVias"):
+        if model.get("groundVias") or surface_impedance:
             copper, _ = gmsh.model.occ.fuse(copper[:1], copper[1:])
         port_surfaces = [add_port(port_definition(model, index, legacy), model, legacy,
                                  unary_union(signals), ground, ground_pads, board)
                          for index, legacy in enumerate(ports)]
-        if model.get("groundVias"):
+        if model.get("groundVias") or surface_impedance:
             # Volumes already provide these copper interfaces. Coplanar
             # marking sheets with different via-hole rings can duplicate facets.
             ground_surfaces = []
@@ -272,7 +273,8 @@ def generate_mesh(model, destination):
         air_tags = (
             {tag for dim, tag in mapping[0] if dim == 3} - substrate_tags - copper_tags
         )
-        gmsh.model.addPhysicalGroup(3, sorted(copper_tags), 3, "copper")
+        if not surface_impedance:
+            gmsh.model.addPhysicalGroup(3, sorted(copper_tags), 3, "copper")
         gmsh.model.addPhysicalGroup(3, sorted(air_tags), 1, "air")
         gmsh.model.addPhysicalGroup(3, sorted(substrate_tags), 2, "substrate")
         offset = 1 + len(substrate) + len(copper)
@@ -294,11 +296,17 @@ def generate_mesh(model, destination):
             }
         )
         offset += len(signal_surfaces)
-        if model.get("groundVias"):
+        if model.get("groundVias") or surface_impedance:
             copper_boundaries = {tag for dim, tag in gmsh.model.getBoundary([(3, tag) for tag in copper_tags], combined=False, oriented=False) if dim == 2}
+            if surface_impedance:
+                exterior = {tag for dim, tag in gmsh.model.getBoundary([(3, tag) for tag in copper_tags], combined=True, oriented=False) if dim == 2}
+                active = {tag for dim, tag in gmsh.model.getBoundary([(3, tag) for tag in air_tags | substrate_tags], combined=False, oriented=False) if dim == 2}
+                copper_boundaries = exterior & active
+                if not copper_boundaries:
+                    raise ValueError("Surface impedance has no exposed conductor interfaces")
             for tag in sorted(copper_boundaries):
                 x, y, z = gmsh.model.occ.getCenterOfMass(2, tag)
-                if abs(z - height) < 1e-7 and unary_union(signals).covers(Point(x, y)):
+                if ((height - 1e-7 <= z <= height + model["copperThickness"] + 1e-7) if surface_impedance else abs(z - height) < 1e-7) and unary_union(signals).covers(Point(x, y)):
                     signal_tags.append(tag)
                 else:
                     ground_tags.append(tag)
@@ -312,6 +320,8 @@ def generate_mesh(model, destination):
                 raise ValueError("Lumped port apertures overlap or have no meshed surface")
             gmsh.model.addPhysicalGroup(2, tags, 21 + index, f"port-{index + 1}")
             port_tags.extend(tags)
+        if surface_impedance and set(port_tags).intersection(ground_tags + signal_tags):
+            raise ValueError("Lumped port aperture overlaps a conductor impedance face")
         outer = [
             tag
             for dim, tag in gmsh.model.getBoundary(
@@ -322,6 +332,12 @@ def generate_mesh(model, destination):
             if dim == 2
         ]
         gmsh.model.addPhysicalGroup(2, outer, 13, "outer-air")
+        copper_volume = sum(gmsh.model.occ.getMass(3, tag) for tag in copper_tags)
+        if surface_impedance:
+            # Preserve all conductor interfaces and their physical attributes;
+            # remove only Cu volume entities from the field-solve domain.
+            gmsh.model.occ.remove([(3, tag) for tag in copper_tags], recursive=False)
+            gmsh.model.occ.synchronize()
         copper_edges = sorted(
             {
                 tag
@@ -359,7 +375,12 @@ def generate_mesh(model, destination):
             "groundAttribute": 11,
             "signalAttribute": 12,
             "portAttributes": list(range(21, 21 + len(ports))),
+            "copperSolidVolumeMm3": copper_volume,
         }
+        if surface_impedance:
+            summary["copperModel"] = model["copperModel"]
+            summary["conductivityBoundaryAttributes"] = [11, 12]
+            summary["surfaceImpedance"] = model["surfaceImpedance"]
         (destination / "mesh-summary.json").write_text(
             json.dumps(summary, indent=2) + "\n"
         )
@@ -439,6 +460,12 @@ def create_configuration(model, port_count):
                "Permeability": 1.0, "LossTan": layer["lossTangent"]}
               for layer in model["multilayer"]["stackup"]["dielectrics"]]
         ]
+    if model["copperModel"] == "surface_impedance_copper":
+        configuration["Domains"]["Materials"] = configuration["Domains"]["Materials"][:2]
+        configuration["Boundaries"]["Conductivity"] = [{
+            "Attributes": [11, 12], "Conductivity": model["copperConductivity"],
+            "Permeability": 1.0, "External": True,
+        }]
     return configuration
 
 

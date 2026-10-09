@@ -30,6 +30,9 @@ export interface PalaceOptions
   meshSize?: number
   airPadding?: number
   order?: 1 | 2
+  /** Explicit two-layer finite-conductivity boundary approximation. Default
+   * volumetric_copper resolves conduction inside meshed copper. */
+  copperModel?: "volumetric_copper" | "surface_impedance_copper"
 }
 
 export interface PalaceModel {
@@ -59,7 +62,13 @@ export interface PalaceModel {
   meshSize: number
   airPadding: number
   order: 1 | 2
-  copperModel: "volumetric_copper"
+  copperModel: "volumetric_copper" | "surface_impedance_copper"
+  surfaceImpedance?: {
+    boundaryModel: "half_space"
+    skinDepthMm: number
+    minimumThicknessToSkinDepth: number
+    currentSampling: "sum_foil_face_surface_currents"
+  }
 }
 
 export interface PalaceTerminalPort {
@@ -89,7 +98,9 @@ export interface PalaceReference {
   solverVersion: string
   femOrder: 1 | 2
   frequencyHz: number
-  copperModel: "volumetric_copper"
+  copperModel: "volumetric_copper" | "surface_impedance_copper"
+  surfaceCurrentScaleAmpsPerMm?: number
+  samplingMethod?: "sum_foil_face_surface_currents"
   copperThickness: number
   layerSeparation: number
   cellWidth: number

@@ -13,8 +13,8 @@ jobs:
         with:
           python-version: '3.12'
       - run: sudo apt-get update && sudo apt-get install -y libglu1-mesa
-      - run: pip install gmsh==4.13.1 shapely==2.1.2 numpy==2.3.5
+      - run: pip install -r lib/palace/python/requirements.txt
       - run: bun install
-      - run: bun test tests/palace/explicit-mesh.test.tsx tests/palace/multilayer-mesh.test.tsx tests/palace/trace-caps.test.tsx tests/ddr-analysis.test.tsx
+      - run: bun test tests/palace/explicit-mesh.test.tsx tests/palace/multilayer-mesh.test.tsx tests/palace/trace-caps.test.tsx tests/palace/surface-impedance.test.tsx tests/ddr-analysis.test.tsx
         env:
           PALACE_MESH_PYTHON: python

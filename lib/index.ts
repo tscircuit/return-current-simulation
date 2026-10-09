@@ -5,6 +5,10 @@ export { parseReturnCurrentCircuitJson } from "./parse-circuit-json"
 export { withNamedExcitations, listCircuitPorts } from "./named-ports"
 export type { NamedExcitation } from "./named-ports"
 export { parseCurrentAmps, parseResistanceOhms } from "./electrical-units"
+export {
+  createReturnCurrentExperiment,
+  selectReturnCurrentExperiment,
+} from "./circuit-json-experiment"
 export type {
   SimulationOptions,
   SimulationResult,

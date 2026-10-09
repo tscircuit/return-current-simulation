@@ -4,6 +4,7 @@ import {
   getZodPrefixedIdWithDefault,
   point,
   pcb_silkscreen_text,
+  simulation_return_current_excitation,
 } from "circuit-json"
 import { z } from "zod"
 import type {
@@ -98,7 +99,14 @@ export function parseReturnCurrentCircuitJson(
         .extend({ pcb_component_id: z.null() })
         .parse(element)
     if (element.type !== "simulation_return_current_excitation")
-      return any_circuit_element.parse(normalizeDisplayOffsets(element))
+      return {
+        ...element,
+        ...any_circuit_element.parse(normalizeDisplayOffsets(element)),
+      } as ReturnCurrentCircuitJson[number]
+    // Official PR887 records are validated without discarding their contact
+    // identities. Legacy point-only records remain supported by the old API.
+    if (element.simulation_experiment_id !== undefined)
+      return simulation_return_current_excitation.parse(element)
     const excitation: SimulationReturnCurrentExcitation =
       excitationSchema.parse(element)
     return excitation

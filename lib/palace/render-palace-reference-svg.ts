@@ -32,10 +32,11 @@ export function renderPalaceModelSvg(
   if (
     reference.frequencyHz !== model.frequencyHz ||
     reference.femOrder !== model.order ||
+    reference.copperModel !== model.copperModel ||
     reference.sampleLayer !== model.multilayer?.sampleLayer
   )
     throw new Error(
-      "Palace model frequency or FEM order differs from reference",
+      "Palace model frequency, FEM order, copper model or sample layer differs from reference",
     )
   const outline = model.geometry.boardOutline
   const bounds = {
@@ -174,11 +175,13 @@ export function renderPalaceReferenceSvg(
       ...options,
       title: options.title ?? "Palace ground-plane return current",
       description:
-        "Palace driven Maxwell reference. Colors show magnitude of the complex conduction-current vector averaged through copper thickness. Arrows show the real instantaneous field at the selected phase. Copper is an explicitly meshed conductive volume.",
+        reference.copperModel === "surface_impedance_copper"
+          ? "Palace driven Maxwell reference with finite-conductivity surface impedance. Colors show the complex sheet current summed over exposed foil faces, divided by physical foil thickness for display. Arrows show the real instantaneous field at the selected phase. Copper uses a half-space surface-impedance boundary."
+          : "Palace driven Maxwell reference. Colors show magnitude of the complex conduction-current vector averaged through copper thickness. Arrows show the real instantaneous field at the selected phase. Copper is an explicitly meshed conductive volume.",
       subtitle: `Palace ${reference.solverVersion}${reference.sampleLayer ? ` · layer = ${reference.sampleLayer}` : ""} · f = ${reference.frequencyHz / 1e6} MHz · |K|/t (A/mm²) · peak phasors`,
       gridLabel: "sample grid",
       separationLabel: reference.sampleLayer ? "outer foil gap" : undefined,
-      footer: `FEM order ${reference.femOrder} · conductive copper volumes · arrows at ${phaseDegrees}° · air/substrate domain · source currents normalized`,
+      footer: `FEM order ${reference.femOrder} · ${reference.copperModel === "surface_impedance_copper" ? "finite-conductivity surface impedance" : "conductive copper volumes"} · arrows at ${phaseDegrees}° · air/substrate domain · source currents normalized`,
     },
   )
 }
