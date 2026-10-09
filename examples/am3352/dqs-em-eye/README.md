@@ -10,6 +10,25 @@ two-port extraction, a passive scikit-rf equivalent, and ngspice nonlinear TI
 IBIS output models. The matched 100 Ω / 400 ps control uses identical I/O,
 package, receiver load, jitter and noise.
 
+The saved eye remains an exploratory result under these assumptions. Device
+validation is tracked in the [Winbond validation notes](../../../scripts/si/winbond-validation.md),
+and channel convergence remains incomplete. These blockers prevent using the
+image or its opening as a credible routing-margin measurement.
+
+For the broadband openEMS channel, the 0.1 → 0.05 mm mesh comparison changes
+complex S21 by up to **0.345 below 1 GHz**, and the fine records stop at
+**−17.11 / −16.48 dB** energy decay instead of the requested **−50 dB**.
+The [mesh comparison](checks/mesh-sensitivity-port1.json),
+[fit/passivity report](channel/fit.json) and native logs in `field-port*/`
+retain the raw evidence. The separate
+[Palace four-port study](https://github.com/tscircuit/circuit-json-to-gmsh/blob/palace-dqs-channel/examples/am3352/palace-channel/README.md)
+has complete **400 MHz** diagnostics, but its
+[0.6 → 0.4 mm comparison](https://github.com/tscircuit/circuit-json-to-gmsh/blob/palace-dqs-channel/examples/am3352/palace-channel/pad-crop/two-mesh-diagnostic.json)
+changes complex S by **0.05804 single-ended / 0.06904 mixed-mode**, versus a
+**0.01** criterion. The valid 0.3 mm case has no completed accepted solve under
+the recorded **14 GiB** cap. Neither the unconverged broadband result nor a
+single clock-frequency sample establishes an accurate transient channel.
+
 ## Conditions and captured results
 
 TI model-selection-guide example IOCTRL **0x18B**, `Model_655/847`; board

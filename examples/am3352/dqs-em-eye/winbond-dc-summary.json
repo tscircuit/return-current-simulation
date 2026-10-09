@@ -1,0 +1,258 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-09",
+  "nativeSimulator": "ngspice 44.2, ngbehavior=hsa",
+  "scope": "DC sanity diagnostics; vendor source and raw expanded circuits remain local",
+  "modelRevision": "Winbond W631GG6MB 1.0, 2017-09-20",
+  "signoff": false,
+  "hspiceEquivalenceEstablished": false,
+  "deviceModelQualified": false,
+  "credibleRoutingEyeAvailable": false,
+  "recovery": {
+    "mainUnresolvedGlyphs": 0,
+    "cornerCommentOnlyUnresolvedGlyphs": 22,
+    "activeUnresolvedGlyphs": 0,
+    "protectedHashesMatchHandoff": true,
+    "standaloneReplayIdentical": true
+  },
+  "conditions": {
+    "supplyV": 1.5,
+    "loadOhm": 1000,
+    "biasV": 0.5,
+    "driveLibrary": "ds034",
+    "odtEnabled": false,
+    "readDirectionDeviceBench": true,
+    "boardDataRateVerified": false
+  },
+  "captures": {
+    "suppliedUnits": {
+      "pass": false,
+      "reportSha256": "14df7ae7a44ac0771816c0bfa2380363f63b4e2d855c370728f0694a67b928a8",
+      "sweepStepV": 0.01,
+      "timeoutSeconds": 240.0,
+      "cases": [
+        {
+          "name": "complete-io-t27-datlow",
+          "temperatureC": 27,
+          "datV": 0,
+          "dqV": 1.239459956054774e-07,
+          "supplySourceCurrentA": -2.504687290638685e-05,
+          "opSanityPass": false,
+          "sweepRows": 0,
+          "expectedSweepRows": 181,
+          "sweepSanityPass": false,
+          "sweepTimedOut": true
+        },
+        {
+          "name": "complete-io-t27-dathigh",
+          "temperatureC": 27,
+          "datV": 1.5,
+          "dqV": -3.159931016789203,
+          "supplySourceCurrentA": 2.528652607256982,
+          "opSanityPass": false,
+          "sweepRows": 0,
+          "expectedSweepRows": 181,
+          "sweepSanityPass": false,
+          "sweepTimedOut": true
+        },
+        {
+          "name": "complete-io-t85-datlow",
+          "temperatureC": 85,
+          "datV": 0,
+          "dqV": 0.0008855436048051883,
+          "supplySourceCurrentA": -8.198943824018193e-05,
+          "opSanityPass": false,
+          "sweepRows": 0,
+          "expectedSweepRows": 181,
+          "sweepSanityPass": false,
+          "sweepTimedOut": true
+        },
+        {
+          "name": "complete-io-t85-dathigh",
+          "temperatureC": 85,
+          "datV": 1.5,
+          "dqV": 1.451399264889074,
+          "supplySourceCurrentA": -0.001504690156433224,
+          "opSanityPass": false,
+          "sweepRows": 0,
+          "expectedSweepRows": 181,
+          "sweepSanityPass": false,
+          "sweepTimedOut": true
+        },
+        {
+          "name": "output-stage-t27-datlow",
+          "temperatureC": 27,
+          "datV": 0,
+          "dqV": 1.2331102824362e-07,
+          "supplySourceCurrentA": -2.504407721668811e-05,
+          "opSanityPass": true,
+          "sweepRows": 0,
+          "expectedSweepRows": 181,
+          "sweepSanityPass": false,
+          "sweepTimedOut": true
+        },
+        {
+          "name": "output-stage-t27-dathigh",
+          "temperatureC": 27,
+          "datV": 1.5,
+          "dqV": 1.454234242366167,
+          "supplySourceCurrentA": -0.001479257547029547,
+          "opSanityPass": true,
+          "sweepRows": 0,
+          "expectedSweepRows": 181,
+          "sweepSanityPass": false,
+          "sweepTimedOut": true
+        },
+        {
+          "name": "output-stage-t85-datlow",
+          "temperatureC": 85,
+          "datV": 0,
+          "dqV": 308.8524016417574,
+          "supplySourceCurrentA": -0.3087425338792905,
+          "opSanityPass": false,
+          "sweepRows": 181,
+          "expectedSweepRows": 181,
+          "sweepSanityPass": false,
+          "sweepTimedOut": false,
+          "maxAbsClampCurrentA": 4.702473108277395
+        },
+        {
+          "name": "output-stage-t85-dathigh",
+          "temperatureC": 85,
+          "datV": 1.5,
+          "dqV": 1.451399330134634,
+          "supplySourceCurrentA": -0.001504539207832964,
+          "opSanityPass": true,
+          "sweepRows": 0,
+          "expectedSweepRows": 181,
+          "sweepSanityPass": false,
+          "sweepTimedOut": true
+        }
+      ]
+    },
+    "receiverMicronControl": {
+      "pass": false,
+      "reportSha256": "a4dcc5b87033f13e22a6f1599a16c19bda34eab35033c04bfe28915567cdc26c",
+      "sweepStepV": 0.05,
+      "timeoutSeconds": 300.0,
+      "cases": [
+        {
+          "name": "complete-io-t27-datlow",
+          "temperatureC": 27,
+          "datV": 0,
+          "dqV": 1.239460347049649e-07,
+          "supplySourceCurrentA": -2.506023012481343e-05,
+          "opSanityPass": true,
+          "sweepRows": 37,
+          "expectedSweepRows": 37,
+          "sweepSanityPass": false,
+          "sweepTimedOut": false,
+          "maxAbsClampCurrentA": 9.754247658450145
+        },
+        {
+          "name": "complete-io-t27-dathigh",
+          "temperatureC": 27,
+          "datV": 1.5,
+          "dqV": 1.454234239071758,
+          "supplySourceCurrentA": -0.001479279227359372,
+          "opSanityPass": true,
+          "sweepRows": 37,
+          "expectedSweepRows": 37,
+          "sweepSanityPass": false,
+          "sweepTimedOut": false,
+          "maxAbsClampCurrentA": 4.988386427113437
+        },
+        {
+          "name": "complete-io-t85-datlow",
+          "temperatureC": 85,
+          "datV": 0,
+          "dqV": 0.000885543600993193,
+          "supplySourceCurrentA": -8.236387914040973e-05,
+          "opSanityPass": false,
+          "sweepRows": 0,
+          "expectedSweepRows": 37,
+          "sweepSanityPass": false,
+          "sweepTimedOut": true
+        },
+        {
+          "name": "complete-io-t85-dathigh",
+          "temperatureC": 85,
+          "datV": 1.5,
+          "dqV": 1.451399264889029,
+          "supplySourceCurrentA": -0.001505065254702357,
+          "opSanityPass": true,
+          "sweepRows": 0,
+          "expectedSweepRows": 37,
+          "sweepSanityPass": false,
+          "sweepTimedOut": true
+        },
+        {
+          "name": "output-stage-t27-datlow",
+          "temperatureC": 27,
+          "datV": 0,
+          "dqV": 1.2331102824362e-07,
+          "supplySourceCurrentA": -2.504407721668811e-05,
+          "opSanityPass": true,
+          "sweepRows": 37,
+          "expectedSweepRows": 37,
+          "sweepSanityPass": false,
+          "sweepTimedOut": false,
+          "maxAbsClampCurrentA": 9.754247658781624
+        },
+        {
+          "name": "output-stage-t27-dathigh",
+          "temperatureC": 27,
+          "datV": 1.5,
+          "dqV": 1.454234242366167,
+          "supplySourceCurrentA": -0.001479257547029547,
+          "opSanityPass": true,
+          "sweepRows": 37,
+          "expectedSweepRows": 37,
+          "sweepSanityPass": false,
+          "sweepTimedOut": false,
+          "maxAbsClampCurrentA": 2.612980339602125
+        },
+        {
+          "name": "output-stage-t85-datlow",
+          "temperatureC": 85,
+          "datV": 0,
+          "dqV": 308.8524016417574,
+          "supplySourceCurrentA": -0.3087425338792905,
+          "opSanityPass": false,
+          "sweepRows": 37,
+          "expectedSweepRows": 37,
+          "sweepSanityPass": false,
+          "sweepTimedOut": false,
+          "maxAbsClampCurrentA": 3.992088691167895
+        },
+        {
+          "name": "output-stage-t85-dathigh",
+          "temperatureC": 85,
+          "datV": 1.5,
+          "dqV": 1.451399330134634,
+          "supplySourceCurrentA": -0.001504539207832964,
+          "opSanityPass": true,
+          "sweepRows": 37,
+          "expectedSweepRows": 37,
+          "sweepSanityPass": false,
+          "sweepTimedOut": false,
+          "maxAbsClampCurrentA": 2.49158339638057
+        }
+      ]
+    }
+  },
+  "controls": {
+    "unchangedHigh27DqV": -3.159931016789203,
+    "noOpWrappersHigh27DqV": -3.1599310167892027,
+    "receiverMicronWrappersHigh27DqV": 1.4542342390717575,
+    "modelCoefficientsChanged": false,
+    "receiverDiodeCapacitanceInMicronControlF": 0.0010842199588292478,
+    "receiverParasiticGeometryQualified": false
+  },
+  "remainingBlockers": [
+    "Receiver resistor unit and diode geometry conventions need a validated conversion/HSPICE reference.",
+    "Output-stage nonlinear extrapolation can select nonphysical DC roots; loaded and clamped cases fail sanity.",
+    "Switching, disabled output, ODT, receiver behavior and process corners are unvalidated.",
+    "Existing openEMS and Palace channel evidence has not established broadband mesh convergence."
+  ]
+}

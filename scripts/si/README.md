@@ -92,6 +92,12 @@ models. The receiver here uses its unencrypted LDQS/LDQSB package RLC plus
 is 120 Ω differential; it is not inferred from a mode register. These are
 explicit engineering conditions, not an exact Winbond receiver.
 
+The separate [Winbond native-model diagnostic](winbond-validation.md) tests a
+locally recovered vendor model against DC electrical-sanity checks. It
+reproduces the earlier impossible output voltage and isolates receiver resistor
+unit inconsistencies. Its explicit unit-conversion controls are not a qualified
+receiver model; the existing eyes continue to use the assumed load above.
+
 Default budgets are **10 ps RMS Gaussian source timing jitter**, **5 ps peak
 periodic jitter** with a 31 UI period, and **2 mV RMS differential receiver
 input noise**, low-pass filtered at 500 MHz. Jitter changes the source event
