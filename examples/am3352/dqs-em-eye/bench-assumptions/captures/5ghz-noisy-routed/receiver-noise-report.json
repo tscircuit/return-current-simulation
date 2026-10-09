@@ -1,0 +1,63 @@
+{
+  "kind": "stationary Gaussian two-pole digital Butterworth low-pass",
+  "configuredRmsV": 0.005,
+  "cutoffHz": 1000000000.0,
+  "sampleIntervalS": 1e-11,
+  "sampleCount": 350581,
+  "order": 2,
+  "seed": 50702,
+  "firstOrderHold": true,
+  "stationaryInitialization": true,
+  "perRealizationRmsNormalization": false,
+  "stationaryGain": 0.1489531762781957,
+  "whiteInputRmsV": 0.033567595703106315,
+  "unitWhiteKnotVariance": 0.02220073314348859,
+  "unitWhiteLagOneCovariance": 0.02215967988311256,
+  "unitWhiteFirstOrderHoldVariance": 0.022187048723363245,
+  "theoreticalLagOneCorrelation": 0.9981508151054881,
+  "theoreticalKnotRmsV": 0.005001541700170881,
+  "theoreticalContinuousRmsV": 0.005,
+  "filterNumerator": [
+    0.0009446918438401507,
+    0.0018893836876803015,
+    0.0009446918438401507
+  ],
+  "filterDenominator": [
+    1.0,
+    -1.911197067426073,
+    0.9149758348014336
+  ],
+  "observedRmsV": 0.005015969721934399,
+  "observedAcRmsV": 0.005015909545641239,
+  "observedMeanV": -2.456992689759116e-05,
+  "observedContinuousRmsV": 0.005014430542000312,
+  "observedContinuousAcRmsV": 0.005014370401579202,
+  "location": "differential series voltage sources at receiver package pins, split +/- half",
+  "budgetMeaning": "commanded differential series-source RMS after shaping; not guaranteed total pad or die noise RMS",
+  "gridEndS": 3.5058e-06,
+  "observedAnalysis": {
+    "samples": 250000,
+    "observedSeriesSourceVolts": {
+      "mean": -0.000176181475822393,
+      "rms": 0.004965602460048343,
+      "acRms": 0.0049624759826940425,
+      "minimum": -0.016441525345726404,
+      "maximum": 0.01677735366683919
+    },
+    "totalPadDifferentialVolts": {
+      "mean": -4.563558750691453e-05,
+      "rms": 0.3606659727687785,
+      "acRms": 0.36066596988161004,
+      "minimum": -0.6525860530057628,
+      "maximum": 0.6560973976116884
+    },
+    "totalDieDifferentialVolts": {
+      "mean": -4.366252854978171e-05,
+      "rms": 0.24550830160548373,
+      "acRms": 0.2455082977228932,
+      "minimum": -0.4552220328780674,
+      "maximum": 0.4409644667532575
+    },
+    "totalWaveformStatisticsAreNotIsolatedNoiseBudgets": true
+  }
+}

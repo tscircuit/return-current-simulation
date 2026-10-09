@@ -1,0 +1,17 @@
+# Exact VSRC PWL lookup optimization
+
+The official ngspice 44.2 VSRC evaluator and breakpoint handler scan PWL arrays from their first knot. This local patch caches whether complete time/value arrays have finite, nondecreasing times, then uses lower_bound for waveform intervals and upper_bound for the next breakpoint. Unsorted/nonfinite/incomplete arrays retain the original scans. Delay, repeat folding, endpoint guards, interpolation operation order and breakpoint/cache arithmetic remain unchanged.
+
+Official source: https://sourceforge.net/projects/ngspice/files/ng-spice-rework/44.2/ngspice-44.2.tar.gz/download
+
+Source archive SHA256: e7dadfb7bd5474fd22409c1e5a67acdec19f77e597df68e17c5549bc1390d7fd.
+
+The public patch is scripts/si/ngspice-pwl-binary-search.patch in the project repository. From a fresh extracted official source directory, apply that patch with `patch -p1 < /absolute/path/to/ngspice-pwl-binary-search.patch`. Configure `./configure --prefix=/absolute/path/to/separate-local-fast-install --without-x --with-readline=no --disable-openmp`, then run `make -j4` and `make install`. The explicit local prefix installs initialization/data files along with the binary. Preserve a separate stock installation when reproducing equivalence checks. Build dependencies include a C compiler, make, autoconf-generated configure prerequisites and standard development libraries. The original build used the archive's configure directly; no network/system installation is part of this patch.
+
+Our incremental build retained the existing stock configure prefix, compiled with `make -j4`, and copied only src/ngspice into a separate fast/bin directory. Therefore our binary continues to read initialization/data from the preserved stock install. That copy-only arrangement should not be assumed for a fresh independent install.
+
+The patched solver still reports 44.2. Identify it by binary SHA256 and patch SHA256, not the printed version alone. Build paths/toolchain/configuration may produce a different binary hash; record the actual hash used. build-provenance.json records our exact archive/configuration/original/optimized/patch hashes. patch-application.json verifies that the patch applies to unchanged official archive sources and reproduces all four built modified source files.
+
+Independent algorithm checks are reproducible with `python check-search-semantics.py`. Native fixture comparisons are reproducible with `python compare-native.py --original /absolute/path/to/stock/ngspice --fast /absolute/path/to/optimized/ngspice`; numpy is required. Each of four short fixture decks runs under a 15 second native timeout, and compares the full adaptive and linearized files, including accepted times and currents. These tests cover strict knots, one/two points, first/final endpoints, duplicate knots, repeated sources with delay, and the descending-array fallback. native-equivalence.json shows every output byte matched. The relevant noisy short bench deck also matched every byte of its adaptive and uniform files; native-bench-equivalence.json records their hashes. That bounded fixture is not a long-run performance or signoff claim.
+
+The long assumed bench uses the identical electrical deck and stimulus traces with a different lookup implementation. No coefficients, tolerances, sample grids or source histories are modified by this patch. Short equivalence evidence establishes the tested source boundaries; long-capture scientific checks remain separate.

@@ -83,6 +83,22 @@ class FrequencyAuditTests(unittest.TestCase):
             self.assertEqual(response.shape, saved["fit"].shape)
             self.assertLess(np.max(abs(response - saved["fit"])), 1e-10)
 
+    def test_electrical_refinement_can_keep_the_saved_sample_grid_fixed(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            coarse, refined = Path(scratch) / "coarse", Path(scratch) / "refined"
+            for directory, electrical_step in ((coarse, 0.5), (refined, 0.25)):
+                save_capture(directory, (10, 0.23))
+                path = directory / "provenance.json"
+                metadata = json.loads(path.read_text())
+                metadata.update(electricalTimeStepPs=electrical_step, sampleTimeStepPs=10)
+                path.write_text(json.dumps(metadata))
+            report = timestep_comparison(coarse, refined)
+            self.assertEqual(report["coarseTimeStepPs"], 0.5)
+            self.assertEqual(report["refinedTimeStepPs"], 0.25)
+            self.assertEqual(report["coarseSavedSampleTimeStepPs"], 10)
+            self.assertEqual(report["refinedSavedSampleTimeStepPs"], 10)
+            self.assertEqual(report["receiverMaximumAbsoluteWaveformDifferenceV"], 0)
+
     def test_unmodeled_components_connections_and_small_damping_changes_are_rejected(self):
         original = (CHANNEL / "channel.sp").read_text()
         imaginary_resistor = next(line for line in original.splitlines() if line.startswith("Rp1_im_im_a1 "))

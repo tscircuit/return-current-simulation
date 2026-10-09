@@ -18,6 +18,10 @@ const frequencyStress = new URL(
   "../examples/am3352/dqs-em-eye/frequency-stress/20ghz/eye-comparison.png",
   import.meta.url,
 ).href
+const benchComparison = new URL(
+  "../examples/am3352/dqs-em-eye/bench-assumptions/5ghz/routed-clean-vs-noisy/eye-comparison.png",
+  import.meta.url,
+).href
 
 export default function DqsEmEye() {
   return (
@@ -94,6 +98,34 @@ export default function DqsEmEye() {
         <img
           src={frequencyStress}
           alt="20 GHz ideal-source bandwidth stress; routed channel uses fit extrapolation"
+          style={{ width: "100%", maxWidth: 1800 }}
+        />
+      </a>
+      <h2>Assumed 5 GHz bench observation</h2>
+      <p>
+        This companion observes the package pads at 10 GT/s (100 ps UI) with 0.2
+        pF probe loading per pin and a causal 12 GHz two-pole Butterworth scope
+        response. Both controls retain that loading and response. The noisy case
+        assumes 3 ps RMS source jitter with a 500 MHz correlation corner, 3 ps
+        peak periodic jitter at 100 MHz, a 5 mV RMS differential pad series
+        source after 1 GHz shaping, and 2 mV RMS differential scope noise after
+        12 GHz shaping. Circuit loading and feedback change the pad source's
+        realized voltage contribution.
+      </p>
+      <p>
+        The clean control zeroes the injected jitter and noise. This plot
+        compares clean and noisy captures of the same routed network over 500 ns
+        (5,000 UI), after 3 µs of source history. The configured injections
+        reduce captured opening at ±200 mV from 73.8 ps to 42.3 ps. These are
+        declared simulation assumptions, not measured bench data or qualified
+        AM3352 operation at 5 GHz. Timing modulation adds carrier sidebands,
+        including a 5.1 GHz upper sideband from the periodic jitter. Sidebands
+        and harmonics above 5 GHz use channel-fit extrapolation.
+      </p>
+      <a href={benchComparison} target="_blank" rel="noreferrer">
+        <img
+          src={benchComparison}
+          alt="Assumed 5 GHz package-pad bench observation, clean versus noisy on the same routed path with identical probe and scope response"
           style={{ width: "100%", maxWidth: 1800 }}
         />
       </a>

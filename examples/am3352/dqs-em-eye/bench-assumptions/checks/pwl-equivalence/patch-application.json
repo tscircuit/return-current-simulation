@@ -1,0 +1,7 @@
+{
+  "patchSha256": "859acd456c7e4f52b331cfb58cba783878d81cf2cd22dc43d9b49ac4b1610f08",
+  "returnCode": 0,
+  "officialSourceMatchesOriginalSnapshots": true,
+  "appliedFilesMatchBuiltSource": true,
+  "output": "patching file src/spicelib/devices/vsrc/vsrcdefs.h\npatching file src/spicelib/devices/vsrc/vsrcpar.c\npatching file src/spicelib/devices/vsrc/vsrcload.c\npatching file src/spicelib/devices/vsrc/vsrcacct.c\n"
+}

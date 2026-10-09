@@ -1,0 +1,41 @@
+{
+  "pass": true,
+  "scope": "Physical PWL, source component NPZ and event CSV inputs preserved during lookup optimization; incomplete old captures are not validation data.",
+  "cases": {
+    "5ghz-clean-routed": {
+      "receiver-noise.sp": "1561bbaa6d71356ed6f4b6ba49ffaeca970685c1bd6ae6de8011f1a07cc42fef",
+      "transmitter-stimulus.sp": "bf712ff732a7d0c3f4d8051c4b9df1abba21c2930f71850a73bc14c0c2cfa46c",
+      "source-timing.npz": "e342882f5bbb4509093659c1bdf69eb296a3902d254a351cdb86cf8b94bc841b",
+      "commanded-noise.npz": "ad56484ff1132fc0fbb582e3218f8979938939ad8c7258744c06c5355e60e1a8",
+      "stimulus-events.csv": "6c1b422450b0c973b67a592cdc7d2ed045683f6f5edb594ea62c7ea26949b8bf"
+    },
+    "5ghz-clean-reference": {
+      "receiver-noise.sp": "1561bbaa6d71356ed6f4b6ba49ffaeca970685c1bd6ae6de8011f1a07cc42fef",
+      "transmitter-stimulus.sp": "bf712ff732a7d0c3f4d8051c4b9df1abba21c2930f71850a73bc14c0c2cfa46c",
+      "source-timing.npz": "e342882f5bbb4509093659c1bdf69eb296a3902d254a351cdb86cf8b94bc841b",
+      "commanded-noise.npz": "ad56484ff1132fc0fbb582e3218f8979938939ad8c7258744c06c5355e60e1a8",
+      "stimulus-events.csv": "6c1b422450b0c973b67a592cdc7d2ed045683f6f5edb594ea62c7ea26949b8bf"
+    },
+    "5ghz-noisy-routed": {
+      "receiver-noise.sp": "f76b229134ddc891788865e8cd62a63ccd5c6dd393ceea343760cbe3eeb04e10",
+      "transmitter-stimulus.sp": "9cd6d1796ac26818afd3ee7c4c0e3ae1c2873e0018d809658143f789044a66f4",
+      "source-timing.npz": "019e00ed3ca642c4c8e9e812463ae4e666b9ca9411a7807935ca2e7c8256596f",
+      "commanded-noise.npz": "b06cc701a0ec30e536695e83427840efbfaf99e4b84c07850a2721237f24b42b",
+      "stimulus-events.csv": "5db076fa78098f07b4295f27484674d5f5db0cdddc6bbf96eba17ecb816b7d9d"
+    },
+    "5ghz-noisy-reference": {
+      "receiver-noise.sp": "f76b229134ddc891788865e8cd62a63ccd5c6dd393ceea343760cbe3eeb04e10",
+      "transmitter-stimulus.sp": "9cd6d1796ac26818afd3ee7c4c0e3ae1c2873e0018d809658143f789044a66f4",
+      "source-timing.npz": "019e00ed3ca642c4c8e9e812463ae4e666b9ca9411a7807935ca2e7c8256596f",
+      "commanded-noise.npz": "b06cc701a0ec30e536695e83427840efbfaf99e4b84c07850a2721237f24b42b",
+      "stimulus-events.csv": "5db076fa78098f07b4295f27484674d5f5db0cdddc6bbf96eba17ecb816b7d9d"
+    },
+    "5ghz-noisy-routed-0.25ps": {
+      "receiver-noise.sp": "f76b229134ddc891788865e8cd62a63ccd5c6dd393ceea343760cbe3eeb04e10",
+      "transmitter-stimulus.sp": "9cd6d1796ac26818afd3ee7c4c0e3ae1c2873e0018d809658143f789044a66f4",
+      "source-timing.npz": "019e00ed3ca642c4c8e9e812463ae4e666b9ca9411a7807935ca2e7c8256596f",
+      "commanded-noise.npz": "b06cc701a0ec30e536695e83427840efbfaf99e4b84c07850a2721237f24b42b",
+      "stimulus-events.csv": "5db076fa78098f07b4295f27484674d5f5db0cdddc6bbf96eba17ecb816b7d9d"
+    }
+  }
+}

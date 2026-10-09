@@ -1,0 +1,3105 @@
+{
+  "pass": true,
+  "signoff": false,
+  "cases": {
+    "clean-routed": {
+      "rawCapture": "/workspace/work/dqs-bench-assumptions/captures/5ghz-clean-routed",
+      "observationCapture": "/workspace/work/dqs-bench-assumptions/observations/5ghz-clean-routed",
+      "checks": [
+        {
+          "check": "package-pad observation plane",
+          "pass": true
+        },
+        {
+          "check": "raw/observed timestamp identity",
+          "pass": true
+        },
+        {
+          "check": "observation source waveform hash",
+          "pass": true
+        },
+        {
+          "check": "observation source provenance hash",
+          "pass": true
+        },
+        {
+          "check": "observation waveform hash",
+          "pass": true
+        },
+        {
+          "check": "declared causal 12 GHz observation",
+          "pass": true
+        },
+        {
+          "check": "physical noise/jitter budgets preserved",
+          "pass": true
+        },
+        {
+          "check": "analysisStartNs preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "analysisStopNs preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "rateMTs preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "sampleTimeStepPs preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "electricalTimeStepPs preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "nominalSourcePhasePs preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "source preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "ioModels preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "channel preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "raw_dqs_p_v raw circuit samples unchanged",
+          "pass": true
+        },
+        {
+          "check": "raw_dqs_n_v raw circuit samples unchanged",
+          "pass": true
+        },
+        {
+          "check": "pad_p_v raw circuit samples unchanged",
+          "pass": true
+        },
+        {
+          "check": "pad_n_v raw circuit samples unchanged",
+          "pass": true
+        },
+        {
+          "check": "simulation.cir recorded input hash",
+          "pass": true
+        },
+        {
+          "check": "transmitter-stimulus.sp recorded input hash",
+          "pass": true
+        },
+        {
+          "check": "receiver-noise.sp recorded input hash",
+          "pass": true
+        },
+        {
+          "check": "stimulus-events.csv recorded input hash",
+          "pass": true
+        },
+        {
+          "check": "source-timing.npz recorded input hash",
+          "pass": true
+        },
+        {
+          "check": "commanded-noise.npz recorded input hash",
+          "pass": true
+        },
+        {
+          "check": "p unfiltered observation plane equals raw package pad",
+          "pass": true
+        },
+        {
+          "check": "p stored scope response matches declared causal filter",
+          "pass": true,
+          "maximumDifferenceV": 0.0,
+          "numericalToleranceV": 1e-12
+        },
+        {
+          "check": "p observed leg equals filtered plane plus scope noise",
+          "pass": true
+        },
+        {
+          "check": "n unfiltered observation plane equals raw package pad",
+          "pass": true
+        },
+        {
+          "check": "n stored scope response matches declared causal filter",
+          "pass": true,
+          "maximumDifferenceV": 0.0,
+          "numericalToleranceV": 1e-12
+        },
+        {
+          "check": "n observed leg equals filtered plane plus scope noise",
+          "pass": true
+        }
+      ],
+      "electricalTimeStepPs": 0.5,
+      "savedSampleTimeStepPs": 2.0,
+      "analysisDurationNs": 500.00000000000045,
+      "analysisUiCount": 5000.000000000007,
+      "configuredBudgets": {
+        "sourceRjRmsPs": 0.0,
+        "sourcePjPeakPs": 0.0,
+        "combinedSourceTimingRmsPs": 0.0,
+        "commandedContinuousSeriesNoiseRmsMv": 0.0,
+        "scopeSampleNoiseRmsMv": 0.0
+      },
+      "wholeAnalysis": {
+        "startNs": 3000.0,
+        "stopNs": 3500.000000000001,
+        "sourceRjPs": {
+          "samples": 5000,
+          "mean": 0.0,
+          "rms": 0.0,
+          "acRms": 0.0,
+          "maximumAbsolute": 0.0
+        },
+        "sourcePjPs": {
+          "samples": 5000,
+          "mean": 0.0,
+          "rms": 0.0,
+          "acRms": 0.0,
+          "maximumAbsolute": 0.0
+        },
+        "combinedSourceTimingPs": {
+          "samples": 5000,
+          "mean": 0.0,
+          "rms": 0.0,
+          "acRms": 0.0,
+          "maximumAbsolute": 0.0
+        },
+        "commandedSeriesNoiseV": {
+          "mean": 0.0,
+          "rms": 0.0,
+          "acRms": 0.0,
+          "maximumAbsolute": 0.0,
+          "definition": "continuous PWL segment integral"
+        },
+        "observedSeriesNoiseV": {
+          "samples": 250000,
+          "mean": 1.837249530990448e-08,
+          "rms": 1.2066561798807757e-05,
+          "acRms": 1.2066547811858319e-05,
+          "maximumAbsolute": 0.002179246956075076
+        },
+        "scopeNoiseV": {
+          "samples": 250000,
+          "mean": 0.0,
+          "rms": 0.0,
+          "acRms": 0.0,
+          "maximumAbsolute": 0.0
+        },
+        "rawPadDifferentialV": {
+          "samples": 250000,
+          "mean": 2.6008971414285044e-08,
+          "rms": 0.35877808573494957,
+          "acRms": 0.35877808573494857,
+          "maximumAbsolute": 0.5062655670891445,
+          "halfPeakToPeakV": 0.506265440249706,
+          "fundamentalPeakV": 0.5073875679481334,
+          "fundamentalPhaseRad": -1.0445782085321313,
+          "fittedDcOffsetV": 2.6002319552899866e-08
+        },
+        "observedPadDifferentialV": {
+          "samples": 250000,
+          "mean": 2.5659009996687133e-08,
+          "rms": 0.3535221152576769,
+          "acRms": 0.35352211525767596,
+          "maximumAbsolute": 0.49931091020987106,
+          "halfPeakToPeakV": 0.49931080104528847,
+          "fundamentalPeakV": 0.49995539881390955,
+          "fundamentalPhaseRad": -1.6629562725783027,
+          "fittedDcOffsetV": 2.5660711236376764e-08
+        }
+      },
+      "blocks": [
+        {
+          "startNs": 3000.0,
+          "stopNs": 3050.0,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "commandedSeriesNoiseV": {
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": -8.827351807667582e-09,
+            "rms": 3.3604161863813286e-05,
+            "acRms": 3.360416070440122e-05,
+            "maximumAbsolute": 0.002179246956075076
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": 1.1337548641222384e-07,
+            "rms": 0.3587779720573819,
+            "acRms": 0.358777972057364,
+            "maximumAbsolute": 0.5062655670891445,
+            "halfPeakToPeakV": 0.5062636279168373,
+            "fundamentalPeakV": 0.5073874061175802,
+            "fundamentalPhaseRad": -1.0445775080736284,
+            "fittedDcOffsetV": 1.1336883376261152e-07
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": 1.1198560505171429e-07,
+            "rms": 0.3535220025690478,
+            "acRms": 0.35352200256903005,
+            "maximumAbsolute": 0.49931091020987106,
+            "halfPeakToPeakV": 0.4993088751999456,
+            "fundamentalPeakV": 0.4999552395190258,
+            "fundamentalPhaseRad": -1.6629555769581366,
+            "fittedDcOffsetV": 1.1198730569190783e-07
+          }
+        },
+        {
+          "startNs": 3050.0,
+          "stopNs": 3100.0000000000005,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "commandedSeriesNoiseV": {
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": 6.390413623648783e-08,
+            "rms": 1.2602432570791199e-05,
+            "acRms": 1.2602270547909641e-05,
+            "maximumAbsolute": 0.0004462747019715607
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": -4.640586484583764e-08,
+            "rms": 0.358778042736294,
+            "acRms": 0.358778042736291,
+            "maximumAbsolute": 0.5062634299375759,
+            "halfPeakToPeakV": 0.5062632548722377,
+            "fundamentalPeakV": 0.5073875072299826,
+            "fundamentalPhaseRad": -1.0445770953812348,
+            "fittedDcOffsetV": -4.6412516232633256e-08
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": -4.7009717714274755e-08,
+            "rms": 0.3535220726230798,
+            "acRms": 0.35352207262307667,
+            "maximumAbsolute": 0.49930873859130953,
+            "halfPeakToPeakV": 0.4993084635312342,
+            "fundamentalPeakV": 0.4999553385678637,
+            "fundamentalPhaseRad": -1.662955160114781,
+            "fittedDcOffsetV": -4.700801660845282e-08
+          }
+        },
+        {
+          "startNs": 3100.0000000000005,
+          "stopNs": 3150.0000000000005,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "commandedSeriesNoiseV": {
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": 5.995850922317913e-08,
+            "rms": 6.556712101271181e-06,
+            "acRms": 6.556437947249077e-06,
+            "maximumAbsolute": 0.0002806716220220551
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": 2.891818128273371e-07,
+            "rms": 0.3587780040947425,
+            "acRms": 0.35877800409462596,
+            "maximumAbsolute": 0.506264766157642,
+            "halfPeakToPeakV": 0.5062631038450149,
+            "fundamentalPeakV": 0.5073874526548346,
+            "fundamentalPhaseRad": -1.0445774531027874,
+            "fittedDcOffsetV": 2.8917516156570845e-07
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": 2.8876412495861813e-07,
+            "rms": 0.3535220347593185,
+            "acRms": 0.3535220347592005,
+            "maximumAbsolute": 0.49931069188070587,
+            "halfPeakToPeakV": 0.49930896121128854,
+            "fundamentalPeakV": 0.49995528497735003,
+            "fundamentalPhaseRad": -1.6629555172019974,
+            "fittedDcOffsetV": 2.8876582710827714e-07
+          }
+        },
+        {
+          "startNs": 3150.0000000000005,
+          "stopNs": 3200.0000000000005,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "commandedSeriesNoiseV": {
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": 7.930922969990206e-08,
+            "rms": 7.129402672927298e-06,
+            "acRms": 7.128961531585601e-06,
+            "maximumAbsolute": 0.0002543753362260759
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": 8.58199971708018e-08,
+            "rms": 0.3587780758923718,
+            "acRms": 0.3587780758923615,
+            "maximumAbsolute": 0.5062628088962811,
+            "halfPeakToPeakV": 0.5062615097373282,
+            "fundamentalPeakV": 0.5073875538703643,
+            "fundamentalPhaseRad": -1.0445773921447055,
+            "fittedDcOffsetV": 8.581334494193707e-08
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": 9.406568006390614e-08,
+            "rms": 0.353522108629158,
+            "acRms": 0.35352210862914546,
+            "maximumAbsolute": 0.49930809888576366,
+            "halfPeakToPeakV": 0.4993071571091765,
+            "fundamentalPeakV": 0.4999553893560892,
+            "fundamentalPhaseRad": -1.6629554224358563,
+            "fittedDcOffsetV": 9.406738137681133e-08
+          }
+        },
+        {
+          "startNs": 3200.0000000000005,
+          "stopNs": 3250.0,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "commandedSeriesNoiseV": {
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": 2.7583279179452803e-08,
+            "rms": 4.183196314936033e-06,
+            "acRms": 4.1831053742410216e-06,
+            "maximumAbsolute": 0.0001195201330119744
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": 3.116347906325245e-07,
+            "rms": 0.3587781765681478,
+            "acRms": 0.3587781765680125,
+            "maximumAbsolute": 0.5062616042573609,
+            "halfPeakToPeakV": 0.5062611056785045,
+            "fundamentalPeakV": 0.5073876965905768,
+            "fundamentalPhaseRad": -1.0445782717744334,
+            "fittedDcOffsetV": 3.11628138297172e-07
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": 3.0362062938934284e-07,
+            "rms": 0.35352220242527,
+            "acRms": 0.3535222024251396,
+            "maximumAbsolute": 0.49930719324684936,
+            "halfPeakToPeakV": 0.4993065684322337,
+            "fundamentalPeakV": 0.49995552209604327,
+            "fundamentalPhaseRad": -1.6629563664137346,
+            "fittedDcOffsetV": 3.036223301328018e-07
+          }
+        },
+        {
+          "startNs": 3250.0,
+          "stopNs": 3300.0000000000005,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "commandedSeriesNoiseV": {
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": -2.2262976476667974e-08,
+            "rms": 3.7948067836488825e-06,
+            "acRms": 3.7947414780332505e-06,
+            "maximumAbsolute": 0.00010081993968924507
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": -9.647337533351674e-09,
+            "rms": 0.3587781169160254,
+            "acRms": 0.35877811691602524,
+            "maximumAbsolute": 0.5062642810968327,
+            "halfPeakToPeakV": 0.5062641240603512,
+            "fundamentalPeakV": 0.5073876121133285,
+            "fundamentalPhaseRad": -1.044577371952447,
+            "fittedDcOffsetV": -9.65398884528035e-09
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": -9.092887428963082e-09,
+            "rms": 0.35352214629977335,
+            "acRms": 0.35352214629977324,
+            "maximumAbsolute": 0.4993095123415209,
+            "halfPeakToPeakV": 0.49930915098166034,
+            "fundamentalPeakV": 0.49995544269193326,
+            "fundamentalPhaseRad": -1.6629554323340652,
+            "fittedDcOffsetV": -9.0911859082488e-09
+          }
+        },
+        {
+          "startNs": 3300.0000000000005,
+          "stopNs": 3350.0000000000005,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "commandedSeriesNoiseV": {
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": -6.83394813677296e-09,
+            "rms": 3.940395295920777e-06,
+            "acRms": 3.940389369753636e-06,
+            "maximumAbsolute": 0.00010977662168443203
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": -1.4060613922083577e-07,
+            "rms": 0.3587780272386361,
+            "acRms": 0.3587780272386085,
+            "maximumAbsolute": 0.5062636387773409,
+            "halfPeakToPeakV": 0.5062623473424992,
+            "fundamentalPeakV": 0.5073874854340142,
+            "fundamentalPhaseRad": -1.044579241497111,
+            "fittedDcOffsetV": -1.4061279092901718e-07
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": -1.3483872964151544e-07,
+            "rms": 0.3535220591209944,
+            "acRms": 0.3535220591209687,
+            "maximumAbsolute": 0.4993092470557212,
+            "halfPeakToPeakV": 0.49930798689064876,
+            "fundamentalPeakV": 0.49995531942100374,
+            "fundamentalPhaseRad": -1.6629572801944457,
+            "fittedDcOffsetV": -1.3483702777880423e-07
+          }
+        },
+        {
+          "startNs": 3350.0000000000005,
+          "stopNs": 3400.0000000000005,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "commandedSeriesNoiseV": {
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": -1.2118126196583035e-08,
+            "rms": 4.071466849245379e-06,
+            "acRms": 4.071448815289415e-06,
+            "maximumAbsolute": 0.00010927401308435947
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": 3.307284953734779e-08,
+            "rms": 0.35877804669332597,
+            "acRms": 0.3587780466933244,
+            "maximumAbsolute": 0.5062653134102675,
+            "halfPeakToPeakV": 0.5062646414401115,
+            "fundamentalPeakV": 0.5073875129351986,
+            "fundamentalPhaseRad": -1.0445789273870203,
+            "fittedDcOffsetV": 3.306619728385738e-08
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": 3.120896089598091e-08,
+            "rms": 0.35352207677591807,
+            "acRms": 0.3535220767759167,
+            "maximumAbsolute": 0.4993106051321935,
+            "halfPeakToPeakV": 0.49931020294529255,
+            "fundamentalPeakV": 0.4999553443894999,
+            "fundamentalPhaseRad": -1.6629569979828305,
+            "fittedDcOffsetV": 3.121066186471347e-08
+          }
+        },
+        {
+          "startNs": 3400.0000000000005,
+          "stopNs": 3450.000000000001,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "commandedSeriesNoiseV": {
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": 7.539113689745136e-09,
+            "rms": 2.3152318611636575e-06,
+            "acRms": 2.3152195862837946e-06,
+            "maximumAbsolute": 7.048255793051794e-05
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": -4.329470625771137e-07,
+            "rms": 0.35877819036289044,
+            "acRms": 0.35877819036262915,
+            "maximumAbsolute": 0.506264360348041,
+            "halfPeakToPeakV": 0.5062639744617172,
+            "fundamentalPeakV": 0.5073877160443433,
+            "fundamentalPhaseRad": -1.044579036929927,
+            "fittedDcOffsetV": -4.3295371429721793e-07
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": -4.269962048292086e-07,
+            "rms": 0.35352222072494227,
+            "acRms": 0.35352222072468437,
+            "maximumAbsolute": 0.49930960573391137,
+            "halfPeakToPeakV": 0.49930943901836394,
+            "fundamentalPeakV": 0.4999555479482216,
+            "fundamentalPhaseRad": -1.6629570762026573,
+            "fittedDcOffsetV": -4.269945038181491e-07
+          }
+        },
+        {
+          "startNs": 3450.000000000001,
+          "stopNs": 3500.000000000001,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "commandedSeriesNoiseV": {
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": -4.526912312030617e-09,
+            "rms": 2.1853451040918143e-06,
+            "acRms": 2.185340415368503e-06,
+            "maximumAbsolute": 6.851423677289858e-05
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": 0.0,
+            "rms": 0.0,
+            "acRms": 0.0,
+            "maximumAbsolute": 0.0
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": 5.6611181739754105e-08,
+            "rms": 0.3587782047895947,
+            "acRms": 0.35877820478959027,
+            "maximumAbsolute": 0.5062646060870293,
+            "halfPeakToPeakV": 0.5062637368281457,
+            "fundamentalPeakV": 0.5073877364932513,
+            "fundamentalPhaseRad": -1.0445797870770048,
+            "fittedDcOffsetV": 5.6604530341948166e-08
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": 4.48826392197077e-08,
+            "rms": 0.35352222864918464,
+            "acRms": 0.3535222286491818,
+            "maximumAbsolute": 0.4993095245126554,
+            "halfPeakToPeakV": 0.49930897531816054,
+            "fundamentalPeakV": 0.49995555917419976,
+            "fundamentalPhaseRad": -1.662957895943508,
+            "fittedDcOffsetV": 4.488434108325664e-08
+          }
+        }
+      ],
+      "sourceRjConsistency": {
+        "lagCovariance": [
+          {
+            "lagUi": 1,
+            "measuredCovarianceS2": 0.0,
+            "expectedCovarianceS2": 0.0
+          },
+          {
+            "lagUi": 2,
+            "measuredCovarianceS2": 0.0,
+            "expectedCovarianceS2": 0.0
+          },
+          {
+            "lagUi": 5,
+            "measuredCovarianceS2": 0.0,
+            "expectedCovarianceS2": 0.0
+          }
+        ],
+        "normalizedInnovations": null,
+        "innovationLagOneCorrelation": null,
+        "psd": {
+          "method": "Hann Welch, ten nonoverlapping segments, no detrending; broad-band powers only",
+          "segmentSamples": 500,
+          "frequencyResolutionHz": 20000000.0,
+          "observedIntegratedPower": 0.0,
+          "expectedIntegratedPower": 0.0,
+          "powerRatio": null,
+          "observedBelowCornerPowerFraction": null,
+          "expectedBelowCornerPowerFraction": null,
+          "interpretation": "finite-record consistency diagnostic; individual bins and these ratios are not pass/fail limits"
+        }
+      },
+      "sourcePjFit": {
+        "frequencyHz": 100000000.0,
+        "peakPs": 0.0,
+        "phaseRad": null,
+        "samples": 5000,
+        "residualRmsPs": 0.0
+      },
+      "noisePsdConsistency": {
+        "commandedNoiseKnots": {
+          "method": "Hann Welch, ten nonoverlapping segments, no detrending; broad-band powers only",
+          "segmentSamples": 5000,
+          "frequencyResolutionHz": 20000000.0,
+          "observedIntegratedPower": 0.0,
+          "expectedIntegratedPower": 0.0,
+          "powerRatio": null,
+          "observedBelowCornerPowerFraction": null,
+          "expectedBelowCornerPowerFraction": null,
+          "interpretation": "finite-record consistency diagnostic; individual bins and these ratios are not pass/fail limits"
+        },
+        "scopeNoiseSamples": {
+          "method": "Hann Welch, ten nonoverlapping segments, no detrending; broad-band powers only",
+          "segmentSamples": 25000,
+          "frequencyResolutionHz": 20000000.0,
+          "observedIntegratedPower": 0.0,
+          "expectedIntegratedPower": 0.0,
+          "powerRatio": null,
+          "observedBelowCornerPowerFraction": null,
+          "expectedBelowCornerPowerFraction": null,
+          "interpretation": "finite-record consistency diagnostic; individual bins and these ratios are not pass/fail limits"
+        }
+      },
+      "commandedNoisePsdDefinition": "PSD is of saved knots; continuous PWL additionally has sinc^4 interpolation power response; its RMS is integrated separately"
+    },
+    "noisy-routed": {
+      "rawCapture": "/workspace/work/dqs-bench-assumptions/captures/5ghz-noisy-routed",
+      "observationCapture": "/workspace/work/dqs-bench-assumptions/observations/5ghz-noisy-routed",
+      "checks": [
+        {
+          "check": "package-pad observation plane",
+          "pass": true
+        },
+        {
+          "check": "raw/observed timestamp identity",
+          "pass": true
+        },
+        {
+          "check": "observation source waveform hash",
+          "pass": true
+        },
+        {
+          "check": "observation source provenance hash",
+          "pass": true
+        },
+        {
+          "check": "observation waveform hash",
+          "pass": true
+        },
+        {
+          "check": "declared causal 12 GHz observation",
+          "pass": true
+        },
+        {
+          "check": "physical noise/jitter budgets preserved",
+          "pass": true
+        },
+        {
+          "check": "analysisStartNs preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "analysisStopNs preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "rateMTs preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "sampleTimeStepPs preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "electricalTimeStepPs preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "nominalSourcePhasePs preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "source preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "ioModels preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "channel preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "raw_dqs_p_v raw circuit samples unchanged",
+          "pass": true
+        },
+        {
+          "check": "raw_dqs_n_v raw circuit samples unchanged",
+          "pass": true
+        },
+        {
+          "check": "pad_p_v raw circuit samples unchanged",
+          "pass": true
+        },
+        {
+          "check": "pad_n_v raw circuit samples unchanged",
+          "pass": true
+        },
+        {
+          "check": "simulation.cir recorded input hash",
+          "pass": true
+        },
+        {
+          "check": "transmitter-stimulus.sp recorded input hash",
+          "pass": true
+        },
+        {
+          "check": "receiver-noise.sp recorded input hash",
+          "pass": true
+        },
+        {
+          "check": "stimulus-events.csv recorded input hash",
+          "pass": true
+        },
+        {
+          "check": "source-timing.npz recorded input hash",
+          "pass": true
+        },
+        {
+          "check": "commanded-noise.npz recorded input hash",
+          "pass": true
+        },
+        {
+          "check": "p unfiltered observation plane equals raw package pad",
+          "pass": true
+        },
+        {
+          "check": "p stored scope response matches declared causal filter",
+          "pass": true,
+          "maximumDifferenceV": 0.0,
+          "numericalToleranceV": 1e-12
+        },
+        {
+          "check": "p observed leg equals filtered plane plus scope noise",
+          "pass": true
+        },
+        {
+          "check": "n unfiltered observation plane equals raw package pad",
+          "pass": true
+        },
+        {
+          "check": "n stored scope response matches declared causal filter",
+          "pass": true,
+          "maximumDifferenceV": 0.0,
+          "numericalToleranceV": 1e-12
+        },
+        {
+          "check": "n observed leg equals filtered plane plus scope noise",
+          "pass": true
+        }
+      ],
+      "electricalTimeStepPs": 0.5,
+      "savedSampleTimeStepPs": 2.0,
+      "analysisDurationNs": 500.00000000000045,
+      "analysisUiCount": 5000.000000000007,
+      "configuredBudgets": {
+        "sourceRjRmsPs": 3.0,
+        "sourcePjPeakPs": 3.0,
+        "combinedSourceTimingRmsPs": 3.674234614174767,
+        "commandedContinuousSeriesNoiseRmsMv": 5.0,
+        "scopeSampleNoiseRmsMv": 2.0
+      },
+      "wholeAnalysis": {
+        "startNs": 3000.0,
+        "stopNs": 3500.000000000001,
+        "sourceRjPs": {
+          "samples": 5000,
+          "mean": 0.08191290014426442,
+          "rms": 3.0349558655560727,
+          "acRms": 3.033850257125945,
+          "maximumAbsolute": 11.712376728731
+        },
+        "sourcePjPs": {
+          "samples": 5000,
+          "mean": -9.72022462519817e-16,
+          "rms": 2.1213203435596433,
+          "acRms": 2.121320343559643,
+          "maximumAbsolute": 3.0
+        },
+        "combinedSourceTimingPs": {
+          "samples": 5000,
+          "mean": 0.08191290014426345,
+          "rms": 3.624509804519977,
+          "acRms": 3.6235840820728034,
+          "maximumAbsolute": 11.114566080149903
+        },
+        "commandedSeriesNoiseV": {
+          "mean": -0.0001761742390838164,
+          "rms": 0.0049655281429251494,
+          "acRms": 0.004962401875671188,
+          "maximumAbsolute": 0.01677735600185148,
+          "definition": "continuous PWL segment integral"
+        },
+        "observedSeriesNoiseV": {
+          "samples": 250000,
+          "mean": -0.000176181475822393,
+          "rms": 0.004965602460048343,
+          "acRms": 0.0049624759826940425,
+          "maximumAbsolute": 0.01677735366683919
+        },
+        "scopeNoiseV": {
+          "samples": 250000,
+          "mean": -3.604952152719144e-05,
+          "rms": 0.001984044905937121,
+          "acRms": 0.0019837173742175817,
+          "maximumAbsolute": 0.008797530720429707
+        },
+        "rawPadDifferentialV": {
+          "samples": 250000,
+          "mean": -4.563558750691453e-05,
+          "rms": 0.3606659727687785,
+          "acRms": 0.36066596988161004,
+          "maximumAbsolute": 0.6560973976116884,
+          "halfPeakToPeakV": 0.6543417253087256,
+          "fundamentalPeakV": 0.5040886820058839,
+          "fundamentalPhaseRad": -1.0471058840376313,
+          "fittedDcOffsetV": -4.563559408449343e-05
+        },
+        "observedPadDifferentialV": {
+          "samples": 250000,
+          "mean": -7.812298201781095e-05,
+          "rms": 0.3553651230063134,
+          "acRms": 0.35536511441908863,
+          "maximumAbsolute": 0.6455462897706427,
+          "halfPeakToPeakV": 0.6449827095571934,
+          "fundamentalPeakV": 0.4967002365800669,
+          "fundamentalPhaseRad": -1.6654568562903966,
+          "fittedDcOffsetV": -7.812298029360059e-05
+        }
+      },
+      "blocks": [
+        {
+          "startNs": 3000.0,
+          "stopNs": 3050.0,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": 0.5046917916820005,
+            "rms": 3.225887251631754,
+            "acRms": 3.186163014606924,
+            "maximumAbsolute": 11.712376728731
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": 2.1884716261411085e-15,
+            "rms": 2.1213203435596446,
+            "acRms": 2.121320343559645,
+            "maximumAbsolute": 3.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": 0.5046917916820026,
+            "rms": 3.623470842443422,
+            "acRms": 3.5881509362687702,
+            "maximumAbsolute": 10.78532574560619
+          },
+          "commandedSeriesNoiseV": {
+            "mean": 0.00017211744655359725,
+            "rms": 0.005474377314866171,
+            "acRms": 0.005471670912080991,
+            "maximumAbsolute": 0.015467236659844917,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": 0.00017180118409043928,
+            "rms": 0.005474582598628167,
+            "acRms": 0.005471886236239517,
+            "maximumAbsolute": 0.01546723077626666
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": -9.709768206242333e-06,
+            "rms": 0.001980781804884492,
+            "acRms": 0.001980758006158967,
+            "maximumAbsolute": 0.006586253667186278
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": 0.00046938842034918395,
+            "rms": 0.36113173301618035,
+            "acRms": 0.36113142796741,
+            "maximumAbsolute": 0.6560973976116884,
+            "halfPeakToPeakV": 0.6543417253087256,
+            "fundamentalPeakV": 0.5036845196437146,
+            "fundamentalPhaseRad": -1.0593726020952499,
+            "fittedDcOffsetV": 0.0004693884139268558
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": 0.0005036960335132609,
+            "rms": 0.3558205626092744,
+            "acRms": 0.3558202060955595,
+            "maximumAbsolute": 0.6455462897706427,
+            "halfPeakToPeakV": 0.6449827095571934,
+            "fundamentalPeakV": 0.49629920853126513,
+            "fundamentalPhaseRad": -1.6775357583959403,
+            "fittedDcOffsetV": 0.0005036960353996233
+          }
+        },
+        {
+          "startNs": 3050.0,
+          "stopNs": 3100.0000000000005,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": 0.09550869082141537,
+            "rms": 2.969462990953824,
+            "acRms": 2.9679266407076184,
+            "maximumAbsolute": 9.851492436290123
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": -1.9610979506978767e-15,
+            "rms": 2.121320343559641,
+            "acRms": 2.121320343559641,
+            "maximumAbsolute": 3.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": 0.09550869082141332,
+            "rms": 3.5648714181229813,
+            "acRms": 3.5635917720367094,
+            "maximumAbsolute": 10.778543419415652
+          },
+          "commandedSeriesNoiseV": {
+            "mean": -0.0001571506241418848,
+            "rms": 0.005422290184262146,
+            "acRms": 0.005420012409919135,
+            "maximumAbsolute": 0.01566881908395266,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": -0.0001568955185597444,
+            "rms": 0.005422301819819298,
+            "acRms": 0.005420031441003967,
+            "maximumAbsolute": 0.01566881521224417
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": 8.451838938752558e-06,
+            "rms": 0.001981134279840067,
+            "acRms": 0.0019811162513027787,
+            "maximumAbsolute": 0.007522317654020997
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": 0.0002788900727648263,
+            "rms": 0.36173438043383677,
+            "acRms": 0.36173427292444804,
+            "maximumAbsolute": 0.6200597570883701,
+            "halfPeakToPeakV": 0.6121354370964696,
+            "fundamentalPeakV": 0.5049331712614363,
+            "fundamentalPhaseRad": -1.047602463011824,
+            "fittedDcOffsetV": 0.00027889006618270716
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": 0.00026122933085758257,
+            "rms": 0.3564117463298683,
+            "acRms": 0.35641165059681074,
+            "maximumAbsolute": 0.6106463290234811,
+            "halfPeakToPeakV": 0.6020798453730584,
+            "fundamentalPeakV": 0.497540027417381,
+            "fundamentalPhaseRad": -1.665888700675057,
+            "fittedDcOffsetV": 0.0002612293325905068
+          }
+        },
+        {
+          "startNs": 3100.0000000000005,
+          "stopNs": 3150.0000000000005,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": -0.19387256749082543,
+            "rms": 3.0571758932645974,
+            "acRms": 3.0510224302572255,
+            "maximumAbsolute": 10.194880625387869
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": -1.2789769243681803e-15,
+            "rms": 2.1213203435596433,
+            "acRms": 2.1213203435596433,
+            "maximumAbsolute": 3.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": -0.19387256749082674,
+            "rms": 3.8710441814575125,
+            "acRms": 3.866186296904299,
+            "maximumAbsolute": 10.757024569145786
+          },
+          "commandedSeriesNoiseV": {
+            "mean": -0.000862878970404572,
+            "rms": 0.004773939501965524,
+            "acRms": 0.004695310240107717,
+            "maximumAbsolute": 0.014561416059344887,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": -0.0008629072126015378,
+            "rms": 0.004774041411937122,
+            "acRms": 0.0046954086664880235,
+            "maximumAbsolute": 0.014561416770447977
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": -3.133386004013587e-05,
+            "rms": 0.0019500262840534345,
+            "acRms": 0.0019497745248397908,
+            "maximumAbsolute": 0.0076728711053582165
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": 0.00040589229939712177,
+            "rms": 0.36034916452192206,
+            "acRms": 0.36034893592612227,
+            "maximumAbsolute": 0.6299479790596934,
+            "halfPeakToPeakV": 0.6219810898829365,
+            "fundamentalPeakV": 0.5035272275042376,
+            "fundamentalPhaseRad": -1.0391415439817118,
+            "fittedDcOffsetV": 0.0004058922927300873
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": 0.00036270758655414584,
+            "rms": 0.3550240707489528,
+            "acRms": 0.3550238854702091,
+            "maximumAbsolute": 0.6204716936153416,
+            "halfPeakToPeakV": 0.611983223574028,
+            "fundamentalPeakV": 0.4960884605716491,
+            "fundamentalPhaseRad": -1.6574030870395269,
+            "fittedDcOffsetV": 0.000362707588167726
+          }
+        },
+        {
+          "startNs": 3150.0000000000005,
+          "stopNs": 3200.0000000000005,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": 0.03454259821004319,
+            "rms": 2.9188855004157372,
+            "acRms": 2.918681101704351,
+            "maximumAbsolute": 9.530021784525822
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": -2.2737367544323206e-15,
+            "rms": 2.1213203435596437,
+            "acRms": 2.1213203435596437,
+            "maximumAbsolute": 3.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": 0.034542598210041034,
+            "rms": 3.3938433085476323,
+            "acRms": 3.3936675164020476,
+            "maximumAbsolute": 10.316710811422297
+          },
+          "commandedSeriesNoiseV": {
+            "mean": 3.8098189154143046e-05,
+            "rms": 0.004327422667921929,
+            "acRms": 0.004327254958380395,
+            "maximumAbsolute": 0.01430059026219283,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": 3.779854934712887e-05,
+            "rms": 0.004327381867404083,
+            "acRms": 0.004327216784031614,
+            "maximumAbsolute": 0.014300583865406225
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": -3.84969338937486e-05,
+            "rms": 0.0019948510612240013,
+            "acRms": 0.0019944795668412614,
+            "maximumAbsolute": 0.0071079361834183235
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": 0.0012740065934923567,
+            "rms": 0.3603215139792114,
+            "acRms": 0.36031926168811845,
+            "maximumAbsolute": 0.6323143675579104,
+            "halfPeakToPeakV": 0.6234519534991705,
+            "fundamentalPeakV": 0.5043563465995557,
+            "fundamentalPhaseRad": -1.0458918001307376,
+            "fittedDcOffsetV": 0.0012740065868959275
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": 0.0012412630305257753,
+            "rms": 0.3550247144347904,
+            "acRms": 0.3550225445314614,
+            "maximumAbsolute": 0.6209728300828277,
+            "halfPeakToPeakV": 0.6136240742394025,
+            "fundamentalPeakV": 0.49697415106329523,
+            "fundamentalPhaseRad": -1.6642810739453788,
+            "fittedDcOffsetV": 0.0012412630322350053
+          }
+        },
+        {
+          "startNs": 3200.0000000000005,
+          "stopNs": 3250.0,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": -0.04801070304139223,
+            "rms": 2.877118459465166,
+            "acRms": 2.87671785237772,
+            "maximumAbsolute": 9.71529503816584
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": 2.5011104298755525e-15,
+            "rms": 2.1213203435596424,
+            "acRms": 2.1213203435596424,
+            "maximumAbsolute": 3.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": -0.048010703041389755,
+            "rms": 3.552326665800274,
+            "acRms": 3.5520022118446324,
+            "maximumAbsolute": 11.114566080149903
+          },
+          "commandedSeriesNoiseV": {
+            "mean": 0.0004945773090347392,
+            "rms": 0.004213796525838664,
+            "acRms": 0.004184671366613865,
+            "maximumAbsolute": 0.012454737735105852,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": 0.0004946230561499619,
+            "rms": 0.004213944377807544,
+            "acRms": 0.004184814840776195,
+            "maximumAbsolute": 0.012454736045128811
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": -3.6792001488850495e-05,
+            "rms": 0.0019783749597380483,
+            "acRms": 0.0019780328182173743,
+            "maximumAbsolute": 0.008095768291590122
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": 0.0005877158280076947,
+            "rms": 0.3607065416494131,
+            "acRms": 0.36070606285282386,
+            "maximumAbsolute": 0.625027387554951,
+            "halfPeakToPeakV": 0.6234991305809103,
+            "fundamentalPeakV": 0.5044084141306441,
+            "fundamentalPhaseRad": -1.0432472476717671,
+            "fittedDcOffsetV": 0.0005877158213781285
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": 0.0005537126148160127,
+            "rms": 0.35542857584332643,
+            "acRms": 0.3554281445360728,
+            "maximumAbsolute": 0.6163110256557797,
+            "halfPeakToPeakV": 0.6143712266467547,
+            "fundamentalPeakV": 0.4970462123920087,
+            "fundamentalPhaseRad": -1.6617156648608258,
+            "fittedDcOffsetV": 0.0005537126164899356
+          }
+        },
+        {
+          "startNs": 3250.0,
+          "stopNs": 3300.0000000000005,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": 0.22092047776319373,
+            "rms": 3.059253565838355,
+            "acRms": 3.05126638014441,
+            "maximumAbsolute": 8.986036450721437
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": -1.0800249583553523e-15,
+            "rms": 2.1213203435596437,
+            "acRms": 2.1213203435596437,
+            "maximumAbsolute": 3.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": 0.22092047776319268,
+            "rms": 3.635551569977809,
+            "acRms": 3.6288330576747385,
+            "maximumAbsolute": 9.81041886138324
+          },
+          "commandedSeriesNoiseV": {
+            "mean": -0.00037274874503036705,
+            "rms": 0.005404126691411263,
+            "acRms": 0.005391256223729488,
+            "maximumAbsolute": 0.01677735600185148,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": -0.00037245931694355436,
+            "rms": 0.005404161240623452,
+            "acRms": 0.0053913108583978665,
+            "maximumAbsolute": 0.01677735366683919
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": -2.8782617053630705e-05,
+            "rms": 0.0019658217288506838,
+            "acRms": 0.001965611006933222,
+            "maximumAbsolute": 0.008797530720429707
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": -0.00035620590537361805,
+            "rms": 0.3605346553280368,
+            "acRms": 0.36053447936342964,
+            "maximumAbsolute": 0.6193343261476798,
+            "halfPeakToPeakV": 0.6177045745537839,
+            "fundamentalPeakV": 0.5041265919356686,
+            "fundamentalPhaseRad": -1.0520505664916517,
+            "fittedDcOffsetV": -0.00035620591189048506
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": -0.00039069184325100665,
+            "rms": 0.35519675265295,
+            "acRms": 0.35519653778589194,
+            "maximumAbsolute": 0.6101101662311122,
+            "halfPeakToPeakV": 0.6090740984560621,
+            "fundamentalPeakV": 0.4966821446587319,
+            "fundamentalPhaseRad": -1.670265220837262,
+            "fittedDcOffsetV": -0.000390691841461184
+          }
+        },
+        {
+          "startNs": 3300.0000000000005,
+          "stopNs": 3350.0000000000005,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": 0.16050107022258173,
+            "rms": 2.845255276841891,
+            "acRms": 2.840724730918861,
+            "maximumAbsolute": 9.756156149398151
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": -5.229594535194337e-15,
+            "rms": 2.1213203435596464,
+            "acRms": 2.1213203435596464,
+            "maximumAbsolute": 3.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": 0.1605010702225765,
+            "rms": 3.4921601259923043,
+            "acRms": 3.4884698295997913,
+            "maximumAbsolute": 10.122469385992908
+          },
+          "commandedSeriesNoiseV": {
+            "mean": 0.0002190520418350553,
+            "rms": 0.004947643294590809,
+            "acRms": 0.004942791759064637,
+            "maximumAbsolute": 0.014954448587409463,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": 0.00021893031709831562,
+            "rms": 0.00494782349073596,
+            "acRms": 0.004942977524906806,
+            "maximumAbsolute": 0.014954447473428445
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": -2.1523671498326386e-05,
+            "rms": 0.0019765631424467074,
+            "acRms": 0.0019764459485763926,
+            "maximumAbsolute": 0.007118415553456446
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": 0.0001968181846584091,
+            "rms": 0.35986157998430224,
+            "acRms": 0.35986152616166195,
+            "maximumAbsolute": 0.6289442195875381,
+            "halfPeakToPeakV": 0.6109458405488226,
+            "fundamentalPeakV": 0.5036161163571953,
+            "fundamentalPhaseRad": -1.0486533584938873,
+            "fittedDcOffsetV": 0.00019681817810608486
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": 0.00020890812928538302,
+            "rms": 0.35455404492960246,
+            "acRms": 0.35455398338382277,
+            "maximumAbsolute": 0.617928318369928,
+            "halfPeakToPeakV": 0.6018838681728125,
+            "fundamentalPeakV": 0.4962200996390552,
+            "fundamentalPhaseRad": -1.6668605275605564,
+            "fittedDcOffsetV": 0.0002089081310275188
+          }
+        },
+        {
+          "startNs": 3350.0000000000005,
+          "stopNs": 3400.0000000000005,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": -0.2567580499141189,
+            "rms": 3.117961212094493,
+            "acRms": 3.1073714653916187,
+            "maximumAbsolute": 8.829487592477596
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": -2.8990143619012086e-15,
+            "rms": 2.121320343559644,
+            "acRms": 2.121320343559644,
+            "maximumAbsolute": 3.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": -0.25675804991412177,
+            "rms": 3.6874579238263108,
+            "acRms": 3.678508018720871,
+            "maximumAbsolute": 10.728118145097953
+          },
+          "commandedSeriesNoiseV": {
+            "mean": 0.00013528619164590764,
+            "rms": 0.005021777118456502,
+            "acRms": 0.005019954489216335,
+            "maximumAbsolute": 0.016701753833958683,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": 0.0001353288666322286,
+            "rms": 0.005021815484040267,
+            "acRms": 0.005019991718479486,
+            "maximumAbsolute": 0.016701757769624237
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": -4.952253687089005e-05,
+            "rms": 0.0020060186143630388,
+            "acRms": 0.0020054072403162602,
+            "maximumAbsolute": 0.00790703527979966
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": -0.001039567299318163,
+            "rms": 0.36086424403020523,
+            "acRms": 0.36086274664936213,
+            "maximumAbsolute": 0.6348562969541263,
+            "halfPeakToPeakV": 0.6203816382449645,
+            "fundamentalPeakV": 0.5044917538947699,
+            "fundamentalPhaseRad": -1.0362732528980756,
+            "fittedDcOffsetV": -0.0010395673060340108
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": -0.00109959854458352,
+            "rms": 0.35561656252291685,
+            "acRms": 0.35561486248982394,
+            "maximumAbsolute": 0.6281764694511289,
+            "halfPeakToPeakV": 0.6128232931976985,
+            "fundamentalPeakV": 0.4971558064961822,
+            "fundamentalPhaseRad": -1.6549211054425474,
+            "fittedDcOffsetV": -0.0010995985430015856
+          }
+        },
+        {
+          "startNs": 3400.0000000000005,
+          "stopNs": 3450.000000000001,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": -0.15874159212311775,
+            "rms": 3.0235934646669285,
+            "acRms": 3.0194235453984883,
+            "maximumAbsolute": 8.416471812431961
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": 1.5063505998114124e-15,
+            "rms": 2.1213203435596424,
+            "acRms": 2.1213203435596424,
+            "maximumAbsolute": 3.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": -0.15874159212311623,
+            "rms": 3.74791748701332,
+            "acRms": 3.744554258705628,
+            "maximumAbsolute": 10.947008547629986
+          },
+          "commandedSeriesNoiseV": {
+            "mean": -0.0004226015702937266,
+            "rms": 0.004684402769576378,
+            "acRms": 0.004665301407240492,
+            "maximumAbsolute": 0.013838991316608299,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": -0.00042266048729929493,
+            "rms": 0.0046844955445807775,
+            "acRms": 0.004665389224885002,
+            "maximumAbsolute": 0.013838983668392757
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": -5.770680522420223e-05,
+            "rms": 0.0020020675992461294,
+            "acRms": 0.002001235767365249,
+            "maximumAbsolute": 0.00736165866605137
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": -0.0009449867919911844,
+            "rms": 0.3610177063620047,
+            "acRms": 0.3610164695783914,
+            "maximumAbsolute": 0.6240096323703028,
+            "halfPeakToPeakV": 0.6159764098505889,
+            "fundamentalPeakV": 0.5042261044626225,
+            "fundamentalPhaseRad": -1.0406236237001707,
+            "fittedDcOffsetV": -0.0009449867986499286
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": -0.0010475290454173224,
+            "rms": 0.35563697216770596,
+            "acRms": 0.3556354294154516,
+            "maximumAbsolute": 0.618946539764522,
+            "halfPeakToPeakV": 0.6078377960781618,
+            "fundamentalPeakV": 0.4967221814749894,
+            "fundamentalPhaseRad": -1.6590991413848928,
+            "fittedDcOffsetV": -0.0010475290437799236
+          }
+        },
+        {
+          "startNs": 3450.000000000001,
+          "stopNs": 3500.000000000001,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": 0.46034728531286406,
+            "rms": 3.2284942120070657,
+            "acRms": 3.195505477051823,
+            "maximumAbsolute": 11.227550898981093
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": -1.1084466677857563e-15,
+            "rms": 2.121320343559639,
+            "acRms": 2.1213203435596393,
+            "maximumAbsolute": 3.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": 0.46034728531286295,
+            "rms": 3.6543172913025703,
+            "acRms": 3.6252055448509446,
+            "maximumAbsolute": 10.777310497894252
+          },
+          "commandedSeriesNoiseV": {
+            "mean": -0.001005493659191052,
+            "rms": 0.005203446826393763,
+            "acRms": 0.005105373774410049,
+            "maximumAbsolute": 0.01644152573717556,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": -0.0010053741961378723,
+            "rms": 0.005203420849441294,
+            "acRms": 0.005105370825135083,
+            "maximumAbsolute": 0.016441525345726404
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": -9.507885993464033e-05,
+            "rms": 0.0020040731696534253,
+            "acRms": 0.002001816495016028,
+            "maximumAbsolute": 0.007761688708529372
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": -0.0013283072770557726,
+            "rms": 0.36013448070004944,
+            "acRms": 0.36013203105093555,
+            "maximumAbsolute": 0.6515946042580936,
+            "halfPeakToPeakV": 0.6458009092768506,
+            "fundamentalPeakV": 0.5036527319374279,
+            "fundamentalPhaseRad": -1.0582269379008262,
+            "fittedDcOffsetV": -0.0013283072834905977
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": -0.0013749271124784198,
+            "rms": 0.354933641987324,
+            "acRms": 0.35493097890973296,
+            "maximumAbsolute": 0.6411888236793806,
+            "halfPeakToPeakV": 0.6354309940929767,
+            "fundamentalPeakV": 0.49640502103627304,
+            "fundamentalPhaseRad": -1.676618960289508,
+            "fittedDcOffsetV": -0.0013749271106030677
+          }
+        }
+      ],
+      "sourceRjConsistency": {
+        "lagCovariance": [
+          {
+            "lagUi": 1,
+            "measuredCovarianceS2": 6.812034603342704e-24,
+            "expectedCovarianceS2": 6.573624219437811e-24
+          },
+          {
+            "lagUi": 2,
+            "measuredCovarianceS2": 5.030322981524417e-24,
+            "expectedCovarianceS2": 4.80139281981993e-24
+          },
+          {
+            "lagUi": 5,
+            "measuredCovarianceS2": 1.9734610109623473e-24,
+            "expectedCovarianceS2": 1.870916187156858e-24
+          }
+        ],
+        "normalizedInnovations": {
+          "samples": 4999,
+          "mean": 0.010494969486896474,
+          "rms": 0.9970949912655227,
+          "acRms": 0.997039757092094,
+          "maximumAbsolute": 4.084021906469889
+        },
+        "innovationLagOneCorrelation": 0.01039358788042648,
+        "psd": {
+          "method": "Hann Welch, ten nonoverlapping segments, no detrending; broad-band powers only",
+          "segmentSamples": 500,
+          "frequencyResolutionHz": 20000000.0,
+          "observedIntegratedPower": 8.842241335188745e-24,
+          "expectedIntegratedPower": 9.000000000000002e-24,
+          "powerRatio": 0.9824712594654158,
+          "observedBelowCornerPowerFraction": 0.48122733669523,
+          "expectedBelowCornerPowerFraction": 0.5116647867094352,
+          "interpretation": "finite-record consistency diagnostic; individual bins and these ratios are not pass/fail limits"
+        }
+      },
+      "sourcePjFit": {
+        "frequencyHz": 100000000.0,
+        "peakPs": 2.9999999999999987,
+        "phaseRad": 1.0051387354832521e-17,
+        "samples": 5000,
+        "residualRmsPs": 1.1501199128704525e-15
+      },
+      "noisePsdConsistency": {
+        "commandedNoiseKnots": {
+          "method": "Hann Welch, ten nonoverlapping segments, no detrending; broad-band powers only",
+          "segmentSamples": 5000,
+          "frequencyResolutionHz": 20000000.0,
+          "observedIntegratedPower": 2.4411030844561538e-05,
+          "expectedIntegratedPower": 2.5015419378540037e-05,
+          "powerRatio": 0.9758393603228182,
+          "observedBelowCornerPowerFraction": 0.7811014691217089,
+          "expectedBelowCornerPowerFraction": 0.7855454890950037,
+          "interpretation": "finite-record consistency diagnostic; individual bins and these ratios are not pass/fail limits"
+        },
+        "scopeNoiseSamples": {
+          "method": "Hann Welch, ten nonoverlapping segments, no detrending; broad-band powers only",
+          "segmentSamples": 25000,
+          "frequencyResolutionHz": 20000000.0,
+          "observedIntegratedPower": 3.961497160607672e-06,
+          "expectedIntegratedPower": 3.999999999999986e-06,
+          "powerRatio": 0.9903742901519216,
+          "observedBelowCornerPowerFraction": 0.7799517456800024,
+          "expectedBelowCornerPowerFraction": 0.7836955144208821,
+          "interpretation": "finite-record consistency diagnostic; individual bins and these ratios are not pass/fail limits"
+        }
+      },
+      "commandedNoisePsdDefinition": "PSD is of saved knots; continuous PWL additionally has sinc^4 interpolation power response; its RMS is integrated separately"
+    },
+    "noisy-routed-refined": {
+      "rawCapture": "/workspace/work/dqs-bench-assumptions/checks/5ghz-noisy-routed-0.25ps",
+      "observationCapture": "/workspace/work/dqs-bench-assumptions/checks/5ghz-noisy-routed-0.25ps-observed",
+      "checks": [
+        {
+          "check": "package-pad observation plane",
+          "pass": true
+        },
+        {
+          "check": "raw/observed timestamp identity",
+          "pass": true
+        },
+        {
+          "check": "observation source waveform hash",
+          "pass": true
+        },
+        {
+          "check": "observation source provenance hash",
+          "pass": true
+        },
+        {
+          "check": "observation waveform hash",
+          "pass": true
+        },
+        {
+          "check": "declared causal 12 GHz observation",
+          "pass": true
+        },
+        {
+          "check": "physical noise/jitter budgets preserved",
+          "pass": true
+        },
+        {
+          "check": "analysisStartNs preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "analysisStopNs preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "rateMTs preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "sampleTimeStepPs preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "electricalTimeStepPs preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "nominalSourcePhasePs preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "source preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "ioModels preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "channel preserved in observation",
+          "pass": true
+        },
+        {
+          "check": "raw_dqs_p_v raw circuit samples unchanged",
+          "pass": true
+        },
+        {
+          "check": "raw_dqs_n_v raw circuit samples unchanged",
+          "pass": true
+        },
+        {
+          "check": "pad_p_v raw circuit samples unchanged",
+          "pass": true
+        },
+        {
+          "check": "pad_n_v raw circuit samples unchanged",
+          "pass": true
+        },
+        {
+          "check": "simulation.cir recorded input hash",
+          "pass": true
+        },
+        {
+          "check": "transmitter-stimulus.sp recorded input hash",
+          "pass": true
+        },
+        {
+          "check": "receiver-noise.sp recorded input hash",
+          "pass": true
+        },
+        {
+          "check": "stimulus-events.csv recorded input hash",
+          "pass": true
+        },
+        {
+          "check": "source-timing.npz recorded input hash",
+          "pass": true
+        },
+        {
+          "check": "commanded-noise.npz recorded input hash",
+          "pass": true
+        },
+        {
+          "check": "p unfiltered observation plane equals raw package pad",
+          "pass": true
+        },
+        {
+          "check": "p stored scope response matches declared causal filter",
+          "pass": true,
+          "maximumDifferenceV": 0.0,
+          "numericalToleranceV": 1e-12
+        },
+        {
+          "check": "p observed leg equals filtered plane plus scope noise",
+          "pass": true
+        },
+        {
+          "check": "n unfiltered observation plane equals raw package pad",
+          "pass": true
+        },
+        {
+          "check": "n stored scope response matches declared causal filter",
+          "pass": true,
+          "maximumDifferenceV": 0.0,
+          "numericalToleranceV": 1e-12
+        },
+        {
+          "check": "n observed leg equals filtered plane plus scope noise",
+          "pass": true
+        }
+      ],
+      "electricalTimeStepPs": 0.25,
+      "savedSampleTimeStepPs": 2.0,
+      "analysisDurationNs": 500.00000000000045,
+      "analysisUiCount": 5000.000000000007,
+      "configuredBudgets": {
+        "sourceRjRmsPs": 3.0,
+        "sourcePjPeakPs": 3.0,
+        "combinedSourceTimingRmsPs": 3.674234614174767,
+        "commandedContinuousSeriesNoiseRmsMv": 5.0,
+        "scopeSampleNoiseRmsMv": 2.0
+      },
+      "wholeAnalysis": {
+        "startNs": 3000.0,
+        "stopNs": 3500.000000000001,
+        "sourceRjPs": {
+          "samples": 5000,
+          "mean": 0.08191290014426442,
+          "rms": 3.0349558655560727,
+          "acRms": 3.033850257125945,
+          "maximumAbsolute": 11.712376728731
+        },
+        "sourcePjPs": {
+          "samples": 5000,
+          "mean": -9.72022462519817e-16,
+          "rms": 2.1213203435596433,
+          "acRms": 2.121320343559643,
+          "maximumAbsolute": 3.0
+        },
+        "combinedSourceTimingPs": {
+          "samples": 5000,
+          "mean": 0.08191290014426345,
+          "rms": 3.624509804519977,
+          "acRms": 3.6235840820728034,
+          "maximumAbsolute": 11.114566080149903
+        },
+        "commandedSeriesNoiseV": {
+          "mean": -0.0001761742390838164,
+          "rms": 0.0049655281429251494,
+          "acRms": 0.004962401875671188,
+          "maximumAbsolute": 0.01677735600185148,
+          "definition": "continuous PWL segment integral"
+        },
+        "observedSeriesNoiseV": {
+          "samples": 250000,
+          "mean": -0.0001761816914612938,
+          "rms": 0.004965602296592729,
+          "acRms": 0.004962475811479672,
+          "maximumAbsolute": 0.016777379030827433
+        },
+        "scopeNoiseV": {
+          "samples": 250000,
+          "mean": -3.604952152719144e-05,
+          "rms": 0.001984044905937121,
+          "acRms": 0.0019837173742175817,
+          "maximumAbsolute": 0.008797530720429707
+        },
+        "rawPadDifferentialV": {
+          "samples": 250000,
+          "mean": -4.5685338423470055e-05,
+          "rms": 0.36062340244134394,
+          "acRms": 0.3606233995475354,
+          "maximumAbsolute": 0.6560278715886625,
+          "halfPeakToPeakV": 0.6542719042315639,
+          "fundamentalPeakV": 0.5040273692792504,
+          "fundamentalPhaseRad": -1.0470230524160729,
+          "fittedDcOffsetV": -4.5685345001268114e-05
+        },
+        "observedPadDifferentialV": {
+          "samples": 250000,
+          "mean": -7.816957695166344e-05,
+          "rms": 0.35532316417734466,
+          "acRms": 0.3553231555788582,
+          "maximumAbsolute": 0.6454742865387619,
+          "halfPeakToPeakV": 0.6449183568367979,
+          "fundamentalPeakV": 0.4966398239957599,
+          "fundamentalPhaseRad": -1.6653740073865229,
+          "fittedDcOffsetV": -7.81695752287815e-05
+        }
+      },
+      "blocks": [
+        {
+          "startNs": 3000.0,
+          "stopNs": 3050.0,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": 0.5046917916820005,
+            "rms": 3.225887251631754,
+            "acRms": 3.186163014606924,
+            "maximumAbsolute": 11.712376728731
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": 2.1884716261411085e-15,
+            "rms": 2.1213203435596446,
+            "acRms": 2.121320343559645,
+            "maximumAbsolute": 3.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": 0.5046917916820026,
+            "rms": 3.623470842443422,
+            "acRms": 3.5881509362687702,
+            "maximumAbsolute": 10.78532574560619
+          },
+          "commandedSeriesNoiseV": {
+            "mean": 0.00017211744655359725,
+            "rms": 0.005474377314866171,
+            "acRms": 0.005471670912080991,
+            "maximumAbsolute": 0.015467236659844917,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": 0.00017179986180561007,
+            "rms": 0.0054745822379701275,
+            "acRms": 0.005471885916919467,
+            "maximumAbsolute": 0.015467237186385319
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": -9.709768206242333e-06,
+            "rms": 0.001980781804884492,
+            "acRms": 0.001980758006158967,
+            "maximumAbsolute": 0.006586253667186278
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": 0.0004689815091534309,
+            "rms": 0.3610891056025759,
+            "acRms": 0.3610888010465186,
+            "maximumAbsolute": 0.6560278715886625,
+            "halfPeakToPeakV": 0.6542719042315639,
+            "fundamentalPeakV": 0.5036230548986617,
+            "fundamentalPhaseRad": -1.0592903465619434,
+            "fittedDcOffsetV": 0.00046898150273084045
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": 0.0005033231372777478,
+            "rms": 0.35577857075555464,
+            "acRms": 0.35577821472749654,
+            "maximumAbsolute": 0.6454742865387619,
+            "halfPeakToPeakV": 0.6449183568367979,
+            "fundamentalPeakV": 0.496238665033068,
+            "fundamentalPhaseRad": -1.6774533357680161,
+            "fittedDcOffsetV": 0.0005033231391626207
+          }
+        },
+        {
+          "startNs": 3050.0,
+          "stopNs": 3100.0000000000005,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": 0.09550869082141537,
+            "rms": 2.969462990953824,
+            "acRms": 2.9679266407076184,
+            "maximumAbsolute": 9.851492436290123
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": -1.9610979506978767e-15,
+            "rms": 2.121320343559641,
+            "acRms": 2.121320343559641,
+            "maximumAbsolute": 3.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": 0.09550869082141332,
+            "rms": 3.5648714181229813,
+            "acRms": 3.5635917720367094,
+            "maximumAbsolute": 10.778543419415652
+          },
+          "commandedSeriesNoiseV": {
+            "mean": -0.0001571506241418848,
+            "rms": 0.005422290184262146,
+            "acRms": 0.005420012409919135,
+            "maximumAbsolute": 0.01566881908395266,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": -0.00015689529880034606,
+            "rms": 0.00542230199698298,
+            "acRms": 0.005420031624603307,
+            "maximumAbsolute": 0.01566882271932002
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": 8.451838938752558e-06,
+            "rms": 0.001981134279840067,
+            "acRms": 0.0019811162513027787,
+            "maximumAbsolute": 0.007522317654020997
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": 0.00027904243421303696,
+            "rms": 0.36169210218709447,
+            "acRms": 0.36169199454762546,
+            "maximumAbsolute": 0.6200405306394714,
+            "halfPeakToPeakV": 0.6121034964299952,
+            "fundamentalPeakV": 0.5048715630056855,
+            "fundamentalPhaseRad": -1.047520191294426,
+            "fittedDcOffsetV": 0.0002790424276307483
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": 0.00026136701057132407,
+            "rms": 0.3563700583839225,
+            "acRms": 0.35636996253871633,
+            "maximumAbsolute": 0.6106221514773771,
+            "halfPeakToPeakV": 0.6020436244226377,
+            "fundamentalPeakV": 0.4974793197686069,
+            "fundamentalPhaseRad": -1.6658064782633515,
+            "fittedDcOffsetV": 0.0002613670123028685
+          }
+        },
+        {
+          "startNs": 3100.0000000000005,
+          "stopNs": 3150.0000000000005,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": -0.19387256749082543,
+            "rms": 3.0571758932645974,
+            "acRms": 3.0510224302572255,
+            "maximumAbsolute": 10.194880625387869
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": -1.2789769243681803e-15,
+            "rms": 2.1213203435596433,
+            "acRms": 2.1213203435596433,
+            "maximumAbsolute": 3.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": -0.19387256749082674,
+            "rms": 3.8710441814575125,
+            "acRms": 3.866186296904299,
+            "maximumAbsolute": 10.757024569145786
+          },
+          "commandedSeriesNoiseV": {
+            "mean": -0.000862878970404572,
+            "rms": 0.004773939501965524,
+            "acRms": 0.004695310240107717,
+            "maximumAbsolute": 0.014561416059344887,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": -0.000862908228385327,
+            "rms": 0.004774040298071529,
+            "acRms": 0.004695407347291157,
+            "maximumAbsolute": 0.014561417363438522
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": -3.133386004013587e-05,
+            "rms": 0.0019500262840534345,
+            "acRms": 0.0019497745248397908,
+            "maximumAbsolute": 0.0076728711053582165
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": 0.0004056991877946755,
+            "rms": 0.3603063802922772,
+            "acRms": 0.3603061518868254,
+            "maximumAbsolute": 0.6299109768245899,
+            "halfPeakToPeakV": 0.6219512940539573,
+            "fundamentalPeakV": 0.5034660909247312,
+            "fundamentalPhaseRad": -1.0390572495930568,
+            "fittedDcOffsetV": 0.00040569918112736054
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": 0.0003625091692972673,
+            "rms": 0.3549819050006026,
+            "acRms": 0.3549817199025311,
+            "maximumAbsolute": 0.6204413093740855,
+            "halfPeakToPeakV": 0.611954993191911,
+            "fundamentalPeakV": 0.49602822417905296,
+            "fundamentalPhaseRad": -1.657318791575843,
+            "fittedDcOffsetV": 0.0003625091709093827
+          }
+        },
+        {
+          "startNs": 3150.0000000000005,
+          "stopNs": 3200.0000000000005,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": 0.03454259821004319,
+            "rms": 2.9188855004157372,
+            "acRms": 2.918681101704351,
+            "maximumAbsolute": 9.530021784525822
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": -2.2737367544323206e-15,
+            "rms": 2.1213203435596437,
+            "acRms": 2.1213203435596437,
+            "maximumAbsolute": 3.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": 0.034542598210041034,
+            "rms": 3.3938433085476323,
+            "acRms": 3.3936675164020476,
+            "maximumAbsolute": 10.316710811422297
+          },
+          "commandedSeriesNoiseV": {
+            "mean": 3.8098189154143046e-05,
+            "rms": 0.004327422667921929,
+            "acRms": 0.004327254958380395,
+            "maximumAbsolute": 0.01430059026219283,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": 3.779863115725938e-05,
+            "rms": 0.004327381709356691,
+            "acRms": 0.0043272166252635745,
+            "maximumAbsolute": 0.014300600067144842
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": -3.84969338937486e-05,
+            "rms": 0.0019948510612240013,
+            "acRms": 0.0019944795668412614,
+            "maximumAbsolute": 0.0071079361834183235
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": 0.0012735956066176192,
+            "rms": 0.3602789273985717,
+            "acRms": 0.36027667629433924,
+            "maximumAbsolute": 0.6323307560151648,
+            "halfPeakToPeakV": 0.6234770537797374,
+            "fundamentalPeakV": 0.5042952511688242,
+            "fundamentalPhaseRad": -1.0458103536128711,
+            "fittedDcOffsetV": 0.0012735956000210634
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": 0.0012408463704143577,
+            "rms": 0.3549827485248922,
+            "acRms": 0.35498057982173037,
+            "maximumAbsolute": 0.6209846471990518,
+            "halfPeakToPeakV": 0.6136469419786224,
+            "fundamentalPeakV": 0.49691394149986384,
+            "fundamentalPhaseRad": -1.6641996459502983,
+            "fittedDcOffsetV": 0.0012408463721221665
+          }
+        },
+        {
+          "startNs": 3200.0000000000005,
+          "stopNs": 3250.0,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": -0.04801070304139223,
+            "rms": 2.877118459465166,
+            "acRms": 2.87671785237772,
+            "maximumAbsolute": 9.71529503816584
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": 2.5011104298755525e-15,
+            "rms": 2.1213203435596424,
+            "acRms": 2.1213203435596424,
+            "maximumAbsolute": 3.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": -0.048010703041389755,
+            "rms": 3.552326665800274,
+            "acRms": 3.5520022118446324,
+            "maximumAbsolute": 11.114566080149903
+          },
+          "commandedSeriesNoiseV": {
+            "mean": 0.0004945773090347392,
+            "rms": 0.004213796525838664,
+            "acRms": 0.004184671366613865,
+            "maximumAbsolute": 0.012454737735105852,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": 0.0004946229318502847,
+            "rms": 0.004213944305650981,
+            "acRms": 0.004184814782808931,
+            "maximumAbsolute": 0.012454747792617127
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": -3.6792001488850495e-05,
+            "rms": 0.0019783749597380483,
+            "acRms": 0.0019780328182173743,
+            "maximumAbsolute": 0.008095768291590122
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": 0.0005876205553821025,
+            "rms": 0.3606635977242008,
+            "acRms": 0.36066311902583975,
+            "maximumAbsolute": 0.6248844831641236,
+            "halfPeakToPeakV": 0.6233649712905844,
+            "fundamentalPeakV": 0.5043470432449599,
+            "fundamentalPhaseRad": -1.0431641036963462,
+            "fittedDcOffsetV": 0.0005876205487523262
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": 0.0005536122296581652,
+            "rms": 0.3553862472370816,
+            "acRms": 0.35538581603484865,
+            "maximumAbsolute": 0.6161775708756729,
+            "halfPeakToPeakV": 0.6142489679513221,
+            "fundamentalPeakV": 0.49698573735820856,
+            "fundamentalPhaseRad": -1.6616325600340878,
+            "fittedDcOffsetV": 0.0005536122313307466
+          }
+        },
+        {
+          "startNs": 3250.0,
+          "stopNs": 3300.0000000000005,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": 0.22092047776319373,
+            "rms": 3.059253565838355,
+            "acRms": 3.05126638014441,
+            "maximumAbsolute": 8.986036450721437
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": -1.0800249583553523e-15,
+            "rms": 2.1213203435596437,
+            "acRms": 2.1213203435596437,
+            "maximumAbsolute": 3.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": 0.22092047776319268,
+            "rms": 3.635551569977809,
+            "acRms": 3.6288330576747385,
+            "maximumAbsolute": 9.81041886138324
+          },
+          "commandedSeriesNoiseV": {
+            "mean": -0.00037274874503036705,
+            "rms": 0.005404126691411263,
+            "acRms": 0.005391256223729488,
+            "maximumAbsolute": 0.01677735600185148,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": -0.00037245923396494546,
+            "rms": 0.005404161361707332,
+            "acRms": 0.005391310985502941,
+            "maximumAbsolute": 0.016777379030827433
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": -2.8782617053630705e-05,
+            "rms": 0.0019658217288506838,
+            "acRms": 0.001965611006933222,
+            "maximumAbsolute": 0.008797530720429707
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": -0.00035614468162155545,
+            "rms": 0.3604926475544514,
+            "acRms": 0.3604924716298299,
+            "maximumAbsolute": 0.6193716845740482,
+            "halfPeakToPeakV": 0.6177060560524694,
+            "fundamentalPeakV": 0.5040654694719989,
+            "fundamentalPhaseRad": -1.0519684817381767,
+            "fittedDcOffsetV": -0.0003561446881385446
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": -0.0003906214499307886,
+            "rms": 0.3551553503419092,
+            "acRms": 0.3551551355272328,
+            "maximumAbsolute": 0.610142516607465,
+            "halfPeakToPeakV": 0.6090793391354304,
+            "fundamentalPeakV": 0.49662192792353244,
+            "fundamentalPhaseRad": -1.670183069139148,
+            "fittedDcOffsetV": -0.0003906214481422998
+          }
+        },
+        {
+          "startNs": 3300.0000000000005,
+          "stopNs": 3350.0000000000005,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": 0.16050107022258173,
+            "rms": 2.845255276841891,
+            "acRms": 2.840724730918861,
+            "maximumAbsolute": 9.756156149398151
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": -5.229594535194337e-15,
+            "rms": 2.1213203435596464,
+            "acRms": 2.1213203435596464,
+            "maximumAbsolute": 3.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": 0.1605010702225765,
+            "rms": 3.4921601259923043,
+            "acRms": 3.4884698295997913,
+            "maximumAbsolute": 10.122469385992908
+          },
+          "commandedSeriesNoiseV": {
+            "mean": 0.0002190520418350553,
+            "rms": 0.004947643294590809,
+            "acRms": 0.004942791759064637,
+            "maximumAbsolute": 0.014954448587409463,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": 0.00021893045804358244,
+            "rms": 0.0049478235192994165,
+            "acRms": 0.00494297754725563,
+            "maximumAbsolute": 0.014954433838283876
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": -2.1523671498326386e-05,
+            "rms": 0.0019765631424467074,
+            "acRms": 0.0019764459485763926,
+            "maximumAbsolute": 0.007118415553456446
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": 0.0001969099969746191,
+            "rms": 0.3598186948776995,
+            "acRms": 0.35981864099841204,
+            "maximumAbsolute": 0.6288734541253689,
+            "halfPeakToPeakV": 0.6109047767521361,
+            "fundamentalPeakV": 0.5035545042419635,
+            "fundamentalPhaseRad": -1.0485710463870244,
+            "fittedDcOffsetV": 0.00019690999042204735
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": 0.00020905405725337876,
+            "rms": 0.3545117854929345,
+            "acRms": 0.35451172385379515,
+            "maximumAbsolute": 0.617856203218359,
+            "halfPeakToPeakV": 0.60184116931113,
+            "fundamentalPeakV": 0.49615942319161394,
+            "fundamentalPhaseRad": -1.6667779757521621,
+            "fittedDcOffsetV": 0.0002090540589941979
+          }
+        },
+        {
+          "startNs": 3350.0000000000005,
+          "stopNs": 3400.0000000000005,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": -0.2567580499141189,
+            "rms": 3.117961212094493,
+            "acRms": 3.1073714653916187,
+            "maximumAbsolute": 8.829487592477596
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": -2.8990143619012086e-15,
+            "rms": 2.121320343559644,
+            "acRms": 2.121320343559644,
+            "maximumAbsolute": 3.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": -0.25675804991412177,
+            "rms": 3.6874579238263108,
+            "acRms": 3.678508018720871,
+            "maximumAbsolute": 10.728118145097953
+          },
+          "commandedSeriesNoiseV": {
+            "mean": 0.00013528619164590764,
+            "rms": 0.005021777118456502,
+            "acRms": 0.005019954489216335,
+            "maximumAbsolute": 0.016701753833958683,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": 0.00013532914799265633,
+            "rms": 0.005021815275862104,
+            "acRms": 0.005019991502640772,
+            "maximumAbsolute": 0.016701738069968997
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": -4.952253687089005e-05,
+            "rms": 0.0020060186143630388,
+            "acRms": 0.0020054072403162602,
+            "maximumAbsolute": 0.00790703527979966
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": -0.001039462046428809,
+            "rms": 0.3608220985475427,
+            "acRms": 0.36082060129502946,
+            "maximumAbsolute": 0.6348294154626046,
+            "halfPeakToPeakV": 0.6203538445102197,
+            "fundamentalPeakV": 0.5044303906494115,
+            "fundamentalPhaseRad": -1.036190008159498,
+            "fittedDcOffsetV": -0.0010394620531448725
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": -0.0010995506669591215,
+            "rms": 0.35557499451177815,
+            "acRms": 0.3555732944280009,
+            "maximumAbsolute": 0.6281680358261269,
+            "halfPeakToPeakV": 0.6128033892663691,
+            "fundamentalPeakV": 0.497095299467976,
+            "fundamentalPhaseRad": -1.6548381274466766,
+            "fittedDcOffsetV": -0.0010995506653784727
+          }
+        },
+        {
+          "startNs": 3400.0000000000005,
+          "stopNs": 3450.000000000001,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": -0.15874159212311775,
+            "rms": 3.0235934646669285,
+            "acRms": 3.0194235453984883,
+            "maximumAbsolute": 8.416471812431961
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": 1.5063505998114124e-15,
+            "rms": 2.1213203435596424,
+            "acRms": 2.1213203435596424,
+            "maximumAbsolute": 3.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": -0.15874159212311623,
+            "rms": 3.74791748701332,
+            "acRms": 3.744554258705628,
+            "maximumAbsolute": 10.947008547629986
+          },
+          "commandedSeriesNoiseV": {
+            "mean": -0.0004226015702937266,
+            "rms": 0.004684402769576378,
+            "acRms": 0.004665301407240492,
+            "maximumAbsolute": 0.013838991316608299,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": -0.00042266098502360706,
+            "rms": 0.0046844953197030395,
+            "acRms": 0.0046653889539950005,
+            "maximumAbsolute": 0.013838968669006135
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": -5.770680522420223e-05,
+            "rms": 0.0020020675992461294,
+            "acRms": 0.002001235767365249,
+            "maximumAbsolute": 0.00736165866605137
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": -0.0009449592876205467,
+            "rms": 0.36097476878462065,
+            "acRms": 0.36097353192589493,
+            "maximumAbsolute": 0.6239735112306448,
+            "halfPeakToPeakV": 0.6159497652301695,
+            "fundamentalPeakV": 0.5041653177584884,
+            "fundamentalPhaseRad": -1.0405385950277606,
+            "fittedDcOffsetV": -0.0009449592942794398
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": -0.0010475231737793978,
+            "rms": 0.35559464593243134,
+            "acRms": 0.3555931030138403,
+            "maximumAbsolute": 0.6189081937570085,
+            "halfPeakToPeakV": 0.6078082097855464,
+            "fundamentalPeakV": 0.49666227678280983,
+            "fundamentalPhaseRad": -1.6590141973615602,
+            "fittedDcOffsetV": -0.0010475231721432466
+          }
+        },
+        {
+          "startNs": 3450.000000000001,
+          "stopNs": 3500.000000000001,
+          "sourceRjPs": {
+            "samples": 500,
+            "mean": 0.46034728531286406,
+            "rms": 3.2284942120070657,
+            "acRms": 3.195505477051823,
+            "maximumAbsolute": 11.227550898981093
+          },
+          "sourcePjPs": {
+            "samples": 500,
+            "mean": -1.1084466677857563e-15,
+            "rms": 2.121320343559639,
+            "acRms": 2.1213203435596393,
+            "maximumAbsolute": 3.0
+          },
+          "combinedSourceTimingPs": {
+            "samples": 500,
+            "mean": 0.46034728531286295,
+            "rms": 3.6543172913025703,
+            "acRms": 3.6252055448509446,
+            "maximumAbsolute": 10.777310497894252
+          },
+          "commandedSeriesNoiseV": {
+            "mean": -0.001005493659191052,
+            "rms": 0.005203446826393763,
+            "acRms": 0.005105373774410049,
+            "maximumAbsolute": 0.01644152573717556,
+            "definition": "continuous PWL segment integral"
+          },
+          "observedSeriesNoiseV": {
+            "samples": 25000,
+            "mean": -0.001005374199288105,
+            "rms": 0.005203420946701084,
+            "acRms": 0.005105370923642415,
+            "maximumAbsolute": 0.01644151892469381
+          },
+          "scopeNoiseV": {
+            "samples": 25000,
+            "mean": -9.507885993464033e-05,
+            "rms": 0.0020040731696534253,
+            "acRms": 0.002001816495016028,
+            "maximumAbsolute": 0.007761688708529372
+          },
+          "rawPadDifferentialV": {
+            "samples": 25000,
+            "mean": -0.0013281366586992726,
+            "rms": 0.36009197208560895,
+            "acRms": 0.3600895227766545,
+            "maximumAbsolute": 0.6515391094874303,
+            "halfPeakToPeakV": 0.6457444418001614,
+            "fundamentalPeakV": 0.5035911730048641,
+            "fundamentalPhaseRad": -1.0581447232949241,
+            "fittedDcOffsetV": -0.0013281366651342783
+          },
+          "observedPadDifferentialV": {
+            "samples": 25000,
+            "mean": -0.0013747124533195663,
+            "rms": 0.3548917480971375,
+            "acRms": 0.354889085536753,
+            "maximumAbsolute": 0.6411312482949392,
+            "halfPeakToPeakV": 0.6353718388049077,
+            "fundamentalPeakV": 0.49634437619442373,
+            "fundamentalPhaseRad": -1.6765365851440364,
+            "fittedDcOffsetV": -0.0013747124514454977
+          }
+        }
+      ],
+      "sourceRjConsistency": {
+        "lagCovariance": [
+          {
+            "lagUi": 1,
+            "measuredCovarianceS2": 6.812034603342704e-24,
+            "expectedCovarianceS2": 6.573624219437811e-24
+          },
+          {
+            "lagUi": 2,
+            "measuredCovarianceS2": 5.030322981524417e-24,
+            "expectedCovarianceS2": 4.80139281981993e-24
+          },
+          {
+            "lagUi": 5,
+            "measuredCovarianceS2": 1.9734610109623473e-24,
+            "expectedCovarianceS2": 1.870916187156858e-24
+          }
+        ],
+        "normalizedInnovations": {
+          "samples": 4999,
+          "mean": 0.010494969486896474,
+          "rms": 0.9970949912655227,
+          "acRms": 0.997039757092094,
+          "maximumAbsolute": 4.084021906469889
+        },
+        "innovationLagOneCorrelation": 0.01039358788042648,
+        "psd": {
+          "method": "Hann Welch, ten nonoverlapping segments, no detrending; broad-band powers only",
+          "segmentSamples": 500,
+          "frequencyResolutionHz": 20000000.0,
+          "observedIntegratedPower": 8.842241335188745e-24,
+          "expectedIntegratedPower": 9.000000000000002e-24,
+          "powerRatio": 0.9824712594654158,
+          "observedBelowCornerPowerFraction": 0.48122733669523,
+          "expectedBelowCornerPowerFraction": 0.5116647867094352,
+          "interpretation": "finite-record consistency diagnostic; individual bins and these ratios are not pass/fail limits"
+        }
+      },
+      "sourcePjFit": {
+        "frequencyHz": 100000000.0,
+        "peakPs": 2.9999999999999987,
+        "phaseRad": 1.0051387354832521e-17,
+        "samples": 5000,
+        "residualRmsPs": 1.1501199128704525e-15
+      },
+      "noisePsdConsistency": {
+        "commandedNoiseKnots": {
+          "method": "Hann Welch, ten nonoverlapping segments, no detrending; broad-band powers only",
+          "segmentSamples": 5000,
+          "frequencyResolutionHz": 20000000.0,
+          "observedIntegratedPower": 2.4411030844561538e-05,
+          "expectedIntegratedPower": 2.5015419378540037e-05,
+          "powerRatio": 0.9758393603228182,
+          "observedBelowCornerPowerFraction": 0.7811014691217089,
+          "expectedBelowCornerPowerFraction": 0.7855454890950037,
+          "interpretation": "finite-record consistency diagnostic; individual bins and these ratios are not pass/fail limits"
+        },
+        "scopeNoiseSamples": {
+          "method": "Hann Welch, ten nonoverlapping segments, no detrending; broad-band powers only",
+          "segmentSamples": 25000,
+          "frequencyResolutionHz": 20000000.0,
+          "observedIntegratedPower": 3.961497160607672e-06,
+          "expectedIntegratedPower": 3.999999999999986e-06,
+          "powerRatio": 0.9903742901519216,
+          "observedBelowCornerPowerFraction": 0.7799517456800024,
+          "expectedBelowCornerPowerFraction": 0.7836955144208821,
+          "interpretation": "finite-record consistency diagnostic; individual bins and these ratios are not pass/fail limits"
+        }
+      },
+      "commandedNoisePsdDefinition": "PSD is of saved knots; continuous PWL additionally has sinc^4 interpolation power response; its RMS is integrated separately"
+    }
+  },
+  "pairedIdentityChecks": {
+    "noisy routed electrical refinement": [
+      {
+        "check": "transmitter-stimulus.sp exact input bytes",
+        "pass": true
+      },
+      {
+        "check": "receiver-noise.sp exact input bytes",
+        "pass": true
+      },
+      {
+        "check": "stimulus-events.csv exact input bytes",
+        "pass": true
+      },
+      {
+        "check": "source-timing.npz exact input bytes",
+        "pass": true
+      },
+      {
+        "check": "commanded-noise.npz exact input bytes",
+        "pass": true
+      },
+      {
+        "check": "all nonchannel circuit lines identical, excluding only electrical maxdt",
+        "pass": true
+      },
+      {
+        "check": "source matched physical configuration",
+        "pass": true
+      },
+      {
+        "check": "noise matched physical configuration",
+        "pass": true
+      },
+      {
+        "check": "jitter matched physical configuration",
+        "pass": true
+      },
+      {
+        "check": "ioModels matched physical configuration",
+        "pass": true
+      },
+      {
+        "check": "analysisStartNs matched physical configuration",
+        "pass": true
+      },
+      {
+        "check": "analysisStopNs matched physical configuration",
+        "pass": true
+      },
+      {
+        "check": "rateMTs matched physical configuration",
+        "pass": true
+      },
+      {
+        "check": "sampleTimeStepPs matched physical configuration",
+        "pass": true
+      },
+      {
+        "check": "captureStartNs matched physical configuration",
+        "pass": true
+      },
+      {
+        "check": "integrationMethod matched physical configuration",
+        "pass": true
+      },
+      {
+        "check": "same-channel model coefficients hash",
+        "pass": true
+      },
+      {
+        "check": "identical physical scope timestamp grid",
+        "pass": true
+      },
+      {
+        "check": "identical additive scope-noise realization",
+        "pass": true
+      }
+    ],
+    "clean/noisy routed circuit identity": [
+      {
+        "check": "same clean/noisy circuit lines; disturbances are in external PWL files",
+        "pass": true
+      }
+    ]
+  },
+  "observedPadRefinement": {
+    "comparison": "observed receiver package pads at the same absolute time, no independent phase alignment",
+    "electricalMaxStepPs": [
+      0.5,
+      0.25
+    ],
+    "savedSampleTimeStepPs": [
+      2.0,
+      2.0
+    ],
+    "waveformDifferenceV": {
+      "samples": 250000,
+      "mean": -4.659493385235525e-08,
+      "rms": 6.775372148794963e-05,
+      "acRms": 6.775370546603917e-05,
+      "maximumAbsolute": 0.00022660337264324149
+    },
+    "observedPadStatistics": [
+      {
+        "samples": 250000,
+        "mean": -7.812298201781095e-05,
+        "rms": 0.3553651230063134,
+        "acRms": 0.35536511441908863,
+        "maximumAbsolute": 0.6455462897706427,
+        "halfPeakToPeakV": 0.6449827095571934,
+        "fundamentalPeakV": 0.4967002365800669,
+        "fundamentalPhaseRad": -1.6654568562903966,
+        "fittedDcOffsetV": -7.812298029360059e-05
+      },
+      {
+        "samples": 250000,
+        "mean": -7.816957695166344e-05,
+        "rms": 0.35532316417734466,
+        "acRms": 0.3553231555788582,
+        "maximumAbsolute": 0.6454742865387619,
+        "halfPeakToPeakV": 0.6449183568367979,
+        "fundamentalPeakV": 0.4966398239957599,
+        "fundamentalPhaseRad": -1.6653740073865229,
+        "fittedDcOffsetV": -7.81695752287815e-05
+      }
+    ],
+    "observedAcRmsDifferenceV": -4.195884023044938e-05,
+    "observedAcRmsRelativeChange": -0.00011807247962147827,
+    "fundamentalPeakRelativeChange": -0.00012162785490699157,
+    "fundamentalPhaseDifferenceRad": 8.284890387377787e-05,
+    "phaseEquivalentTimeDifferencePs": 0.002637162516251405,
+    "eyeMetrics": [
+      {
+        "finiteCaptureEyeHeightV": 0.6749261328131991,
+        "commonOpeningAt200mVThresholdPs": 42.31493112804137,
+        "receiverTie": {
+          "count": 5000,
+          "rmsPs": 4.096978308099757,
+          "peakToPeakPs": 27.68771235529905,
+          "minPs": -13.057695622244262,
+          "maxPs": 14.630016733054788
+        },
+        "timingAvailable": true,
+        "timingUnavailableReason": null,
+        "observedCrossingCount": 5000,
+        "nominalPhasePs": 3000003.162539221,
+        "nominalPhaseBasis": "receiver mean phase from strict crossing association",
+        "nominalSamplePolarityBasis": "first observed crossing and fixed nominal clock",
+        "nominalCenterSamples": 5000,
+        "nominalThresholdFailures": 0,
+        "completeThresholdWindows": 5000,
+        "samplingThresholdMv": 200,
+        "analysisStartNs": 3000.0000000002756,
+        "analysisStopNs": 3499.9980000140777,
+        "rateMTs": 10000.0,
+        "uiPs": 100.0,
+        "signoff": false
+      },
+      {
+        "finiteCaptureEyeHeightV": 0.6748435095238845,
+        "commonOpeningAt200mVThresholdPs": 42.30387155860951,
+        "receiverTie": {
+          "count": 5000,
+          "rmsPs": 4.097582341445578,
+          "peakToPeakPs": 27.698185595819332,
+          "minPs": -13.061267440327672,
+          "maxPs": 14.636918155491658
+        },
+        "timingAvailable": true,
+        "timingUnavailableReason": null,
+        "observedCrossingCount": 5000,
+        "nominalPhasePs": 3000003.159942198,
+        "nominalPhaseBasis": "receiver mean phase from strict crossing association",
+        "nominalSamplePolarityBasis": "first observed crossing and fixed nominal clock",
+        "nominalCenterSamples": 5000,
+        "nominalThresholdFailures": 0,
+        "completeThresholdWindows": 5000,
+        "samplingThresholdMv": 200,
+        "analysisStartNs": 3000.0000000002756,
+        "analysisStopNs": 3499.9980000140777,
+        "rateMTs": 10000.0,
+        "uiPs": 100.0,
+        "signoff": false
+      }
+    ],
+    "eyeMetricDifferences": {
+      "finiteCaptureEyeHeightV": -8.26232893146317e-05,
+      "commonOpeningAt200mVThresholdPs": -0.011059569431864702,
+      "nominalThresholdFailures": 0
+    }
+  },
+  "limitations": [
+    "Input identities are deterministic checks; budget/PSD/block consistency remains finite-record diagnostics.",
+    "Noisy cycle differences are not interpreted as settling or attenuation.",
+    "One mean nominal clock phase is allowed; individual edges are not aligned, sorted or clipped.",
+    "Finite noisy eye extrema do not establish DDR compliance, BER or rare-event tails."
+  ]
+}

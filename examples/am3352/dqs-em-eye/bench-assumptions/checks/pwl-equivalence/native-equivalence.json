@@ -1,0 +1,203 @@
+{
+  "binaries": {
+    "original": {
+      "path": "/workspace/work/tools/ngspice-44.2-install/bin/ngspice",
+      "sha256": "18cf37b7ddf399ed68752371e8dbc12aa594f00dab459cffaa3a82921181cfa4"
+    },
+    "fast": {
+      "path": "/workspace/work/tools/ngspice-44.2-fast-pwl/bin/ngspice",
+      "sha256": "371046ceac2ab7cea9f01aeb393e3958d8dc57b8d5508e40f3f0e155457f8d2c"
+    }
+  },
+  "cases": [
+    {
+      "case": "strict",
+      "same_deck_byte_identical": true,
+      "initial_adaptive_baseline_matches_rerun": true,
+      "outputs": [
+        {
+          "file": "capture.dat",
+          "byte_identical": true,
+          "shape_original": [
+            187,
+            16
+          ],
+          "shape_fast": [
+            187,
+            16
+          ],
+          "finite_original": true,
+          "finite_fast": true,
+          "original_sha256": "d9ccffb77b924f100ddff1570ce4b24cd4440af17de3165b1caae4efe5289980",
+          "fast_sha256": "d9ccffb77b924f100ddff1570ce4b24cd4440af17de3165b1caae4efe5289980",
+          "time_array_identical": true,
+          "all_values_identical": true,
+          "maximum_absolute_time_difference_s": 0.0,
+          "maximum_absolute_value_difference": 0.0
+        },
+        {
+          "file": "linearized.dat",
+          "byte_identical": true,
+          "shape_original": [
+            309,
+            16
+          ],
+          "shape_fast": [
+            309,
+            16
+          ],
+          "finite_original": true,
+          "finite_fast": true,
+          "original_sha256": "eaa8d9b7bdf946ee56b1761630f1e24dd8c079a04fe0ac871dbea178265a3c3b",
+          "fast_sha256": "eaa8d9b7bdf946ee56b1761630f1e24dd8c079a04fe0ac871dbea178265a3c3b",
+          "time_array_identical": true,
+          "all_values_identical": true,
+          "maximum_absolute_time_difference_s": 0.0,
+          "maximum_absolute_value_difference": 0.0
+        }
+      ]
+    },
+    {
+      "case": "repeat_delay",
+      "same_deck_byte_identical": true,
+      "initial_adaptive_baseline_matches_rerun": true,
+      "outputs": [
+        {
+          "file": "capture.dat",
+          "byte_identical": true,
+          "shape_original": [
+            330,
+            16
+          ],
+          "shape_fast": [
+            330,
+            16
+          ],
+          "finite_original": true,
+          "finite_fast": true,
+          "original_sha256": "2642fda98f5a76628b210654176e4124b1fc7b671a9b7030d2130044e30b8db7",
+          "fast_sha256": "2642fda98f5a76628b210654176e4124b1fc7b671a9b7030d2130044e30b8db7",
+          "time_array_identical": true,
+          "all_values_identical": true,
+          "maximum_absolute_time_difference_s": 0.0,
+          "maximum_absolute_value_difference": 0.0
+        },
+        {
+          "file": "linearized.dat",
+          "byte_identical": true,
+          "shape_original": [
+            309,
+            16
+          ],
+          "shape_fast": [
+            309,
+            16
+          ],
+          "finite_original": true,
+          "finite_fast": true,
+          "original_sha256": "983c64a14ecdd3a24336959548fc96d6919a2a1b31a43f73a7874e0fdd333d0f",
+          "fast_sha256": "983c64a14ecdd3a24336959548fc96d6919a2a1b31a43f73a7874e0fdd333d0f",
+          "time_array_identical": true,
+          "all_values_identical": true,
+          "maximum_absolute_time_difference_s": 0.0,
+          "maximum_absolute_value_difference": 0.0
+        }
+      ]
+    },
+    {
+      "case": "duplicates",
+      "same_deck_byte_identical": true,
+      "initial_adaptive_baseline_matches_rerun": true,
+      "outputs": [
+        {
+          "file": "capture.dat",
+          "byte_identical": true,
+          "shape_original": [
+            215,
+            16
+          ],
+          "shape_fast": [
+            215,
+            16
+          ],
+          "finite_original": true,
+          "finite_fast": true,
+          "original_sha256": "6ec6ee590e62174728a4db4ca5362d0efdaee7c8e3cf81e35fce3c9f8650fcf2",
+          "fast_sha256": "6ec6ee590e62174728a4db4ca5362d0efdaee7c8e3cf81e35fce3c9f8650fcf2",
+          "time_array_identical": true,
+          "all_values_identical": true,
+          "maximum_absolute_time_difference_s": 0.0,
+          "maximum_absolute_value_difference": 0.0
+        },
+        {
+          "file": "linearized.dat",
+          "byte_identical": true,
+          "shape_original": [
+            309,
+            16
+          ],
+          "shape_fast": [
+            309,
+            16
+          ],
+          "finite_original": true,
+          "finite_fast": true,
+          "original_sha256": "a41edd02025b2d2fd8e1415e64cffc2c0b918d07074c01495ed632101664f625",
+          "fast_sha256": "a41edd02025b2d2fd8e1415e64cffc2c0b918d07074c01495ed632101664f625",
+          "time_array_identical": true,
+          "all_values_identical": true,
+          "maximum_absolute_time_difference_s": 0.0,
+          "maximum_absolute_value_difference": 0.0
+        }
+      ]
+    },
+    {
+      "case": "descending",
+      "same_deck_byte_identical": true,
+      "initial_adaptive_baseline_matches_rerun": null,
+      "outputs": [
+        {
+          "file": "capture.dat",
+          "byte_identical": true,
+          "shape_original": [
+            130,
+            4
+          ],
+          "shape_fast": [
+            130,
+            4
+          ],
+          "finite_original": true,
+          "finite_fast": true,
+          "original_sha256": "1133af117285caf1d6c620347b4ed5dcd38b74e5116aafcf40342993c8b33c49",
+          "fast_sha256": "1133af117285caf1d6c620347b4ed5dcd38b74e5116aafcf40342993c8b33c49",
+          "time_array_identical": true,
+          "all_values_identical": true,
+          "maximum_absolute_time_difference_s": 0.0,
+          "maximum_absolute_value_difference": 0.0
+        },
+        {
+          "file": "linearized.dat",
+          "byte_identical": true,
+          "shape_original": [
+            309,
+            4
+          ],
+          "shape_fast": [
+            309,
+            4
+          ],
+          "finite_original": true,
+          "finite_fast": true,
+          "original_sha256": "33b3258bcb55e07ec98e7caa46f69686aae516f1997e313bbe0f750c86ff6957",
+          "fast_sha256": "33b3258bcb55e07ec98e7caa46f69686aae516f1997e313bbe0f750c86ff6957",
+          "time_array_identical": true,
+          "all_values_identical": true,
+          "maximum_absolute_time_difference_s": 0.0,
+          "maximum_absolute_value_difference": 0.0
+        }
+      ]
+    }
+  ],
+  "all_output_files_byte_identical": true
+}

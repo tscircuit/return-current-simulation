@@ -107,12 +107,19 @@ def eye_diagnostics(waveform, metadata, analysis, nominal_phase_ps=None, events=
             observed_height = float(positive.min() - negative.max())
             height = observed_height if observed_height > 0 else None
         windows = []
+        threshold_roots = {
+            True: analysis.crossings(t, voltage, 0.2),
+            False: analysis.crossings(t, voltage, -0.2),
+        }
         for sample, high, valid_sample in zip(samples, expected_positive, valid):
             if not valid_sample:
                 continue
-            margin = analysis.valid_margin(t, voltage, sample, 0.2 if high else -0.2, bool(high))
-            if margin:
-                windows.append(margin)
+            roots = threshold_roots[bool(high)]
+            left = np.searchsorted(roots, sample, side="right") - 1
+            right = np.searchsorted(roots, sample, side="left")
+            # Keep the same exclusion of capture-boundary-truncated windows.
+            if left >= 0 and right < len(roots):
+                windows.append((float(sample - roots[left]), float(roots[right] - sample)))
         complete_windows = len(windows)
         width = 0.0 if invalid_count else (
             float(min(right for left, right in windows) + min(left for left, right in windows)) * 1e12

@@ -1,0 +1,44 @@
+{
+  "accept_selector": "First knot > query, beginning at knot index 0; query = time + CKTminBreak",
+  "duplicate_knot_arrays_checked": 479,
+  "duplicate_note": "Index equality includes duplicates; original zero-width-interval behavior is not repaired",
+  "equivalent_index_checks": 12860,
+  "fallback_scope": "Cached eligibility rejects decreasing/nonfinite time knots and odd coefficient counts",
+  "hashes": {
+    "vsrcacct.c_current_sha256": "559a4a90b39839a438f60c0f13688ffcb98c6db977fafc2753c8ee6f344254e4",
+    "vsrcacct.c_original_sha256": "36927a98f13fcff1678ca4531c4f55305b72e61f7a702b1600bd444da7516a7c",
+    "vsrcdefs.h_current_sha256": "112e0d01d5c2d6d0731b86a777b660f80eaf28ee094067b570029899ab780c12",
+    "vsrcdefs.h_original_sha256": "0cb4cae511c6c2d8c20372b6dc3bf3f99c341fab23efded75469afc61872b7b3",
+    "vsrcload.c_current_sha256": "76dffd83fa9251798e4c09e3563c54e6de1eef09b426c32154b0cdae32e3ff51",
+    "vsrcload.c_original_sha256": "6f4baccc6bd523a8ac979593b762e90900787840bd7611cb19fdd81671828ff7",
+    "vsrcpar.c_current_sha256": "aaecdd396ae2af63ee944e20c0b7c6df8885a679247061b0c6bc3e04b5838138",
+    "vsrcpar.c_original_sha256": "107953459a693221e86cb69db206a3b1369647fc0b2b48918300611aeb361959"
+  },
+  "limitation": "Checks selector indices/dispatch using independently transcribed algorithms; does not compile C or execute malformed odd-length interpolation",
+  "load_selector": "First knot >= query, beginning at knot index 1",
+  "nonfinite_fallback_checks": 108,
+  "odd_length_fallback_dispatch_checks": 98280,
+  "patch_path": "/workspace/work/simulate-return-current/scripts/si/ngspice-pwl-binary-search.patch",
+  "patch_sha256": "859acd456c7e4f52b331cfb58cba783878d81cf2cd22dc43d9b49ac4b1610f08",
+  "patched_dispatch_checks": 98280,
+  "purpose": "Scalar read-only algorithm evidence; not an electrical waveform simulation",
+  "scope": "Finite nondecreasing time knots in complete time/value pairs",
+  "source_inspection": "TD, repetition fold, endpoint guards, interpolation arithmetic and breakpoint cache update unchanged",
+  "unsorted_counterexample": {
+    "accept_binary_index": 3,
+    "accept_linear_index": 1,
+    "accept_patched_index": 1,
+    "load_binary_index": 3,
+    "load_linear_index": 1,
+    "load_patched_index": 1,
+    "query": 1.5,
+    "times": [
+      0.0,
+      2.0,
+      1.0,
+      3.0
+    ]
+  },
+  "unsorted_fallback_checks": 94518,
+  "unsorted_note": "Original parser warns but accepts decreasing time knots; patch retains linear-scan fallback for these"
+}

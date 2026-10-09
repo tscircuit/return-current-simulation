@@ -1,0 +1,146 @@
+--- a/src/spicelib/devices/vsrc/vsrcdefs.h
++++ b/src/spicelib/devices/vsrc/vsrcdefs.h
+@@ -91,6 +91,7 @@
+     unsigned VSRCdF1given    :1 ;  /* flag to indicate source is an f1 distortion input */
+     unsigned VSRCdF2given    :1 ;  /* flag to indicate source is an f2 distortion input */
+     unsigned VSRCrGiven      :1 ;  /* flag to indicate repeating pwl */
++    unsigned VSRCpwlSorted   :1 ;  /* finite, nondecreasing PWL time points */
+ 
+ #ifdef RFSPICE
+     unsigned VSRCportNumGiven : 1;      /* Flag to indicate Port Num is given */
+--- a/src/spicelib/devices/vsrc/vsrcpar.c
++++ b/src/spicelib/devices/vsrc/vsrcpar.c
+@@ -107,7 +107,15 @@
+             here->VSRCfuncTGiven = TRUE;
+             copy_coeffs(here, value);
+ 
++            /* Cache ordering once. Retain the original scans for time arrays
++             * that binary search cannot handle, including non-finite knots.
++             */
++            here->VSRCpwlSorted = !(here->VSRCfunctionOrder % 2) &&
++                                  finite(here->VSRCcoeffs[0]);
+             for (i=0; i<(here->VSRCfunctionOrder/2)-1; i++) {
++                  if (!finite(here->VSRCcoeffs[2*(i+1)]) ||
++                      !(here->VSRCcoeffs[2*(i+1)] >= here->VSRCcoeffs[2*i]))
++                      here->VSRCpwlSorted = FALSE;
+                   if (*(here->VSRCcoeffs+2*(i+1))<=*(here->VSRCcoeffs+2*i)) {
+                      fprintf(stderr, "Warning : voltage source %s",
+                                                                here->VSRCname);
+--- a/src/spicelib/devices/vsrc/vsrcload.c
++++ b/src/spicelib/devices/vsrc/vsrcload.c
+@@ -316,8 +316,8 @@
+                     break;
+ 
+                     case PWL: {
+-                        int    i;
+-                        double end_time, itime;
++                        int    i, lower, upper, middle;
++                        double end_time;
+ 
+                         time -= here->VSRCrdelay;
+                         if (time <= here->VSRCcoeffs[0]) {
+@@ -345,18 +345,33 @@
+                             }
+                         }
+ 
+-                        for (i = 2;  i < here->VSRCfunctionOrder; i += 2) {
+-                            itime = here->VSRCcoeffs[i];
+-                            if (itime >= time) {
+-                                time -= here->VSRCcoeffs[i - 2];
+-                                time /=  here->VSRCcoeffs[i] -
+-                                             here->VSRCcoeffs[i - 2];
+-                                value = here->VSRCcoeffs[i - 1];
+-                                value += time *
+-                                    ( here->VSRCcoeffs[i + 1] -
+-                                      here->VSRCcoeffs[i - 1]);
+-                                break;
+-                            }
++                        /* First knot at or after time, excluding knot zero.
++                         * Keep the original interval and interpolation arithmetic.
++                         */
++                        if (here->VSRCpwlSorted) {
++                            lower = 1;
++                            upper = here->VSRCfunctionOrder / 2;
++                            while (lower < upper) {
++                                middle = lower + (upper - lower) / 2;
++                                if (here->VSRCcoeffs[2 * middle] >= time)
++                                    upper = middle;
++                                else
++                                    lower = middle + 1;
++                            }
++                            i = 2 * lower;
++                        } else {
++                            for (i = 2; i < here->VSRCfunctionOrder; i += 2)
++                                if (here->VSRCcoeffs[i] >= time)
++                                    break;
++                        }
++                        if (i < here->VSRCfunctionOrder) {
++                            time -= here->VSRCcoeffs[i - 2];
++                            time /=  here->VSRCcoeffs[i] -
++                                         here->VSRCcoeffs[i - 2];
++                            value = here->VSRCcoeffs[i - 1];
++                            value += time *
++                                ( here->VSRCcoeffs[i + 1] -
++                                  here->VSRCcoeffs[i - 1]);
+                         }
+                         break;
+                     }
+--- a/src/spicelib/devices/vsrc/vsrcacct.c
++++ b/src/spicelib/devices/vsrc/vsrcacct.c
+@@ -170,7 +170,7 @@
+                     case PWL:
+                         if (ckt->CKTtime >= here->VSRCbreak_time) {
+                             double time, atime, end, period;
+-                            int    i;
++                            int    i, lower, upper, middle;
+ 
+                             time = ckt->CKTtime - here->VSRCrdelay;
+                             end =
+@@ -200,20 +200,34 @@
+ 
+                             atime = time + ckt->CKTminBreak;
+ 
+-                            for (i = 0;
+-                                 i < here->VSRCfunctionOrder;
+-                                 i += 2) {
+-                                if (here->VSRCcoeffs[i] > atime) {
+-                                    here->VSRCbreak_time =
+-                                        ckt->CKTtime +
+-                                            here->VSRCcoeffs[i] - time;
+-                                    error = CKTsetBreak(ckt,
+-                                                        here->VSRCbreak_time);
+-                                    if (error)
+-                                        return error;
+-                                    here->VSRCbreak_time -= ckt->CKTminBreak;
+-                                    break;
++                            /* First knot strictly after atime; retain the
++                             * original breakpoint expression and cache update.
++                             */
++                            if (here->VSRCpwlSorted) {
++                                lower = 0;
++                                upper = here->VSRCfunctionOrder / 2;
++                                while (lower < upper) {
++                                    middle = lower + (upper - lower) / 2;
++                                    if (here->VSRCcoeffs[2 * middle] > atime)
++                                        upper = middle;
++                                    else
++                                        lower = middle + 1;
+                                 }
++                                i = 2 * lower;
++                            } else {
++                                for (i = 0; i < here->VSRCfunctionOrder; i += 2)
++                                    if (here->VSRCcoeffs[i] > atime)
++                                        break;
++                            }
++                            if (i < here->VSRCfunctionOrder) {
++                                here->VSRCbreak_time =
++                                    ckt->CKTtime +
++                                        here->VSRCcoeffs[i] - time;
++                                error = CKTsetBreak(ckt,
++                                                    here->VSRCbreak_time);
++                                if (error)
++                                    return error;
++                                here->VSRCbreak_time -= ckt->CKTminBreak;
+                             }
+                         }
+                         break;

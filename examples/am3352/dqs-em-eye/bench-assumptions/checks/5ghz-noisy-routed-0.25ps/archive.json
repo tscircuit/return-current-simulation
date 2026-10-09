@@ -1,0 +1,17 @@
+{
+  "kind": "exact derived differential arrays for review; not complete native or scope leg captures",
+  "nativeWaveformsSha256": "34c0f0f3254432c70f220b77dc294e7080700514c917c89ad669b4cf8b09a2ff",
+  "observedWaveformsSha256": "1e708402ec1629ba77cc707b2ceb4a24cfc6c79a289b3ea11fd876bfbf731641",
+  "reviewWaveformsSha256": "2054900823d377b4f4e8762bbe74e5c40cac60923edf840fe9c2f896c40fc026",
+  "derivation": {
+    "time_s": "native time_s (same exact scope timestamps)",
+    "transmitter_differential_v": "native tx_p_v - tx_n_v",
+    "receiver_die_differential_v": "native dqs_p_v - dqs_n_v",
+    "receiver_pad_differential_v": "native pad_p_v - pad_n_v",
+    "scope_filtered_differential_v": "observation scope_filtered_p_v - scope_filtered_n_v",
+    "scope_noise_v": "observation scope_noise_v",
+    "observed_differential_v": "observation dqs_p_v - dqs_n_v"
+  },
+  "units": "seconds and differential volts; all saved samples, no rounding, resampling or time trimming",
+  "reproduction": "Regenerate complete native/observed captures and large PWL includes with scripts/generate-dqs-bench-eye.sh; audits check complete original files, not these derived review arrays."
+}

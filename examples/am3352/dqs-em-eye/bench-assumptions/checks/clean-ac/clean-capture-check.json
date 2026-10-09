@@ -1,0 +1,780 @@
+{
+  "analysisStartNs": 3000,
+  "analysisStopNs": 3500,
+  "fundamentalHz": 5000000000.0,
+  "auditScriptSha256": "63dc73ef2c1d4e8cb8d98141713dc75924018402e7ba5fdff1fb065a09f47b1f",
+  "captures": [
+    {
+      "case": "routed",
+      "kind": "captures",
+      "status": "complete",
+      "capture": "/workspace/work/dqs-bench-assumptions/captures/5ghz-clean-routed",
+      "waveformsSha256": "48fc8b937e7ce92a6b4aa12296f0961029a36ad4a9c962535f39a697021e505c",
+      "provenanceSha256": "8524fa1df709c585e188ac21e7999d003102fd464e3f872df949f3bc7338132c",
+      "acResultsSha256": "85d8b1c9b7dc78ba4eb14ee2b68b5dcde655c9316b94cd6f34cf862e98f98482",
+      "electricalTimeStepPs": 0.5,
+      "sampleIntervalPs": 2,
+      "maximumAbsoluteGridTimeErrorS": 1.4237776810397534e-17,
+      "expectedFundamental": {
+        "transferReal": 0.2275580114940975,
+        "transferImag": 0.13703705382003156,
+        "expectedPeakV": 0.5073040759856897,
+        "expectedAbsolutePhaseRad": -1.0444634905209869,
+        "expectedPhasorRealV": 0.2548522658043951,
+        "expectedPhasorImagV": -0.43864307600378283
+      },
+      "expectedGridStatistics": {
+        "meanV": -1.4155343563970746e-17,
+        "acRmsV": 0.35871904887847444,
+        "halfPeakToPeakV": 0.5061630166815532
+      },
+      "expectedSampledGridFundamental": {
+        "expectedPeakV": 0.5073040759848064,
+        "expectedAbsolutePhaseRad": -1.0444634905869568,
+        "expectedPhasorRealV": 0.2548522657750142,
+        "expectedPhasorImagV": -0.43864307601983166
+      },
+      "windows": [
+        {
+          "label": "full",
+          "startNs": 3000.0,
+          "stopNs": 3500.0,
+          "actual": {
+            "samples": 250000,
+            "meanV": 2.6008971414285044e-08,
+            "acRmsV": 0.35877808573494857,
+            "halfPeakToPeakV": 0.506265440249706,
+            "fundamentalPeakV": 0.5073875679481334,
+            "fundamentalPhaseRad": -1.0445782085321313,
+            "fundamentalPhasorRealV": 0.25484387909867556,
+            "fundamentalPhasorImagV": -0.43874450582800617,
+            "fittedOffsetV": 2.6002319552899866e-08,
+            "nonFundamentalAcRmsV": 0.000801717796662228
+          },
+          "acPredictionOnActualTimestamps": {
+            "samples": 250000,
+            "meanV": 6.674883024970768e-12,
+            "acRmsV": 0.35871904887576733,
+            "halfPeakToPeakV": 0.5061630165625421,
+            "fundamentalPeakV": 0.5073040759848236,
+            "fundamentalPhaseRad": -1.0444634905796142,
+            "fundamentalPhasorRealV": 0.25485226577824355,
+            "fundamentalPhasorImagV": -0.4386430760179753,
+            "fittedOffsetV": 2.265217507416114e-14,
+            "nonFundamentalAcRmsV": 0.0008020429403998299
+          },
+          "versusSampledACFundamental": {
+            "fundamentalPeakRelativeError": 0.0001645797210434452,
+            "fundamentalPhaseErrorRad": -0.00011471795251716266,
+            "fundamentalPhaseErrorEquivalentPs": -0.003651585840897555,
+            "fundamentalComplexErrorV": 0.0001017759439016548
+          },
+          "versusAC": {
+            "fundamentalPeakRelativeError": 0.0001645797193359222,
+            "fundamentalPhaseErrorRad": -0.00011471801114448787,
+            "fundamentalPhaseErrorEquivalentPs": -0.003651587707063277,
+            "fundamentalComplexErrorV": 0.00010177596020084412,
+            "acRmsRelativeError": 0.00016457687253090825,
+            "halfPeakToPeakRelativeError": 0.0002023531625432451,
+            "waveformMaximumAbsoluteErrorV": 0.00183199499793113,
+            "waveformRmsErrorV": 7.350115791728274e-05
+          }
+        },
+        {
+          "label": "early20ns",
+          "startNs": 3000.0,
+          "stopNs": 3020.0,
+          "actual": {
+            "samples": 10000,
+            "meanV": 8.176054225600638e-07,
+            "acRmsV": 0.3587779459151222,
+            "halfPeakToPeakV": 0.5062598107598433,
+            "fundamentalPeakV": 0.5073873667333996,
+            "fundamentalPhaseRad": -1.0445780543483383,
+            "fundamentalPhasorRealV": 0.2548438456824776,
+            "fundamentalPhasorImagV": -0.43874429254227215,
+            "fittedOffsetV": 8.175987709820806e-07,
+            "nonFundamentalAcRmsV": 0.0008028179735535284
+          },
+          "acPredictionOnActualTimestamps": {
+            "samples": 10000,
+            "meanV": 6.671427321691681e-12,
+            "acRmsV": 0.3587190488757699,
+            "halfPeakToPeakV": 0.5061630165625421,
+            "fundamentalPeakV": 0.5073040759848249,
+            "fundamentalPhaseRad": -1.0444634905801422,
+            "fundamentalPhasorRealV": 0.2548522657780125,
+            "fundamentalPhasorImagV": -0.43864307601811087,
+            "fittedOffsetV": 1.952587326971573e-14,
+            "nonFundamentalAcRmsV": 0.0008020429404056594
+          },
+          "versusSampledACFundamental": {
+            "fundamentalPeakRelativeError": 0.00016418308568288964,
+            "fundamentalPhaseErrorRad": -0.00011456376819607428,
+            "fundamentalPhaseErrorEquivalentPs": -0.0036466780015278586,
+            "fundamentalComplexErrorV": 0.00010156614973557485
+          },
+          "versusAC": {
+            "fundamentalPeakRelativeError": 0.00016418308397780912,
+            "fundamentalPhaseErrorRad": -0.00011456382735142157,
+            "fundamentalPhaseErrorEquivalentPs": -0.0036466798845010443,
+            "fundamentalComplexErrorV": 0.00010156616620147712,
+            "acRmsRelativeError": 0.00016418709721954805,
+            "halfPeakToPeakRelativeError": 0.0001912312716136899,
+            "waveformMaximumAbsoluteErrorV": 0.00183199499793113,
+            "waveformRmsErrorV": 8.542223201053639e-05
+          }
+        },
+        {
+          "label": "middle20ns",
+          "startNs": 3240.0000000000005,
+          "stopNs": 3260.0,
+          "actual": {
+            "samples": 10000,
+            "meanV": 3.959568424079407e-07,
+            "acRmsV": 0.3587781056149301,
+            "halfPeakToPeakV": 0.5062622210040786,
+            "fundamentalPeakV": 0.5073875960491615,
+            "fundamentalPhaseRad": -1.044576708686331,
+            "fundamentalPhasorRealV": 0.25484455126174055,
+            "fundamentalPhasorImagV": -0.4387441479002873,
+            "fittedOffsetV": 3.9595019056780276e-07,
+            "nonFundamentalAcRmsV": 0.0008017220944739566
+          },
+          "acPredictionOnActualTimestamps": {
+            "samples": 10000,
+            "meanV": 6.676027197727308e-12,
+            "acRmsV": 0.3587190488757683,
+            "halfPeakToPeakV": 0.5061630137278148,
+            "fundamentalPeakV": 0.507304075984825,
+            "fundamentalPhaseRad": -1.0444634905796073,
+            "fundamentalPhasorRealV": 0.25485226577824727,
+            "fundamentalPhasorImagV": -0.4386430760179747,
+            "fittedOffsetV": 2.385352785229755e-14,
+            "nonFundamentalAcRmsV": 0.0008020429403982562
+          },
+          "versusSampledACFundamental": {
+            "fundamentalPeakRelativeError": 0.00016463511390951702,
+            "fundamentalPhaseErrorRad": -0.00011321810672360044,
+            "fundamentalPhaseErrorEquivalentPs": -0.0036038442665133523,
+            "fundamentalComplexErrorV": 0.00010136586782121748
+          },
+          "versusAC": {
+            "fundamentalPeakRelativeError": 0.00016463511220465854,
+            "fundamentalPhaseErrorRad": -0.00011321816534404228,
+            "fundamentalPhaseErrorEquivalentPs": -0.003603846132459969,
+            "fundamentalComplexErrorV": 0.00010136588396192672,
+            "acRmsRelativeError": 0.0001646322918922305,
+            "halfPeakToPeakRelativeError": 0.0001959986675699188,
+            "waveformMaximumAbsoluteErrorV": 0.00013106976423377104,
+            "waveformRmsErrorV": 7.23693787464452e-05
+          }
+        },
+        {
+          "label": "late20ns",
+          "startNs": 3480.0,
+          "stopNs": 3500.0,
+          "actual": {
+            "samples": 10000,
+            "meanV": 1.8929530009472727e-07,
+            "acRmsV": 0.3587783615752669,
+            "halfPeakToPeakV": 0.5062617804031788,
+            "fundamentalPeakV": 0.5073879582613792,
+            "fundamentalPhaseRad": -1.044579292328382,
+            "fundamentalPhasorRealV": 0.25484359962985537,
+            "fundamentalPhasorImagV": -0.4387451195356469,
+            "fittedOffsetV": 1.8928864809665238e-07,
+            "nonFundamentalAcRmsV": 0.0008016497113743447
+          },
+          "acPredictionOnActualTimestamps": {
+            "samples": 10000,
+            "meanV": 6.6728906844559784e-12,
+            "acRmsV": 0.3587190488757664,
+            "halfPeakToPeakV": 0.5061630108931442,
+            "fundamentalPeakV": 0.5073040759848226,
+            "fundamentalPhaseRad": -1.0444634905790904,
+            "fundamentalPhasorRealV": 0.2548522657784728,
+            "fundamentalPhasorImagV": -0.43864307601784086,
+            "fittedOffsetV": 2.057438663978673e-14,
+            "nonFundamentalAcRmsV": 0.0008020429404027601
+          },
+          "versusSampledACFundamental": {
+            "fundamentalPeakRelativeError": 0.0001653491082123093,
+            "fundamentalPhaseErrorRad": -0.00011580174929171072,
+            "fundamentalPhaseErrorEquivalentPs": -0.00368608416369283,
+            "fundamentalComplexErrorV": 0.00010241084736533714
+          },
+          "versusAC": {
+            "fundamentalPeakRelativeError": 0.0001653491065027879,
+            "fundamentalPhaseErrorRad": -0.00011580180739523271,
+            "fundamentalPhaseErrorEquivalentPs": -0.0036860860131853776,
+            "fundamentalComplexErrorV": 0.00010241086356652707,
+            "acRmsRelativeError": 0.00016534583174876438,
+            "halfPeakToPeakRelativeError": 0.00019513379664060082,
+            "waveformMaximumAbsoluteErrorV": 0.00013444414257068882,
+            "waveformRmsErrorV": 7.308971014639472e-05
+          }
+        },
+        {
+          "label": "early8cycles",
+          "startNs": 3000.0,
+          "stopNs": 3001.6000000000004,
+          "actual": {
+            "samples": 800,
+            "meanV": 1.5353532683093363e-06,
+            "acRmsV": 0.3587800927145933,
+            "halfPeakToPeakV": 0.5062538772895095,
+            "fundamentalPeakV": 0.507390403022508,
+            "fundamentalPhaseRad": -1.044563670615537,
+            "fundamentalPhasorRealV": 0.2548516815018654,
+            "fundamentalPhasorImagV": -0.4387432523868771,
+            "fittedOffsetV": 1.5353466248119828e-06,
+            "nonFundamentalAcRmsV": 0.000802739416195068
+          },
+          "acPredictionOnActualTimestamps": {
+            "samples": 800,
+            "meanV": 6.647191408415409e-12,
+            "acRmsV": 0.358719048875748,
+            "halfPeakToPeakV": 0.5061630165625421,
+            "fundamentalPeakV": 0.5073040759847913,
+            "fundamentalPhaseRad": -1.0444634905801942,
+            "fundamentalPhasorRealV": 0.2548522657779729,
+            "fundamentalPhasorImagV": -0.4386430760180951,
+            "fittedOffsetV": 3.6010511561853e-15,
+            "nonFundamentalAcRmsV": 0.0008020429404126737
+          },
+          "versusSampledACFundamental": {
+            "fundamentalPeakRelativeError": 0.00017016823203941378,
+            "fundamentalPhaseErrorRad": -0.00010018003534284504,
+            "fundamentalPhaseErrorEquivalentPs": -0.0031888295647869136,
+            "fundamentalComplexErrorV": 0.00010017807265524487
+          },
+          "versusAC": {
+            "fundamentalPeakRelativeError": 0.00017016823026816397,
+            "fundamentalPhaseErrorRad": -0.00010018009455015076,
+            "fundamentalPhaseErrorEquivalentPs": -0.003188831449413988,
+            "fundamentalComplexErrorV": 0.00010017808712138266,
+            "acRmsRelativeError": 0.00017017172362776556,
+            "halfPeakToPeakRelativeError": 0.00017950882224559983,
+            "waveformMaximumAbsoluteErrorV": 0.0006002584832798252,
+            "waveformRmsErrorV": 7.431805340313278e-05
+          }
+        },
+        {
+          "label": "middle8cycles",
+          "startNs": 3249.2000000000003,
+          "stopNs": 3250.8,
+          "actual": {
+            "samples": 800,
+            "meanV": 2.949990330023411e-06,
+            "acRmsV": 0.35877716701273216,
+            "halfPeakToPeakV": 0.5062542030536861,
+            "fundamentalPeakV": 0.5073862670811926,
+            "fundamentalPhaseRad": -1.0445775036383498,
+            "fundamentalPhasorRealV": 0.2548435349839484,
+            "fundamentalPhasorImagV": -0.4387432013142453,
+            "fittedOffsetV": 2.9499836759110935e-06,
+            "nonFundamentalAcRmsV": 0.0008022221253229204
+          },
+          "acPredictionOnActualTimestamps": {
+            "samples": 800,
+            "meanV": 6.695833332237555e-12,
+            "acRmsV": 0.35871904887579065,
+            "halfPeakToPeakV": 0.5061630136191599,
+            "fundamentalPeakV": 0.5073040759848524,
+            "fundamentalPhaseRad": -1.0444634905795112,
+            "fundamentalPhasorRealV": 0.2548522657783032,
+            "fundamentalPhasorImagV": -0.4386430760179738,
+            "fittedOffsetV": 4.139743830522963e-14,
+            "nonFundamentalAcRmsV": 0.0008020429403798791
+          },
+          "versusSampledACFundamental": {
+            "fundamentalPeakRelativeError": 0.00016201544641769594,
+            "fundamentalPhaseErrorRad": -0.00011401305883862457,
+            "fundamentalPhaseErrorEquivalentPs": -0.0036291483782388417,
+            "fundamentalComplexErrorV": 0.00010050523231914102
+          },
+          "versusAC": {
+            "fundamentalPeakRelativeError": 0.00016201544476701635,
+            "fundamentalPhaseErrorRad": -0.00011401311736292109,
+            "fundamentalPhaseErrorEquivalentPs": -0.0036291502411250585,
+            "fundamentalComplexErrorV": 0.00010050524872305455,
+            "acRmsRelativeError": 0.0001620157533412936,
+            "halfPeakToPeakRelativeError": 0.00018015823375572282,
+            "waveformMaximumAbsoluteErrorV": 0.00012285000452144645,
+            "waveformRmsErrorV": 7.20105033713453e-05
+          }
+        },
+        {
+          "label": "late8cycles",
+          "startNs": 3498.3999999999996,
+          "stopNs": 3500.0,
+          "actual": {
+            "samples": 800,
+            "meanV": -3.3587581256711017e-07,
+            "acRmsV": 0.3587795966563065,
+            "halfPeakToPeakV": 0.5062562406671987,
+            "fundamentalPeakV": 0.5073897051544605,
+            "fundamentalPhaseRad": -1.044578045388615,
+            "fundamentalPhasorRealV": 0.2548450241248631,
+            "fundamentalPhasorImagV": -0.43874631232128697,
+            "fittedOffsetV": -3.3588245598765177e-07,
+            "nonFundamentalAcRmsV": 0.0008015799671094799
+          },
+          "acPredictionOnActualTimestamps": {
+            "samples": 800,
+            "meanV": 6.687957826434499e-12,
+            "acRmsV": 0.35871904887578526,
+            "halfPeakToPeakV": 0.506163010675834,
+            "fundamentalPeakV": 0.5073040759848383,
+            "fundamentalPhaseRad": -1.0444634905789985,
+            "fundamentalPhasorRealV": 0.254852265778521,
+            "fundamentalPhasorImagV": -0.43864307601783104,
+            "fittedOffsetV": 4.4264665470525924e-14,
+            "nonFundamentalAcRmsV": 0.0008020429403595299
+          },
+          "versusSampledACFundamental": {
+            "fundamentalPeakRelativeError": 0.00016879259141755476,
+            "fundamentalPhaseErrorRad": -0.00011455480961664044,
+            "fundamentalPhaseErrorEquivalentPs": -0.003646392841087863,
+            "fundamentalComplexErrorV": 0.00010348997970309268
+          },
+          "versusAC": {
+            "fundamentalPeakRelativeError": 0.00016879258973889755,
+            "fundamentalPhaseErrorRad": -0.00011455486762823598,
+            "fundamentalPhaseErrorEquivalentPs": -0.0036463946876543005,
+            "fundamentalComplexErrorV": 0.0001034899955273919,
+            "acRmsRelativeError": 0.0001687888633485901,
+            "halfPeakToPeakRelativeError": 0.00018418965708333346,
+            "waveformMaximumAbsoluteErrorV": 0.00012095182634264123,
+            "waveformRmsErrorV": 7.382187340886155e-05
+          }
+        }
+      ],
+      "block20nsConsistency": {
+        "fundamentalPeakRangeV": 5.915279795987161e-07,
+        "fundamentalPeakRelativeRange": 1.166022524950898e-06,
+        "fundamentalPhaseRangeRad": 2.583642051190438e-06,
+        "fundamentalPhaseEquivalentTimeRangePs": 8.223988072540837e-05,
+        "acRmsRangeV": 4.156601446925201e-07,
+        "halfPeakToPeakRangeV": 2.410244235306891e-06,
+        "meanRangeV": 6.283101224653365e-07
+      },
+      "block8cycleConsistency": {
+        "fundamentalPeakRangeV": 4.135941315430713e-06,
+        "fundamentalPeakRelativeRange": 8.152785501268833e-06,
+        "fundamentalPhaseRangeRad": 1.4374773078085212e-05,
+        "fundamentalPhaseEquivalentTimeRangePs": 0.0004575632382403122,
+        "acRmsRangeV": 2.9257018611672514e-06,
+        "halfPeakToPeakRangeV": 2.3633776891074376e-06,
+        "meanRangeV": 3.2858661425905213e-06
+      },
+      "lateCycleRepeat": {
+        "cycleSamples": 100,
+        "maximumAbsoluteDifferenceV": 7.143155380617827e-05,
+        "rmsDifferenceV": 7.0711169497168045e-06
+      },
+      "comparisonAlignment": "same absolute physical time; no phase fit or alignment applied to waveform comparisons",
+      "limitations": [
+        "Native AC establishes model consistency, not physical accuracy.",
+        "Higher routed harmonics in the waveform prediction extrapolate beyond 5GHz.",
+        "No absolute numerical pass/fail tolerance is inferred from agreement."
+      ]
+    },
+    {
+      "case": "routed",
+      "kind": "observations",
+      "status": "complete",
+      "capture": "/workspace/work/dqs-bench-assumptions/observations/5ghz-clean-routed",
+      "waveformsSha256": "c2cac577f59b721bd097b6c64e77be9ac8ca72c04c0e60038d6785973ec932d5",
+      "provenanceSha256": "d31b0fdbc103e3389aa354a6e38528171aa0908a67ec59de7cd63358e114271f",
+      "acResultsSha256": "85d8b1c9b7dc78ba4eb14ee2b68b5dcde655c9316b94cd6f34cf862e98f98482",
+      "electricalTimeStepPs": 0.5,
+      "sampleIntervalPs": 2,
+      "maximumAbsoluteGridTimeErrorS": 1.4237776810397534e-17,
+      "expectedFundamental": {
+        "expectedPeakV": 0.499873129964515,
+        "expectedAbsolutePhaseRad": -1.662841553157335,
+        "expectedPhasorRealV": -0.04594599299379909,
+        "expectedPhasorImagV": -0.49775708110315686
+      },
+      "expectedGridStatistics": {
+        "meanV": 7.355227538141662e-18,
+        "acRmsV": 0.3534639426362169,
+        "halfPeakToPeakV": 0.49921038085220526
+      },
+      "expectedSampledGridFundamental": {
+        "expectedPeakV": 0.49987312996364497,
+        "expectedAbsolutePhaseRad": -1.6628415532233045,
+        "expectedPhasorRealV": -0.045945993026555866,
+        "expectedPhasorImagV": -0.4977570810992595
+      },
+      "windows": [
+        {
+          "label": "full",
+          "startNs": 3000.0,
+          "stopNs": 3500.0,
+          "actual": {
+            "samples": 250000,
+            "meanV": 2.5659009996687133e-08,
+            "acRmsV": 0.35352211525767596,
+            "halfPeakToPeakV": 0.49931080104528847,
+            "fundamentalPeakV": 0.49995539881390955,
+            "fundamentalPhaseRad": -1.6629562725783027,
+            "fundamentalPhasorRealV": -0.0460106662599753,
+            "fundamentalPhasorImagV": -0.4978337266532758,
+            "fittedOffsetV": 2.5660711236376764e-08,
+            "nonFundamentalAcRmsV": 0.0004307876753915802
+          },
+          "acPredictionOnActualTimestamps": {
+            "samples": 250000,
+            "meanV": -1.7143540915753874e-12,
+            "acRmsV": 0.35346394263148334,
+            "halfPeakToPeakV": 0.49921038677900587,
+            "fundamentalPeakV": 0.499873129963645,
+            "fundamentalPhaseRad": -1.6628415532160976,
+            "fundamentalPhasorRealV": -0.04594599302296858,
+            "fundamentalPhasorImagV": -0.49775708109959066,
+            "fittedOffsetV": -1.4992295470330677e-14,
+            "nonFundamentalAcRmsV": 0.00043094560382252607
+          },
+          "versusSampledACFundamental": {
+            "fundamentalPeakRelativeError": 0.0001645794609335116,
+            "fundamentalPhaseErrorRad": -0.00011471936220508461,
+            "fundamentalPhaseErrorEquivalentPs": -0.003651630712657754,
+            "fundamentalComplexErrorV": 0.0001002854350572815
+          },
+          "versusAC": {
+            "fundamentalPeakRelativeError": 0.0001645794591926819,
+            "fundamentalPhaseErrorRad": -0.00011471942096763499,
+            "fundamentalPhaseErrorEquivalentPs": -0.0036516325831278265,
+            "fundamentalComplexErrorV": 0.00010028545114289009,
+            "acRmsRelativeError": 0.00016457867175789787,
+            "halfPeakToPeakRelativeError": 0.00020114618794386807,
+            "waveformMaximumAbsoluteErrorV": 0.0001580818759888969,
+            "waveformRmsErrorV": 7.149154045203386e-05
+          }
+        },
+        {
+          "label": "early20ns",
+          "startNs": 3000.0,
+          "stopNs": 3020.0,
+          "actual": {
+            "samples": 10000,
+            "meanV": 8.18056601627859e-07,
+            "acRmsV": 0.35352197592848617,
+            "halfPeakToPeakV": 0.4993053458126697,
+            "fundamentalPeakV": 0.49995520164115675,
+            "fundamentalPhaseRad": -1.6629561159858146,
+            "fundamentalPhasorRealV": -0.04601057015726548,
+            "fundamentalPhasorImagV": -0.4978335375221853,
+            "fittedOffsetV": 8.180583027873426e-07,
+            "nonFundamentalAcRmsV": 0.00043086390263623596
+          },
+          "acPredictionOnActualTimestamps": {
+            "samples": 10000,
+            "meanV": -1.7170872723681895e-12,
+            "acRmsV": 0.3534639426314874,
+            "halfPeakToPeakV": 0.499210381199662,
+            "fundamentalPeakV": 0.49987312996364847,
+            "fundamentalPhaseRad": -1.6628415532166283,
+            "fundamentalPhasorRealV": -0.04594599302323299,
+            "fundamentalPhasorImagV": -0.49775708109956973,
+            "fittedOffsetV": -1.775040339638548e-14,
+            "nonFundamentalAcRmsV": 0.00043094560382367293
+          },
+          "versusSampledACFundamental": {
+            "fundamentalPeakRelativeError": 0.00016418501533421725,
+            "fundamentalPhaseErrorRad": -0.00011456276918631048,
+            "fundamentalPhaseErrorEquivalentPs": -0.0036466462020594372,
+            "fundamentalComplexErrorV": 0.00010007892285101127
+          },
+          "versusAC": {
+            "fundamentalPeakRelativeError": 0.00016418501360049298,
+            "fundamentalPhaseErrorRad": -0.00011456282847954746,
+            "fundamentalPhaseErrorEquivalentPs": -0.003646648089421789,
+            "fundamentalComplexErrorV": 0.00010007893910316486,
+            "acRmsRelativeError": 0.00016418448955990428,
+            "halfPeakToPeakRelativeError": 0.00019022964382164886,
+            "waveformMaximumAbsoluteErrorV": 0.0001580818759888969,
+            "waveformRmsErrorV": 7.211323966330279e-05
+          }
+        },
+        {
+          "label": "middle20ns",
+          "startNs": 3240.0000000000005,
+          "stopNs": 3260.0,
+          "actual": {
+            "samples": 10000,
+            "meanV": 3.9530868627366545e-07,
+            "acRmsV": 0.3535221354378489,
+            "halfPeakToPeakV": 0.4993073666197089,
+            "fundamentalPeakV": 0.4999554273166326,
+            "fundamentalPhaseRad": -1.6629547749465343,
+            "fundamentalPhasorRealV": -0.04600992331136933,
+            "fundamentalPhasorImagV": -0.4978338239415223,
+            "fittedOffsetV": 3.953103875199106e-07,
+            "nonFundamentalAcRmsV": 0.0004308087800917538
+          },
+          "acPredictionOnActualTimestamps": {
+            "samples": 10000,
+            "meanV": -1.712984065704859e-12,
+            "acRmsV": 0.3534639426314825,
+            "halfPeakToPeakV": 0.49921038398934486,
+            "fundamentalPeakV": 0.49987312996364247,
+            "fundamentalPhaseRad": -1.6628415532160925,
+            "fundamentalPhasorRealV": -0.045945993022965766,
+            "fundamentalPhasorImagV": -0.4977570810995883,
+            "fittedOffsetV": -1.3601218977301341e-14,
+            "nonFundamentalAcRmsV": 0.0004309456038213256
+          },
+          "versusSampledACFundamental": {
+            "fundamentalPeakRelativeError": 0.00016463648085296434,
+            "fundamentalPhaseErrorRad": -0.00011322173044181483,
+            "fundamentalPhaseErrorEquivalentPs": -0.003603959613046591,
+            "fundamentalComplexErrorV": 9.988265897275291e-05
+          },
+          "versusAC": {
+            "fundamentalPeakRelativeError": 0.0001646364791070276,
+            "fundamentalPhaseErrorRad": -0.00011322178919925817,
+            "fundamentalPhaseErrorEquivalentPs": -0.003603961483354101,
+            "fundamentalComplexErrorV": 9.988267489918962e-05,
+            "acRmsRelativeError": 0.00016463576435299387,
+            "halfPeakToPeakRelativeError": 0.0001942720613883342,
+            "waveformMaximumAbsoluteErrorV": 0.0001186787596990646,
+            "waveformRmsErrorV": 7.106267032742435e-05
+          }
+        },
+        {
+          "label": "late20ns",
+          "startNs": 3480.0,
+          "stopNs": 3500.0,
+          "actual": {
+            "samples": 10000,
+            "meanV": 1.8133538723805742e-07,
+            "acRmsV": 0.3535223853887583,
+            "halfPeakToPeakV": 0.4993070317930506,
+            "fundamentalPeakV": 0.499955780849332,
+            "fundamentalPhaseRad": -1.6629573877125137,
+            "fundamentalPhasorRealV": -0.04601125657033573,
+            "fundamentalPhasorImagV": -0.49783405575902906,
+            "fittedOffsetV": 1.8133708838348668e-07,
+            "nonFundamentalAcRmsV": 0.00043078065544595664
+          },
+          "acPredictionOnActualTimestamps": {
+            "samples": 10000,
+            "meanV": -1.7142168573514026e-12,
+            "acRmsV": 0.35346394263148306,
+            "halfPeakToPeakV": 0.49921038677900587,
+            "fundamentalPeakV": 0.4998731299636461,
+            "fundamentalPhaseRad": -1.6628415532155632,
+            "fundamentalPhasorRealV": -0.045945993022702664,
+            "fundamentalPhasorImagV": -0.49775708109961625,
+            "fittedOffsetV": -1.4991714776434836e-14,
+            "nonFundamentalAcRmsV": 0.0004309456038107884
+          },
+          "versusSampledACFundamental": {
+            "fundamentalPeakRelativeError": 0.00016534372570076172,
+            "fundamentalPhaseErrorRad": -0.0001158344969505176,
+            "fundamentalPhaseErrorEquivalentPs": -0.003687126554047591,
+            "fundamentalComplexErrorV": 0.00010091793121825086
+          },
+          "versusAC": {
+            "fundamentalPeakRelativeError": 0.0001653437239623745,
+            "fundamentalPhaseErrorRad": -0.00011583455517860662,
+            "fundamentalPhaseErrorEquivalentPs": -0.0036871284075052297,
+            "fundamentalComplexErrorV": 0.0001009179472095879,
+            "acRmsRelativeError": 0.0001653429111896365,
+            "halfPeakToPeakRelativeError": 0.00019359575963218134,
+            "waveformMaximumAbsoluteErrorV": 0.00012184261834580212,
+            "waveformRmsErrorV": 7.186046181692408e-05
+          }
+        },
+        {
+          "label": "early8cycles",
+          "startNs": 3000.0,
+          "stopNs": 3001.6000000000004,
+          "actual": {
+            "samples": 800,
+            "meanV": 1.4907026925028987e-06,
+            "acRmsV": 0.3535240967504048,
+            "halfPeakToPeakV": 0.4992997236494639,
+            "fundamentalPeakV": 0.49995820028598176,
+            "fundamentalPhaseRad": -1.6629419417344078,
+            "fundamentalPhasorRealV": -0.046003789656042626,
+            "fundamentalPhasorImagV": -0.49783717556092616,
+            "fittedOffsetV": 1.4907043888171263e-06,
+            "nonFundamentalAcRmsV": 0.00043124232014086746
+          },
+          "acPredictionOnActualTimestamps": {
+            "samples": 800,
+            "meanV": -1.7425161313866511e-12,
+            "acRmsV": 0.3534639426314903,
+            "halfPeakToPeakV": 0.4992103809858067,
+            "fundamentalPeakV": 0.4998731299636558,
+            "fundamentalPhaseRad": -1.6628415532167173,
+            "fundamentalPhasorRealV": -0.04594599302327798,
+            "fundamentalPhasorImagV": -0.4977570810995729,
+            "fittedOffsetV": -4.783044960572251e-14,
+            "nonFundamentalAcRmsV": 0.00043094560382588655
+          },
+          "versusSampledACFundamental": {
+            "fundamentalPeakRelativeError": 0.00017018382710864977,
+            "fundamentalPhaseErrorRad": -0.00010038851769045287,
+            "fundamentalPhaseErrorEquivalentPs": -0.0031954657640207514,
+            "fundamentalComplexErrorV": 9.877030676473944e-05
+          },
+          "versusAC": {
+            "fundamentalPeakRelativeError": 0.0001701838253893584,
+            "fundamentalPhaseErrorRad": -0.00010038857707272975,
+            "fundamentalPhaseErrorEquivalentPs": -0.0031954676542173305,
+            "fundamentalComplexErrorV": 9.877032110837358e-05,
+            "acRmsRelativeError": 0.0001701845978028249,
+            "halfPeakToPeakRelativeError": 0.0001789679603232397,
+            "waveformMaximumAbsoluteErrorV": 0.00011056171819545657,
+            "waveformRmsErrorV": 7.025729798606875e-05
+          }
+        },
+        {
+          "label": "middle8cycles",
+          "startNs": 3249.2000000000003,
+          "stopNs": 3250.8,
+          "actual": {
+            "samples": 800,
+            "meanV": 2.9841451819231925e-06,
+            "acRmsV": 0.35352123153926235,
+            "halfPeakToPeakV": 0.49930016755807655,
+            "fundamentalPeakV": 0.4999541485045078,
+            "fundamentalPhaseRad": -1.6629554470613364,
+            "fundamentalPhasorRealV": -0.046010140225398344,
+            "fundamentalPhasorImagV": -0.4978325196321617,
+            "fittedOffsetV": 2.984146892888412e-06,
+            "nonFundamentalAcRmsV": 0.00043110201231906
+          },
+          "acPredictionOnActualTimestamps": {
+            "samples": 800,
+            "meanV": -1.6866246593805202e-12,
+            "acRmsV": 0.3534639426314822,
+            "halfPeakToPeakV": 0.4992103838824179,
+            "fundamentalPeakV": 0.4998731299636328,
+            "fundamentalPhaseRad": -1.6628415532159717,
+            "fundamentalPhasorRealV": -0.045945993022904724,
+            "fundamentalPhasorImagV": -0.4977570810995843,
+            "fittedOffsetV": 2.2502763613962696e-14,
+            "nonFundamentalAcRmsV": 0.00043094560381831524
+          },
+          "versusSampledACFundamental": {
+            "fundamentalPeakRelativeError": 0.00016207820748626034,
+            "fundamentalPhaseErrorRad": -0.0001138938453646432,
+            "fundamentalPhaseErrorEquivalentPs": -0.0036253536955053833,
+            "fundamentalComplexErrorV": 9.902442014569115e-05
+          },
+          "versusAC": {
+            "fundamentalPeakRelativeError": 0.00016207820572100573,
+            "fundamentalPhaseErrorRad": -0.00011389390400129429,
+            "fundamentalPhaseErrorEquivalentPs": -0.0036253555619679564,
+            "fundamentalComplexErrorV": 9.902443627842524e-05,
+            "acRmsRelativeError": 0.00016207850609495367,
+            "halfPeakToPeakRelativeError": 0.00017985137841169951,
+            "waveformMaximumAbsoluteErrorV": 0.00010998781955118275,
+            "waveformRmsErrorV": 7.058553496052074e-05
+          }
+        },
+        {
+          "label": "late8cycles",
+          "startNs": 3498.3999999999996,
+          "stopNs": 3500.0,
+          "actual": {
+            "samples": 800,
+            "meanV": -5.707957021597321e-07,
+            "acRmsV": 0.3535235183801177,
+            "halfPeakToPeakV": 0.4993020636047914,
+            "fundamentalPeakV": 0.49995738328559114,
+            "fundamentalPhaseRad": -1.662957029526392,
+            "fundamentalPhasorRealV": -0.04601122572576568,
+            "fundamentalPhasorImagV": -0.49783566787544276,
+            "fittedOffsetV": -5.70794001886785e-07,
+            "nonFundamentalAcRmsV": 0.00043069747520790565
+          },
+          "acPredictionOnActualTimestamps": {
+            "samples": 800,
+            "meanV": -1.7028504994964777e-12,
+            "acRmsV": 0.3534639426314906,
+            "halfPeakToPeakV": 0.49921038677900587,
+            "fundamentalPeakV": 0.4998731299636516,
+            "fundamentalPhaseRad": -1.6628415532154424,
+            "fundamentalPhasorRealV": -0.04594599302264302,
+            "fundamentalPhasorImagV": -0.4977570810996273,
+            "fittedOffsetV": -4.4637322794970444e-15,
+            "nonFundamentalAcRmsV": 0.00043094560383018286
+          },
+          "versusSampledACFundamental": {
+            "fundamentalPeakRelativeError": 0.00016854941161903447,
+            "fundamentalPhaseErrorRad": -0.00011547631094965816,
+            "fundamentalPhaseErrorEquivalentPs": -0.0036757251395309713,
+            "fundamentalComplexErrorV": 0.00010213318211902858
+          },
+          "versusAC": {
+            "fundamentalPeakRelativeError": 0.00016854940989152745,
+            "fundamentalPhaseErrorRad": -0.0001154763690569549,
+            "fundamentalPhaseErrorEquivalentPs": -0.0036757269891436726,
+            "fundamentalComplexErrorV": 0.00010213319782587755,
+            "acRmsRelativeError": 0.0001685483056166337,
+            "halfPeakToPeakRelativeError": 0.00018364366650502895,
+            "waveformMaximumAbsoluteErrorV": 0.0001086945385935234,
+            "waveformRmsErrorV": 7.266873042217614e-05
+          }
+        }
+      ],
+      "block20nsConsistency": {
+        "fundamentalPeakRangeV": 5.792081752553635e-07,
+        "fundamentalPeakRelativeRange": 1.1587103617601536e-06,
+        "fundamentalPhaseRangeRad": 2.6127659793484526e-06,
+        "fundamentalPhaseEquivalentTimeRangePs": 8.316692415112864e-05,
+        "acRmsRangeV": 4.094602721327334e-07,
+        "halfPeakToPeakRangeV": 2.0208070392047084e-06,
+        "meanRangeV": 6.367212143898016e-07
+      },
+      "block8cycleConsistency": {
+        "fundamentalPeakRangeV": 4.051781473946026e-06,
+        "fundamentalPeakRelativeRange": 8.105619668401967e-06,
+        "fundamentalPhaseRangeRad": 1.5087791984225163e-05,
+        "fundamentalPhaseEquivalentTimeRangePs": 0.00048025933492634216,
+        "acRmsRangeV": 2.865211142455415e-06,
+        "halfPeakToPeakRangeV": 2.3399553275016416e-06,
+        "meanRangeV": 3.5549408840829246e-06
+      },
+      "lateCycleRepeat": {
+        "cycleSamples": 100,
+        "maximumAbsoluteDifferenceV": 1.7532401998754388e-05,
+        "rmsDifferenceV": 6.2082750562450454e-06
+      },
+      "comparisonAlignment": "same absolute physical time; no phase fit or alignment applied to waveform comparisons",
+      "limitations": [
+        "Native AC establishes model consistency, not physical accuracy.",
+        "Higher routed harmonics in the waveform prediction extrapolate beyond 5GHz.",
+        "No absolute numerical pass/fail tolerance is inferred from agreement."
+      ]
+    },
+    {
+      "case": "reference",
+      "kind": "captures",
+      "status": "unavailable",
+      "missing": [
+        "/workspace/work/dqs-bench-assumptions/captures/5ghz-clean-reference/waveforms.npz",
+        "/workspace/work/dqs-bench-assumptions/captures/5ghz-clean-reference/provenance.json"
+      ],
+      "reason": "Long matched-reference Tline captures timed out at 600 s and are excluded; no valid native/reference observation capture."
+    },
+    {
+      "case": "reference",
+      "kind": "observations",
+      "status": "unavailable",
+      "missing": [
+        "/workspace/work/dqs-bench-assumptions/observations/5ghz-clean-reference/waveforms.npz",
+        "/workspace/work/dqs-bench-assumptions/observations/5ghz-clean-reference/provenance.json"
+      ],
+      "reason": "Long matched-reference Tline captures timed out at 600 s and are excluded; no valid native/reference observation capture."
+    }
+  ]
+}

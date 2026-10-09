@@ -102,7 +102,9 @@ def audit_capture(directory):
         "capture": str(directory.resolve()),
         "waveformsSha256": hashlib.sha256((directory / "waveforms.npz").read_bytes()).hexdigest(),
         "netlistSha256": metadata["netlistSha256"],
-        "frequencyHz": frequency, "timeStepPs": metadata["timeStepPs"],
+        "frequencyHz": frequency,
+        "timeStepPs": metadata.get("electricalTimeStepPs", metadata["timeStepPs"]),
+        "savedSampleTimeStepPs": metadata.get("sampleTimeStepPs", metadata["timeStepPs"]),
         "windows": [window_metrics(waveforms, window) for window in windows],
         "lateCycleRepeat": {
             "cycleDurationPs": period * 1e12,
@@ -146,7 +148,10 @@ def timestep_comparison(coarse_directory, refined_directory):
     ))))
     return {
         "coarseCapture": str(directories[0].resolve()), "refinedCapture": str(directories[1].resolve()),
-        "coarseTimeStepPs": coarse_metadata["timeStepPs"], "refinedTimeStepPs": refined_metadata["timeStepPs"],
+        "coarseTimeStepPs": coarse_metadata.get("electricalTimeStepPs", coarse_metadata["timeStepPs"]),
+        "refinedTimeStepPs": refined_metadata.get("electricalTimeStepPs", refined_metadata["timeStepPs"]),
+        "coarseSavedSampleTimeStepPs": coarse_metadata.get("sampleTimeStepPs", coarse_metadata["timeStepPs"]),
+        "refinedSavedSampleTimeStepPs": refined_metadata.get("sampleTimeStepPs", refined_metadata["timeStepPs"]),
         "receiverHalfPeakToPeakRelativeChange": relative_change(refined_summary["halfPeakToPeakV"], coarse_summary["halfPeakToPeakV"]),
         "receiverAcRmsRelativeChange": relative_change(refined_summary["acRmsV"], coarse_summary["acRmsV"]),
         "receiverFundamentalPeakRelativeChange": relative_change(refined_summary["fundamentalPeakV"], coarse_summary["fundamentalPeakV"]),

@@ -137,6 +137,27 @@ range. These are bandwidth diagnostics, and do not qualify the active IBIS
 driver or the high-frequency channel. See the
 [captured stress comparison](../../examples/am3352/dqs-em-eye/README.md#5-ghz-and-20-ghz-frequency-stress).
 
+For an assumed **5 GHz / 10 GT/s / 100 ps UI** bench companion, run
+`bash scripts/generate-dqs-bench-eye.sh`. It keeps the ideal source and
+passive network, adds **0.2 pF probe loading per pin**, and observes receiver
+package pads through a causal **12 GHz two-pole Butterworth** scope response.
+The noisy control assumes **3 ps RMS source jitter** with a 500 MHz
+correlation corner, **3 ps peak periodic jitter at 100 MHz**, a **5 mV RMS
+differential pad series source** after 1 GHz shaping, and **2 mV RMS
+differential scope noise** after 12 GHz shaping. Circuit loading and feedback
+change the pad source's realized voltage contribution. The clean control
+zeroes injections while retaining probe loading and scope response. It
+compares clean and noisy captures of the **same routed path** over
+**3000–3500 ns / 5,000 UI** after 3 µs of history. These configured assumptions
+are not measured bench data or qualified AM3352 behavior at 5 GHz. Timing
+modulation produces sidebands, including the 5.1 GHz upper sideband from
+100 MHz periodic jitter; sidebands and harmonics above 5 GHz use fit
+extrapolation. See the
+[assumed bench observation](../../examples/am3352/dqs-em-eye/README.md#assumed-5-ghz-bench-observation)
+for the budgets, sampling, reproduction command and evidence.
+The long matched-line bench controls timed out before the requested
+window; they have no verified bench-reference eye.
+
 The comparison renderer accepts capture-specific time windows and plots closed
 eyes with unavailable timing metrics when receiver crossings cannot be
 associated reliably. Missing or extra edges are retained rather than
@@ -164,3 +185,43 @@ ideal. Preamble/postamble, turnaround and simultaneous DQ sampling are absent.
 Therefore this eye gives a conditional view of the **DQS interconnect**, not
 whole-board DDR setup/hold compliance. The independent TI routing-length audit
 also remains relevant even if this particular eye is open.
+
+## ngspice build for large PWL stimuli
+
+The 3.5 µs bench stimulus contains hundreds of thousands of PWL knots.
+Stock ngspice **44.2** scans these tables repeatedly and can exceed the
+wrapper's native timeout. The bench capture uses the checked
+[PWL lookup patch](ngspice-pwl-binary-search.patch): binary search selects
+the same interval, with the original interpolation arithmetic and a linear
+fallback for descending tables. The stimulus and passive circuit are
+unchanged.
+
+Build a separate executable from the official 44.2 source, using a C
+compiler and Make. From the repository root:
+
+```sh
+si_repo_root=$PWD
+mkdir -p work/ngspice-pwl-build
+curl -fL \
+  https://sourceforge.net/projects/ngspice/files/ng-spice-rework/44.2/ngspice-44.2.tar.gz/download \
+  -o work/ngspice-pwl-build/ngspice-44.2.tar.gz
+printf '%s  %s\n' \
+  e7dadfb7bd5474fd22409c1e5a67acdec19f77e597df68e17c5549bc1390d7fd \
+  work/ngspice-pwl-build/ngspice-44.2.tar.gz | sha256sum -c -
+tar -xzf work/ngspice-pwl-build/ngspice-44.2.tar.gz -C work/ngspice-pwl-build
+cd work/ngspice-pwl-build/ngspice-44.2
+patch -p1 < "$si_repo_root/scripts/si/ngspice-pwl-binary-search.patch"
+./configure --prefix="$si_repo_root/work/ngspice-fast-pwl" \
+  --without-x --with-readline=no --disable-openmp
+make -j4
+make install
+cd "$si_repo_root"
+sha256sum work/ngspice-fast-pwl/bin/ngspice scripts/si/ngspice-pwl-binary-search.patch
+```
+
+The new prefix includes the binary and its data/init files. Use it for the
+vendor-free bench wrapper through `SI_NGSPICE`; retain the existing setup
+for the original IBIS/XSPICE workflow. The patched executable still prints
+version 44.2, so record the actual binary and patch hashes. The checked
+capture includes its build provenance; compiled binary hashes depend on
+the build path and toolchain.

@@ -1,0 +1,13 @@
+{
+  "source_deck": "/workspace/work/dqs-bench-smoke/noisy-reference/simulation.cir",
+  "source_deck_sha256": "8d271ad4bf36477eb9962a77cd243d41694d8f05eaf8fdec7dc9da4423f14fad",
+  "binary": "/workspace/work/tools/ngspice-44.2-install/bin/ngspice",
+  "binary_sha256": "18cf37b7ddf399ed68752371e8dbc12aa594f00dab459cffaa3a82921181cfa4",
+  "compatibility_mode": "default",
+  "referenceT": "Tref csrc 0 cload 0 Z0=100 TD=.4n",
+  "referenceLTRA": "Oref csrc 0 cload 0 refline; .model refline LTRA(R=0 G=0 L=40n C=4p LEN=1)",
+  "probe_capacitance_f_per_leg": 2e-13,
+  "source_resistance_ohms_per_leg": 50,
+  "physical_noise_sources": "Vnp rxp rxp0 DC0; Vnn rxn rxn0 DC0",
+  "scope": "AC derivative of exact supplied passive bench; PWL stimulus/noise replaced by prescribed AC drive/zero noise, transient controls replaced by AC controls; all other electrical values retained."
+}

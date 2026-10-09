@@ -265,6 +265,149 @@ window and respect the requested sample gap. Closed eyes retain zero
 threshold opening, and ambiguous or missing crossings produce unavailable
 timing metrics with a reason instead of a fabricated TIE value.
 
+## Assumed 5 GHz bench observation
+
+![Clean versus noisy routed 5 GHz bench observation](bench-assumptions/5ghz/routed-clean-vs-noisy/eye-comparison.png)
+
+This companion keeps the **5 GHz strobe / 10 GT/s / 100 ps UI** ideal source
+and passive package/channel/receiver network, then adds explicitly assumed
+bench conditions. It observes **differential receiver package-pad voltage**,
+with **0.2 pF probe capacitance per pin** in the native circuit. The comparison
+uses the **same routed path** for clean and noisy captures, with identical
+probe loading and scope response.
+
+| Assumed condition | Noisy control | Clean control |
+| --- | --- | --- |
+| Source random timing jitter | 3 ps RMS target, sampled Ornstein–Uhlenbeck process with 500 MHz correlation corner | 0 |
+| Source periodic timing jitter | 3 ps peak at 100 MHz | 0 |
+| Differential pad series-source noise | 5 mV RMS target, 1 GHz two-pole Butterworth filter | 0 |
+| Probe loading | 0.2 pF per pin | Identical |
+| Scope response | Causal 12 GHz two-pole Butterworth filter | Identical |
+| Differential scope noise | 2 mV RMS target, 12 GHz filtered and added to the observation | 0 |
+
+Timing jitter changes source events before ngspice. The **5 mV** pad budget
+is the commanded differential series-source RMS after 1 GHz shaping;
+circuit feedback and loading change its realized pad/die contribution.
+The scope response is applied afterward to the saved pad waveforms, with
+**2 mV RMS** differential scope noise added after 12 GHz shaping. Fixed
+timing/pad/scope seeds are **50701 / 50702 / 50703**; the noisy refinement
+reuses the same realizations. These are configured budgets; finite-capture
+statistics are recorded separately, without rescaling each realization to
+its target RMS.
+The clean control zeroes all injected jitter and noise while retaining the
+probe and scope response.
+
+Within the analyzed window, realized source RJ is **3.035 ps RMS**, periodic
+jitter is **2.121 ps RMS**, and combined source timing error is **3.625 ps
+RMS**. Continuous commanded series noise is **4.966 mV RMS**, and final
+differential scope noise is **1.984 mV RMS**.
+
+| Package-pad observation | Eye height (V) | Opening at ±200 mV (ps) | Zero-crossing TIE RMS (ps) |
+| --- | ---: | ---: | ---: |
+| Clean, routed | 0.998 | 73.8 | 0.00062 |
+| Noisy, routed | 0.675 | 42.3 | 4.10 |
+
+The assumed injections reduce the routed captured opening from **73.8 ps
+to 42.3 ps** within the 100 ps UI. The clean near-zero TIE is a finite
+numerical residual under a periodic ideal drive. This table measures
+scope-filtered package pads with probe loading; the earlier frequency
+table measures receiver die voltage.
+
+Native runs preserve **2990–3505.8 ns** of raw capture and analyze
+**3000–3500 ns**, or **500 ns / 5,000 UI**, after **3 µs** of source history.
+The 10 ns pre-roll settles the causal scope filter before the analysis
+window. Native maximum electrical step is **0.5 ps**, saved sampling is
+**2 ps**, and the solver uses trapezoidal integration. Folding uses the
+fixed nominal UI and removes one mean phase per case, retaining edge
+variation.
+
+Refining the noisy routed electrical step **0.5 → 0.25 ps** with identical
+stimuli and the same 2 ps saved grid changes the observed differential
+waveform by at most **226.6 µV**, with **67.8 µV RMS** difference. Captured
+eye height changes by **−82.6 µV** and threshold opening by **−0.0111 ps**.
+The [routed bench audit](bench-assumptions/checks/bench-audit.json) records
+the numerical comparison, realized budgets and **116 passing integrity and
+paired-input checks**. Receiver AC RMS changes by **−0.01181%** and carrier
+peak by **−0.01216%** under this refinement.
+
+The [independent clean AC check](bench-assumptions/checks/clean-ac/clean-capture-check.json)
+predicts a **0.4998731 V** scope-filtered pad fundamental peak, versus
+**0.4999554 V** captured: **+0.01646%** amplitude difference and
+**−0.003652 ps** equivalent phase difference. Across 20 ns blocks, the
+captured carrier amplitude range is **0.579 µV**. These are numerical checks
+of the declared network and scope response.
+
+Both long matched 100 Ω / 400 ps bench-reference transients exceeded the
+**600 s native limit** before reaching the requested window; see the
+[clean attempt](bench-assumptions/checks/reference-timeouts/clean/attempt.json)
+and [noisy attempt](bench-assumptions/checks/reference-timeouts/noisy/attempt.json).
+Their incomplete records are a model/solver limitation, and do not provide
+a verified bench-reference eye. The
+[reference AC model control](bench-assumptions/checks/clean-ac/reference/results.json)
+solves the declared network in frequency space, without validating that
+missing long transient. The clean/noisy routed comparison above and its
+timestep refinement completed.
+
+These are assumed observations, **not measured bench data or qualified
+AM3352 operation at 5 GHz**. The fundamental remains at the extracted
+dataset's upper edge. Timing modulation produces carrier sidebands as well
+as harmonics: the **100 MHz periodic jitter has a 5.1 GHz upper sideband**.
+Sidebands and harmonics above 5 GHz use fit extrapolation, and the channel
+mesh limitations above still apply. The finite-capture eye metrics do not
+establish a manufacturer mask or BER. Scope sampling, trigger and
+clock-recovery jitter are not modeled.
+
+Reproduce without vendor files or another EM extraction. First build the
+separate [ngspice PWL lookup executable](../../../scripts/si/README.md#ngspice-build-for-large-pwl-stimuli);
+stock 44.2 can time out on these large stimulus tables:
+
+```sh
+SI_PYTHON=work/si-python/bin/python \
+SI_NGSPICE="$PWD/work/ngspice-fast-pwl/bin/ngspice" \
+bash scripts/generate-dqs-bench-eye.sh \
+  examples/am3352/dqs-em-eye/channel/channel.sp work/dqs-bench-assumptions
+```
+
+The wrapper separates native `captures/`, scope-filtered `observations/`,
+and the rendered `5ghz/routed-clean-vs-noisy/` comparison in its output
+directory. It regenerates full leg captures and the large PWL stimulus
+streams. Observation provenance records the selected plane, filter, noise,
+and raw-input hashes.
+
+To regenerate the additional noisy routed refinement and its audit after
+the wrapper completes:
+
+```sh
+work/si-python/bin/python scripts/si/simulate-dqs-bench.py \
+  --channel examples/am3352/dqs-em-eye/channel/channel.sp \
+  --ngspice "$PWD/work/ngspice-fast-pwl/bin/ngspice" \
+  --dt-ps 0.25 --timeout-seconds 1800 \
+  --out work/dqs-bench-assumptions/checks/5ghz-noisy-routed-0.25ps
+work/si-python/bin/python scripts/si/bench_observation.py \
+  work/dqs-bench-assumptions/checks/5ghz-noisy-routed-0.25ps \
+  --out work/dqs-bench-assumptions/checks/5ghz-noisy-routed-0.25ps-observed \
+  --plane pads --scope-noise-mv 2 --seed 50703
+work/si-python/bin/python scripts/si/bench_audit.py \
+  --root work/dqs-bench-assumptions --routed-only \
+  --out work/dqs-bench-assumptions/checks/bench-audit.json
+```
+
+The compact public packet keeps `review-waveforms.npz` in each routed case
+folder, containing exact derived differential arrays: transmitter, receiver
+die, receiver pad, scope-filtered pad, scope noise and final observation,
+with their timestamps. Each `archive.json` records original full native/
+observed hashes, the derivation and archived-file hashes. Original native
+and observation provenance, circuit decks, logs and reports accompany these
+arrays. Shared `inputs/{clean,noisy}/` holds source timing, commanded noise
+and stimulus events; the refined case is in `checks/5ghz-noisy-routed-0.25ps/`.
+
+The [short native bench equivalence](bench-assumptions/checks/pwl-equivalence/native-bench-equivalence.json)
+and [source-boundary fixtures](bench-assumptions/checks/pwl-equivalence/native-equivalence.json)
+match stock and patched adaptive/linearized output bytes exactly. Their
+[build provenance](bench-assumptions/checks/pwl-equivalence/build-provenance.json)
+records the source, patch and executable identities; long-capture numerical
+checks remain separate.
+
 ## Scope
 
 PEC thin foils and solid via exteriors omit copper/dielectric loss. Neighboring
