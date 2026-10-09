@@ -20,7 +20,11 @@ import type { CopperLayer } from "./palace/stackup"
 import { readGeometry } from "./read-geometry"
 import { validatePalaceReference } from "./palace/validate-reference"
 import { currentColor } from "./current-color"
-import { palaceGeometrySignature } from "./palace/geometry-signature"
+import {
+  matchingGeometrySignatures,
+  palaceGeometrySignature,
+} from "./palace/geometry-signature"
+import { validatePalaceInputs } from "./palace/input-provenance"
 import { createPalaceModel } from "./palace/create-palace-model"
 import { createSampleMask } from "./palace/create-sample-mask"
 import { selectReturnCurrentExperiment } from "./circuit-json-experiment"
@@ -231,8 +235,10 @@ export function exportReturnCurrentCircuitJson(options: {
         "Palace model does not contain exactly the selected experiment excitations",
       )
     if (
-      reference.provenance.geometrySignature !==
-      palaceGeometrySignature(model.geometry)
+      !matchingGeometrySignatures(
+        reference.provenance.geometrySignature,
+        palaceGeometrySignature(model.geometry),
+      )
     )
       throw new Error(
         "Palace reference provenance does not match its model geometry",
@@ -261,12 +267,15 @@ export function exportReturnCurrentCircuitJson(options: {
       order: model.order,
     })
     if (
-      palaceGeometrySignature(expected.geometry) !==
-      palaceGeometrySignature(model.geometry)
+      !matchingGeometrySignatures(
+        palaceGeometrySignature(expected.geometry),
+        palaceGeometrySignature(model.geometry),
+      )
     )
       throw new Error(
         "Palace result is stale: input geometry, current, contacts, or termination changed",
       )
+    validatePalaceInputs(reference, model, selected.solverCircuitJson)
     const minX = Math.min(...model.geometry.boardOutline.map((p) => p.x))
     const minY = Math.min(...model.geometry.boardOutline.map((p) => p.y))
     metadata = {

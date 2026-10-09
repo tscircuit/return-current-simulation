@@ -118,7 +118,16 @@ export interface PalaceReference {
     circuitSha256: string
     modelSha256: string
     meshSha256: string
+    /** Present on new runs; archived cases retain their original byte hashes. */
+    inputManifest?: PalaceInputManifest
   }
+}
+
+export interface PalaceInputManifest {
+  schemaVersion: 1
+  numericPrecision: "model_12_input_17_significant_digits"
+  circuitSha256: string
+  modelSha256: string
 }
 
 /** All physical copper is retained, including unexcited and floating nets. */

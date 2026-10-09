@@ -118,6 +118,14 @@ field and image. `--field-format gzip` (default) uses `application/gzip`;
 provides a suggested export filename, and decoding is selected by MIME type.
 The exporter validates decoded channels against the official grid schema and
 checks model/current/contact/provenance consistency before writing any results.
+New Palace cases also save `input-manifest.json`: sorted nested JSON retains
+12 significant digits for derived model values and 17 for authored circuit
+inputs. The complete model includes pads, barrels, materials, contacts and
+resolved solver settings. Original circuit/model/mesh SHA-256 byte hashes remain
+separate. Preparation/import, case rendering/resampling and result export
+recompute their applicable hashes; altered input bytes fail case validation.
+Archived references retain their original hashes and nested geometry is compared
+at the documented model precision, so trigonometry roundoff is portable.
 Markers only identify actual PCB ports or vias. An omitted named reference
 becomes an identified copper-pour contact beneath the signal, never a fabricated
 GND pad. Missing or wrong-net contacts and unrepresentable via contacts are rejected.

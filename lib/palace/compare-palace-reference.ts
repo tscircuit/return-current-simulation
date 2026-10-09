@@ -1,4 +1,7 @@
-import { palaceGeometrySignature } from "./geometry-signature"
+import {
+  matchingGeometrySignatures,
+  palaceGeometrySignature,
+} from "./geometry-signature"
 import { segmentInCopper } from "../geometry"
 import type { SimulationResult } from "../types"
 import type { PalaceReference } from "./types"
@@ -18,8 +21,10 @@ export function comparePalaceReference(
   const { reference } = options
   validatePalaceReference(reference)
   if (
-    palaceGeometrySignature(result.geometry) !==
-    reference.provenance.geometrySignature
+    !matchingGeometrySignatures(
+      palaceGeometrySignature(result.geometry),
+      reference.provenance.geometrySignature,
+    )
   )
     throw new Error(
       "Palace reference geometry differs from the simulation geometry",

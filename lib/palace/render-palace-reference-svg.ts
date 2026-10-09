@@ -1,4 +1,7 @@
-import { palaceGeometrySignature } from "./geometry-signature"
+import {
+  matchingGeometrySignatures,
+  palaceGeometrySignature,
+} from "./geometry-signature"
 import { renderCurrentFieldSvg } from "../render-return-current-svg"
 import type { RenderOptions, SimulationResult } from "../types"
 import type { PalaceModel, PalaceReference } from "./types"
@@ -107,8 +110,10 @@ export function renderPalaceReferenceSvg(
   const { reference } = options
   validatePalaceReference(reference)
   if (
-    palaceGeometrySignature(result.geometry) !==
-    reference.provenance.geometrySignature
+    !matchingGeometrySignatures(
+      palaceGeometrySignature(result.geometry),
+      reference.provenance.geometrySignature,
+    )
   )
     throw new Error(
       "Palace reference geometry differs from the simulation geometry",

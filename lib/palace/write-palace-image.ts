@@ -3,6 +3,7 @@ import { writeFile } from "node:fs/promises"
 import { Resvg } from "@resvg/resvg-js"
 import { renderPalaceModelSvg } from "./render-palace-reference-svg"
 import type { PalaceModel, PalaceReference } from "./types"
+import { validatePalaceCaseInputs } from "./input-provenance"
 
 /** Export sampled Palace fields without constructing the approximation graph. */
 export async function writePalaceImage(destination: string, imageSize = 1100) {
@@ -11,6 +12,7 @@ export async function writePalaceImage(destination: string, imageSize = 1100) {
   const reference: PalaceReference = await readJson(
     `${destination}/reference.json`,
   )
+  await validatePalaceCaseInputs(reference, destination)
   const readSeconds = (performance.now() - readStarted) / 1000
   const svgStarted = performance.now()
   const svg = renderPalaceModelSvg(model, {

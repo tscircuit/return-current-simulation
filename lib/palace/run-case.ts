@@ -1,10 +1,11 @@
 import { palacePython, palacePythonAsset } from "./python-runtime"
-import { mkdir, writeFile } from "node:fs/promises"
+import { mkdir, readFile, writeFile } from "node:fs/promises"
 import { resolve } from "node:path"
 import { createPalaceModel } from "./create-palace-model"
 import type { PalaceOptions } from "./types"
 import { runCommand } from "./run-command"
 import { writeSampleGrid } from "./write-sample-grid"
+import { palaceInputManifest, sha256 } from "./input-provenance"
 
 // Community-built Palace v0.14.0; pinned by digest, not a moving image tag.
 export const palaceImage =
@@ -32,6 +33,18 @@ export async function preparePalaceCase(options: PalaceCaseOptions) {
     JSON.stringify(options.circuitJson),
   )
   await writeFile(`${destination}/model.json`, JSON.stringify(model, null, 2))
+  await writeFile(
+    `${destination}/input-manifest.json`,
+    JSON.stringify(
+      {
+        ...palaceInputManifest(options.circuitJson, model),
+        circuitFileSha256: sha256(JSON.stringify(options.circuitJson)),
+        modelFileSha256: sha256(JSON.stringify(model, null, 2)),
+      },
+      null,
+      2,
+    ),
+  )
   if (model.multilayer)
     await writeFile(
       `${destination}/model-audit.json`,
@@ -56,6 +69,14 @@ export async function runPalaceCase(options: PalaceCaseOptions): Promise<void> {
     cwd: destination,
     logPath: `${destination}/mesh.log`,
   })
+  const manifest = JSON.parse(
+    await readFile(`${destination}/input-manifest.json`, "utf8"),
+  )
+  manifest.meshSha256 = sha256(await readFile(`${destination}/mesh.msh`))
+  await writeFile(
+    `${destination}/input-manifest.json`,
+    JSON.stringify(manifest, null, 2),
+  )
   const palaceBin = options.palaceBin ?? process.env.PALACE_BIN
   const command = palaceBin
     ? [palaceBin, "-np", String(processes), "palace.json"]

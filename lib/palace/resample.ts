@@ -1,4 +1,5 @@
 import { writeFile } from "node:fs/promises"
+import { existsSync } from "node:fs"
 import { resolve, join } from "node:path"
 import { cpus, platform, arch } from "node:os"
 import { readJson } from "./read-json"
@@ -9,6 +10,8 @@ import { writePalaceImage } from "./write-palace-image"
 import { writeComparison } from "./write-comparison"
 import { imageDimension } from "./run-simulation"
 import type { PalaceModel } from "./types"
+import { validatePalaceCaseInputs } from "./input-provenance"
+import type { PalaceReference } from "./types"
 
 export async function resamplePalaceCase(options: {
   outputDirectory: string
@@ -24,6 +27,11 @@ export async function resamplePalaceCase(options: {
     throw new Error("imageSize is configurable only for Palace-only resampling")
   const destination = resolve(options.outputDirectory)
   const model = await readJson<PalaceModel>(join(destination, "model.json"))
+  if (existsSync(join(destination, "reference.json")))
+    await validatePalaceCaseInputs(
+      await readJson<PalaceReference>(join(destination, "reference.json")),
+      destination,
+    )
   const gridStarted = performance.now()
   const grid = await writeSampleGrid({
     destination,

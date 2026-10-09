@@ -6,3 +6,8 @@ export {
 export type { PalaceSimulationOptions } from "./palace/run-simulation"
 export { resamplePalaceCase } from "./palace/resample"
 export { setupPalacePython } from "./palace/python-runtime"
+export {
+  palaceInputManifest,
+  validatePalaceInputs,
+  validatePalaceCaseInputs,
+} from "./palace/input-provenance"

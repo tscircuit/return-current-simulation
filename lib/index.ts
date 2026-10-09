@@ -30,6 +30,7 @@ export type {
   PalaceReference,
   PalaceSample,
   PalaceTerminalPort,
+  PalaceInputManifest,
 } from "./palace/types"
 export { comparePalaceRuns } from "./palace/compare-palace-runs"
 

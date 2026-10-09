@@ -1,8 +1,9 @@
 import type { Point } from "circuit-json"
 import type { SimulationGeometry } from "../types"
+import { canonicalJson } from "./canonical-json"
 
 function coordinate(number: number): string {
-  return (number === 0 ? 0 : number).toFixed(9)
+  return (Math.abs(number) < 0.5e-9 ? 0 : number).toFixed(9)
 }
 
 function point(point: Point): string[] {
@@ -30,7 +31,7 @@ export function palaceGeometrySignature(geometry: SimulationGeometry): string {
         ]),
     ),
     ...(geometry.physicalModelSignature
-      ? [geometry.physicalModelSignature]
+      ? [canonicalJson(JSON.parse(geometry.physicalModelSignature))]
       : []),
     geometry.excitations.map((excitation) => [
       coordinate(excitation.current),
@@ -48,4 +49,19 @@ export function palaceGeometrySignature(geometry: SimulationGeometry): string {
         : []),
     ]),
   ])
+}
+
+/** Accept archived signatures at the same precision as newly generated models. */
+export function matchingGeometrySignatures(a: string, b: string): boolean {
+  const normalize = (signature: string) => {
+    const values = JSON.parse(signature)
+    if (values.length === 6 && typeof values[4] === "string")
+      values[4] = canonicalJson(JSON.parse(values[4]))
+    return canonicalJson(values)
+  }
+  try {
+    return normalize(a) === normalize(b)
+  } catch {
+    return false
+  }
 }
