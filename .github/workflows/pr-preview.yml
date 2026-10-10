@@ -17,4 +17,5 @@ jobs:
       - run: bun install
       - run: bun run build
       - run: bun run smoke:package
-      - run: bunx pkg-pr-new@0.0.37 publish --compact --comment=off
+      # Compact URLs require an existing npm release.
+      - run: bunx pkg-pr-new@0.0.37 publish --comment=off
